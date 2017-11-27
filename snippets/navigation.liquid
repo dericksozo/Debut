@@ -1,5 +1,6 @@
-{% if link.title == section.settings.megadropdown_link %}
-<li class="dropdown">{{ link.title | link_to: link.url }}  
+{% assign megalinks = section.settings.megadropdown_link | replace: ',', ' ' %}
+{% if megalinks contains link.title and link.links.size > 0 %}
+<li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
   <ul class="megamenu row">
     {% if section.settings.nav_promo_image != blank %}
     {%- assign image_size = '600x' -%}
@@ -9,8 +10,8 @@
       </a>
     </span>
     {% endif %}
-    <span class="{% if section.settings.nav_promo_image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">      
-      {% case section.blocks.size %}
+    <span class="{% if section.settings.nav_promo_image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
+      {% case link.links.size %}
       {% when 0 %}
       {% when 1 %}
       {% assign column_width = 'desktop-12 tablet-fourth' %}
@@ -18,37 +19,38 @@
       {% assign column_width = 'desktop-6 tablet-fourth' %}
       {% when 3 %}
       {% assign column_width = 'desktop-4 tablet-fourth' %}
-      {% when 4 %}
+      {% when 4 or 5 or 6 or 7 or 8 %}
       {% assign column_width = 'desktop-3 tablet-fourth' %}
-      {% endcase %}  
-
-      {% for block in section.blocks %}      
+      {% endcase %}
+      {% for sub_link in link.links %}
       <li class="{{ column_width }}">
-        <h4>{{ block.settings.title }}</h4>
-        <ul class="mega-stack" {{ block.shopify_attributes }}>
-          {% for link in linklists[block.settings.mega-nav].links %}
-          <li>{{ link.title | link_to: link.url }}</li>
+        <h4><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></h4>
+        {% if sub_link.links != blank %}
+        <ul class="mega-stack">
+          {% for sub_sub_link in sub_link.links %}
+          <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
           {% endfor %}
         </ul>
+        {% endif %}
       </li>
-      {% endfor %} 
+      {% endfor %}
     </span>
   </ul>
 </li>
-{% elsif linklists[link.handle] and linklists[link.handle].links.size > 0 %}
-<li class="dropdown">{{ link.title | link_to: link.url }}  
+{% elsif link.links != blank %}
+<li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
   <ul class="submenu">
-    {% for l in linklists[link.handle].links %}
-    {% if linklists[l.handle] and linklists[l.handle].links.size > 0 %}      
-    <li class="nest"><a href="{{ l.url }}">{{ l.title }}</a>                 
+    {% for sub_link in link.links %}
+    {% if sub_link.links != blank %}
+    <li class="nest has_sub_menu" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
       <ul class="nested">
-        {% for l in linklists[l.handle].links %}
-        <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+        {% for sub_sub_link in sub_link.links %}
+        <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
         {% endfor %}
       </ul>
     </li>
     {% else %}
-    <li><a href="{{ l.url }}">{{ l.title }}</a></li>    
+    <li><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
     {% endif %}
 
     {% endfor %}

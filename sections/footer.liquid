@@ -1,13 +1,13 @@
 <div class="footer-section" data-section-id="{{ section.id }}" data-section-type="footer-section">
 {% if section.settings.bottom_logo != blank %}
 <div class="row">
-  <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">       
+  <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">
       {%- assign image_size = '800x' -%}
       <a href="/">
-        <img src="{{ section.settings.bottom_logo | img_url: image_size }}" alt="{{ section.settings.bottom_logo.alt | default: shop.name }}">        
-      </a>         
-  </div> 
-</div>    
+        <img src="{{ section.settings.bottom_logo | img_url: image_size }}" alt="{{ section.settings.bottom_logo.alt | default: shop.name }}">
+      </a>
+  </div>
+</div>
 <style>
   @media screen and ( min-width: 740px ) {
   #bottom-logo img { max-width: {{ section.settings.bottom_logo_max_width }}px; }
@@ -16,8 +16,8 @@
 {% endif %}
 
 <footer>
-  <div id="footer-wrapper">	
-    <div id="footer" class="row">     
+  <div id="footer-wrapper">
+    <div id="footer" class="row">
     {% case section.blocks.size %}
       {% when 0 %}
       {% when 1 %}
@@ -28,8 +28,8 @@
         {% assign column_width = 'desktop-4 tablet-3 mobile-3' %}
       {% when 4 %}
         {% assign column_width = 'desktop-3 tablet-3 mobile-3' %}
-    {% endcase %}      
-      {% for block in section.blocks %}   
+    {% endcase %}
+      {% for block in section.blocks %}
       {% case block.type %}
       {% when 'menu' %}
       <div class="{{ column_width }}">
@@ -54,15 +54,15 @@
             <input type="email" name="contact[email]" id="footer-EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
             <input type="submit" id="footer-subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
             {% endif %}
-            {% endform %}                   
-        </div> 
-      </div>  
+            {% endform %}
+        </div>
+      </div>
       {% endcase %}
       {% endfor %}
       <div class="clear"></div>
       <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
           {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-          {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}      
+          {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
@@ -70,25 +70,25 @@
           {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus-official fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.snapchat-id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.weibo-id != blank %}<li><a href="//weibo.com/{{ settings.weibo-id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-      </ul>      
+      </ul>
       <div class="clear"></div>
       <div class="credit desktop-12 tablet-6 mobile-3">
         {% for type in shop.enabled_payment_types %}
         <img src="{{ type | payment_type_img_url }}" />
-        {% endfor %}  
+        {% endfor %}
         <p>
-          {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} • 
+          {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} •
           <a href="//www.shopifythemes.net" target="_blank" title="Shopify theme">Shopify Theme</a>
           {{ 'layout.footer.theme_title' | t }} Underground • 
           {{ powered_by_link | replace: '" target', '?ref=undergroundmedia" target' }}
         </p>
       </div>
-    </div> 
+    </div>
   </div>
 </footer>
 
 <style>
-  #footer-wrapper { 
+  #footer-wrapper {
     text-align: {{ section.settings.footer_text_align }};
   }
 
@@ -181,17 +181,18 @@
         "unit":       "px",
         "label":     "Footer title size",
         "default":   14
-      }      
+      }
     ],
-   "blocks":[  
-      {  
+   "blocks":[
+      {
          "type":"menu",
          "name":"Menu",
-         "settings":[  
+         "settings":[
             {
                "type": "link_list",
                "id": "footer_nav",
-               "label": "Choose a menu"
+               "label": "Choose a menu",
+               "info": "This menu won't show dropdown items"
             },
            {
             "type": "text",

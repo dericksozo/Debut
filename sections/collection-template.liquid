@@ -34,11 +34,11 @@
 
     {% for product in collection.products %}
     {% assign products-per-row = section.settings.products-per-row %}
-    <div id="product-listing-{{ product.id }}" class="product-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}">           
+    <div id="product-listing-{{ product.id }}" class="product-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
       {% include 'product-listing' %}
     </div>
 
-    {% endfor %} 
+    {% endfor %}
 
   </div>
 </div>
@@ -71,7 +71,7 @@
         "step":      1,
         "label":     "Products per row",
         "default":   4
-      },          
+      },
       {
         "type": "header",
         "content": "Filter with tags"
@@ -92,7 +92,7 @@
         "type": "text",
         "id": "filter-1-title",
         "label": "Filter 1 title"
-      },      
+      },
 	  {
         "type": "textarea",
         "id": "sort_a",
@@ -108,7 +108,7 @@
         "type": "text",
         "id": "filter-2-title",
         "label": "Filter 2 title"
-      },  
+      },
       {
         "type": "textarea",
         "id": "sort_b",
@@ -124,22 +124,23 @@
         "type": "text",
         "id": "filter-3-title",
         "label": "Filter 3 title"
-      },  
+      },
       {
         "type": "textarea",
         "id": "sort_c",
         "label": "Third filter tags"
       }
     ],
-	"blocks":[  
-      {  
+	"blocks":[
+      {
          "type":"menu",
          "name":"Menu",
-         "settings":[  
+         "settings":[
             {
                "type": "link_list",
                "id": "side_nav",
-               "label": "Sidebar menu"
+               "label": "Sidebar menu",
+               "info": "This menu won't show dropdown items"
             },
            {
             "type": "text",
@@ -149,11 +150,11 @@
            }
          ]
       },
-      {  
+      {
          "type":"vendor_list",
          "name":"Vendor list",
 		 "limit": 1,
-         "settings":[  
+         "settings":[
           {
           "type": "text",
           "id": "shop_by_designer_title",

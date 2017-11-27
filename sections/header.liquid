@@ -2,58 +2,41 @@
   <div id="dl-menu" class="dl-menuwrapper">
     <button class="dl-trigger"><i class="fa fa-bars" aria-hidden="true"></i></button>
     <ul class="dl-menu">
-      {% for link in linklists[section.settings.main_nav].links %}
-      {% if link.title == section.settings.megadropdown_link %}
-      <li>{{ link.title | link_to: link.url }}
+      {% assign menu = linklists[section.settings.main_nav] %}
+      {% for link in menu.links %}
+      {% if link.links != blank %}
+      <li class="has_sub_menu">
+        {{ link.title | link_to: link.url }}
         <ul class="dl-submenu">
-          {% for block in section.blocks %}      
-          <li><a href="#">{{ block.settings.title }}</a>
-            <ul class="dl-submenu" {{ block.shopify_attributes }}>
-              {% for link in linklists[block.settings.mega-nav].links %}
-              <li>{{ link.title | link_to: link.url }}</li>
-              {% endfor %}
-            </ul>
-          </li>
-          {% endfor %}         
-        </ul>
-      </li>
-      {% elsif linklists[link.handle] and linklists[link.handle].links.size > 0 %}   
-      <li>
-        {{ link.title | link_to: link.url }}       
-        {% if linklists[link.handle] and linklists[link.handle].links.size > 0 %}       
-        <ul class="dl-submenu">
-          {% for l in linklists[link.handle].links %}
-          <li><a href="{{ l.url }}">{{ l.title }}</a>
-
-            {% if linklists[l.handle] and linklists[l.handle].links.size > 0 %}       
-            <ul class="dl-submenu">
-              {% for l in linklists[l.handle].links %}
-              <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+          {% for sub_link in link.links %}
+          <li><a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+            {% if sub_link.links != blank %}
+            <ul class="dl-submenu has_sub_menu">
+              {% for sub_sub_link in sub_link.links %}
+              <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
               {% endfor %}
             </ul>
             {% endif %}
-
           </li>
           {% endfor %}
         </ul>
-        {% endif %}
       </li>
       {% else %}
       <li>{{ link.title | link_to: link.url }}</li>
       {% endif %}
       {% endfor %}
     </ul>
-  </div><!-- /dl-menuwrapper -->   
+  </div><!-- /dl-menuwrapper -->
 
   <header>
     {% if section.settings.full-width-header %}
     <div class="gridlock-fluid">
       <div class="row">
-        {% endif %}    
+        {% endif %}
         <div class="row">
           <ul id="social-icons" class="{% if section.settings.hello != blank %}desktop-4{% else%}desktop-6{% endif %} tablet-6 mobile-3">
             {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-            {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}      
+            {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
@@ -66,7 +49,7 @@
           <div id="hello" class="desktop-4 tablet-6 mobile-3">
             {{ section.settings.hello }}
           </div>
-          {% endif %}        
+          {% endif %}
           <ul id="cart" class="{% if section.settings.hello != blank %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
             <li><a href="{{ shop.url }}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             <li class="seeks"><a id="inline" href="#search_popup" class="open_popup"><i class="fa fa-search fa-2x" aria-hidden="true"></i></a></li>
@@ -87,31 +70,32 @@
                 <a class="checkout-link" href="/cart">{{ 'cart.general.checkout' | t }}</a>
                 {% endif %}
               </div>
-              </li>         
-          </ul>        
-        </div> 
+              </li>
+          </ul>
+        </div>
         {% if section.settings.full-width-header %}
       </div>
     </div>
-    {% endif %}        
+    {% endif %}
   </header>
   <div class="header-wrapper">
     <div class="row">
-      <div id="logo" class="desktop-12 tablet-6 mobile-3">       
+      <div id="logo" class="desktop-12 tablet-6 mobile-3">
         {% if section.settings.logo != blank %}
         {%- assign image_size = '800x' -%}
         <a href="/">
-          <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">        
+          <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
         </a>
         {% else %}
         <a href="/">{{ shop.name }}</a>
-        {% endif %}         
-      </div> 
+        {% endif %}
+      </div>
     </div>
     <div class="clear"></div>
     <nav>
-      <ul id="main-nav" role="navigation" {% if template == 'index' and settings.display-wide %}style="margin-bottom: 0;"{% else %}{% endif %} class="row"> 
-        {% for link in linklists[section.settings.main_nav].links %}
+      <ul id="main-nav" role="navigation" {% if template == 'index' and settings.display-wide %}style="margin-bottom: 0;"{% else %}{% endif %} class="row">
+      	{% assign menu = linklists[section.settings.main_nav] %}
+        {% for link in menu.links %}
         {% include 'navigation' %}
         {% endfor %}
       </ul>
@@ -124,10 +108,10 @@
       #logo img { max-width: {{ section.settings.logo_max_width }}px; }
     }
     {% else %}
-    #logo a { 
-      font-size: {{ section.settings.logo-size }}px; 
-      text-transform: {{ section.settings.logo-transform }}; 
-      font-weight: {{ section.settings.logo-weight }}; 
+    #logo a {
+      font-size: {{ section.settings.logo-size }}px;
+      text-transform: {{ section.settings.logo-transform }};
+      font-weight: {{ section.settings.logo-weight }};
     }
     {% endif %}
 
@@ -140,7 +124,7 @@
     {% else %}
     nav { display: none; }
     {% endif %}
-    ul#main-nav li { 
+    ul#main-nav li {
       line-height: {{ section.settings.nav-height }}px;
     }
     ul#main-nav li ul.submenu {
@@ -149,9 +133,9 @@
     ul.megamenu {
       top: {{ section.settings.nav-height }}px;
     }
-    nav { 
+    nav {
       border-top: {{ section.settings.nav-top-border-height }}px solid {{ settings.nav-border-color }};
-      border-bottom: {{ section.settings.nav-bottom-border-height }}px solid {{ settings.nav-border-color }};  
+      border-bottom: {{ section.settings.nav-bottom-border-height }}px solid {{ settings.nav-border-color }};
     }
   </style>
 </div>
@@ -159,7 +143,6 @@
 {% schema %}
 {
     "name": "Header",
-	"max_blocks": 4,
     "settings": [
       {
         "type": "checkbox",
@@ -194,7 +177,7 @@
         "unit":       "px",
         "label":     "Logo text size",
         "default":   26
-      },   
+      },
       {
         "type": "select",
         "id": "logo-transform",
@@ -264,8 +247,8 @@
         ],
 	  "info":"You can change the text in your edit language section"
       },
-	  
-      
+
+
       {
         "type": "header",
         "content": "Navigation"
@@ -273,8 +256,8 @@
       {
         "type": "link_list",
         "id": "main_nav",
-        "label": "Menu",
-		"default": "main-menu"
+        "label": "Choose main menu",
+        "default": "main-menu"
       },
       {
         "type": "select",
@@ -328,9 +311,9 @@
       {
         "type": "text",
         "id": "megadropdown_link",
-        "label": "Mega dropdown link title",
+        "label": "Mega dropdown link titles",
         "default": "Catalog",
-        "info": "When hovered this link will open the mega drop-down Menu, you may choose menus to add to this below"
+        "info": "Add the titles of the links from which you would like to show mega menus, separate each with a comma"
       },
       {
        "type": "image_picker",
@@ -342,26 +325,7 @@
         "id": "nav_promo_link",
         "label": "Mega dropdown image link",
         "default": "\/collections\/all"
-      }            
-    ],
-   "blocks":[  
-      {  
-         "type":"menu",
-         "name":"Menu",
-         "settings":[  
-            {
-               "type": "link_list",
-               "id": "mega-nav",
-               "label": "Choose a menu"
-            },
-           {
-            "type": "text",
-            "id": "title",
-            "label": "Menu title",
-            "default": "Explore"
-           }
-         ]
       }
-   ]
+    ]
   }
 {% endschema %}
