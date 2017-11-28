@@ -93,7 +93,7 @@
     </div>
     <div class="clear"></div>
     <nav>
-      <ul id="main-nav" role="navigation" {% if template == 'index' and settings.display-wide %}style="margin-bottom: 0;"{% else %}{% endif %} class="row">
+      <ul id="main-nav" {% if template == 'index' and settings.display-wide %}style="margin-bottom: 0;"{% else %}{% endif %} class="row">
       	{% assign menu = linklists[section.settings.main_nav] %}
         {% for link in menu.links %}
         {% include 'navigation' %}
@@ -303,28 +303,30 @@
         "unit":       "px",
         "label":     "Bottom border size",
         "default":   1
-      },
+      }
+    ],
+    "blocks": [
       {
-        "type": "header",
-        "content": "Mega dropdown"
-      },
-      {
-        "type": "text",
-        "id": "megadropdown_link",
-        "label": "Mega dropdown link titles",
-        "default": "Catalog",
-        "info": "Add the titles of the links from which you would like to show mega menus, separate each with a comma"
-      },
-      {
-       "type": "image_picker",
-       "id": "nav_promo_image",
-       "label": "Image"
-      },
-      {
-        "type": "text",
-        "id": "nav_promo_link",
-        "label": "Mega dropdown image link",
-        "default": "\/collections\/all"
+        "type": "mega_menu",
+        "name": "Mega menu",
+        "settings": [
+          {
+            "type":"text",
+            "id":"menu_item",
+            "label":"Menu item",
+            "info":"Enter menu item to apply a mega menu"
+          },
+          {
+           "type": "image_picker",
+           "id": "nav-image",
+           "label": "Featured image"
+         },
+         {
+           "type": "url",
+           "id": "link",
+           "label": "Slide link"
+         }
+        ]
       }
     ]
   }

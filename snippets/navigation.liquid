@@ -1,16 +1,19 @@
-{% assign megalinks = section.settings.megadropdown_link | replace: ',', ' ' %}
-{% if megalinks contains link.title and link.links.size > 0 %}
+{% assign meganav = false %}
+{% for block in section.blocks %}
+{% if block.settings.menu_item == link.title %}
+{% capture megalink %}
+
 <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
   <ul class="megamenu row">
-    {% if section.settings.nav_promo_image != blank %}
-    {%- assign image_size = '600x' -%}
+    {% if block.settings.nav-image != blank %}
+    {%- assign image_size = '300x' -%}
     <span class="desktop-3 tablet-hide mm-image">
-      <a href="{{ section.settings.nav_promo_link }}">
-        <img src="{{ section.settings.nav_promo_image | img_url: image_size }}">
+      <a href="{{ block.settings.link }}">
+        <img src="{{ block.settings.nav-image | img_url: image_size }}">
       </a>
     </span>
     {% endif %}
-    <span class="{% if section.settings.nav_promo_image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
+    <span class="{% if block.settings.nav-image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
       {% case link.links.size %}
       {% when 0 %}
       {% when 1 %}
@@ -37,6 +40,14 @@
     </span>
   </ul>
 </li>
+
+{% endcapture %}
+{% assign meganav = true %}
+{% endif %}
+{% endfor %}
+{% if meganav %}
+{{ megalink }}
+
 {% elsif link.links != blank %}
 <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
   <ul class="submenu">
