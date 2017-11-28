@@ -20,9 +20,9 @@
       {% assign column_width = 'desktop-12 tablet-fourth' %}
       {% when 2 %}
       {% assign column_width = 'desktop-6 tablet-fourth' %}
-      {% when 3 %}
+      {% when 3 or 6 %}
       {% assign column_width = 'desktop-4 tablet-fourth' %}
-      {% when 4 or 5 or 6 or 7 or 8 %}
+      {% else %}
       {% assign column_width = 'desktop-3 tablet-fourth' %}
       {% endcase %}
       {% for sub_link in link.links %}

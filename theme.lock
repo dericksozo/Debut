@@ -10,4 +10,4 @@ sections/footer.liquid:
 sections/header.liquid:
   development: 2017-11-28T10:36:47-05:00   ce280d3e8fe68ae4ee4dc4ec4c1c4419
 snippets/navigation.liquid:
-  development: 2017-11-28T10:35:58-05:00   683f9cbcd16f752d5325d94895205cc8
+  development: 2017-11-28T13:03:37-05:00   374b3362d2035ce8396310e3f4c98c64
