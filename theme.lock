@@ -5,6 +5,10 @@ assets/theme.js.liquid:
   development: 2017-11-29T10:45:57-05:00   9d8de3aa04a599c89a2765b61953286a
 config/settings_schema.json:
   development: 2017-11-29T13:47:32-05:00   88e716dcbabad9ef5037e85658b4c746
+layout/theme.liquid:
+  development: 2017-12-05T10:56:49-05:00   0d6887f8fddeb0f61a4e1abbde572b27
+locales/en.default.json:
+  development: 2017-12-05T10:56:02-05:00   4ba3fdb4f7d64523331a5714b72cc3f8
 sections/collection-template.liquid:
   development: 2017-11-27T11:04:47-05:00   f3be9e7854a354e5b80127e5c4b2c948
 sections/footer.liquid:
