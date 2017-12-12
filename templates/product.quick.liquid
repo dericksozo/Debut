@@ -7,21 +7,21 @@
     <div class="bigimage desktop-10">
       <img id="product-main-image" src="{{ featured_image | img_url: '450x' }}" data-image-id="{{ image.id }}" alt='{{ image.alt }}' title="{{ product.title }}"/>
     </div>
-    <div id="{{ product.id }}-gallery">	
+    <div id="{{ product.id }}-gallery">
       {% for image in product.images %}
       <a href="{{ image | product_img_url: '450x' }}" data-image="{{ image | product_img_url: '450x' }}" data-image-id="{{ image.id }}" class="thumb">
         <img class="thumbnail desktop-2" src="{{ image | product_img_url: '100x' }}" data-image-id="{{ image.id }}" alt="{{ image.alt }}" />
       </a>
-      {% endfor %} 
+      {% endfor %}
     </div>
   </div>
 
   <script type="text/javascript">
     $('.thumb').click(function() {
       var newImage = $(this).attr('href');
-      $( '#product-main-image' ).attr({ src: newImage }); 
+      $( '#product-main-image' ).attr({ src: newImage });
       return false;
-    });        
+    });
   </script>
 
   <div class="product-right">
@@ -38,16 +38,16 @@
         {% else %}
         <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
         {% endif %}
-      </p>  
+      </p>
 
       {% include 'quick-form' %}
-      
+
       <div class="desc">
         {% include 'social' with product %}
         <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
       </div>
     </div>
-  </div>  
+  </div>
 </div>
 
 <script>
@@ -79,14 +79,30 @@
       // Otherwise put a 0 there
       $('input[name='+fieldName+']').val(1);
     }
-  }); 
-  
-  $('.add').on('click', addToCart ); 
+  });
+
   {% if settings.show_multiple_currencies %}
-  $(document).ajaxComplete(function() {
-    Currency.convertAll(defaultCurrency, Currency.currentCurrency);
+  Currency.convertAll(shopCurrency, Currency.currentCurrency);
+  jQuery('.selected-currency').text(Currency.currentCurrency);
+  {% endif %}
+
+
+{% if settings.ajax_cart_method != 'page' %}
+  jQuery(function($) {
+    ajaxifyShopify.init({
+      method: '{{ settings.ajax_cart_method }}',
+      wrapperClass: 'page-wrap',
+      formSelector: '#AddToCartForm',
+      addToCartSelector: '#addToCart',
+      cartCountSelector: '#item_count',
+      toggleCartButton: '.my-cart-link',
+      useCartTemplate: false,
+      btnClass: 'btn',
+      moneyFormat: {{ shop.money_format | json }},
+      disableAjaxCart: false,
+      enableQtySelectors: true
+    });
   });
   {% endif %}
-  
 </script>
 </div>
