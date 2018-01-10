@@ -1,6 +1,6 @@
 {% if section.settings.show-sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
 
-<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form{% if product.template_suffix == 'pre-order' %} pre_order{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
   {% if product.options.size > 1 %}
   <div class="select">
     <select id="product-select-{{ product.id }}" name='id'>
@@ -9,9 +9,11 @@
       {% endfor %}
     </select>
   </div>
-  {% for option in product.options %}
-  {% include 'swatch' with option %}
-  {% endfor %}
+  {% unless section.settings.product-variants == 'dropdowns' %}
+    {% for option in product.options %}
+    {% include 'swatch' with option %}
+    {% endfor %}
+  {% endunless %}
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
   <div class="select">
     <label>{{ product.options[0] }}</label>
@@ -21,9 +23,11 @@
       {% endfor %}
     </select>
   </div>
-  {% for option in product.options %}
-  {% include 'swatch' with option %}
-  {% endfor %}
+  {% unless section.settings.product-variants == 'dropdowns' %}
+    {% for option in product.options %}
+    {% include 'swatch' with option %}
+    {% endfor %}
+  {% endunless %}
   {% else %}
   <div class="what-is-it">
     {% if product.options.first != 'Title' %}
@@ -61,6 +65,7 @@
   $(document).on('shopify:section:load', function(event) {
     new Shopify.OptionSelectors("product-select-{{ product.id }}", { product: {{ product | json }}, onVariantSelected:
     selectCallback, enableHistoryState: true });
+    {% unless section.settings.product-variants == 'dropdowns' %}
     jQuery('.swatch :radio').change(function() {
       var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
       var optionValue = jQuery(this).val();
@@ -71,6 +76,7 @@
       .val(optionValue)
       .trigger('change');
     });
+    {% endunless %}
   });
 
 </script>

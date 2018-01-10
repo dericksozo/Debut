@@ -75,11 +75,12 @@
         {% endfor %}
       </tbody>
     </table>
-
+    {% if settings.cart_notes_enable %}
     <div id="cart-notes" class="desktop-9 tablet-6 mobile-3">
       <label for="note"><strong>{{ 'cart.general.note' | t }}</strong></label>
       <textarea name="note" id="note" rows="5" cols="60">{{cart.note}}</textarea>
     </div>
+    {% endif %}
 
     <div id="basket-right" class="desktop-3 tablet-6 mobile-3">
       <h4>{{ 'cart.general.subtotal' | t }} {{ cart.total_price | money }}</h4>

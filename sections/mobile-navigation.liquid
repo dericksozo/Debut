@@ -1,4 +1,12 @@
 <div id="menu" data-section-id="{{ section.id }}" data-section-type="mobile-navigation">
+  <div class="mobile-search-form">
+  <form action="/search" method="get">
+    <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+    {% if settings.search_products %}
+    <input type="hidden" name="type" value="product">
+    {% endif %}
+  </form>
+</div>
   <ul id="accordion">
     {% assign menu = linklists[section.settings.main_nav] %}
     {% for link in menu.links %}
@@ -34,6 +42,9 @@
   .slideout-menu ul#accordion li, .slideout-menu .accordion-toggle, .slideout-menu .accordion-toggle2 {
     color: {{ section.settings.link_color }};
     border-bottom: 1px solid {{ section.settings.border_color }};
+  }
+  .slideout-menu ul#accordion li a, .slideout-menu ul#accordion a {
+    color: {{ section.settings.link_color }}! important;
   }
   .accordion-toggle:after, .accordion-toggle2:after { border-left: 1px solid {{ section.settings.border_color }}; }
 </style>

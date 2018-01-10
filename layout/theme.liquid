@@ -29,7 +29,7 @@
   <!-- JS
 ================================================== -->
 
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
 
   {{ 'theme.js' | asset_url | script_tag }}
   {{ 'option_selection.js' | shopify_asset_url | script_tag }}
@@ -96,33 +96,6 @@
   {% endif %}
 </main>
 {% section 'mobile-navigation' %}
-  <div style='display:none'>
-    <div id='search_popup' style='padding:30px;'>
-      <p class="box-title">{{ 'general.search.title' | t }}<p>
-      <!-- BEGIN #subs-container -->
-      <div id="subs-container" class="clearfix">
-        <div id="search">
-          <form action="/search" method="get">
-            <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% if settings.nav-style == 'full' %}
-  <script type="text/javascript">
-    //initiating jQuery
-    jQuery(function($) {
-      $(document).ready( function() {
-        if ($(window).width() >= 741) {
-            $('nav').stickUp();
-        } else {
-            $('header').stickUp();
-        }
-      });
-    });
-  </script>
-  {% endif %}
 
   <a href="#" class="scrollup"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
   <div id="fb-root"></div>
@@ -135,14 +108,9 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-
-
   {% include 'currencies' %}
   {% if settings.ajax_cart_method != 'page' %}
-  {{ 'handlebars.min.js' | asset_url | script_tag }}
   {% include 'ajax-cart-template' %}
-  {{ 'ajaxify.js' | asset_url | script_tag }}
-  {{ 'magnific-popup.min.js' | asset_url | script_tag }}
   <script>
   jQuery(function($) {
     ajaxifyShopify.init({
@@ -154,7 +122,7 @@
       toggleCartButton: '.my-cart-link',
       useCartTemplate: false,
       btnClass: 'btn',
-      moneyFormat: {{ shop.money_format | json }},
+      moneyFormat: {{ settings.money_format | json }},
       disableAjaxCart: false,
       enableQtySelectors: true
     });

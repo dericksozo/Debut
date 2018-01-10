@@ -1,4 +1,4 @@
-<section class="index-section slideshow-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="slideshow-section">
+<section class="index-section slideshow-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="slideshow-section" data-slideout-ignore>
   {% if section.settings.display-wide %}
   {% else %}
   <div class="row">
@@ -23,8 +23,8 @@
   {%- assign slider_speed = 9000 -%}
   {% when 10 %}
   {%- assign slider_speed = 10000 -%}
-  {% endcase %}      
-      
+  {% endcase %}
+
       {% if section.blocks.size > 0 %}
       <div class="flexslider index_Slider" id="Slideshow-{{ section.id }}" data-speed="{{ slider_speed }}">
         <ul class="slides">
@@ -32,25 +32,25 @@
           {% for block in section.blocks %}
           {%- assign img_url = block.settings.image | img_url: image_size -%}
           <li id="slide--{{ block.id }}" data-block-id="{{ block.id }}" class="slide--{{ block.id }} slide_image" data-flexslider-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
-            
+
             {% if block.settings.image != blank %}
             {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
               <img src="{{ img_url }}"/>
             {% if block.settings.link != blank %}</a>{% endif %}
-            {% endif %}            
+            {% endif %}
 
             {% if block.settings.image == blank %}
             {% capture current %}{% cycle 1, 2 %}{% endcapture %}
             {%- assign placeholder = 'lifestyle-' | append: current -%}
             {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
-            
+
             <div class="flex-caption slide-{{ block.id }}">
               <div class="caption-inners">
                 {% if block.settings.title != blank %}
                 <h2 class="slide-title">{{ block.settings.title | escape }}</h2>
                 {% endif %}
-                {% if block.settings.subheading != blank %}            
+                {% if block.settings.subheading != blank %}
                 <p class="caption">{{ block.settings.subheading | escape }}</p>
                 {% endif %}
                 {% if block.settings.link != blank %}
@@ -65,17 +65,17 @@
             .flex-caption.slide-{{ block.id }} {
               top: {{ block.settings.caption_vertical }}%;
               text-align: {{ block.settings.caption_horizontal }};
-            }           
+            }
             .flex-caption.slide-{{ block.id }} .caption-inners {
-              
-              {% assign bg_color = block.settings.caption_background %}    
+
+              {% assign bg_color = block.settings.caption_background %}
               {% assign caption_opacity = block.settings.caption_opacity | plus: 0 %}
               {% if block.settings.caption_background == 'rgba(0,0,0,0)' %}
               background: transparent;
               {% else %}
               background: {{ bg_color | color_modify: 'alpha', caption_opacity }};
               {% endif %}
-              display: inline-block; 
+              display: inline-block;
               padding: 10px 20px;
             }
             .flex-caption.slide-{{ block.id }} h2.slide-title {
@@ -87,10 +87,10 @@
             .flex-caption.slide-{{ block.id }} .cta a {
               color: {{ block.settings.cta_color }};
               background: {{ block.settings.cta_background }};
-            }        
+            }
             .cta a {
               font-size: {{ section.settings.cta_size }}px;
-              font-weight: {{ section.settings.cta_weight }}; 
+              font-weight: {{ section.settings.cta_weight }};
             }
             .flex-caption h2.slide-title {
               font-size: {{ section.settings.slide-title-size }}px;
@@ -100,20 +100,20 @@
             .flex-caption p {
               font-size: {{ section.settings.caption-size }}px;
             }
-          </style>  
+          </style>
           {% endfor %}
         </ul>
       </div>
       {% endif %}
       {% if section.blocks.size == 0 %}
       {% include 'no-blocks' %}
-      {% endif %}  
+      {% endif %}
 
       {% if section.settings.display-wide %}
       {% else %}
     </div>
   </div>
-  {% endif %}    
+  {% endif %}
 
 </section>
 <div class="clear"></div>
@@ -273,7 +273,7 @@
         "step":      1,
         "label":     "Slideshow speed (seconds)",
         "default":   5
-      },	
+      },
 	{
         "type": "header",
         "content": "Slideshow text"
@@ -288,7 +288,7 @@
         "label":     "Slide title size",
         "default":   22
       },
-      
+
       {
         "type": "select",
         "id": "slide-title-weight",
@@ -328,8 +328,8 @@
         "unit":      "px",
         "label":     "Slide button size",
         "default":   14
-      },      
-      
+      },
+
       {
         "type": "select",
         "id": "cta_weight",
