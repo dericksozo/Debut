@@ -84,7 +84,7 @@ assets/theme.js.liquid:
 config/settings_data.json:
   development: 2017-12-11T10:30:33-05:00   7147dc8095eec07e667c10da5ad19fa9
 config/settings_schema.json:
-  development: 2017-12-20T12:44:46-05:00   0fb775a464edd9eeeba29ad0d8083305
+  development: 2018-01-10T12:14:32-05:00   ac26c3969da638b775f38f1bb7d27b93
 layout/theme.liquid:
   development: 2017-12-19T11:51:15-05:00   b2922e8bf9ba80d9e6950932abbaa304
 locales/en.default.json:
