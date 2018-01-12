@@ -816,33 +816,23 @@ theme.Instagram = (function() {
     var id = $container.attr('data-section-id');
     var instafeedEl = this.instagram = $('#instafeed-' + id);
     var instafeedId = this.instagram = 'instafeed-' + id;
+    var template = $("#instagram-template").html();
 
-      {% assign igimage = '{{image}}'%}
-      {% assign url = '{{link}}' %}
-      {% assign caption = '{{caption}}' %}
-
-      var userFeed = new Instafeed({
-        get: 'user',
-        limit: 6,
-        userId: 'self',
-
-        target: instafeedId,
-        accessToken: instafeedEl.attr('data-access-token'),
-
-
-        resolution: 'thumbnail',
-        template: '<a class="desktop-2 tablet-1 mobile-1" target="_blank" href="{{url}}" rel="ig" title="{{ caption }}"><img class="instagram-image" src="{{ igimage }}" /></a>',
-        after: function() {
-          $('.instagram-image').each(function() {
-            var src = $(this).attr('src');
-            $(this).attr('src', src.replace('150x150', '640x640'));
-          });
-        }
+    var userFeed = new Instafeed({
+      get: 'user',
+      limit: 6,
+      userId: 'self',
+      target: instafeedId,
+      accessToken: instafeedEl.attr('data-access-token'),
+      resolution: 'standard_resolution',
+      template: template
     });
+
     if( !_.isUndefined( userFeed.options.accessToken) ){
       userFeed.run();
     }
   }
+
   Instagram.prototype = _.assignIn({}, Instagram.prototype, {});
 
   return Instagram;
