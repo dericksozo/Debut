@@ -1,3 +1,13 @@
+<script id="instagram-template" type="text/template">
+  {% raw %}
+    <div class="desktop-2 tablet-1 mobile-1">
+      <a class="instagram-image-container" target="_blank" href="{{link}}" rel="ig" title="{{caption}}">
+        <img class="instagram-image" src="{{image}}" />
+      </a>
+    </div>
+  {% endraw %}
+</script>
+
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="instagram">
     <div id="instagram-card" class="row">
       {% if section.settings.title != blank %}
@@ -19,6 +29,15 @@
 </section>
 <div class="clear"></div>
 
+<style>
+  .instagram-image-container {
+    display: block;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden;    
+    margin-bottom: 25px;
+  }
+</style>
 
 {% schema %}
 {
