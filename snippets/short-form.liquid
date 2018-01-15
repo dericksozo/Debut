@@ -1,6 +1,6 @@
 {% if section.settings.show-sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
 
-<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form{% if product.template_suffix == 'pre-order' %} pre_order{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form" id="AddToCartForm" data-product="{{ product | json | escape }}">
   {% if product.options.size > 1 %}
   <div class="select">
     <select id="product-select-{{ product.id }}" name='id'>
@@ -48,7 +48,7 @@
     <a class="up" field="quantity">+</a>
     </div>
     {% endif %}
-    <input type="submit" name="button" class="add" id="addToCart" value="{% if product.template_suffix == 'pre-order' %}{{ 'products.product.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}" />
+    <input type="submit" name="button" class="add" id="addToCart" value="{{ 'products.product.add_to_cart' | t }}" />
   </div>
   {% endif %}
 </form>
