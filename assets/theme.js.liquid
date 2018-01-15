@@ -1690,11 +1690,7 @@ theme.Product = (function() {
               $('.was', $product).text('')
             }
             $('.product-price', $product).html(Shopify.formatMoney(variant.price, $productForm.data('money-format')));
-              if ($("#AddToCartForm").hasClass("pre_order")) {
-                $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.pre_order' | t | json }});
-                  } else {
-                $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.add_to_cart' | t | json }});
-              }
+            $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.add_to_cart' | t | json }});
           } else {
             var message = variant ? {{ 'products.product.sold_out' | t | json }} : {{ 'products.product.unavailable' | t | json }};
             $('.was', $product).text('')
