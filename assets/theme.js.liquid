@@ -1641,12 +1641,12 @@ theme.Instagram = (function() {
       resolution: 'standard_resolution',
       template: template
     });
-    
+
     if( !_.isUndefined( userFeed.options.accessToken) ){
       userFeed.run();
     }
   }
-  
+
   Instagram.prototype = _.assignIn({}, Instagram.prototype, {});
 
   return Instagram;
@@ -1868,8 +1868,6 @@ theme.Header = (function() {
   function Header(container) {
     var $container = this.$container = $(container);
 
-
-
     $(document).ready( function() {
       if ($(window).width() >= 741) {
         $('nav').stickUp();
@@ -1933,7 +1931,7 @@ theme.mobileNav = (function() {
         'tolerance': 70
       });
       // Toggle button
-      document.querySelector('.mm-trigger').addEventListener('click', function() {
+      $('.mm-trigger').on('click', function() {
         slideout.toggle();
       });
       function close(eve) {
@@ -1954,9 +1952,13 @@ theme.mobileNav = (function() {
       $(document).on('shopify:section:select', '#shopify-section-mobile-navigation', function(event) {
         slideout.open();
       });
-
       $(document).on('shopify:section:deselect', '#shopify-section-mobile-navigation', function(event) {
         slideout.close();
+      });
+      $(document).on('shopify:section:load', '#shopify-section-header', function(event) {
+        $('.mm-trigger').on('click', function() {
+          slideout.toggle();
+        });
       });
     };
     initMobileslideout($('Slideout'));
