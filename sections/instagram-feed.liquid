@@ -13,16 +13,16 @@
       {% if section.settings.title != blank %}
       <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank">{{ section.settings.title | escape }}</a></h2></div>
       {% endif %}
-      
+
     {% assign token = section.settings.instagram-access-token %}
     {% capture userid %}
     {{- token | truncate: 9, "" -}}
     {% endcapture %}
-      
+
       {% if section.settings.instagram-access-token != blank %}
-      <div id="instafeed-{{ section.id }}" data-access-token="{{ token }}"></div> 
+      <div id="instafeed-{{ section.id }}" data-access-token="{{ token }}"></div>
       {% else %}
-      
+
       {% include 'onboard-instagram' %}
       {% endif %}
     </div>
@@ -34,8 +34,7 @@
     display: block;
     height: 0;
     padding-bottom: 100%;
-    overflow: hidden;    
-    margin-bottom: 25px;
+    overflow: hidden;
   }
 </style>
 
