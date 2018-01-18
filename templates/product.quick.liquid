@@ -1,53 +1,76 @@
 {% layout none %}
+<script>
+  // Shopify Product form requirement
+  selectCallback = function(variant, selector) {
+    var $product = $('#product-' + selector.product.id);
 
-<div id="product-{{ product.id }}">
-<div class="product-quick-view desktop-12" style="position: relative; z-index: 0">
-  <div class="product-photos row">
-    {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-    <div class="bigimage desktop-10">
-      <img id="product-main-image" src="{{ featured_image | img_url: '450x' }}" data-image-id="{{ image.id }}" alt='{{ image.alt }}' title="{{ product.title }}"/>
-    </div>
-    <div id="{{ product.id }}-gallery">	
-      {% for image in product.images %}
-      <a href="{{ image | product_img_url: '450x' }}" data-image="{{ image | product_img_url: '450x' }}" data-image-id="{{ image.id }}" class="thumb">
-        <img class="thumbnail desktop-2" src="{{ image | product_img_url: '100x' }}" data-image-id="{{ image.id }}" alt="{{ image.alt }}" />
-      </a>
-      {% endfor %} 
-    </div>
-  </div>
+    jQuery(function() {
+      jQuery('.swatch :radio').change(function() {
+        var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+        var optionValue = jQuery(this).val();
+        jQuery(this)
+        .closest('form')
+        .find('.single-option-selector')
+        .eq(optionIndex)
+        .val(optionValue)
+        .trigger('change');
+      });
+    });
 
-  <script type="text/javascript">
-    $('.thumb').click(function() {
-      var newImage = $(this).attr('href');
-      $( '#product-main-image' ).attr({ src: newImage }); 
-      return false;
-    });        
-  </script>
+    if (variant && variant.available == true) {
+      if(variant.compare_at_price > variant.price){
+        $('.was', $product).html(Shopify.formatMoney(variant.compare_at_price, $('form', $product).data('money-format')))
+      } else {
+        $('.was', $product).text('')
+      }
+      $('.product-price', $product).html(Shopify.formatMoney(variant.price, $('form', $product).data('money-format')))
+      if ($("#AddToCartForm").hasClass("pre_order")) {
+        $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.pre_order' | t | json }});
+          } else {
+        $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.add_to_cart' | t | json }});
+      }
+    } else {
+      var message = variant ? "{{ 'products.product.sold_out' | t }}" : "{{ 'products.product.sold_out' | t }}";
+      $('.was', $product).text('')
+      $('.product-price', $product).text(message);
+      $('.add', $product).addClass('disabled').attr('disabled', 'disabled').val(message);
+    }
+    if (variant && variant.featured_image) {
+      var original_image = $("#product-main-image"), new_image = variant.featured_image;
+      Shopify.Image.switchImage(new_image, original_image[0], function (new_image_src, original_image, element) {
+        $(element).parents('a').attr('href', new_image_src);
+        $(element).attr('src', new_image_src);
+        $(element).attr('data-image', new_image_src);
+        $(element).attr('data-zoom-image',new_image_src);
+        $('.thumb[data-image-id="' + variant.featured_image.id + '"]').trigger('click');
+      });
+    }
 
-  <div class="product-right">
-    <div class="product-description">
-      {% if settings.vendor %}<h3>{{ product.vendor }}</h3>{% endif %}
-      <h2>{{ product.title | escape }}</h2>
-      <p class="product-prices">
-        {% if product.available %}
-        {% if product.compare_at_price > product.price %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
-        {% else %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>
-        {% endif %}
-        {% else %}
-        <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
-        {% endif %}
-      </p>  
+  {% if settings.show_multiple_currencies %}
+    Currency.convertAll(shopCurrency, Currency.currentCurrency);
+    jQuery('.selected-currency').text(Currency.currentCurrency);
+  {% endif %}
 
-      {% include 'quick-form' %}
-      
-      <div class="desc">
-        {% include 'social' with product %}
-        <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
-      </div>
-    </div>
-  </div>  
+  };
+  $('.thumbnail-slider').bxSlider({
+    mode: 'vertical',
+    minSlides: 4,
+    slideMargin: 10,
+    infiniteLoop: false,
+    pager: false,
+    prevText: "",
+    nextText: "",
+    hideControlOnEnd: true
+  });
+  $('.slide a').click(function() {
+    var newImage = $(this).attr('data-image');
+    $( '#product-main-image' ).attr({ src: newImage });
+    return false;
+  });
+</script>
+
+<div class="row quick-shop">
+{% section 'product-template' %}
 </div>
 
 <script>
@@ -79,14 +102,24 @@
       // Otherwise put a 0 there
       $('input[name='+fieldName+']').val(1);
     }
-  }); 
-  
-  $('.add').on('click', addToCart ); 
-  {% if settings.show_multiple_currencies %}
-  $(document).ajaxComplete(function() {
-    Currency.convertAll(defaultCurrency, Currency.currentCurrency);
+  });
+
+{% if settings.ajax_cart_method != 'page' %}
+  jQuery(function($) {
+    ajaxifyShopify.init({
+      method: '{{ settings.ajax_cart_method }}',
+      wrapperClass: 'page-wrap',
+      formSelector: '#AddToCartForm',
+      addToCartSelector: '#addToCart',
+      cartCountSelector: '#item_count',
+      toggleCartButton: '.my-cart-link',
+      useCartTemplate: false,
+      btnClass: 'btn',
+      moneyFormat: {{ settings.money_format | json }},
+      disableAjaxCart: false,
+      enableQtySelectors: true
+    });
   });
   {% endif %}
-  
 </script>
 </div>

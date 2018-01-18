@@ -3,16 +3,16 @@
 
   {% case section.settings.grid %}
   {% when 2 %}
-  {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}    
+  {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}
   {% when 3 %}
   {%- assign grid_item_width = 'desktop-4 tablet-2 mobile-half' -%}
   {% when 4 %}
   {%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
-  {% endcase %} 
+  {% endcase %}
 
-  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}    
-  {% paginate search.results by product_limit %}  	
-  
+  {%- assign product_limit = section.settings.grid | times: section.settings.rows -%}
+  {% paginate search.results by product_limit %}
+
   <div id="search-bar">
     <form action="/search" method="get">
       {% if search.performed %}
@@ -23,6 +23,9 @@
       {% endif %}
       {% endif %}
       <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}"/>
+      {% if settings.search_products %}
+      <input type="hidden" name="type" value="product">
+      {% endif %}
     </form>
   </div>
 </div>
@@ -31,11 +34,11 @@
 
 <div class="desktop-12 tablet-6 mobile-3">
   <div id="product-loop">
-    {% for item in search.results %} 
+    {% for item in search.results %}
     {% assign products-per-row = section.settings.grid %}
 
     <div id="product-{{ item.id }}" class="product-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ item.title }}" data-price="{{ item.price }}">
-      <div class="product-index-inner">    
+      <div class="product-index-inner">
 
         {% if item.object_type == 'article' %}
         <!--'item' is an article All article object properties can be accessed. -->
@@ -61,7 +64,7 @@
         </div>
         {% else %}
         <div class="search-content prod-image">
-          {{ item.content | strip_html | trancate: 200 }}
+          {{ item.content | strip_html | truncate: 200 }}
         </div>
         {% endif %}
 
@@ -72,29 +75,29 @@
         {% if col.handle == 'new' %}
         <div class="new icn">{{ 'products.general.new' | t }}</div>
         {% endif %}
-        {% endfor %}        
+        {% endfor %}
         {% if item.price < item.compare_at_price %}
         <div class="sale-item icn">{{ 'products.general.sale' | t }}</div>
         {% endif %}
         {% else %}
         <div class="so icn">{{ 'products.general.sold' | t }}</div>
-        {% endif %}  
+        {% endif %}
         <div class="prod-image">
           <a href="{{ item.url }}" title="{{ item.title | escape }}">
             {{ item.featured_image | img_url: 'grande' | img_tag: item.featured_image.alt }}
           </a>
         </div>
-        {% endif %} 
+        {% endif %}
 
       </div> <!-- Close product-index-inner class -->
 
 
-      <div class="product-info"> 
+      <div class="product-info">
         <div class="product-info-inner">
-          <a href="{{ item.url }}"> 
+          <a href="{{ item.url }}">
             {% if item.object_type == 'product' %} {% if settings.vendor %}<span class="prod-vendor">{{ item.vendor }}</span>{% endif %} {% endif %}
             <span class="prod-title">{{ item.title }}</span>
-          </a>        
+          </a>
           {% if item.object_type == 'product' %}
           <div class="price">
             {% if item.price < item.compare_at_price %}
@@ -102,13 +105,13 @@
             <div class="was">{{ item.compare_at_price | money }}</div>
             {% else %}
             <div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} {{ item.price_min | money }} - {{ item.price_max | money }} {% else %}{{ item.price | money }}{% endif %}</div>
-            {% endif %}	
+            {% endif %}
           </div>
           {% if settings.alternate_colors %}
           <div class="prod-colors">
             {% include 'product-listing-swatches' %}
-          </div> 
-          {% endif %} 
+          </div>
+          {% endif %}
           {% endif %}
         </div>
       </div>
@@ -120,7 +123,7 @@
 
   {% endif %}
 
-  {% endpaginate %}  
+  {% endpaginate %}
 
 </div>
 
@@ -148,7 +151,7 @@
         "step": 1,
         "label": "Rows",
         "default": 4
-      } 	    
+      }
   ]
 }
 {% endschema %}

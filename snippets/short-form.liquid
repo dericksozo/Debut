@@ -1,6 +1,6 @@
 {% if section.settings.show-sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
 
-<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form{% if product.variants.size > 1 or product.options.size > 1 %} with_variants{% endif %}" id="AddToCartForm" data-product="{{ product | json | escape }}">
+<form action="/cart/add" method="post" data-money-format="{{ shop.money_format }}" data-product-id="{{ product.id }}" enctype="multipart/form-data" class="prod-form product_form" id="AddToCartForm" data-product="{{ product | json | escape }}">
   {% if product.options.size > 1 %}
   <div class="select">
     <select id="product-select-{{ product.id }}" name='id'>
@@ -9,9 +9,11 @@
       {% endfor %}
     </select>
   </div>
-  {% for option in product.options %}
-  {% include 'swatch' with option %}
-  {% endfor %}
+  {% unless section.settings.product-variants == 'dropdowns' %}
+    {% for option in product.options %}
+    {% include 'swatch' with option %}
+    {% endfor %}
+  {% endunless %}
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
   <div class="select">
     <label>{{ product.options[0] }}</label>
@@ -21,47 +23,49 @@
       {% endfor %}
     </select>
   </div>
-  {% for option in product.options %}
-  {% include 'swatch' with option %}
-  {% endfor %}
+  {% unless section.settings.product-variants == 'dropdowns' %}
+    {% for option in product.options %}
+    {% include 'swatch' with option %}
+    {% endfor %}
+  {% endunless %}
   {% else %}
   <div class="what-is-it">
     {% if product.options.first != 'Title' %}
     <label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
     {% endif %}
   </div>
-  <div class="product-variants"></div><!-- product variants -->  
-  <input  type="hidden" id="{{ variant.id }}" data-sku="{{ variant.sku }}" name="id" value="{{ product.variants[0].id }}" />    
+  <div class="product-variants"></div><!-- product variants -->
+  <input  type="hidden" id="{{ variant.id }}" data-sku="{{ variant.sku }}" name="id" value="{{ product.variants[0].id }}" />
   {% endif %}
 
-  {% if product.available %}  
+  {% if product.available %}
   <div class="product-add">
     {% if section.settings.product_quantity %}
     <div class="qty-selection">
-    <h5>{{ 'products.product.quantity' | t }}</h5> 
-    <a class="down" field="quantity"><i class="fa fa-minus" aria-hidden="true"></i></a>
+    <h5>{{ 'products.product.quantity' | t }}</h5>
+    <a class="down" field="quantity">-</a>
     <input min="1" type="text" name="quantity" class="quantity" value="1" />
-    <a class="up" field="quantity"><i class="fa fa-plus" aria-hidden="true"></i></a>
+    <a class="up" field="quantity">+</a>
     </div>
     {% endif %}
-    <input type="submit" name="button" class="add" value="{% if product.template_suffix == 'pre-order' %}{{ 'products.product.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}" />
+    <input type="submit" name="button" class="add" id="addToCart" value="{{ 'products.product.add_to_cart' | t }}" />
   </div>
-  <p class="add-to-cart-msg"></p> 
   {% endif %}
-</form>    
+</form>
 
 
 {% if product.variants.size > 1 or product.options.size > 1 %}
 <script type="text/javascript">
-  $(function() {   
+  $(function() {
     $product = $('#product-' + {{ product.id }});
     new Shopify.OptionSelectors("product-select-{{ product.id }}", { product: {{ product | json }}, onVariantSelected:
      selectCallback, enableHistoryState: true });
-  });    
+  });
 
   $(document).on('shopify:section:load', function(event) {
     new Shopify.OptionSelectors("product-select-{{ product.id }}", { product: {{ product | json }}, onVariantSelected:
     selectCallback, enableHistoryState: true });
+    {% unless section.settings.product-variants == 'dropdowns' %}
     jQuery('.swatch :radio').change(function() {
       var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
       var optionValue = jQuery(this).val();
@@ -71,8 +75,9 @@
       .eq(optionIndex)
       .val(optionValue)
       .trigger('change');
-    });        
+    });
+    {% endunless %}
   });
-  
+
 </script>
 {% endif %}
