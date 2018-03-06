@@ -1691,11 +1691,13 @@ theme.Product = (function() {
             }
             $('.product-price', $product).html(Shopify.formatMoney(variant.price, $productForm.data('money-format')));
             $('.add', $product).removeClass('disabled').removeAttr('disabled').val({{ 'products.product.add_to_cart' | t | json }});
+            $('.shopify-payment-button').removeClass('hide');
           } else {
             var message = variant ? {{ 'products.product.sold_out' | t | json }} : {{ 'products.product.unavailable' | t | json }};
             $('.was', $product).text('')
             $('.product-price', $product).text(message);
             $('.add', $product).addClass('disabled').attr('disabled', 'disabled').val(message);
+            $('.shopify-payment-button').addClass('hide');
           }
 
           if (variant) {
