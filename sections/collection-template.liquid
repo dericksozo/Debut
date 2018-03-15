@@ -17,7 +17,7 @@
 
 <!-- Start Sidebar -->
 {% if section.blocks.size > 0 %}
-{% include 'collection-sidebar' %}
+  {% include 'collection-sidebar' %}
 {% endif %}
 <!-- End Sidebar -->
 
@@ -25,19 +25,18 @@
 <div class="{% if section.blocks.size > 0 %}desktop-9 tablet-6{% else %}desktop-12 tablet-6{% endif %} mobile-3">
 
   {% if section.blocks.size == 0 %}
-  <div id="full-width-filter" class="desktop-12 tablet-6 mobile-3">
-    {% include 'filter' %}
-  </div>
+    <div id="full-width-filter" class="desktop-12 tablet-6 mobile-3">
+      {% include 'filter' %}
+    </div>
   {% endif %}
 
   <div id="product-loop">
 
     {% for product in collection.products %}
-    {% assign products-per-row = section.settings.products-per-row %}
-    <div id="product-listing-{{ product.id }}" class="product-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-      {% include 'product-listing' %}
-    </div>
-
+      {% assign products_per_row = section.settings.products_per_row %}
+      <div id="product-listing-{{ product.id }}" class="product-index {% if products_per_row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products_per_row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products_per_row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products_per_row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products_per_row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+        {% include 'product-listing' %}
+      </div>
     {% endfor %}
 
   </div>
@@ -52,7 +51,7 @@
 {% schema %}
   {
     "name": "Collection page",
-	"max_blocks":4,
+    "max_blocks":4,
     "settings": [
       {
         "type":      "range",
@@ -65,7 +64,7 @@
       },
       {
         "type":      "range",
-        "id":        "products-per-row",
+        "id":        "products_per_row",
         "min":       2,
         "max":       6,
         "step":      1,
@@ -77,24 +76,24 @@
         "content": "Filter with tags"
       },
       {
-    "type": "paragraph",
-    "content": "Your customers can filter collections using tags that you have added to your products. [See our setup instructions for these filters](http:\/\/support.undergroundmedia.co.uk\/customer\/en\/portal\/articles\/1348811-filter-collections-with-tags)."
-    },
+        "type": "paragraph",
+        "content": "Your customers can filter collections using tags that you have added to your products. [See our setup instructions for these filters](http:\/\/support.undergroundmedia.co.uk\/customer\/en\/portal\/articles\/1348811-filter-collections-with-tags)."
+      },
       {
         "type": "checkbox",
-        "id": "sort-by",
+        "id": "sort_by",
         "label": "Show sort by",
         "default": true
       },
       {
         "type": "checkbox",
-        "id": "sort-dropdown-a-check",
+        "id": "sort_dropdown_a_check",
         "label": "Show first filter",
         "default": true
       },
       {
         "type": "text",
-        "id": "filter-1-title",
+        "id": "filter_1_title",
         "label": "Filter 1 title"
       },
 	  {
@@ -104,13 +103,13 @@
       },
       {
         "type": "checkbox",
-        "id": "sort-dropdown-b-check",
+        "id": "sort_dropdown_b_check",
         "label": "Show second filter",
         "default": true
       },
       {
         "type": "text",
-        "id": "filter-2-title",
+        "id": "filter_2_title",
         "label": "Filter 2 title"
       },
       {
@@ -120,13 +119,13 @@
       },
       {
         "type": "checkbox",
-        "id": "sort-dropdown-c-check",
+        "id": "sort_dropdown_c_check",
         "label": "Show third filter",
         "default": true
       },
       {
         "type": "text",
-        "id": "filter-3-title",
+        "id": "filter_3_title",
         "label": "Filter 3 title"
       },
       {
@@ -157,7 +156,7 @@
       {
          "type":"vendor_list",
          "name":"Vendor list",
-		 "limit": 1,
+	       "limit": 1,
          "settings":[
           {
           "type": "text",

@@ -1523,7 +1523,9 @@ $(document).ready(function() {
 });
 
 
-
+/*======================================================
+  Slideshow Section
+========================================================*/
 theme.Slideshow = (function() {
   function Slideshow(container) {
 
@@ -1571,7 +1573,9 @@ theme.Slideshow.prototype = _.assignIn({}, theme.Slideshow.prototype, {
   }
 });
 
-
+/*======================================================
+  Featured Collection Section
+========================================================*/
 theme.FeaturedProducts = (function() {
   function FeaturedProducts(container) {
 	var $container = this.$container = $(container);
@@ -1623,6 +1627,9 @@ theme.FeaturedProducts = (function() {
   return FeaturedProducts;
 })();
 
+/*======================================================
+  Instagram Section
+========================================================*/
 theme.Instagram = (function() {
   function Instagram(container) {
 
@@ -1652,7 +1659,9 @@ theme.Instagram = (function() {
   return Instagram;
 })();
 
-
+/*======================================================
+  Product Module
+========================================================*/
 theme.Product = (function() {
   function Product(container) {
     var $container = this.$container = $(container);
@@ -1843,8 +1852,9 @@ theme.Product = (function() {
   return Product;
 })();
 
-
-
+/*======================================================
+  Collection Page
+========================================================*/
 theme.Collection = (function() {
   function Collection(container) {
 
@@ -1861,7 +1871,9 @@ theme.Collection = (function() {
   return Collection;
 })();
 
-
+/*======================================================
+  Header Section
+========================================================*/
 theme.Header = (function() {
   function Header(container) {
     var $container = this.$container = $(container);
@@ -1897,6 +1909,9 @@ theme.Header = (function() {
   return Header;
 })();
 
+/*======================================================
+  MobileNav Section
+========================================================*/
 theme.mobileNav = (function() {
   function mobileNav(container) {
 
@@ -1966,7 +1981,9 @@ theme.mobileNav = (function() {
   return mobileNav;
 })();
 
-
+/*======================================================
+  Register Sections
+========================================================*/
 $(document).ready(function() {
   var sections = new theme.Sections();
   sections.register('instagram', theme.Instagram);

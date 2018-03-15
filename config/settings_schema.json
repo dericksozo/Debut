@@ -2,7 +2,7 @@
   "name": "theme_info",
   "theme_name": "Testament",
   "theme_author": "Underground",
-  "theme_version": "5.1.5",
+  "theme_version": "6",
   "theme_documentation_url": "https:\/\/\/\/www.weareunderground.com\/products\/testament",
   "theme_support_url": "http:\/\/support.undergroundmedia.co.uk\/"
 }, {
@@ -43,7 +43,7 @@
     "label": "Background image"
   }, {
     "type": "select",
-    "id": "background-position",
+    "id": "background_position",
     "label": "Background image position",
     "options": [{
       "value": "left top",
@@ -75,7 +75,7 @@
     }]
   }, {
     "type": "select",
-    "id": "background-repeat",
+    "id": "background_repeat",
     "label": "Background image repeat",
     "options": [{
       "value": "no-repeat",
@@ -95,37 +95,37 @@
     "content": "Header"
   }, {
     "type": "color",
-    "id": "header-wrapper-background",
+    "id": "header_wrapper_background",
     "label": "Header background",
     "default": "#ffffff"
   }, {
     "type": "color",
-    "id": "content-wrapper-background",
+    "id": "content_wrapper_background",
     "label": "Content area background",
     "default": "#ffffff"
   }, {
     "type": "color",
-    "id": "logo-color",
+    "id": "logo_color",
     "label": "Logo text",
     "default": "#000000"
   }, {
     "type": "color",
     "id": "header",
-    "label": "Message bar background",
+    "label": "Announcement bar background",
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "hello-color",
-    "label": "Message bar text",
+    "id": "hello_color",
+    "label": "Announcement bar text",
     "default": "#f0f0f0"
   }, {
     "type": "color",
-    "id": "header-icons",
+    "id": "header_icons",
     "label": "Header icons",
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "header-icons-hover",
+    "id": "header_icons_hover",
     "label": "Header icons hover",
     "default": "#000000"
   }, {
@@ -133,7 +133,7 @@
     "content": "General"
   }, {
     "type": "color",
-    "id": "header-color",
+    "id": "header_color",
     "label": "Headings",
     "default": "#000000"
   }, {
@@ -163,7 +163,7 @@
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "sale-color",
+    "id": "sale_color",
     "label": "Sale tags",
     "default": "#d5d5d5"
   }, {
@@ -199,7 +199,7 @@
     "default": "#f0f0f0"
   }, {
     "type": "color",
-    "id": "nav-border-color",
+    "id": "nav_border_color",
     "label": "Navigation borders",
     "default": "#000000"
   }, {
@@ -219,22 +219,22 @@
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "dropdown-background",
+    "id": "dropdown_background",
     "label": "Drop down Background",
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "dropdown-hover-background",
+    "id": "dropdown_hover_background",
     "label": "Drop down hover background",
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "dropdown-link-color",
+    "id": "dropdown_link_color",
     "label": "Drop down links",
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "dropdown-link-hover-color",
+    "id": "dropdown_link_hover_color",
     "label": "Drop down link hover",
     "default": "#000000"
   }, {
@@ -247,7 +247,7 @@
     "default": "#000000"
   }, {
     "type": "color",
-    "id": "icons-hover",
+    "id": "icons_hover",
     "label": "Icon hover",
     "default": "#000000"
   }, {
@@ -308,7 +308,8 @@
     "type": "select",
     "id": "font",
     "label": "Main font",
-    "options": [{
+    "options": [
+    {
       "value": "'Century Gothic', Helvetica, Arial, sans-serif",
       "label": "Century Gothic",
       "group": "Sans-serif"
@@ -448,7 +449,7 @@
     "default": "'Helvetica Neue', Helvetica, Arial, sans-serif"
   }, {
     "type": "select",
-    "id": "navigation-font",
+    "id": "navigation_font",
     "label": "Navigation font",
     "options": [{
       "value": "'Century Gothic', Helvetica, Arial, sans-serif",
@@ -735,7 +736,7 @@
     "content": "Text size"
   }, {
     "type": "range",
-    "id": "font-size",
+    "id": "font_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -753,7 +754,7 @@
     "default": 15
   }, {
     "type": "range",
-    "id": "h1-size",
+    "id": "h1_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -762,7 +763,7 @@
     "default": 22
   }, {
     "type": "range",
-    "id": "h2-size",
+    "id": "h2_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -771,7 +772,7 @@
     "default": 19
   }, {
     "type": "range",
-    "id": "h3-size",
+    "id": "h3_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -780,7 +781,7 @@
     "default": 17
   }, {
     "type": "range",
-    "id": "h4-size",
+    "id": "h4_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -789,7 +790,7 @@
     "default": 16
   }, {
     "type": "range",
-    "id": "h5-size",
+    "id": "h5_size",
     "min": 12,
     "max": 36,
     "step": 1,
@@ -801,7 +802,7 @@
     "content": "Decoration"
   }, {
     "type": "select",
-    "id": "nav-weight",
+    "id": "nav_weight",
     "label": "Navigation weight",
     "options": [{
       "value": "400",
@@ -815,7 +816,7 @@
     }]
   }, {
     "type": "select",
-    "id": "navigation-transform",
+    "id": "navigation_transform",
     "label": "Navigation case",
     "options": [{
       "value": "uppercase",
@@ -826,7 +827,7 @@
     }]
   }, {
     "type": "select",
-    "id": "heading-weight",
+    "id": "heading_weight",
     "label": "Heading Weight",
     "options": [{
       "value": "bold",
@@ -837,7 +838,7 @@
     }]
   }, {
     "type": "select",
-    "id": "link-decoration",
+    "id": "link_decoration",
     "label": "Link hover",
     "options": [{
       "value": "underline",
@@ -862,7 +863,7 @@
     "label": "Enable quick view"
   }, {
     "type": "checkbox",
-    "id": "image-flip",
+    "id": "image_flip",
     "label": "Switch product images on hover"
   }, {
     "type": "checkbox",
@@ -875,7 +876,7 @@
     "label": "Show product vendor"
   }, {
     "type": "checkbox",
-    "id": "product-border",
+    "id": "product_border",
     "label": "Border each item"
   }]
 }, {
@@ -930,17 +931,17 @@
     "info": "https:\/\/plus.google.com\/+shopify"
   }, {
     "type": "text",
-    "id": "instagram-id",
+    "id": "instagram_id",
     "label": "Instagram",
     "info": "shopify"
   }, {
     "type": "text",
-    "id": "snapchat-id",
+    "id": "snapchat_id",
     "label": "Snapchat",
     "info": "shopify"
   }, {
     "type": "text",
-    "id": "weibo-id",
+    "id": "weibo_id",
     "label": "Weibo",
     "info": "shopify"
   }]
@@ -953,17 +954,17 @@
     "info": "Show mailing list subscribe popup box once every 7 days per customer"
   }, {
     "type": "checkbox",
-    "id": "test-mode",
+    "id": "test_mode",
     "label": "Enable test mode",
     "info": "Popup will show after 5 seconds on each page load until unchecked"
   }, {
     "type": "image_picker",
-    "id": "email-image",
+    "id": "email_image",
     "label": "Email popup image",
     "info": "Max width 480px. For best results, use landscape orientation."
   }, {
     "type": "text",
-    "id": "email-popup-title",
+    "id": "email_popup_title",
     "label": "Email popup title"
   }, {
     "type": "text",

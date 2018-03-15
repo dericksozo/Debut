@@ -6,13 +6,13 @@ body {
   color: {{ settings.text_color }};
   background: {{ settings.background }}{% if settings.bg != "no_bg" %} url({{ 'background.jpg' | asset_url }}) {% endif %};
   {% if settings.bg != "no_bg" %}  
-  background-position: {{ settings.background-position }};
-  background-repeat: {{ settings.background-repeat }}; 
-  {% endif %}  font-size: {{ settings.font-size }}; 
+  background-position: {{ settings.background_position }};
+  background-repeat: {{ settings.background_position }}; 
+  {% endif %}  font-size: {{ settings.font_size }}; 
   font-family:{{ settings.font }};	
   line-height: 1.6em; 
   -webkit-text-size-adjust: 100%; /* Stops Mobile Safari from auto-adjusting font-sizes */
-  margin: 0! important;
+  margin: 0 !important;
 }
 
 a { text-decoration: none; color: {{ settings.link_color }}; outline: 0;
@@ -23,7 +23,7 @@ a { text-decoration: none; color: {{ settings.link_color }}; outline: 0;
 }
 
 a:hover {
-  color: {{ settings.link_hover_color }}; text-decoration: {{ settings.link-decoration }};
+  color: {{ settings.link_hover_color }}; text-decoration: {{ settings.link_decoration }};
 }
 
 h3 {
@@ -66,7 +66,7 @@ h3.plisthead {
 #tagline {
   {% if settings.use_logo_image %}display:none;{% endif %}
   font-family: {{ settings.headings_font }};
-  font-size: {{ settings.h1-size }};
+  font-size: {{ settings.h1_size }};
 }
 
 #content {
@@ -124,7 +124,7 @@ h3.plisthead {
 #steps {
   margin-top:8px;
   display:block;
-  font-family: {{ settings.font }}! important; 
+  font-family: {{ settings.font }} !important; 
   font-style: normal;  
 }
 
@@ -205,10 +205,10 @@ span.sign-in-message a {
   background-color:transparent;
   color:#303030;
   padding:8px 12px;
-  font-size:13px! important;
+  font-size:13px !important;
   width:250px;
   -webkit-appearance:none;
-  font-family:{{ settings.font }}! important;
+  font-family:{{ settings.font }} !important;
 }
 
 input#billing_address_province, input#shipping_address_province {
@@ -218,8 +218,8 @@ input#billing_address_province, input#shipping_address_province {
   padding:8px 12px;
   color:#303030;
   -webkit-appearance:none;
-  font-family:{{ settings.font }}! important;	
-  font-size: 13px! important;
+  font-family:{{ settings.font }} !important;	
+  font-size: 13px !important;
 }
 
 #billing_address_province, #shipping_address_province {
@@ -357,9 +357,9 @@ input#commit-button, input#complete-purchase, #create-account-btn, #discounts-bo
   height:40px;
   background:#000;
   color: #fff;
-  font-family:{{ settings.font }}! important;	
-  font-weight: normal! important;
-  font-size: 13px! important;
+  font-family:{{ settings.font }} !important;	
+  font-weight: normal !important;
+  font-size: 13px !important;
 }
 
 #complete-purchase {
@@ -367,9 +367,9 @@ input#commit-button, input#complete-purchase, #create-account-btn, #discounts-bo
   height:40px;
   background:#000;
   color: #fff;
-  font-family:{{ settings.font }}! important;	
-  font-weight: normal! important;
-  font-size: 13px! important;
+  font-family:{{ settings.font }} !important;	
+  font-weight: normal !important;
+  font-size: 13px !important;
 }
 
 #discounts-body input[type=submit] {
@@ -531,9 +531,9 @@ div.sst {
 #cost, #order-num { 
   text-shadow: none !important; 
   color:#303030!important;
-  font-family: {{ settings.font }}! important;
-  color: {{ settings.text_color }}! important;
-  text-shadow: 0 none! important;
+  font-family: {{ settings.font }} !important;
+  color: {{ settings.text_color }} !important;
+  text-shadow: 0 none !important;
   display: block;
 }
 
@@ -546,25 +546,25 @@ div.sst {
 
 
 .slim #thumbs td {
-  width: 100%! important;
-  display: table-cell! important;
-  padding: 10px 0! important;
-  clear: left! important;
-  float: left! important;
-  border-bottom: {{ settings.dotted_color }} 1px solid! important;
+  width: 100% !important;
+  display: table-cell !important;
+  padding: 10px 0 !important;
+  clear: left !important;
+  float: left !important;
+  border-bottom: {{ settings.dotted_color }} 1px solid !important;
 }
 
 .slim #thumbs td img {
-  float: left! important;
-  max-width: 40px! important;
+  float: left !important;
+  max-width: 40px !important;
 }
 
 .slim #thumbs td h3 {
   font-weight: 400;
   font-size: 13px;
   margin-top: 12px;
-  float: left! important;
-  margin-left: 20px! important;
+  float: left !important;
+  margin-left: 20px !important;
 }
 
 

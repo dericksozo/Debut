@@ -5,15 +5,15 @@
 
 <li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
   <ul class="megamenu row">
-    {% if block.settings.nav-image != blank %}
+    {% if block.settings.nav_image != blank %}
     {%- assign image_size = '300x' -%}
     <span class="desktop-3 tablet-hide mm-image">
       <a href="{{ block.settings.link }}">
-        <img src="{{ block.settings.nav-image | img_url: image_size }}">
+        <img src="{{ block.settings.nav_image | img_url: image_size }}">
       </a>
     </span>
     {% endif %}
-    <span class="{% if block.settings.nav-image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
+    <span class="{% if block.settings.nav_image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
       {% case link.links.size %}
       {% when 0 %}
       {% when 1 %}

@@ -57,8 +57,8 @@
       "product-title-size": "13px",
       "price-size": "13px",
       "main_nav": "main-menu",
-      "nav-style": "full",
-      "nav-height": "50px",
+      "nav_style": "full",
+      "nav_height": "50px",
       "megadropdown_link": "",
       "nav_promo_image": false,
       "nav_promo_link": "\/collections\/all",
@@ -70,8 +70,8 @@
       "mega_3_links": "",
       "mega_4_show": false,
       "mega_4_links": "",
-      "nav-top-border-height": "1px",
-      "nav-bottom-border-height": "1px",
+      "nav_top_border_height": "1px",
+      "nav_bottom_border_height": "1px",
       "breadcrumb": true,
       "quickview": true,
       "image-flip": true,
@@ -127,11 +127,11 @@
           "settings": {
             "logo": "",
             "logo_max_width": 600,
-            "logo-size": 22,
-            "logo-transform": "uppercase",
-            "logo-weight": "400",
+            "logo_size": 22,
+            "logo_transform": "uppercase",
+            "logo_weight": "400",
             "hello": "",
-            "hello-size": 13,
+            "hello_size": 13,
             "cart_icon": "cart"
           }
         },
@@ -204,10 +204,10 @@
             "1480352639511-1"
           ],
           "settings": {
-            "display-wide": true,
-            "slide-title-size": 22,
-            "slide-title-weight": "700",
-            "caption-size": 14,
+            "display_wide": true,
+            "slide_title_size": 22,
+            "slide_title_weight": "700",
+            "caption_size": 14,
             "cta_size": 14,
             "cta_weight": "400"
           }
@@ -358,28 +358,28 @@
           "type": "collection-template",
           "settings": {
             "products-per-row": 4,
-            "sort-dropdown-a-check": false,
+            "sort_dropdown_a_check": false,
             "sort_a": "",
-            "sort-dropdown-b-check": false,
+            "sort_dropdown_b_check": false,
             "sort_b": "",
-            "sort-dropdown-c-check": false,
+            "sort_dropdown_c_check": false,
             "sort_c": ""
           }
         },
         "product-template": {
           "type": "product-template",
           "settings": {
-            "product-page-border": "#f0f0f0",
-            "product-form-background": "#fff",
+            "product_page_border": "#f0f0f0",
+            "product_form_background": "#fff",
             "subtitle": true,
             "product_quantity": true,
-            "show-sku": false,
+            "show_sku": false,
             "product-description": "right",
-            "use-swatch-images": false,
-            "popup-one": "",
-            "popup-two": "",
-            "popup-three": "",
-            "popup-4": true
+            "use_swatch_images": false,
+            "popup_one": "",
+            "popup_two": "",
+            "popup_three": "",
+            "popup_four": true
           }
         },
         "blog-template": {
@@ -464,8 +464,8 @@
       "product-title-size": "13px",
       "price-size": "13px",
       "main_nav": "main-menu",
-      "nav-style": "full",
-      "nav-height": "50px",
+      "nav_style": "full",
+      "nav_height": "50px",
       "megadropdown_link": "",
       "nav_promo_image": false,
       "nav_promo_link": "\/collections\/all",
@@ -477,8 +477,8 @@
       "mega_3_links": "",
       "mega_4_show": false,
       "mega_4_links": "",
-      "nav-top-border-height": "1px",
-      "nav-bottom-border-height": "1px",
+      "nav_top_border_height": "1px",
+      "nav_bottom_border_height": "1px",
       "breadcrumb": true,
       "quickview": true,
       "image-flip": true,
@@ -534,11 +534,11 @@
           "settings": {
             "logo": "",
             "logo_max_width": 600,
-            "logo-size": 22,
-            "logo-transform": "uppercase",
-            "logo-weight": "400",
+            "logo_size": 22,
+            "logo_transform": "uppercase",
+            "logo_weight": "400",
             "hello": "",
-            "hello-size": 13,
+            "hello_size": 13,
             "cart_icon": "cart"
           }
         },
@@ -611,10 +611,10 @@
             "1480352639511-1"
           ],
           "settings": {
-            "display-wide": true,
-            "slide-title-size": 22,
-            "slide-title-weight": "700",
-            "caption-size": 14,
+            "display_wide": true,
+            "slide_title_size": 22,
+            "slide_title_weight": "700",
+            "caption_size": 14,
             "cta_size": 14,
             "cta_weight": "400"
           }
@@ -765,28 +765,28 @@
           "type": "collection-template",
           "settings": {
             "products-per-row": 4,
-            "sort-dropdown-a-check": false,
+            "sort_dropdown_a_check": false,
             "sort_a": "",
-            "sort-dropdown-b-check": false,
+            "sort_dropdown_b_check": false,
             "sort_b": "",
-            "sort-dropdown-c-check": false,
+            "sort_dropdown_c_check": false,
             "sort_c": ""
           }
         },
         "product-template": {
           "type": "product-template",
           "settings": {
-            "product-page-border": "#f0f0f0",
-            "product-form-background": "#fff",
+            "product_page_border": "#f0f0f0",
+            "product_form_background": "#fff",
             "subtitle": true,
             "product_quantity": true,
-            "show-sku": false,
+            "show_sku": false,
             "product-description": "right",
-            "use-swatch-images": false,
-            "popup-one": "",
-            "popup-two": "",
-            "popup-three": "",
-            "popup-4": true
+            "use_swatch_images": false,
+            "popup_one": "",
+            "popup_two": "",
+            "popup_three": "",
+            "popup_four": true
           }
         },
         "blog-template": {
@@ -871,8 +871,8 @@
       "product-title-size": "13px",
       "price-size": "13px",
       "main_nav": "main-menu",
-      "nav-style": "full",
-      "nav-height": "50px",
+      "nav_style": "full",
+      "nav_height": "50px",
       "megadropdown_link": "",
       "nav_promo_image": false,
       "nav_promo_link": "\/collections\/all",
@@ -884,8 +884,8 @@
       "mega_3_links": "",
       "mega_4_show": false,
       "mega_4_links": "",
-      "nav-top-border-height": "1px",
-      "nav-bottom-border-height": "1px",
+      "nav_top_border_height": "1px",
+      "nav_bottom_border_height": "1px",
       "breadcrumb": true,
       "quickview": true,
       "image-flip": true,
@@ -941,11 +941,11 @@
           "settings": {
             "logo": "",
             "logo_max_width": 600,
-            "logo-size": 22,
-            "logo-transform": "uppercase",
-            "logo-weight": "400",
+            "logo_size": 22,
+            "logo_transform": "uppercase",
+            "logo_weight": "400",
             "hello": "",
-            "hello-size": 13,
+            "hello_size": 13,
             "cart_icon": "cart"
           }
         },
@@ -1018,10 +1018,10 @@
             "1480352639511-1"
           ],
           "settings": {
-            "display-wide": true,
-            "slide-title-size": 22,
-            "slide-title-weight": "700",
-            "caption-size": 14,
+            "display_wide": true,
+            "slide_title_size": 22,
+            "slide_title_weight": "700",
+            "caption_size": 14,
             "cta_size": 14,
             "cta_weight": "400"
           }
@@ -1172,28 +1172,28 @@
           "type": "collection-template",
           "settings": {
             "products-per-row": 3,
-            "sort-dropdown-a-check": false,
+            "sort_dropdown_a_check": false,
             "sort_a": "",
-            "sort-dropdown-b-check": false,
+            "sort_dropdown_b_check": false,
             "sort_b": "",
-            "sort-dropdown-c-check": false,
+            "sort_dropdown_c_check": false,
             "sort_c": ""
           }
         },
         "product-template": {
           "type": "product-template",
           "settings": {
-            "product-page-border": "#f0f0f0",
-            "product-form-background": "#fff",
+            "product_page_border": "#f0f0f0",
+            "product_form_background": "#fff",
             "subtitle": true,
             "product_quantity": true,
-            "show-sku": false,
+            "show_sku": false,
             "product-description": "right",
-            "use-swatch-images": false,
-            "popup-one": "",
-            "popup-two": "",
-            "popup-three": "",
-            "popup-4": true
+            "use_swatch_images": false,
+            "popup_one": "",
+            "popup_two": "",
+            "popup_three": "",
+            "popup_four": true
           }
         },
         "blog-template": {
@@ -1215,7 +1215,7 @@
           "type": "instagram-feed",
           "settings": {
             "title": "Follow us on Instagram",
-            "instagram-access-token": ""
+            "instagram_access_token": ""
           }
         }
       },
@@ -1286,8 +1286,8 @@
       "product-title-size": "13px",
       "price-size": "13px",
       "main_nav": "main-menu",
-      "nav-style": "full",
-      "nav-height": "50px",
+      "nav_style": "full",
+      "nav_height": "50px",
       "megadropdown_link": "",
       "nav_promo_image": false,
       "nav_promo_link": "\/collections\/all",
@@ -1299,8 +1299,8 @@
       "mega_3_links": "",
       "mega_4_show": false,
       "mega_4_links": "",
-      "nav-top-border-height": "1px",
-      "nav-bottom-border-height": "1px",
+      "nav_top_border_height": "1px",
+      "nav_bottom_border_height": "1px",
       "breadcrumb": true,
       "quickview": true,
       "image-flip": true,
@@ -1356,11 +1356,11 @@
           "settings": {
             "logo": "",
             "logo_max_width": 600,
-            "logo-size": 22,
-            "logo-transform": "uppercase",
-            "logo-weight": "400",
+            "logo_size": 22,
+            "logo_transform": "uppercase",
+            "logo_weight": "400",
             "hello": "",
-            "hello-size": 13,
+            "hello_size": 13,
             "cart_icon": "cart"
           }
         },
@@ -1433,10 +1433,10 @@
             "1480352639511-1"
           ],
           "settings": {
-            "display-wide": true,
-            "slide-title-size": 22,
-            "slide-title-weight": "700",
-            "caption-size": 14,
+            "display_wide": true,
+            "slide_title_size": 22,
+            "slide_title_weight": "700",
+            "caption_size": 14,
             "cta_size": 14,
             "cta_weight": "400"
           }
@@ -1561,28 +1561,28 @@
           "type": "collection-template",
           "settings": {
             "products-per-row": 3,
-            "sort-dropdown-a-check": false,
+            "sort_dropdown_a_check": false,
             "sort_a": "",
-            "sort-dropdown-b-check": false,
+            "sort_dropdown_b_check": false,
             "sort_b": "",
-            "sort-dropdown-c-check": false,
+            "sort_dropdown_c_check": false,
             "sort_c": ""
           }
         },
         "product-template": {
           "type": "product-template",
           "settings": {
-            "product-page-border": "#f0f0f0",
-            "product-form-background": "#fff",
+            "product_page_border": "#f0f0f0",
+            "product_form_background": "#fff",
             "subtitle": true,
             "product_quantity": true,
-            "show-sku": false,
+            "show_sku": false,
             "product-description": "right",
-            "use-swatch-images": false,
-            "popup-one": "",
-            "popup-two": "",
-            "popup-three": "",
-            "popup-4": true
+            "use_swatch_images": false,
+            "popup_one": "",
+            "popup_two": "",
+            "popup_three": "",
+            "popup_four": true
           }
         },
         "blog-template": {
@@ -1604,7 +1604,7 @@
           "type": "instagram-feed",
           "settings": {
             "title": "Follow us on Instagram",
-            "instagram-access-token": ""
+            "instagram_access_token": ""
           }
         },
         "1480356235240": {
@@ -1793,8 +1793,8 @@
     "password_bg": "no_password_bg",
     "password-background": "#ffffff",
     "main_nav": "main-menu",
-    "nav-style": "full",
-    "nav-height": "50px",
+    "nav_style": "full",
+    "nav_height": "50px",
     "megadropdown_link": "",
     "nav_promo_image": "0",
     "nav_promo_link": "\/collections\/all",
@@ -1806,27 +1806,27 @@
     "mega_3_links": "",
     "mega_4_show": "0",
     "mega_4_links": "",
-    "nav-top-border-height": "1px",
-    "nav-bottom-border-height": "1px",
+    "nav_top_border_height": "1px",
+    "nav_bottom_border_height": "1px",
     "Links and accents": "#444444",
     "sections": {
       "header": {
         "type": "header",
         "settings": {
-          "full-width-header": false,
+          "full_width_header": false,
           "logo": "",
           "logo_max_width": 230,
-          "logo-size": 22,
-          "logo-transform": "uppercase",
-          "logo-weight": "400",
+          "logo_size": 22,
+          "logo_transform": "uppercase",
+          "logo_weight": "400",
           "hello": "<p>Add an announcement to your header<\/p>",
-          "hello-size": 13,
+          "hello_size": 13,
           "cart_icon": "cart",
           "main_nav": "main-menu",
-          "nav-style": "full",
-          "nav-height": 50,
-          "nav-top-border-height": 1,
-          "nav-bottom-border-height": 1,
+          "nav_style": "full",
+          "nav_height": 50,
+          "nav_top_border_height": 1,
+          "nav_bottom_border_height": 1,
           "megadropdown_link": "",
           "nav_promo_image": "",
           "nav_promo_link": "\/collections\/all"
@@ -1905,11 +1905,11 @@
           "1480352639511-1"
         ],
         "settings": {
-          "display-wide": true,
+          "display_wide": true,
           "slider_speed": 5,
-          "slide-title-size": 22,
-          "slide-title-weight": "700",
-          "caption-size": 14,
+          "slide_title_size": 22,
+          "slide_title_weight": "700",
+          "caption_size": 14,
           "cta_size": 14,
           "cta_weight": "400"
         }
@@ -1959,7 +1959,7 @@
         "settings": {
           "title": "Featured collections",
           "grid": 4,
-          "title-position": "below",
+          "title_position": "below",
           "collection_count": true
         }
       },
@@ -1978,32 +1978,32 @@
           "products_per_page": 30,
           "products-per-row": 4,
           "sort-by": true,
-          "sort-dropdown-a-check": false,
-          "filter-1-title": "Filter by",
+          "sort_dropdown_a_check": false,
+          "filter_1_title": "Filter by",
           "sort_a": "",
-          "sort-dropdown-b-check": false,
-          "filter-2-title": "",
+          "sort_dropdown_b_check": false,
+          "filter_2_title": "",
           "sort_b": "",
-          "sort-dropdown-c-check": false,
-          "filter-3-title": "",
+          "sort_dropdown_c_check": false,
+          "filter_3_title": "",
           "sort_c": ""
         }
       },
       "product-template": {
         "type": "product-template",
         "settings": {
-          "thumbnail-position": "right",
-          "product-page-border": "#f0f0f0",
-          "product-form-background": "#fff",
+          "thumbnail_position": "right",
+          "product_page_border": "#f0f0f0",
+          "product_form_background": "#fff",
           "subtitle": true,
           "product_quantity": true,
-          "show-sku": false,
+          "show_sku": false,
           "product-description": "right",
-          "use-swatch-images": false,
-          "popup-one": "",
-          "popup-two": "",
-          "popup-three": "",
-          "popup-4": true
+          "use_swatch_images": false,
+          "popup_one": "",
+          "popup_two": "",
+          "popup_three": "",
+          "popup_four": true
         }
       },
       "blog-template": {
@@ -2038,7 +2038,7 @@
         "type": "instagram-feed",
         "settings": {
           "title": "Follow us on Instagram",
-          "instagram-access-token": ""
+          "instagram_access_token": ""
         }
       },
       "1480356301009": {
@@ -2114,7 +2114,7 @@
         "type": "featured-content",
         "settings": {
           "title": "Welcome",
-          "rich-text": "<p>Use this section to tell customers about your store or add content from one of your pages which makes it easy to add images, video or any other content.<\/p>",
+          "rich_text": "<p>Use this section to tell customers about your store or add content from one of your pages which makes it easy to add images, video or any other content.<\/p>",
           "page": ""
         }
       }

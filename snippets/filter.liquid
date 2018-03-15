@@ -1,5 +1,5 @@
 <ul id="sortme">
-{% if section.settings.sort-by %}    
+{% if section.settings.sort_by %}
   <li class="filter">
     <select id="sort-by" class="styled-select">
       <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
@@ -36,14 +36,14 @@
         location.search = jQuery.param(Shopify.queryParams);
       });
     });
-  </script> 
+  </script>
   {% endif %}
 
-{% if section.settings.sort-dropdown-a-check %}                        
+{% if section.settings.sort_dropdown_a_check %}
   <li class="filter">
-{% assign tags = section.settings.sort_a  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}    
+{% assign tags = section.settings.sort_a  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
     <select class="styled-select coll-filter alpha">
-      <option value="">{{ section.settings.filter-1-title }}</option>
+      <option value="">{{ section.settings.filter_1_title }}</option>
       {% for tag in tags %}
       {% if current_tags contains tag %}
       <option value="{{ tag | handle }}" selected>{{ tag }}</option>
@@ -55,11 +55,11 @@
   </li>
 {% endif %}
 
-{% if section.settings.sort-dropdown-b-check %}
+{% if section.settings.sort_dropdown_b_check %}
   <li class="filter">
-{% assign tags = section.settings.sort_b  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}    
+{% assign tags = section.settings.sort_b  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
     <select class="styled-select coll-filter bravo">
-      <option value="">{{ section.settings.filter-2-title }}</option>
+      <option value="">{{ section.settings.filter_2_title }}</option>
       {% for tag in tags %}
       {% if current_tags contains tag %}
       <option value="{{ tag | handle }}" selected>{{ tag }}</option>
@@ -71,11 +71,11 @@
   </li>
 {% endif %}
 
-{% if section.settings.sort-dropdown-c-check %}
+{% if section.settings.sort_dropdown_c_check %}
   <li class="filter">
-{% assign tags = section.settings.sort_c  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}    
+{% assign tags = section.settings.sort_c  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
     <select class="styled-select coll-filter charlie">
-      <option value="">{{ section.settings.filter-3-title }}</option>
+      <option value="">{{ section.settings.filter_3_title }}</option>
       {% for tag in tags %}
       {% if current_tags contains tag %}
       <option value="{{ tag | handle }}" selected>{{ tag }}</option>
@@ -86,7 +86,7 @@
     </select>
   </li>
 {% endif %}
-  
+
   {% if paginate.previous %}
   <li class="pagiprev">
     {{ '<i class="fa fa-caret-left"></i>' | link_to: paginate.previous.url }}
@@ -96,16 +96,16 @@
   <span class="pagination-count">
   {{ paginate.current_page }} {{ 'general.pagination.of' | t }} {{ paginate.pages }}
   </span>
-  
+
   {% if paginate.next %}
   <li class="paginext">
     {{ '<i class="fa fa-caret-right"></i>' | link_to: paginate.next.url }}
   </li>
-  {% endif %}  
+  {% endif %}
 
-</ul>  
-                   
-     
+</ul>
+
+
 <script>
   /* Product Tag Filters - Good for any number of filters on any type of collection pages */
   /* Give you product tag filter select element a class of coll-filter */
@@ -161,7 +161,7 @@
     location.search = jQuery.param(Shopify.queryParams);
     {% endif %}
   });
-  
+
   $(document).on('shopify:section:load', function(event) {
 Shopify.queryParams = {};
   if (location.search.length) {
@@ -208,6 +208,6 @@ Shopify.queryParams = {};
     }
     location.search = jQuery.param(Shopify.queryParams);
     {% endif %}
-  });    
+  });
   });
 </script>

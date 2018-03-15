@@ -1,20 +1,20 @@
 <div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
   <header>
-    {% if section.settings.full-width-header %}
+    {% if section.settings.full_width_header %}
     <div class="gridlock-fluid">
       <div class="row">
         {% endif %}
         <div class="row" id="upper-content">
           <ul id="social-icons" class="{% if section.settings.hello != blank %}desktop-4{% else%}desktop-6{% endif %} tablet-6 mobile-3">
             {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-            {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+            {% if settings.instagram_id != blank %}<li><a href="//instagram.com/{{ settings.instagram_id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-            {% if settings.snapchat-id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-            {% if settings.weibo-id != blank %}<li><a href="//weibo.com/{{ settings.weibo-id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+            {% if settings.snapchat_id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat_id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+            {% if settings.weibo_id != blank %}<li><a href="//weibo.com/{{ settings.weibo_id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           </ul>
           {% if section.settings.hello != blank %}
           <div id="hello" class="desktop-4 tablet-6 mobile-3">
@@ -47,7 +47,7 @@
             <li><a class="my-cart-link" href="/cart">{{ 'layout.header.my_cart' | t }}&nbsp; {% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
-        {% if section.settings.full-width-header %}
+        {% if section.settings.full_width_header %}
       </div>
     </div>
     {% endif %}
@@ -74,7 +74,7 @@
         {% endfor %}
       </ul>
     </nav>
-    {% if section.settings.nav-style != 'mobile' %}
+    {% if section.settings.nav_style != 'mobile' %}
     <div class="clear header-spacer"></div>
     {% endif %}
   </div>
@@ -85,15 +85,15 @@
     }
     {% else %}
     #logo a {
-      font-size: {{ section.settings.logo-size }}px;
-      text-transform: {{ section.settings.logo-transform }};
-      font-weight: {{ section.settings.logo-weight }};
+      font-size: {{ section.settings.logo_size }}px;
+      text-transform: {{ section.settings.logo_transform }};
+      font-weight: {{ section.settings.logo_weight }};
     }
     {% endif %}
 
-    #hello p { font-size: {{ section.settings.hello-size }}px;  }
+    #hello p { font-size: {{ section.settings.hello_size }}px;  }
 
-    {% if section.settings.nav-style == 'full' %}
+    {% if section.settings.nav_style == 'full' %}
     @media screen and (min-width: 740px ) {
       ul#cart li.mm-trigger { display: none; }
     }
@@ -101,17 +101,17 @@
     nav { display: none; }
     {% endif %}
     ul#main-nav li {
-      line-height: {{ section.settings.nav-height }}px;
+      line-height: {{ section.settings.nav_height }}px;
     }
     ul#main-nav li ul.submenu {
-      top: {{ section.settings.nav-height }}px;
+      top: {{ section.settings.nav_height }}px;
     }
     ul.megamenu {
-      top: {{ section.settings.nav-height }}px;
+      top: {{ section.settings.nav_height }}px;
     }
     nav {
-      border-top: {{ section.settings.nav-top-border-height }}px solid {{ settings.nav-border-color }};
-      border-bottom: {{ section.settings.nav-bottom-border-height }}px solid {{ settings.nav-border-color }};
+      border-top: {{ section.settings.nav_top_border_height }}px solid {{ settings.nav_border_color }};
+      border-bottom: {{ section.settings.nav_bottom_border_height }}px solid {{ settings.nav_border_color }};
     }
   </style>
 </div>
@@ -122,8 +122,8 @@
     "settings": [
       {
         "type": "checkbox",
-        "id": "full-width-header",
-		"label":"Full width header"
+        "id": "full_width_header",
+		    "label":"Full width header"
       },
       {
         "type": "header",
@@ -146,7 +146,7 @@
       },
       {
         "type":      "range",
-        "id":        "logo-size",
+        "id":        "logo_size",
         "min":       12,
         "max":        36,
         "step":       1,
@@ -156,7 +156,7 @@
       },
       {
         "type": "select",
-        "id": "logo-transform",
+        "id": "logo_transform",
         "label": "Logo text case",
         "options": [
           {
@@ -171,7 +171,7 @@
       },
       {
         "type": "select",
-        "id": "logo-weight",
+        "id": "logo_weight",
         "label": "Logo text weight",
         "options": [
           {
@@ -199,7 +199,7 @@
       },
       {
         "type":      "range",
-        "id":        "hello-size",
+        "id":        "hello_size",
         "min":       12,
         "max":        36,
         "step":       1,
@@ -237,7 +237,7 @@
       },
       {
         "type": "select",
-        "id": "nav-style",
+        "id": "nav_style",
         "label": "Style",
         "options": [
           {
@@ -252,7 +252,7 @@
       },
       {
         "type":      "range",
-        "id":        "nav-height",
+        "id":        "nav_height",
         "min":       30,
         "max":        60,
         "step":       5,
@@ -262,7 +262,7 @@
       },
       {
         "type":      "range",
-        "id":        "nav-top-border-height",
+        "id":        "nav_top_border_height",
         "min":       0,
         "max":        5,
         "step":       1,
@@ -272,7 +272,7 @@
       },
       {
         "type":      "range",
-        "id":        "nav-bottom-border-height",
+        "id":        "nav_bottom_border_height",
         "min":       0,
         "max":        5,
         "step":       1,
@@ -294,7 +294,7 @@
           },
           {
            "type": "image_picker",
-           "id": "nav-image",
+           "id": "nav_image",
            "label": "Featured image"
          },
          {

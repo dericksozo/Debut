@@ -3,7 +3,7 @@
     {% if section.settings.title != blank %}
     <div class="section-title desktop-12 tablet-6 mobile-3 lines"><h2>{{ section.settings.title | escape }}</h2></div>
     {% endif %}
-    
+
     {% case section.settings.grid %}
       {% when 2 %}
         {%- assign grid_item_width = 'desktop-6 tablet-3 mobile-half' -%}
@@ -11,11 +11,11 @@
         {%- assign grid_item_width = 'desktop-4 tablet-2 mobile-half' -%}
       {% when 4 %}
         {%- assign grid_item_width = 'desktop-3 tablet-2 mobile-half' -%}
-    {% endcase %}    
-    
+    {% endcase %}
+
     <div id="collection-loop">
 	{% for block in section.blocks limit: section.blocks.size %}
-      {%- assign collection = collections[block.settings.collection] -%}      
+      {%- assign collection = collections[block.settings.collection] -%}
       <div class="collection-index {{ grid_item_width }}" data-alpha="{{ collection.title }}" {{ block.shopify_attributes }}>
         {% if block.settings.collection == blank %}
         {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
@@ -23,29 +23,29 @@
           <div class="collection-image ci onboard">
             <a href="#">
               {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
-            </a>     
-          </div> 
+            </a>
+          </div>
         <div class="collection-info">
           <a href="{{ collection.url }}" title="{{ collection.title }}">
             <p><a href="#">Sample collection {{ forloop.index }}</a></p>
           </a>
-        </div>        
-        {% else %}        
-        {% include 'collection-grid-item' %}
+        </div>
+        {% else %}
+          {% include 'collection-grid-item' %}
         {% endif %}
       </div>
       {% endfor %}
     </div>
-    
+
     {% if section.blocks.size == 0 %}
       {% include 'no-blocks' %}
-    {% endif %}    
-    
+    {% endif %}
+
   </div>
 </section>
 <div class="clear"></div>
 
-{% if section.settings.title-position == 'below' %}
+{% if section.settings.title_position == 'below' %}
 <style>
 .collection-info { position: relative; top: initial; margin-top: 10px; padding: 0; background: transparent; }
 </style>
@@ -54,7 +54,7 @@
 
 {% schema %}
 {
-  "name": "Featured collections",
+  "name": "Collection list",
   "max_blocks": 12,
   "settings": [
     {
@@ -74,7 +74,7 @@
       },
       {
         "type": "select",
-        "id": "title-position",
+        "id": "title_position",
         "label": "Collection title position",
         "options": [
           {

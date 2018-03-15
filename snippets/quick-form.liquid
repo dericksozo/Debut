@@ -28,7 +28,7 @@
     <label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
     {% endif %}
   </div>
-  <div class="product-variants"></div><!-- product variants -->
+  <div class="product_variants"></div><!-- product variants -->
   <input  type="hidden" id="{{ variant.id }}" name="id" value="{{ product.variants[0].id }}" />
   {% endif %}
 

@@ -1,5 +1,5 @@
 <section class="index-section slideshow-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="slideshow-section" data-slideout-ignore>
-  {% if section.settings.display-wide %}
+  {% if section.settings.display_wide %}
   {% else %}
   <div class="row">
     <div class="desktop-12 tablet-6 mobile-3">
@@ -93,12 +93,12 @@
               font-weight: {{ section.settings.cta_weight }};
             }
             .flex-caption h2.slide-title {
-              font-size: {{ section.settings.slide-title-size }}px;
+              font-size: {{ section.settings.slide_title_size }}px;
               font-family: {{ section.settings.headings_font }};
-              font-weight:{{ section.settings.slide-title-weight }};
+              font-weight:{{ section.settings.slide_title_weight }};
             }
             .flex-caption p {
-              font-size: {{ section.settings.caption-size }}px;
+              font-size: {{ section.settings.caption_size }}px;
             }
           </style>
           {% endfor %}
@@ -109,7 +109,7 @@
       {% include 'no-blocks' %}
       {% endif %}
 
-      {% if section.settings.display-wide %}
+      {% if section.settings.display_wide %}
       {% else %}
     </div>
   </div>
@@ -262,8 +262,8 @@
   "settings": [
     {
       "type": "checkbox",
-      "id": "display-wide",
-	  "label": "Make slideshow full width"
+      "id": "display_wide",
+	     "label": "Make slideshow full width"
     },
       {
         "type":      "range",
@@ -274,13 +274,13 @@
         "label":     "Slideshow speed (seconds)",
         "default":   5
       },
-	{
+	   {
         "type": "header",
         "content": "Slideshow text"
       },
       {
         "type":      "range",
-        "id":        "slide-title-size",
+        "id":        "slide_title_size",
         "min":       12,
         "max":       36,
         "step":      1,
@@ -291,9 +291,9 @@
 
       {
         "type": "select",
-        "id": "slide-title-weight",
+        "id": "slide_title_weight",
         "label": "Slide title weight",
-		"default": "700",
+		    "default": "700",
         "options": [
           {
             "value": "400",
@@ -311,7 +311,7 @@
       },
       {
         "type":      "range",
-        "id":        "caption-size",
+        "id":        "caption_size",
         "min":       12,
         "max":       36,
         "step":      1,
@@ -334,7 +334,7 @@
         "type": "select",
         "id": "cta_weight",
         "label": "Slide button weight",
-		"default": "400",
+		    "default": "400",
         "options": [
           {
             "value": "400",

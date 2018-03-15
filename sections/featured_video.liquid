@@ -1,14 +1,16 @@
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" >
-  
+
   <div class="row">
     <div class="desktop-12 tablet-6 mobile-3">
-        {% if section.settings.title != blank %}
-      <div class="section-title lines"><h2>{{ section.settings.title | escape }}</h2></div>
+      {% if section.settings.title != blank %}
+        <div class="section-title lines">
+          <h2>{{ section.settings.title | escape }}</h2>
+        </div>
       {% endif %}
     </div>
   </div>
-  
-  {% if section.settings.display-wide %}
+
+  {% if section.settings.display_wide %}
   {% else %}
   <div class="row">
     <div class="desktop-12 tablet-6 mobile-3">
@@ -16,30 +18,30 @@
 
   <div class="videoWrapper">
     {% if section.settings.video_url == blank %}
-    <iframe src="//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      <iframe src="//www.youtube.com/embed/_9VUPq3SxOc?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
     {% else %}
-    {% if section.settings.video_url.type == "youtube" %}
-    <iframe src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      {% if section.settings.video_url.type == "youtube" %}
+        <iframe src="//www.youtube.com/embed/{{ section.settings.video_url.id }}?rel=0&showinfo=0&vq=720" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      {% endif %}
+      {% if section.settings.video_url.type == "vimeo" %}
+        <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+      {% endif %}
     {% endif %}
-    {% if section.settings.video_url.type == "vimeo" %}
-    <iframe src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
-    {% endif %}
-    {% endif %}
-  </div> 
+  </div>
 
-      {% if section.settings.display-wide %}
+      {% if section.settings.display_wide %}
       {% else %}
     </div>
   </div>
-  {% endif %}    
-</section> 
+  {% endif %}
+</section>
 
 
 {% schema %}
-{  
+{
    "name":"Video",
-   "settings":[  
-   {  
+   "settings":[
+   {
       "type":"text",
       "id":"title",
       "label":"Heading",
@@ -53,12 +55,12 @@
       },
     {
       "type": "checkbox",
-      "id": "display-wide",
+      "id": "display_wide",
 	  "label": "Make video full width"
     }
    ],
-   "presets":[  
-      {  
+   "presets":[
+      {
        "name":"Featured video",
        "category":"Video"
       }

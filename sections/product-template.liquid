@@ -9,7 +9,7 @@
     <div class="mobile-gallery">
       <ul class="slides">
         {% for image in product.images %}
-        <li data-thumb="{{ image | product_img_url: 'small' }}" data-image-id="{{ image.id }}"><img data-image-id="{{ image.id }}" src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}"></li>
+          <li data-thumb="{{ image | product_img_url: 'small' }}" data-image-id="{{ image.id }}"><img data-image-id="{{ image.id }}" src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}"></li>
         {% endfor %}
       </ul>
     </div>
@@ -38,28 +38,31 @@
   <div id="product-right" class="desktop-5 tablet-3 mobile-3">
     <div id="product-description">
       {% if settings.vendor %}<h3>{{ product.vendor }}</h3>{% endif %}
-      <h1 itemprop="name">{{ product.title }}</h1>
+        <h1 itemprop="name">{{ product.title }}</h1>
       {% if section.settings.subtitle %}<p>{{ page_title }}</p>{% endif %}
 	  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
       <p id="product-price">
         {% if product.available %}
-        {% if product.compare_at_price > product.price %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
+          {% if product.compare_at_price > product.price %}
+            <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
+          {% else %}
+            <span class="product-price" itemprop="price">{{ product.price | money }}</span>
+          {% endif %}
         {% else %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>
-        {% endif %}
-        {% else %}
-        <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
+          <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
         {% endif %}
       </p>
-        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
-        <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+      <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+      <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
       {% include 'short-form' %}
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-        {% if section.settings.product-description == 'right' %}
+
+      {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+        {% if section.settings.product_description == 'right' %}
         <div class="rte" itemprop="description">{{ product.description }}</div>
         {% endif %}
-{% endif %}
+      {% endif %}
       </div>
       <div class="desc">
         {% include 'social' with product %}
@@ -68,62 +71,87 @@
         {% endif %}
       </div>
     </div>
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-    <ul id="popups">
-      {% if section.settings.popup-one != blank %}<li class="first"><a href="#pop-one" class="fancybox">{{ pages[section.settings.popup-one].title }}</a></li>{% endif %}
-      {% if section.settings.popup-two != blank %}<li><a href="#pop-two" class="fancybox">{{ pages[section.settings.popup-two].title }}</a></li>{% endif %}
-      {% if section.settings.popup-three != blank %}<li><a href="#pop-three" class="fancybox">{{ pages[section.settings.popup-three].title }}</a></li>{% endif %}
-      {% if section.settings.popup-4 %}<li class="last"><a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a></li>{% endif %}
-    </ul>
-     {% if section.settings.popup-one != blank %}<div id="pop-one" style="display: none">{{ pages[section.settings.popup-one].content }}</div>{% endif %}
-     {% if section.settings.popup-two != blank %}<div id="pop-two" style="display: none">{{ pages[section.settings.popup-two].content }}</div>{% endif %}
-     {% if section.settings.popup-three != blank %}<div id="pop-three" style="display: none">{{ pages[section.settings.popup-three].content }}</div>{% endif %}
-     {% if section.settings.popup-4 %}<div id="pop-four" style="display: none">{% include 'question' %}</div>{% endif %}
-{% endif %}
-   </div>
+
+    {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+      <ul id="popups">
+        {% if section.settings.popup_one != blank %}
+          <li class="first">
+            <a href="#pop-one" class="fancybox">{{ pages[section.settings.popup_one].title }}</a>
+          </li>
+        {% endif %}
+        {% if section.settings.popup_two != blank %}
+          <li>
+            <a href="#pop-two" class="fancybox">{{ pages[section.settings.popup_two].title }}</a>
+          </li>
+        {% endif %}
+        {% if section.settings.popup_three != blank %}
+          <li>
+            <a href="#pop-three" class="fancybox">{{ pages[section.settings.popup_three].title }}</a>
+          </li>
+        {% endif %}
+        {% if section.settings.popup_four %}
+          <li class="last">
+            <a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a>
+          </li>
+        {% endif %}
+      </ul>
+      {% if section.settings.popup_one != blank %}
+        <div id="pop-one" style="display: none">{{ pages[section.settings.popup_one].content }}</div>
+      {% endif %}
+      {% if section.settings.popup_two != blank %}
+        <div id="pop-two" style="display: none">{{ pages[section.settings.popup_two].content }}</div>
+      {% endif %}
+      {% if section.settings.popup_three != blank %}
+        <div id="pop-three" style="display: none">{{ pages[section.settings.popup_three].content }}</div>
+      {% endif %}
+      {% if section.settings.popup_four %}
+        <div id="pop-four" style="display: none">{% include 'question' %}</div>
+      {% endif %}
+    {% endif %}
+  </div>
 
 {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-  {% if section.settings.product-description == 'bottom' %}
-  <div class="clear"></div>
-  <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
-    <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
-    <div class="rte" itemprop="description">{{ product.description }}</div>
-  </div>
+  {% if section.settings.product_description == 'bottom' %}
+    <div class="clear"></div>
+    <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
+      <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
+      <div class="rte" itemprop="description">{{ product.description }}</div>
+    </div>
   {% endif %}
   <div class="clear"></div>
   {% if collection %}
-  {% include 'related-products' %}
+    {% include 'related-products' %}
   {% endif %}
   <div class="clear"></div>
 {% endif %}
 </div>
 <style>
-  #product-right { background: {{ section.settings.product-form-background }}; padding: 20px; border: 7px double {{ section.settings.product-page-border }}; }
-  {% if section.settings.thumbnail-position == 'left' %}
-  .bigimage { float: right! important; }
+  #product-right { background: {{ section.settings.product_form_background }}; padding: 20px; border: 7px double {{ section.settings.product_page_border }}; }
+  {% if section.settings.thumbnail_position == 'left' %}
+  .bigimage { float: right !important; }
   {% endif %}
     @media screen and ( min-width: 741px ) {
-    {% if section.settings.form-left %}
+    {% if section.settings.form_left %}
       #product-description, #product-description .rte, #product-description h1 { text-align: left; }
       .add { margin: 0; }
       ul#popups { text-align: left; }
       ul#popups li { margin-left: 0; margin-right: 10px; }
     }
   {% endif %}
-  {% if section.settings.product-variants == 'swatches' %}
+  {% if section.settings.product_variants == 'swatches' %}
   .select { display: none; }
   /* Hiding the drop-downs. */
-  product-variants, .selector-wrapper, .select { display: none; }
+  product_variants, .selector-wrapper, .select { display: none; }
   label[for="product-select-option-{{ option_index }}"] { display: none; }
   #product-select-option-{{ option_index }} { display: none; }
   #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
   {% endif %}
-  {% if section.settings.swatch-shape == 'circles' %}
+  {% if section.settings.swatch_shape == 'circles' %}
   .swatch .color label {
-    min-width: 34px! important;
-    width: 34px! important;
+    min-width: 34px !important;
+    width: 34px !important;
     border-radius: 50%;
-    outline: 0! important;
+    outline: 0 !important;
   }
   {% endif %}
 </style>
@@ -133,19 +161,19 @@
     "settings": [
     {
       "type": "color",
-      "id": "product-form-background",
+      "id": "product_form_background",
       "label": "Product options background",
       "default": "#fff"
     },
     {
       "type": "color",
-      "id": "product-page-border",
+      "id": "product_page_border",
       "label": "Product options border",
       "default": "#f0f0f0"
     },
       {
         "type": "select",
-        "id": "thumbnail-position",
+        "id": "thumbnail_position",
         "label": "Thumbnail position",
         "options": [
           {
@@ -160,7 +188,7 @@
       },
       {
         "type": "select",
-        "id": "product-variants",
+        "id": "product_variants",
         "label": "Product variants",
         "info": "Choose how variants are presented",
         "options": [
@@ -183,7 +211,7 @@
       },
       {
         "type": "checkbox",
-        "id": "form-left",
+        "id": "form_left",
         "label": "Left align product form",
         "default": false,
         "info": "will be centered on mobile"
@@ -201,13 +229,13 @@
       },
       {
         "type": "checkbox",
-        "id": "show-sku",
+        "id": "show_sku",
         "label": "Show variant SKU",
         "default": true
       },
       {
         "type": "select",
-        "id": "product-description",
+        "id": "product_description",
         "label": "Description position",
         "options": [
           {
@@ -222,13 +250,13 @@
       },
       {
         "type": "checkbox",
-        "id": "use-swatch-images",
+        "id": "use_swatch_images",
         "label": "Show custom swatch images",
         "default": true
       },
       {
         "type": "select",
-        "id": "swatch-shape",
+        "id": "swatch_shape",
         "label": "Color swatch shape",
         "options": [
           {
@@ -251,22 +279,22 @@
       },
       {
         "type": "page",
-        "id": "popup-one",
+        "id": "popup_one",
         "label": "Choose content for first popup"
       },
       {
         "type": "page",
-        "id": "popup-two",
+        "id": "popup_two",
         "label": "Choose content for second popup"
       },
       {
         "type": "page",
-        "id": "popup-three",
+        "id": "popup_three",
         "label": "Choose content for third popup"
       },
       {
         "type": "checkbox",
-        "id": "popup-4",
+        "id": "popup_four",
         "label": "Show contact form",
         "default": true
       }

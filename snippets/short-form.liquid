@@ -1,4 +1,4 @@
-{% if section.settings.show-sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
+{% if section.settings.show_sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
 
   {% capture 'money-format' %}{{ shop.money_format }}{% endcapture %}
   {% capture 'product-id' %}{{ product.id }}{% endcapture %}
@@ -13,7 +13,7 @@
       {% endfor %}
     </select>
   </div>
-  {% unless section.settings.product-variants == 'dropdowns' %}
+  {% unless section.settings.product_variants == 'dropdowns' %}
     {% for option in product.options %}
     {% include 'swatch' with option %}
     {% endfor %}
@@ -27,7 +27,7 @@
       {% endfor %}
     </select>
   </div>
-  {% unless section.settings.product-variants == 'dropdowns' %}
+  {% unless section.settings.product_variants == 'dropdowns' %}
     {% for option in product.options %}
     {% include 'swatch' with option %}
     {% endfor %}
@@ -38,7 +38,7 @@
     <label>{{ product.options.first }}:</label>{% for variant in product.variants %}<span class="it-is">{{ variant.option1 | escape }}</span>{% endfor %}
     {% endif %}
   </div>
-  <div class="product-variants"></div><!-- product variants -->
+  <div class="product_variants"></div><!-- product variants -->
   <input  type="hidden" id="{{ variant.id }}" data-sku="{{ variant.sku }}" name="id" value="{{ product.variants[0].id }}" />
   {% endif %}
 
@@ -73,7 +73,7 @@
   $(document).on('shopify:section:load', function(event) {
     new Shopify.OptionSelectors("product-select-{{ product.id }}", { product: {{ product | json }}, onVariantSelected:
     selectCallback, enableHistoryState: true });
-    {% unless section.settings.product-variants == 'dropdowns' %}
+    {% unless section.settings.product_variants == 'dropdowns' %}
     jQuery('.swatch :radio').change(function() {
       var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
       var optionValue = jQuery(this).val();

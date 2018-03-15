@@ -43,11 +43,11 @@
         {% if item.object_type == 'article' %}
         <!--'item' is an article All article object properties can be accessed. -->
         {% if item.image %}
-        <div class="prod-image">
-          <a href="{{ item.url }}" title="{{ item.title | escape }}">
-            <img src="{{ item.image | img_url: 'grande' }}" alt="{{ item.title }}">
-          </a>
-        </div>
+          <div class="prod-image">
+            <a href="{{ item.url }}" title="{{ item.title | escape }}">
+              <img src="{{ item.image | img_url: 'grande' }}" alt="{{ item.title }}">
+            </a>
+          </div>
         {% endif %}
         {% elsif item.object_type == 'page' %}
 

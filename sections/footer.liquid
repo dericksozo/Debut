@@ -36,7 +36,7 @@
         <h4>{{ block.settings.title | escape }}</h4>
         <ul {{ block.shopify_attributes }}>
           {% for link in linklists[block.settings.footer_nav].links %}
-          <li>{{ link.title | link_to: link.url }}</li>
+            <li>{{ link.title | link_to: link.url }}</li>
           {% endfor %}
         </ul>
       </div>
@@ -62,14 +62,14 @@
       <div class="clear"></div>
       <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
           {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-          {% if settings.instagram-id != blank %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+          {% if settings.instagram_id != blank %}<li><a href="//instagram.com/{{ settings.instagram_id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.pinterest_url != blank %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="fa fa-pinterest fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.tumblr_url != blank %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="fa fa-tumblr fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.youtube_url != blank %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           {% if settings.googleplus_url != blank %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="fa fa-google-plus fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-          {% if settings.snapchat-id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat-id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
-          {% if settings.weibo-id != blank %}<li><a href="//weibo.com/{{ settings.weibo-id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+          {% if settings.snapchat_id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat_id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
+          {% if settings.weibo_id != blank %}<li><a href="//weibo.com/{{ settings.weibo_id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
       </ul>
       <div class="clear"></div>
       <div class="credit desktop-12 tablet-6 mobile-3">
@@ -102,23 +102,23 @@
 {% schema %}
 {
     "name": "Footer",
-	"max_blocks": 4,
+	  "max_blocks": 4,
     "settings": [
     {
       "type": "image_picker",
       "id": "bottom_logo",
       "label": "Logo image"
     },
-      {
-        "type":      "range",
-        "id":        "bottom_logo_max_width",
-        "min":       100,
-        "max":        600,
-        "step":       10,
-        "unit":       "px",
-        "label":     "Footer logo image width",
-        "default":   300
-      },
+    {
+      "type":      "range",
+      "id":        "bottom_logo_max_width",
+      "min":       100,
+      "max":        600,
+      "step":       10,
+      "unit":       "px",
+      "label":     "Footer logo image width",
+      "default":   300
+    },
      {
         "type": "select",
         "id": "footer_text_align",
@@ -206,7 +206,7 @@
         "type": "newsletter",
         "name": "Newsletter signup",
         "limit": 1,
-		"settings":[
+		    "settings":[
           {
             "type": "text",
             "id": "title",
