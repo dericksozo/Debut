@@ -17,6 +17,10 @@
         <p class="posted">{{ 'blogs.article.posted_on_date_html' | t: date: published_at }}</p>
 	    {% endif %}
 
+      {% if article.image %}
+        {% include 'basic-responsive-image', type: article.image %}
+      {% endif %}
+
       <div class="rte">{{ article.content }}</div>
       {% include 'social' with article %}
 

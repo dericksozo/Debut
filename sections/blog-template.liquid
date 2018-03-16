@@ -1,10 +1,8 @@
 <div id="page" data-section-id="{{ section.id }}" data-section-type="blog-section">
 
   {% if section.settings.image != blank %}
-    {%- assign image_size = '1920x' -%}
-    {%- assign img_url = section.settings.image | img_url: image_size -%}
     <div class="collection-banner">
-      <img src="{{ img_url }}">
+      {% include "basic-responsive-image", type: section.settings.image %}
     </div>
   {% endif %}
 
@@ -54,7 +52,7 @@
               <div class="article-content">
                 {% if article.image %}
                   <a href="{{ article.url }}">
-                    <img class="article-image" src="{{ article.image | img_url: '800x' }}" alt="{{ article.title }}">
+                    {% include "basic-responsive-image", type: article.image %}
                   </a>
                 {% endif %}
                 <div class="clear"></div>

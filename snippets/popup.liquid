@@ -17,15 +17,17 @@
         {% if settings.test_mode == false %}
       }
       {% endif %}
-    }); 
+    });
   };
-</script>  
+</script>
 
 <div style="display:none">
   <div id="subscribe_popup">
     {% if settings.email_image != blank %}
-    {%- assign image_size = '600x' -%}
-    <p><img src="{{ settings.email_image | img_url: image_size }}"></p>
+      {% include "basic-responsive-image", type: settings.email_image %}
+      <noscript>
+        <img src="{{ settings.email_image | img_url: '800x' }}" class="popup-image">
+      </noscript>
     {% endif %}
     <h3>{{ settings.email_popup_title }}</h3>
     <p>{{ settings.footer_signup_text }}</p>   <!-- BEGIN #subs-container -->
@@ -40,8 +42,8 @@
             <input type="email" name="contact[email]" id="mce-EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
             <input type="submit" id="mc-embedded-subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
             {% endif %}
-            {% endform %}               
-      </div>  
+            {% endform %}
+      </div>
     </div>
     <div class="clear"></div>
     <div class="fb-like" data-href="{{ shop.url }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>

@@ -15,11 +15,17 @@
 <div class="collection-image">
   <a href="{{ collection.url }}" title="{{ collection_title }}">
     {% if collection.image %}
-    <img src="{{ collection_image_url }}">
+      {% include "basic-responsive-image", type: collection.image %}
+      <noscript>
+        <img src="{{ collection.image | img_url: '800x' }}"  class="collection-grid-image">
+      </noscript>
     {% else %}
-    <img src="{{ collection.products.first | img_url: image_size }}">
+      {% include "basic-responsive-image", type: collection.products.first.featured_image %}
+      <noscript>
+        <img src="{{ collection.products.first.featured_image | img_url: '800x' }}" class="collection-grid-image">
+      </noscript>
     {% endif %}
-  </a>     
+  </a>
 </div>
 <div class="collect{% if template == 'index' %}ion{% endif %}-info">
   <a href="{{ collection.url }}" title="{{ collection.title }}">

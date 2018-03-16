@@ -1,10 +1,13 @@
 <a class="show mobile-3" href="#"><i class="icon-align-justify icon-2x"></i></a>
 <div class="desktop-3 tablet-4 tablet-push-1 mobile-3" id="sidebar">
   {% if collection.image %}
-  {{ collection.image.src | collection_img_url: '220x' | img_tag: collection_title }}
-  {% endif %}   
+    {% include "basic-responsive-image", type: collection.image %}
+    <noscript>
+      <img src="{{ collection.image | img_url: '220x' }}" class="collection-sidebar-image">
+    </noscript>
+  {% endif %}
   {% for block in section.blocks %}
-  
+
 
   {% if block.type == 'vendor_list' %}
   {% if collection.handle == "all" %}

@@ -941,6 +941,36 @@ img {
   border: 0;
 }
 
+img[data-sizes="auto"] {
+  display: block;
+  width: 100%;
+}
+
+.box-ratio {
+  display: block;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.product .box-ratio {
+  background-color: white;
+}
+
+.box-ratio img {
+  background-color: white;
+}
+
+.lazyload-fade {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.lazyload-fade.lazyloaded {
+  opacity: 1;
+}
+
 h1,
 h2,
 h3,

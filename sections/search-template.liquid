@@ -41,32 +41,30 @@
       <div class="product-index-inner">
 
         {% if item.object_type == 'article' %}
-        <!--'item' is an article All article object properties can be accessed. -->
-        {% if item.image %}
-          <div class="prod-image">
+          <!--'item' is an article All article object properties can be accessed. -->
+          {% if item.image %}
             <a href="{{ item.url }}" title="{{ item.title | escape }}">
-              <img src="{{ item.image | img_url: 'grande' }}" alt="{{ item.title }}">
+              {%- include 'basic-responsive-image', type: item.image  -%}
             </a>
-          </div>
-        {% endif %}
+          {% endif %}
         {% elsif item.object_type == 'page' %}
 
 
-        <!--'item' is a page. All page object properties can be accessed. -->
+          <!--'item' is a page. All page object properties can be accessed. -->
 
-        {% if item.content contains "img" %}
-        {% assign feat_image = item.content | split: 'src="' %}
-        {% assign feat_image = feat_image[1] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:'  %}
-        <div class="prod-image">
-          <a href="{{ item.url }}" title="{{ item.title | escape }}">
-            <img src="{{ feat_image }}" alt="{{ item.title }}">
-          </a>
-        </div>
-        {% else %}
-        <div class="search-content prod-image">
-          {{ item.content | strip_html | truncate: 200 }}
-        </div>
-        {% endif %}
+          {% if item.content contains "img" %}
+            {% assign feat_image = item.content | split: 'src="' %}
+            {% assign feat_image = feat_image[1] | split: '"' | first | replace: '//cdn', 'http://cdn' | replace: 'http:http://', 'http://' | remove: 'https:'  %}
+            <div class="prod-image">
+              <a href="{{ item.url }}" title="{{ item.title | escape }}">
+                <img src="{{ feat_image }}" alt="{{ item.title }}">
+              </a>
+            </div>
+          {% else %}
+            <div class="search-content prod-image">
+              {{ item.content | strip_html | truncate: 200 }}
+            </div>
+          {% endif %}
 
         {% else %}
         <!-- 'item' is a product. All product object properties can be accessed.-->
