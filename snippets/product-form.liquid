@@ -20,6 +20,8 @@
     {% endunless %}
   </p><div class="clear"></div>
 
+  {% if section.settings.show_sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
+
   {% if product.options.size > 1 %}
     <div class="select" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
       <select id="product-select-{{ product.id }}" name='id'>
@@ -48,7 +50,7 @@
     </div>
     {% if section.settings.product_variants == 'swatches' %}
       {% for option in product.options_with_values %}
-        {% include 'swatch' with option %}
+        {% include 'swatch' %}
       {% endfor %}
     {% endif %}
   {% elsif product.variants.size == 1 %}
@@ -74,10 +76,14 @@
 
   <div class="product-add">
     {% if section.settings.show_quantity %}
-      <label for="quantity">{{ 'products.product.quantity' | t }}</label>
-      <input min="1" type="number" id="quantity" name="quantity" value="1" />
+      <div class="qty-selection">
+        <h5>{{ 'products.product.quantity' | t }}</h5>
+        <a class="down quantity-control-down" field="quantity">-</a>
+          <input min="1" type="text" name="quantity" class="quantity" value="1" />
+        <a class="up quantity-control-up" field="quantity">+</a>
+      </div>
     {% endif %}
-    <input type="submit" name="button" class="add clearfix AddtoCart" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
+    <input id="addToCart" type="submit" name="button" class="add clearfix AddtoCart" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
     {% if section.settings.show_payment_button %}
      {{ form | payment_button }}
     {% endif %}

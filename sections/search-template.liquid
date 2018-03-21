@@ -105,10 +105,10 @@
             <div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} {{ item.price_min | money }} - {{ item.price_max | money }} {% else %}{{ item.price | money }}{% endif %}</div>
             {% endif %}
           </div>
-          {% if settings.alternate_colors %}
-          <div class="prod-colors">
-            {% include 'product-listing-swatches' %}
-          </div>
+          {% if settings.secondary_images_hover == 'alternate_colors' %}
+            <div class="prod-colors">
+              {% include 'product-listing-swatches' %}
+            </div>
           {% endif %}
           {% endif %}
         </div>
