@@ -278,7 +278,10 @@
       "popup_three": "Returns",
       "popup_question": "Contact us",
       "add_to_cart_success_link": "View Cart and Check out!",
-      "add_to_cart_success_html": "Item Added {{ link }}"
+      "add_to_cart_success_html": "Item Added {{ link }}",
+      "brand": "Vendor",
+      "product_type": "Type",
+      "product_sku": "SKU"
     }
   },
   "gift_cards": {
