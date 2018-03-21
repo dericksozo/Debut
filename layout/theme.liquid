@@ -69,7 +69,13 @@
         {% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
         {% capture alt %}{{ collection.title }}{% endcapture %}
         <div class="collection-banner">
-          <img src="{{ banner | file_url }}" alt="{{ collection.title }}">
+          {% assign img_url = banner | file_img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+          <img class="lazyload lazyload-fade"
+            src="{{ banner | file_url }} "
+            data-src="{{ img_url }}"
+            data-sizes="auto"
+            alt="{{ alt }}">
         </div>
       {% endif %}
     {% endif %}
