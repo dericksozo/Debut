@@ -5,7 +5,7 @@
       <div class="row">
         {% endif %}
         <div class="row" id="upper-content">
-          <ul id="social-icons" class="{% if section.settings.hello != blank %}desktop-4{% else%}desktop-6{% endif %} tablet-6 mobile-3">
+          <ul id="social-icons" class="{% if section.settings.show_announcement_text %}desktop-4{% else%}desktop-6{% endif %} tablet-6 mobile-3">
             {% if settings.facebook_url != blank %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.instagram_id != blank %}<li><a href="//instagram.com/{{ settings.instagram_id }}" target="_blank"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.twittername != blank %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a></li>{% endif %}
@@ -16,12 +16,18 @@
             {% if settings.snapchat_id != blank %}<li><a href="//snapchat.com/add/{{ settings.snapchat_id }}" target="_blank"><i class="fa fa-snapchat-ghost fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             {% if settings.weibo_id != blank %}<li><a href="//weibo.com/{{ settings.weibo_id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
           </ul>
-          {% if section.settings.hello != blank %}
-          <div id="hello" class="desktop-4 tablet-6 mobile-3">
-            {{ section.settings.hello }}
-          </div>
-          {% endif %}
-          <ul id="cart" class="{% if section.settings.hello != blank %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
+          {%- unless section.settings.show_announcement_text == false -%}
+            <div id="hello" class="desktop-4 tablet-6 mobile-3">
+              {%- if section.settings.announcement_link -%}
+                <a href="{{ section.settings.announcement_link }}">
+                  {{ section.settings.announcement_text }}
+                </a>
+              {%- else -%}
+                {{ section.settings.announcement_text }}
+              {%- endif -%}
+            </div>
+          {%- endunless -%}
+          <ul id="cart" class="{% if section.settings.show_announcement_text %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
             <li class="mm-trigger">
               <i class="fa fa-bars" aria-hidden="true"></i> {{ 'layout.header.menu' | t }}
             </li>
@@ -91,7 +97,7 @@
     }
     {% endif %}
 
-    #hello p { font-size: {{ section.settings.hello_size }}px;  }
+    #hello { font-size: {{ section.settings.announcement_text_size }}px; }
 
     {% if section.settings.nav_style == 'full' %}
     @media screen and (min-width: 740px ) {
@@ -124,6 +130,53 @@
         "type": "checkbox",
         "id": "full_width_header",
 		    "label":"Full width header"
+      },
+      {
+        "type": "header",
+        "content": "Announcement Bar"
+      },
+      {
+        "type": "checkbox",
+        "default": true,
+        "id": "show_announcement_text",
+        "label": "Show announcement text"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement text",
+        "default": "Share a shop announcement or message"
+      },
+      {
+        "type":      "range",
+        "id":        "announcement_text_size",
+        "min":       12,
+        "max":        36,
+        "step":       1,
+        "unit":       "px",
+        "label":     "Text size",
+        "default":   13
+      },
+      {
+        "type": "url",
+        "id": "announcement_link",
+        "label": "Announcement link"
+      },
+      {
+        "type": "select",
+        "id": "cart_icon",
+        "label": "Cart icon",
+        "options": [
+          {
+            "value": "cart",
+            "label": "Cart"
+          },
+          {
+            "value": "bag",
+            "label": "Bag"
+          }
+        ],
+     "info":"You can change the text in your edit language section"
       },
       {
         "type": "header",
@@ -188,43 +241,6 @@
           }
         ]
       },
-      {
-        "type": "header",
-        "content": "Promotional text"
-      },
-      {
-        "type": "richtext",
-        "id": "hello",
-        "label": "Text"
-      },
-      {
-        "type":      "range",
-        "id":        "hello_size",
-        "min":       12,
-        "max":        36,
-        "step":       1,
-        "unit":       "px",
-        "label":     "Text size",
-        "default":   13
-      },
-		{
-        "type": "select",
-        "id": "cart_icon",
-        "label": "Cart icon",
-        "options": [
-          {
-            "value": "cart",
-            "label": "Cart"
-          },
-          {
-            "value": "bag",
-            "label": "Bag"
-          }
-        ],
-	  "info":"You can change the text in your edit language section"
-      },
-
-
       {
         "type": "header",
         "content": "Navigation"
