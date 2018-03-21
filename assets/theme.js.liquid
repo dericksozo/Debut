@@ -300,16 +300,12 @@ var ajaxifyShopify = (function(module, $) {
       disableAjaxCart: false,
       enableQtySelectors: true,
       prependDrawerTo: 'body',
-      {% if settings.show_multiple_currencies %}
       onToggleCallback: function(cart) {
         if (cart.is_visible) {
           Currency.convertAll(shopCurrency, Currency.currentCurrency);
           jQuery('.selected-currency').text(Currency.currentCurrency);
         }
       }
-      {% else %}
-      onToggleCallback: null
-      {% endif %}
     };
 
     // Override defaults with arguments
