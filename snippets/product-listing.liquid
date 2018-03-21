@@ -66,10 +66,10 @@
       {% endif %}
     </div>
 
-    {% if settings.alternate_colors %}
-    <div class="prod-colors">
-      {% include 'product-listing-swatches' %}
-    </div>
+    {% if settings.secondary_images_hover == 'alternate_colors' and product.images.size > 1 %}
+      <div class="prod-colors">
+        {% include 'product-listing-swatches' %}
+      </div>
     {% endif %}
   </div>
 </div>
