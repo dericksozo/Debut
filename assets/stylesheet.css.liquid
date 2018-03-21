@@ -2853,6 +2853,248 @@ dd {
   color: firebrick;
   margin: 0 1.1%;
 }
+/* ================================ */
+/* = Image w/Text Overlay Section = */
+/* ================================ */
+.image-with-text-overlay .onboard svg {
+  fill: #d0d0d0;
+}
+
+.image-with-text-overlay .image-overlay {
+  position: absolute;
+  text-align: center;
+  top: 45%;
+  width: 100%;
+}
+
+.image-with-text-overlay .image-overlay .button {
+  width: auto;
+  height: auto;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.image-with-text-overlay .image-overlay .button:hover {
+  opacity: 0.8;
+}
+
+.image-with-text-overlay .image-wrapper {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding-top: 0;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  position: relative;
+  height: 430px;
+}
+
+/* =============== */
+/* = Map Section = */
+/* =============== */
+.map-section-container,
+.map-section-image {
+  visibility: visible;
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+.map-section--display-map .map-section-container,
+.map-section--display-bg-image .map-section-image {
+  z-index: 4;
+  position: relative;
+}
+
+.placeholder-background {
+  display: none;
+}
+.map-section--onboarding .placeholder-background {
+  display: block;
+}
+
+.map-section-image.show-image {
+  z-index: 5;
+  position: relative;
+}
+
+.map-section-wrapper {
+  height: 400px;
+  margin-top: 20px;
+}
+
+.map-section-container {
+  height: 400px;
+  width: 100%;
+}
+
+.map-section-content {
+  padding: 30px;
+}
+
+.map-section-content .button {
+  height: auto;
+  padding: 10px;
+  width: auto;
+  margin-top: 20px;
+}
+
+.map-section-wrapper .text_right .map-section-content-wrapper {
+  float: right;
+}
+
+.map-section-background-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.map-section--onboarding .map-section-error {
+  display: none;
+}
+
+.map-section-error {
+  font-style: italic;
+  color: #ff6d6d;
+  border: 2px solid #ff6d6d;
+  background-color: rgba(119, 0, 0, 0.65);
+  padding: 30px;
+  margin-top: -250px;
+  width: 50%;
+  margin-left: 25%;
+  z-index: 6;
+}
+
+.map-section-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+}
+
+.placeholder-background {
+  height: 400px;
+}
+
+.map-section .placeholder-svg {
+  fill: rgba(28,29,29,0.1);
+  height: 400px;
+}
+
+/* ====================== */
+/* = Newsletter Section = */
+/* ====================== */
+#newsletter {
+  line-height: 80px;
+  padding: 30px 15px 0 15px;
+}
+
+#newsletter #social-icons {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+#newsletter #social-icons li {
+  line-height: 13px;
+}
+
+#newsletter p.form--success {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#newsletter .section-title {
+  margin-bottom: 0;
+}
+
+#newsletter .section-header p {
+  margin: 0;
+  padding: 0;
+}
+
+#newsletter .section-header {
+  text-align: center;
+}
+
+#newsletter .input-group {
+    position: relative;
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+}
+
+#newsletter .password__input-group {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#newsletter .newsletter__submit {
+  width: 30%;
+  float: left;
+  font-size: 13px;
+  height: 44px;
+  transition: all .25s ease-in-out;
+}
+
+#newsletter .newsletter__input {
+  width: 70%;
+  float:left;
+  border-radius: 0;
+  border: 1px solid {{ settings.newsletter-color }};
+  background: transparent;
+  margin-bottom: 0;
+  height: 44px;
+  line-height: 44px;
+}
+
+#newsletter .newsletter__input:hover {
+  opacity: 0.7;
+}
+
+#newsletter .section-icons li {
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 25px;
+}
+
+#newsletter .newsletter__input:focus {
+  opacity: 0.7;
+}
+
+/* ============================ */
+/* = Featured Product Section = */
+/* ============================ */
+.homepage-featured-product .featured-product-gallery {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.homepage-featured-product h4.product-vendor {
+  font-size: 16px;
+}
+
+.homepage-featured-product .product-description .rte {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.homepage-featured-product .product-details {
+  padding: 16px;
+  margin-bottom: 11px;
+  display: inline-block;
+}
+
+.homepage-featured-product .product-details li {
+  display: block;
+}
+
+.homepage-featured-product .flexslider .slides > li.product-slide.flex-active-slide {
+  opacity: 1 !important;
+  z-index: 2 !important;
+  display: block !important;
+}
 
 /* =============== */
 /* = Search = */
