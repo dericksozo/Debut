@@ -1,18 +1,22 @@
-<div class="article-index desktop-4 tablet-3 mobile-3{% cycle ' first', '', ' last' %}" id="article-{{ article.id }}" data-alpha="{{ article.title }}">   
-  <div class="article-info"> 
+<div class="article-index desktop-4 tablet-3 mobile-3{% cycle ' first', '', ' last' %}" id="article-{{ article.id }}" data-alpha="{{ article.title }}">
+  <div class="article-info">
     <div class="article-info-inner">
       <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
-      {% unless template == 'index' %}    
-      {% if section.settings.show-author %}
+      {% unless template == 'index' %}
+      {% if section.settings.show_author %}
       <p class="posted">{{ article.author }}</p>
       {% endif %}
-      {% endunless %}     
-      {% if section.settings.show-date %}
+      {% endunless %}
+      {% if section.settings.show_date %}
       {% assign published_at = article.published_at | date: format: 'month_date_year' %}
       <p class="posted">{{ 'blogs.article.posted_on_date_html' | t: date: published_at }}</p>
       {% endif %}
       <div class="article-content">
-        {% if article.image %}<a href="{{ article.url }}"><img class="article-image" src="{{ article.image | img_url: '600x' }}" alt="{{ article.title }}"></a>{% endif %}
+        {% if article.image %}
+          <a href="{{ article.url }}">
+            {% include 'basic-responsive-image' | type: article.image %}
+          </a>
+        {% endif %}
         <div class="clear"></div>
         {% if article.excerpt == blank %}
         {{ article.content | strip_html | truncate: 90 }}
@@ -23,7 +27,7 @@
       {% if template != 'index' %}
       {% if article.tags.size > 0 %}
       <ul class="centered-tags">
-        {% for tag in article.tags %} 
+        {% for tag in article.tags %}
         <li class="tags">
           <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
             {{ tag }}
@@ -31,7 +35,7 @@
         </li>
         {% endfor %}
       </ul>
-      {% endif %} 
+      {% endif %}
       <div class="readmore">
         <a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}</a>
       </div>
