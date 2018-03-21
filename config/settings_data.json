@@ -880,7 +880,7 @@
             "main_nav": "main-menu",
             "background_color": "#000000",
             "link_color": "#ffffff",
-            "border_color": "#ffffff"
+            "border_color": "#383838"
           }
         },
         "1521604513411": {
@@ -1398,9 +1398,9 @@
           "type": "mobile-navigation",
           "settings": {
             "main_nav": "main-menu",
-            "background_color": "#000000",
-            "link_color": "#ffffff",
-            "border_color": "#ffffff"
+            "background_color": "#ffffff",
+            "link_color": "#000000",
+            "border_color": "#000000"
           }
         },
         "1521604513411": {
@@ -1920,7 +1920,7 @@
             "main_nav": "main-menu",
             "background_color": "#000000",
             "link_color": "#ffffff",
-            "border_color": "#ffffff"
+            "border_color": "#383838"
           }
         },
         "1521604513411": {
