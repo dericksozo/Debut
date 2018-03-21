@@ -9,7 +9,7 @@
       {%- assign blog = blogs[section.settings.blog] -%}
       {%- assign post_limit = section.settings.post_limit -%}
       <div id="article-loop">
-        {% if blog == blank %}
+        {% if blog.articles.size == 0 %}
           {% include 'onboard-blog' %}
         {% else %}
           {% for article in blog.articles limit: post_limit %}
