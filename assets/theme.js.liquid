@@ -1886,6 +1886,21 @@ theme.ProductForm = function (context, events) {
     });
   })();
 
+  (function smart_payment_buttons() {
+    var element = context.querySelector(".shopify-payment-button");
+
+    events.on("variantchange", function (variant) {
+
+
+      if ( !variant.available ) {
+         element.style.display = 'none';
+       } else {
+         element.style.display = 'block';
+       }
+
+    });
+  })();
+
   function format_money(cents) {
     return (window.Currency || Shopify).formatMoney(cents, config.money_format);
   }
