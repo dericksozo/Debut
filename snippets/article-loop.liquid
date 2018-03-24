@@ -15,6 +15,9 @@
         {% if article.image %}
           <a href="{{ article.url }}">
             {% include 'basic-responsive-image' | type: article.image %}
+            <noscript>
+              <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.image.alt }}">
+            </noscript>
           </a>
         {% endif %}
         <div class="clear"></div>

@@ -35,7 +35,7 @@
         </noscript>
         {% if settings.secondary_images_hover == 'image_flip' and product.images.size > 1 %}
           <div class="hidden">
-            {% include "basic-responsive-image", type: product.images[1] %}
+            {% include 'basic-responsive-image', type: product.images[1] %}
             <noscript>
               <img src="{{ product.images[1] | img_url: '1024x' }}" alt="{{ product.images[1].alt | escape }}">
             </noscript>

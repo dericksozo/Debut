@@ -1,7 +1,7 @@
 <a class="show mobile-3" href="#"><i class="icon-align-justify icon-2x"></i></a>
 <div class="desktop-3 tablet-4 tablet-push-1 mobile-3" id="sidebar">
   {% if collection.image %}
-    {% include "basic-responsive-image", type: collection.image %}
+    {% include 'basic-responsive-image', type: collection.image %}
     <noscript>
       <img src="{{ collection.image | img_url: '220x' }}" class="collection-sidebar-image">
     </noscript>

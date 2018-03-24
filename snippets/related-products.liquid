@@ -26,6 +26,9 @@
       <div class="prod-image">
       <a href="{{ prod.url | within: collection }}" title="{{ prod.title | escape }}">
         {% include 'basic-responsive-image' | type: prod.featured_image %}
+        <noscript>
+          <img src="{{ prod.featured_image | img_url: '800x' }}" alt="{{ prod.featured_image.alt }}">
+        </noscript>
       </a>
       {% if settings.quick-view %}
       <a class="fancybox.ajax product-modal" href="{{ prod.url }}?view=quick">{{ 'products.general.quick_view' | t }}</a>

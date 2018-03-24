@@ -1163,6 +1163,57 @@ hr {
   float: right;
 }
 
+/* NO JS Helpers
+================================================== */
+.no-js .no-fouc {
+  visibility: visible;
+  display: block;
+}
+
+.no-js .box-ratio {
+  display: none;
+}
+
+.no-js .load-wait {
+  display: none;
+}
+
+.no-js .flexslider .slides img.lazyload,
+.no-js .product-main-image img.lazyload {
+ opacity: 1;
+}
+
+
+.no-js .product-thumbnails .lazyload {
+  display: none;
+}
+
+.no-js .vantage-accordion .product-accordion-content {
+  display: block;
+}
+
+.no-js .collection-carousel {
+ text-align: center;
+}
+
+.no-js .collection-carousel .lazyOwl {
+  width: 14.5833333333333333%;
+  display: inline-block;
+}
+
+.no-js .shifter-navigation {
+  display: none;
+}
+
+.no-js .flexslider .slides > li {
+  display: block;
+  opacity: 1;
+}
+
+.no-js #shopify-section-mobile-navigation {
+  display: none;
+}
+
 /* #Buttons
 ================================================== */
 
@@ -2916,6 +2967,10 @@ dd {
 /* ================================ */
 /* = Image w/Text Overlay Section = */
 /* ================================ */
+.image-with-text-overlay .onboard {
+  text-align: center;
+}
+
 .image-with-text-overlay .onboard svg {
   fill: #d0d0d0;
   height: 430px;

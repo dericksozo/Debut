@@ -41,6 +41,10 @@
     background-color: {{ section.settings.button_background_color }};
     color: {{ section.settings.button_text_color }};
   }
+  .no-js .image-with-text-overlay .image-wrapper {
+    background-image: url({{ section.settings.image | img_url: '1024x' }});
+    opacity: 1;
+  }
 </style>
 {% schema %}
 {

@@ -19,6 +19,9 @@
 
       {% if article.image %}
         {% include 'basic-responsive-image', type: article.image %}
+        <noscript>
+        <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.image.alt }}">
+      </noscript>
       {% endif %}
 
       <div class="rte">{{ article.content }}</div>
