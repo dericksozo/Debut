@@ -1972,8 +1972,15 @@ theme.ProductGallery = function (context, events) {
       });
     };
 
-    initThumbSlider($('.thumbnail-slider'));
+    if ($(window).width() > 740 ) {
+      initThumbSlider($('.thumbnail-slider'));
+    }
 
+    if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/Android/i))) {
+         do something different for these
+    } else {
+      initThumbSlider($('.thumbnail-slider'));
+    }
     $(document).on('shopify:section:unload', function(event) {
       var target = $(event.target);
       target.find('.thumbnail-slider').bxSlider("destroy");

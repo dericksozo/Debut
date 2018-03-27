@@ -5,23 +5,7 @@
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
   <div class="product-top">
-    {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-    <!-- For Mobile -->
-      <div id="mobile-product" class="mobile-3">
-        <div class="product-flex-gallery">
-          <ul class="slides">
-            {% for image in product.images %}
-              <li data-thumb="{{ image | product_img_url: 'small' }}" data-image-id="{{ image.id }}">
-                <img data-image-id="{{ image.id }}" src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}">
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-    {% endif %}
-
-    <!-- For Desktop -->
-    <div class="product-photos desktop-7" data-product-gallery>
+    <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery>
       {%- if product.featured_image -%}
         {% include 'product-image-gallery' %}
       {%- else -%}
@@ -255,8 +239,8 @@
     {
       "type": "checkbox",
       "id": "show_payment_button",
-      "label": "Show smart checkout button",
-      "info": "Customers will see their preferred accelerated checkout method. [Learn more](https:\/\/link_will_be_provided_later)",
+      "label": "Show dynamic checkout button",
+      "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
       "default": false
     },
     {

@@ -144,9 +144,13 @@
           "label": "Image"
         },
         {
+          "type": "header",
+          "content": "Caption Settings"
+        },
+        {
           "type": "text",
           "id": "title",
-          "label": "Title",
+          "label": "Heading",
           "default": "Add a title to your image"
         },
         {
@@ -156,116 +160,117 @@
           "default": "Tell your brand's story through images"
         },
         {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button text",
-          "default": "Add a call to action"
+          "type": "color",
+          "id": "slide_text_color",
+          "label": "Heading and subheading",
+          "default": "#000000"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Slide link"
+          "label": "Link"
         },
-		{
-        "type": "select",
-        "id": "caption_horizontal",
-        "label": "Caption horizontal alignment",
-        "options": [
-          {
-            "value": "left",
-            "label": "Left"
-          },
-          {
-            "value": "center",
-            "label": "Center"
-          },
-          {
-            "value": "right",
-            "label": "Right"
-          }
-        ]
-      },
-      {
-        "type":      "range",
-        "id":        "caption_vertical",
-        "min":       5,
-        "max":       50,
-        "step":      1,
-        "unit":      "%",
-        "label":     "Caption vertical alignment",
-        "default":   50
-      },
-      {
-        "type": "color",
-        "id": "slide_text_color",
-        "label": "Text color",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "cta_color",
-        "label": "Button text color",
-        "default": "#ffffff"
-      },
-      {
-        "type": "color",
-        "id": "cta_background",
-        "label": "Button background",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "caption_background",
-        "label": "Caption background",
-        "default": "transparent"
-      },
-	  {
-        "type": "select",
-        "id": "caption_opacity",
-        "label": "Caption background opacity",
-        "options": [
-          {
-            "value": "0.1",
-            "label": "10%"
-          },
-          {
-            "value": "0.2",
-            "label": "20%"
-          },
-          {
-            "value": "0.3",
-            "label": "30%"
-          },
-          {
-            "value": "0.4",
-            "label": "40%"
-          },
-          {
-            "value": "0.5",
-            "label": "50%"
-          },
-          {
-            "value": "0.6",
-            "label": "60%"
-          },
-          {
-            "value": "0.7",
-            "label": "70%"
-          },
-          {
-            "value": "0.8",
-            "label": "80%"
-          },
-          {
-            "value": "0.9",
-            "label": "90%"
-          },
-          {
-            "value": "1.0",
-            "label": "100%"
-          }
-        ]
-      }
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Add a button",
+		      "info": "Visible only if a link is chosen"
+        },
+        {
+          "type": "color",
+          "id": "cta_color",
+          "label": "Button text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "cta_background",
+          "label": "Button background",
+          "default": "#000000"
+        },
+  		  {
+          "type": "select",
+          "id": "caption_horizontal",
+          "label": "Caption horizontal position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ]
+        },
+        {
+          "type":      "range",
+          "id":        "caption_vertical",
+          "min":       5,
+          "max":       50,
+          "step":      1,
+          "unit":      "%",
+          "label":     "Caption vertical position",
+          "default":   50
+        },
+        {
+          "type": "color",
+          "id": "caption_background",
+          "label": "Caption background",
+          "default": "transparent"
+        },
+        {
+          "type": "select",
+          "id": "caption_opacity",
+          "label": "Caption background opacity",
+          "options": [
+            {
+              "value": "0.1",
+              "label": "10%"
+            },
+            {
+              "value": "0.2",
+              "label": "20%"
+            },
+            {
+              "value": "0.3",
+              "label": "30%"
+            },
+            {
+              "value": "0.4",
+              "label": "40%"
+            },
+            {
+              "value": "0.5",
+              "label": "50%"
+            },
+            {
+              "value": "0.6",
+              "label": "60%"
+            },
+            {
+              "value": "0.7",
+              "label": "70%"
+            },
+            {
+              "value": "0.8",
+              "label": "80%"
+            },
+            {
+              "value": "0.9",
+              "label": "90%"
+            },
+            {
+              "value": "1.0",
+              "label": "100%"
+            }
+          ]
+        }
       ]
     }
   ],
@@ -273,7 +278,7 @@
     {
       "type": "checkbox",
       "id": "display_wide",
-	     "label": "Make slideshow full width"
+	     "label": "Enable full width"
     },
       {
         "type":      "range",
@@ -295,14 +300,14 @@
         "max":       36,
         "step":      1,
         "unit":      "px",
-        "label":     "Slide title size",
+        "label":     "Heading size",
         "default":   22
       },
 
       {
         "type": "select",
         "id": "slide_title_weight",
-        "label": "Slide title weight",
+        "label": "Heading weight",
 		    "default": "700",
         "options": [
           {
@@ -326,7 +331,7 @@
         "max":       36,
         "step":      1,
         "unit":      "px",
-        "label":     "Slide caption size",
+        "label":     "Subheading size",
         "default":   14
       },
       {
@@ -336,14 +341,14 @@
         "max":       36,
         "step":      1,
         "unit":      "px",
-        "label":     "Slide button size",
+        "label":     "Button text size",
         "default":   14
       },
 
       {
         "type": "select",
         "id": "cta_weight",
-        "label": "Slide button weight",
+        "label": "Button text weight",
 		    "default": "400",
         "options": [
           {
