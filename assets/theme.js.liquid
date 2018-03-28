@@ -1882,26 +1882,25 @@ theme.ProductForm = function (context, events) {
     });
   })();
 
-    (function smart_payment_buttons() {
-      var element = context.querySelector(".shopify-payment-button");
+  (function smart_payment_buttons() {
+    var element = context.querySelector(".shopify-payment-button");
 
-      if ( !element ) {
-        return false;
-      }
-
-      events.on("variantchange", function (variant) {
-        if ( !variant.available ) {
-           element.style.display = 'none';
-         } else {
-           element.style.display = 'block';
-         }
-      });
-    })();
-
-
-    function format_money(cents) {
-      return (window.Currency || Shopify).formatMoney(cents, config.money_format);
+    if ( !element ) {
+      return false;
     }
+
+    events.on("variantchange", function (variant) {
+      if ( !variant.available ) {
+         element.style.display = 'none';
+       } else {
+         element.style.display = 'block';
+       }
+    });
+  })();
+
+  function format_money(cents) {
+    return (window.Currency || Shopify).formatMoney(cents, config.money_format);
+  }
 
 }
 
@@ -2022,7 +2021,7 @@ theme.ProductGallery = function (context, events) {
         return false;
       }
 
-      context.setAttribute("style","opacity: 1; z-index: 2;");
+      $elements.attr("style","opacity: 1; z-index: 2;");
       $elements
         .removeClass("flex-active-slide")
         .hide()
@@ -2034,37 +2033,37 @@ theme.ProductGallery = function (context, events) {
   })();
 
   (function mobile_gallery() {
-      $(".mobile-gallery").flexslider({
-        animation: 'fade',
-        slideshow: false,
-        directionNav: true,
-        controlNav: false,
-        nextText: '',
-        prevText: ''
-      });
+    $(".mobile-gallery").flexslider({
+      animation: 'fade',
+      slideshow: false,
+      directionNav: true,
+      controlNav: false,
+      nextText: '',
+      prevText: ''
+    });
 
-      var $elements = $(".product-slide", context);
+    var $elements = $(".product-slide", context);
 
-      events
-        .on("variantchange:image", select);
+    events
+      .on("variantchange:image", select);
 
-      function select(id) {
-        var image = $elements.filter("[data-image-id=" + id + "]");
+    function select(id) {
+      var image = $elements.filter("[data-image-id=" + id + "]");
 
-        if ( !image.length ) {
-          return false;
-        }
+      if ( !image.length ) {
+        return false;
+      }
 
-        context.setAttribute("style","opacity: 1; z-index: 2;");
-        $elements
-          .removeClass("flex-active-slide")
-          .hide()
-          .filter(image)
-          .addClass("flex-active-slide")
-          .show();
-      };
+      $elements.attr("style","opacity: 1; z-index: 2;");
+      $elements
+        .removeClass("flex-active-slide")
+        .hide()
+        .filter(image)
+        .addClass("flex-active-slide")
+        .show();
+    };
 
-    })();
+  })();
 
   (function zoom() {
     var elements = context.querySelectorAll(".product-main-image");
