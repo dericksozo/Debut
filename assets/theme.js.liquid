@@ -1882,24 +1882,27 @@ theme.ProductForm = function (context, events) {
     });
   })();
 
-  (function smart_payment_buttons() {
-    var element = context.querySelector(".shopify-payment-button");
+    (function smart_payment_buttons() {
+      var element = context.querySelector(".shopify-payment-button");
 
-    events.on("variantchange", function (variant) {
+      if ( !element ) {
+        return false;
+      }
+
+      events.on("variantchange", function (variant) {
+        if ( !variant.available ) {
+           element.style.display = 'none';
+         } else {
+           element.style.display = 'block';
+         }
+      });
+    })();
 
 
-      if ( !variant.available ) {
-         element.style.display = 'none';
-       } else {
-         element.style.display = 'block';
-       }
+    function format_money(cents) {
+      return (window.Currency || Shopify).formatMoney(cents, config.money_format);
+    }
 
-    });
-  })();
-
-  function format_money(cents) {
-    return (window.Currency || Shopify).formatMoney(cents, config.money_format);
-  }
 }
 
 theme.ProductGallery = function (context, events) {
@@ -1977,7 +1980,6 @@ theme.ProductGallery = function (context, events) {
     }
 
     if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/Android/i))) {
-         do something different for these
     } else {
       initThumbSlider($('.thumbnail-slider'));
     }
@@ -2031,6 +2033,39 @@ theme.ProductGallery = function (context, events) {
 
   })();
 
+  (function mobile_gallery() {
+      $(".mobile-gallery").flexslider({
+        animation: 'fade',
+        slideshow: false,
+        directionNav: true,
+        controlNav: false,
+        nextText: '',
+        prevText: ''
+      });
+
+      var $elements = $(".product-slide", context);
+
+      events
+        .on("variantchange:image", select);
+
+      function select(id) {
+        var image = $elements.filter("[data-image-id=" + id + "]");
+
+        if ( !image.length ) {
+          return false;
+        }
+
+        context.setAttribute("style","opacity: 1; z-index: 2;");
+        $elements
+          .removeClass("flex-active-slide")
+          .hide()
+          .filter(image)
+          .addClass("flex-active-slide")
+          .show();
+      };
+
+    })();
+
   (function zoom() {
     var elements = context.querySelectorAll(".product-main-image");
 
@@ -2075,6 +2110,46 @@ theme.Product = (function () {
     container.querySelectorAll("[data-product-gallery]").forEach(function (context) {
       theme.ProductGallery(context, events);
     });
+
+    // Collection carousel  edit to work with new theme editor
+    var initHomepageCarousel = function(productCarousel) {
+      productCarousel.owlCarousel({
+        itemsCustom : [
+          [0, 2],
+          [450, 2],
+          [600, 2],
+          [700, 3],
+          [1000, 4],
+          [1200, 5],
+          [1400, 5],
+          [1600, 5]
+        ],
+        lazyLoad : false,
+        pagination : false,
+        navigation: true,
+        navigationText : false,
+        autoPlay : false,
+        stopOnHover : true
+      });
+    };
+
+    initHomepageCarousel($('.collection-carousel'));
+
+    $(document).on('shopify:section:unload', function(event) {
+      var target = $(event.target);
+      target.find('.collection-carousel').owlCarousel("destroy");
+      $(document).off('.collection-carousel');
+    });
+
+    $(document).on('shopify:section:load', function(event) {
+      initHomepageCarousel($(event.target).find('.collection-carousel'));
+      $('.prod-image').matchHeight({ remove: true });
+      setTimeout(heightFix, 500);
+      function heightFix() {
+      $('.prod-image').matchHeight();
+      }
+    });
+
   }
 
   Product.prototype = _.assignIn({}, Product.prototype, {});
