@@ -35,18 +35,18 @@
               {% if block.settings.image != blank %}
                 {% assign image_box_ratio = block.settings.image.height | append: ".0" | times: 1 | divided_by: block.settings.image.width | times: 100 | append: "%" %}
                 {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-                <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
-                  {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+                {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
+                  <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
                     <img class="slideshow__image slideshow__image--{{ block.id }} lazyload lazyload-fade"
-                      src="{{ block.settings.image | img_url: '300x' }}"
-                      data-srcset="{{ img_url }}"
-                      data-widths="[540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-src="{{ img_url }}"
                       data-sizes="auto"
                       data-parent-fit="cover"
                       alt="{{ block.settings.image.alt | escape }}">
-                  {% if block.settings.link != blank %}</a>{% endif %}
-                </div>
+                  </div>
+                  <noscript>
+                    <img src="{{ block.settings.image | img_url: '1024x' }}" alt="{{ block.settings.image.alt | escape }}" class="slideshow__image slideshow__image--{{ block.id }}">
+                  </noscript>
+                {% if block.settings.link != blank %}</a>{% endif %}
               {% endif %}
 
               {% if block.settings.image == blank %}
