@@ -11,7 +11,7 @@
 {% assign product_image_box_ratio_max = product_image_box_ratio_max | append: "%" %}
 
 
-<div class="product-main-images {% if product.images.size > 1 %}desktop-10 tablet-5{% else %}desktop-12 tablet-6{% endif %} mobile-3">
+<div class="product-main-images {% if product.images.size > 1 %}desktop-10 tablet-5{% else %}desktop-12 tablet-6{% endif %} mobile-hide">
   <div class="product-image-container" style="padding-bottom: {{ product_image_box_ratio_max }};" >
     {% for image in product.images %}
       {% assign image_box_ratio = image.height | append: ".0" | times: 1 | divided_by: image.width | times: 100 | append: "%" %}
@@ -35,7 +35,7 @@
 </div>
 
 {% if product.images.size > 1 %}
-  <div id="thumbnail-gallery" class="product-thumbnails desktop-2 tablet-1 mobile-3">
+  <div id="thumbnail-gallery" class="product-thumbnails desktop-2 tablet-1 mobile-hide">
     {% if product.images.size > 4 %}<div class="thumbnail-slider">{% endif %}
       {% for image in product.images %}
         {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}

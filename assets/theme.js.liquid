@@ -2032,39 +2032,6 @@ theme.ProductGallery = function (context, events) {
 
   })();
 
-  (function mobile_gallery() {
-    $(".mobile-gallery").flexslider({
-      animation: 'fade',
-      slideshow: false,
-      directionNav: true,
-      controlNav: false,
-      nextText: '',
-      prevText: ''
-    });
-
-    var $elements = $(".product-slide", context);
-
-    events
-      .on("variantchange:image", select);
-
-    function select(id) {
-      var image = $elements.filter("[data-image-id=" + id + "]");
-
-      if ( !image.length ) {
-        return false;
-      }
-
-      $elements.attr("style","opacity: 1; z-index: 2;");
-      $elements
-        .removeClass("flex-active-slide")
-        .hide()
-        .filter(image)
-        .addClass("flex-active-slide")
-        .show();
-    };
-
-  })();
-
   (function zoom() {
     var elements = context.querySelectorAll(".product-main-image");
 
@@ -2097,56 +2064,46 @@ theme.ProductGallery = function (context, events) {
   })();
 }
 
+theme.ProductMobileGallery = function (events) {
+  var $element = $('.mobile-gallery');
+
+  if ( !$element.length ) {
+    return false;
+  }
+
+  $element.flexslider({
+    animation: 'fade',
+    slideshow: false,
+    directionNav: true,
+    controlNav: false,
+    nextText: '',
+    prevText: ''
+  });
+
+  events.on("variantchange:image", select);
+
+  function select(id) {
+    var slides = $element.find("[data-image-id]");
+    var slide = slides.filter("[data-image-id=" + id + "]");
+    var index = slides.index(slide);
+
+    $element.flexslider(index);
+  };
+}
+
 theme.Product = (function () {
   function Product(container) {
     var events = new EventEmitter3();
     events.trigger = events.emit; // alias
 
-    container.querySelectorAll("[data-product-form]").forEach(function (context) {
-      theme.ProductForm(context, events);
-    });
+    theme.ProductMobileGallery(events);
 
     container.querySelectorAll("[data-product-gallery]").forEach(function (context) {
       theme.ProductGallery(context, events);
     });
 
-    // Collection carousel  edit to work with new theme editor
-    var initHomepageCarousel = function(productCarousel) {
-      productCarousel.owlCarousel({
-        itemsCustom : [
-          [0, 2],
-          [450, 2],
-          [600, 2],
-          [700, 3],
-          [1000, 4],
-          [1200, 5],
-          [1400, 5],
-          [1600, 5]
-        ],
-        lazyLoad : false,
-        pagination : false,
-        navigation: true,
-        navigationText : false,
-        autoPlay : false,
-        stopOnHover : true
-      });
-    };
-
-    initHomepageCarousel($('.collection-carousel'));
-
-    $(document).on('shopify:section:unload', function(event) {
-      var target = $(event.target);
-      target.find('.collection-carousel').owlCarousel("destroy");
-      $(document).off('.collection-carousel');
-    });
-
-    $(document).on('shopify:section:load', function(event) {
-      initHomepageCarousel($(event.target).find('.collection-carousel'));
-      $('.prod-image').matchHeight({ remove: true });
-      setTimeout(heightFix, 500);
-      function heightFix() {
-      $('.prod-image').matchHeight();
-      }
+    container.querySelectorAll("[data-product-form]").forEach(function (context) {
+      theme.ProductForm(context, events);
     });
 
   }

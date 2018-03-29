@@ -6,10 +6,11 @@
 
   <div class="product-top">
 
-    {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+    {% if template != 'product.quick' %}
+    {% comment %} Don't show in quick view popup {% endcomment %}
       <!-- For Mobile -->
       <div id="mobile-product" class="mobile-3">
-        <div class="mobile-gallery" data-product-gallery>
+        <div class="mobile-gallery">
           {%- if product.featured_image -%}
             <ul class="slides">
              {% for image in product.images %}
@@ -41,7 +42,7 @@
       </div>
     {% endif %}
 
-    <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery>
+    <div class="product-photos desktop-7 tablet-3 mobile-hide" data-product-gallery>
       {%- if product.featured_image -%}
         {% include 'product-image-gallery' %}
       {%- else -%}
