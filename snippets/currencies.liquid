@@ -1,5 +1,3 @@
-{% if settings.show_multiple_currencies %}
-
 {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
 {{ "jquery.currencies.min.js" | asset_url | script_tag }}
 
@@ -12,10 +10,10 @@ var shopCurrency = '{{ shop.currency }}';
 /* Sometimes merchants change their shop currency, let's tell our JavaScript file */
 Currency.moneyFormats[shopCurrency].money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
 Currency.moneyFormats[shopCurrency].money_format = {{ shop.money_format | strip_html | json }};
-  
+
 /* Default currency */
 var defaultCurrency = '{{ settings.default_currency | default: shop.currency }}';
-  
+
 /* Cookie currency */
 var cookieCurrency = Currency.cookie.read();
 
@@ -65,11 +63,9 @@ var selectCallback = function(variant, selector) {
 
 $('body').on('ajaxCart.afterCartLoad', function(cart) {
   Currency.convertAll(shopCurrency, jQuery('[name=currencies]').val());
-  jQuery('.selected-currency').text(Currency.currentCurrency);  
+  jQuery('.selected-currency').text(Currency.currentCurrency);
 });
 
 jQuery('.selected-currency').text(Currency.currentCurrency);
 
 </script>
-
-{% endif %}

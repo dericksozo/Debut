@@ -28,18 +28,26 @@
 
 {% endfor %}
 
-{% unless settings.image-flip %}
+{% unless settings.secondary_images_hover == 'image_flip' %}
   <script>
-   
     $('#product-listing-{{ product.id }} .col-swatch li').each(function(){
-      var Original = $('#product-listing-{{ product.id }} .prod-image img').attr('data-original'); 
+
+      var Original = $('#product-listing-{{ product.id }} .prod-image img').attr('data-original');
+
       $(this).hover(function() {
-      var newImage = $(this).attr('data-href');            
-      $( '#product-listing-{{ product.id }} .prod-image img' ).attr({ src: newImage }); 
-        return false;          
-        }, function(){
-        $( '#product-listing-{{ product.id }} .prod-image img' ).attr({ src: Original }); 
-          });
+        var newImage = $(this).attr('data-href');
+
+        $( '#product-listing-{{ product.id }} .prod-image img' ).attr({
+          srcset: newImage
+        });
+
+        return false;
+      },
+      function(){
+        $( '#product-listing-{{ product.id }} .prod-image img' ).attr({
+          srcset: Original
+        });
       });
+    });
   </script>
 {% endunless %}

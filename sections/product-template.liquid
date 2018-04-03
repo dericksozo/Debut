@@ -1,130 +1,195 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
 <div itemscope itemtype="http://schema.org/Product" id="product-{{ product.id }}" class="product-section" data-section-id="{{ section.id }}" data-section-type="product-section">
 
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-<!-- For Mobile -->
-  <div id="mobile-product" class="mobile-3">
-    <div class="mobile-gallery">
-      <ul class="slides">
-        {% for image in product.images %}
-        <li data-thumb="{{ image | product_img_url: 'small' }}" data-image-id="{{ image.id }}"><img data-image-id="{{ image.id }}" src="{{ image.src | product_img_url: 'grande' }}" alt="{{ image.alt | escape }}"></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-{% endif %}
+  <div class="product-top">
 
-  <!-- For Desktop -->
-	<div id="product-photos" class="desktop-7 tablet-3 mobile-3">
-    {% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
-    <div class="bigimage desktop-10 tablet-5">
-      <img id="product-main-image" src="{{ featured_image | img_url: '1024x1024' }}" data-image-id="{{ image.id }}" data-zoom-image="{{ featured_image | img_url: 'original' }}" alt='{{ image.alt }}' title="{{ product.title }}"/>
-    </div>
-    <div id="product-gallery" class="desktop-2 tablet-1">
-      <div class="thumbnail-slider">
-        {% for image in product.images %}
-        <div class="slide">
-          <a href="#" data-image="{{ image | product_img_url: '1024x1024' }}" data-image-id="{{ image.id }}" data-zoom-image="{{ image | product_img_url: 'original' }}">
-            <img class="thumbnail" src="{{ image | product_img_url: 'compact' }}" data-image-id="{{ image.id }}" alt="{{ image.alt }}" data-image-id="{{ image.id }}" />
-          </a>
+    {% if template != 'product.quick' %}
+    {% comment %} Don't show in quick view popup {% endcomment %}
+      <!-- For Mobile -->
+      <div id="mobile-product" class="mobile-3">
+        <div class="mobile-gallery">
+          {%- if product.featured_image -%}
+            <ul class="slides">
+             {% for image in product.images %}
+               {% assign selected = "" %}
+               {%- assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
+               {% if image == featured_image %}
+                 {% assign selected = "flex-active-slide" %}
+               {% endif %}
+               {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+               <li id="slide" class="product-slide slide_image {{ selected }}" data-image-id="{{ image.id }}">
+                <img class="slideshow__image slideshow__image--{{ block.id }} lazyload lazyload-fade"
+                  src="{{ image | product_img_url: '300x' }}"
+                  data-src="{{ img_url }}"
+                  data-sizes="auto"
+                  data-zoom-src="{{ img_url }}"
+                  alt="{{ image.alt | escape }}">
+                  <noscript>
+                    <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.featured_image.alt }}">
+                  </noscript>
+               </li>
+             {% endfor %}
+            </ul>
+          {%- else -%}
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
         </div>
-        {% endfor %}
       </div>
+    {% endif %}
+
+    <div class="product-photos desktop-7 tablet-3 mobile-hide" data-product-gallery>
+      {%- if product.featured_image -%}
+        {% include 'product-image-gallery' %}
+      {%- else -%}
+        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
     </div>
+
+    <div id="product-right" class="desktop-5 tablet-3 mobile-3">
+      <div id="product-description">
+        {% if settings.vendor %}
+          <h3>{{ product.vendor }}</h3>
+        {% endif %}
+        <h1 itemprop="name">{{ product.title }}</h1>
+        {% if section.settings.subtitle %}
+          <p>{{ page_title }}</p>
+        {% endif %}
+    	  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+          {% capture product_form_config %}
+            { "money_format": {{ shop.money_format | json }},
+              "enable_history": true,
+              "sold_out": {{ "products.product.sold_out" | t | json }},
+              "button": {{ 'products.product.add_to_cart' | t | json }},
+              "unavailable": {{ 'products.product.unavailable' | t | json }}
+            }
+          {% endcapture %}
+          {% include 'product-form' %}
+
+          {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+            {% if section.settings.product_description == 'right' %}
+            <div class="rte" itemprop="description">{{ product.description }}</div>
+            {% endif %}
+          {% endif %}
+          </div>
+          <div class="desc">
+            {%- if section.settings.show_social -%}
+              {% include 'social' with product %}
+            {%- endif -%}
+            {% if template == 'product.quick' %}
+              <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
+            {% endif %}
+          </div>
+      </div>
+
+      {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+        <ul id="popups">
+          {% if section.settings.popup_one != blank %}
+            <li class="first">
+              <a href="#pop-one" class="fancybox">{{ pages[section.settings.popup_one].title }}</a>
+            </li>
+          {% endif %}
+          {% if section.settings.popup_two != blank %}
+            <li>
+              <a href="#pop-two" class="fancybox">{{ pages[section.settings.popup_two].title }}</a>
+            </li>
+          {% endif %}
+          {% if section.settings.popup_three != blank %}
+            <li>
+              <a href="#pop-three" class="fancybox">{{ pages[section.settings.popup_three].title }}</a>
+            </li>
+          {% endif %}
+          {% if section.settings.popup_four %}
+            <li class="last">
+              <a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a>
+            </li>
+          {% endif %}
+        </ul>
+        {% if section.settings.popup_one != blank %}
+          <div id="pop-one" style="display: none">{{ pages[section.settings.popup_one].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_two != blank %}
+          <div id="pop-two" style="display: none">{{ pages[section.settings.popup_two].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_three != blank %}
+          <div id="pop-three" style="display: none">{{ pages[section.settings.popup_three].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_four %}
+          <div id="pop-four" style="display: none">{% include 'question' %}</div>
+        {% endif %}
+      {% endif %}
+    </div>
+    {%- if section.settings.zoom_image_position == 'zoom_on_right' -%}
+      <div class="zoom-box"></div>
+    {%- endif -%}
   </div>
 
-  <div id="product-right" class="desktop-5 tablet-3 mobile-3">
-    <div id="product-description">
-      {% if settings.vendor %}<h3>{{ product.vendor }}</h3>{% endif %}
-      <h1 itemprop="name">{{ product.title }}</h1>
-      {% if section.settings.subtitle %}<p>{{ page_title }}</p>{% endif %}
-	  <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-      <p id="product-price">
-        {% if product.available %}
-        {% if product.compare_at_price > product.price %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>&nbsp;<span class="was">{{ product.compare_at_price | money }}</span>
-        {% else %}
-        <span class="product-price" itemprop="price">{{ product.price | money }}</span>
-        {% endif %}
-        {% else %}
-        <span class="product-price" itemprop="price">{{ 'products.product.sold_out' | t }}</span>
-        {% endif %}
-      </p>
-        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
-        <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
-      {% include 'short-form' %}
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-        {% if section.settings.product-description == 'right' %}
+  {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
+    {% if section.settings.product_description == 'bottom' %}
+      <div class="clear"></div>
+      <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
+        <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
         <div class="rte" itemprop="description">{{ product.description }}</div>
-        {% endif %}
-{% endif %}
       </div>
-      <div class="desc">
-        {% include 'social' with product %}
-        {% if template == 'product.quick' %}
-          <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
-        {% endif %}
-      </div>
-    </div>
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-    <ul id="popups">
-      {% if section.settings.popup-one != blank %}<li class="first"><a href="#pop-one" class="fancybox">{{ pages[section.settings.popup-one].title }}</a></li>{% endif %}
-      {% if section.settings.popup-two != blank %}<li><a href="#pop-two" class="fancybox">{{ pages[section.settings.popup-two].title }}</a></li>{% endif %}
-      {% if section.settings.popup-three != blank %}<li><a href="#pop-three" class="fancybox">{{ pages[section.settings.popup-three].title }}</a></li>{% endif %}
-      {% if section.settings.popup-4 %}<li class="last"><a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a></li>{% endif %}
-    </ul>
-     {% if section.settings.popup-one != blank %}<div id="pop-one" style="display: none">{{ pages[section.settings.popup-one].content }}</div>{% endif %}
-     {% if section.settings.popup-two != blank %}<div id="pop-two" style="display: none">{{ pages[section.settings.popup-two].content }}</div>{% endif %}
-     {% if section.settings.popup-three != blank %}<div id="pop-three" style="display: none">{{ pages[section.settings.popup-three].content }}</div>{% endif %}
-     {% if section.settings.popup-4 %}<div id="pop-four" style="display: none">{% include 'question' %}</div>{% endif %}
-{% endif %}
-   </div>
-
-{% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-  {% if section.settings.product-description == 'bottom' %}
-  <div class="clear"></div>
-  <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
-    <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
-    <div class="rte" itemprop="description">{{ product.description }}</div>
-  </div>
+    {% endif %}
+    <div class="clear"></div>
+    {% if collection %}
+      {% include 'related-products' %}
+    {% endif %}
+    <div class="clear"></div>
   {% endif %}
-  <div class="clear"></div>
-  {% if collection %}
-  {% include 'related-products' %}
-  {% endif %}
-  <div class="clear"></div>
-{% endif %}
 </div>
 <style>
-  #product-right { background: {{ section.settings.product-form-background }}; padding: 20px; border: 7px double {{ section.settings.product-page-border }}; }
-  {% if section.settings.thumbnail-position == 'left' %}
-  .bigimage { float: right! important; }
+  #product-right {
+    background: {{ section.settings.product_form_background }};
+    padding: 20px;
+    border: 7px double {{ section.settings.product_page_border }};
+  }
+  {% if section.settings.thumbnail_position == 'left' %}
+    .product-main-images {
+      float: right !important;
+    }
   {% endif %}
-    @media screen and ( min-width: 741px ) {
-    {% if section.settings.form-left %}
+  @media screen and ( min-width: 741px ) {
+    {% if section.settings.form_left %}
       #product-description, #product-description .rte, #product-description h1 { text-align: left; }
       .add { margin: 0; }
       ul#popups { text-align: left; }
       ul#popups li { margin-left: 0; margin-right: 10px; }
+    {% endif %}
+  }
+  {% if section.settings.product_variants == 'swatches' %}
+    .select { display: none; }
+    /* Hiding the drop-downs. */
+    .product_variants, .selector-wrapper, .select { display: none; }
+    label[for="product-select-option-{{ option_index }}"] { display: none; }
+    #product-select-option-{{ option_index }} { display: none; }
+    #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+  {% endif %}
+  {% if section.settings.swatch_shape == 'circles' %}
+    .swatch .color label {
+      min-width: 34px !important;
+      width: 34px !important;
+      border-radius: 50%;
+      outline: 0 !important;
     }
   {% endif %}
-  {% if section.settings.product-variants == 'swatches' %}
-  .select { display: none; }
-  /* Hiding the drop-downs. */
-  product-variants, .selector-wrapper, .select { display: none; }
-  label[for="product-select-option-{{ option_index }}"] { display: none; }
-  #product-select-option-{{ option_index }} { display: none; }
-  #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
-  {% endif %}
-  {% if section.settings.swatch-shape == 'circles' %}
-  .swatch .color label {
-    min-width: 34px! important;
-    width: 34px! important;
-    border-radius: 50%;
-    outline: 0! important;
-  }
+  {% if product.images.size > 1 %}
+    .product-top .zoom-box {
+      left: 48%;
+    }
+  {% else %}
+    .product-top .zoom-box {
+      left: 57.5%;
+    }
   {% endif %}
 </style>
 {% schema %}
@@ -132,22 +197,98 @@
     "name": "Product page",
     "settings": [
     {
+      "type": "header",
+      "content": "Product Form Settings"
+    },
+    {
       "type": "color",
-      "id": "product-form-background",
-      "label": "Product options background",
+      "id": "product_form_background",
+      "label": "Product form background",
       "default": "#fff"
     },
     {
       "type": "color",
-      "id": "product-page-border",
-      "label": "Product options border",
+      "id": "product_page_border",
+      "label": "Product form border",
       "default": "#f0f0f0"
     },
-      {
-        "type": "select",
-        "id": "thumbnail-position",
-        "label": "Thumbnail position",
-        "options": [
+    {
+      "type": "select",
+      "id": "product_variants",
+      "label": "Product variant style",
+      "info": "Choose how variants are presented",
+      "options": [
+        {
+          "value": "swatches",
+          "label": "Swatches"
+        },
+        {
+          "value": "dropdowns",
+          "label": "Drop downs"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "use_swatch_images",
+      "label": "Show custom swatch images",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "swatch_shape",
+      "label": "Color swatch shape",
+      "options": [
+        {
+          "value": "circles",
+          "label": "Circles"
+        },
+        {
+          "value": "rectangles",
+          "label": "Rectangles"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "form_left",
+      "label": "Left align product form",
+      "default": false,
+      "info": "will be centered on mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "subtitle",
+      "label": "Show page subtitle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "Show quantity selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show variant SKU",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_button",
+      "label": "Show dynamic checkout button",
+      "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_position",
+      "label": "Thumbnail position",
+      "options": [
           {
             "value": "right",
             "label": "Right"
@@ -160,47 +301,38 @@
       },
       {
         "type": "select",
-        "id": "product-variants",
-        "label": "Product variants",
-        "info": "Choose how variants are presented",
+        "id": "zoom_image_position",
+        "label": "Zoom image position",
         "options": [
           {
-            "value": "swatches",
-            "label": "Swatches"
+            "value": "zoom_on_right",
+            "label": "To right of main image"
           },
           {
-            "value": "dropdowns",
-            "label": "Drop downs"
+            "value": "zoom_over_main",
+            "label": "Over top of main image"
           }
         ]
       },
       {
-        "type": "checkbox",
-        "id": "form-left",
-        "label": "Left align product form",
-        "default": false,
-        "info": "will be centered on mobile"
+        "type": "header",
+        "content": "Product Content"
       },
       {
         "type": "checkbox",
-        "id": "subtitle",
-        "label": "Show page sub title",
+        "id": "show_social",
+        "label": "Show social share icons",
         "default": true
       },
       {
         "type": "checkbox",
-        "id": "product_quantity",
-        "label": "Show quantity selector"
-      },
-      {
-        "type": "checkbox",
-        "id": "show-sku",
-        "label": "Show variant SKU",
+        "id": "popup_four",
+        "label": "Show contact form link",
         "default": true
       },
       {
         "type": "select",
-        "id": "product-description",
+        "id": "product_description",
         "label": "Description position",
         "options": [
           {
@@ -214,27 +346,6 @@
         ]
       },
       {
-        "type": "checkbox",
-        "id": "use-swatch-images",
-        "label": "Show custom swatch images",
-        "default": true
-      },
-      {
-        "type": "select",
-        "id": "swatch-shape",
-        "label": "Color swatch shape",
-        "options": [
-          {
-            "value": "circles",
-            "label": "circles"
-          },
-          {
-            "value": "rectangles",
-            "label": "Rectangles"
-          }
-        ]
-      },
-      {
         "type": "header",
         "content": "Additional info popups"
       },
@@ -244,25 +355,19 @@
       },
       {
         "type": "page",
-        "id": "popup-one",
+        "id": "popup_one",
         "label": "Choose content for first popup"
       },
       {
         "type": "page",
-        "id": "popup-two",
+        "id": "popup_two",
         "label": "Choose content for second popup"
       },
       {
         "type": "page",
-        "id": "popup-three",
+        "id": "popup_three",
         "label": "Choose content for third popup"
-      },
-      {
-        "type": "checkbox",
-        "id": "popup-4",
-        "label": "Show contact form",
-        "default": true
       }
-	]
+    ]
   }
 {% endschema %}

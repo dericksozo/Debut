@@ -2,17 +2,19 @@
   <div class="row">
     <div id="homepage-blog">
       {% if section.settings.title != blank %}
-      <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.title | escape }}</h2></div>
+        <div class="section-title lines desktop-12 tablet-6 mobile-3">
+          <h2>{{ section.settings.title | escape }}</h2>
+        </div>
       {% endif %}
       {%- assign blog = blogs[section.settings.blog] -%}
       {%- assign post_limit = section.settings.post_limit -%}
       <div id="article-loop">
-        {% if blog == blank %}
-        {% include 'onboard-blog' %}
+        {% if blog.articles.size == 0 %}
+          {% include 'onboard-blog' %}
         {% else %}
-        {% for article in blog.articles limit: post_limit %}
-        {% include 'article-loop' %}
-        {% endfor %} 
+          {% for article in blog.articles limit: post_limit %}
+            {% include 'article-loop' %}
+          {% endfor %}
         {% endif %}
       </div>
     </div>
@@ -42,7 +44,7 @@
         "min":       3,
         "max":       12,
         "step":      3,
-        "label":     "Posts",
+        "label":     "Posts shown",
         "default":   3
       }
   ],

@@ -1,38 +1,38 @@
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" >
   <div class="row">
-    
+
     <div class="desktop-12 tablet-6 mobile-3">
-      
+
       {% if section.settings.title != blank %}
-      <div class="section-title lines"><h1>{{ section.settings.title | escape }}</h1></div>
+      <div class="section-title lines"><h2>{{ section.settings.title | escape }}</h2></div>
       {% endif %}
-      
-      
+
+
       <div class="pages-content">
         {% if section.settings.page != blank %}
         {%- assign feat_page = pages[section.settings.page] -%}
         {{ feat_page.content }}
         {% else %}
         <div class="rte">
-        {{ section.settings.rich-text }}
+        {{ section.settings.rich_text }}
         </div>
         {% endif %}
-        
-        {% if section.settings.page == blank and section.settings.rich-text == blank %}
+
+        {% if section.settings.page == blank and section.settings.rich_text == blank %}
         <div class="content-onboard">
           <p>Use this section to tell customers about your store or add content from one of your pages which makes it easy to add images, video or any other content</p>
         </div>
         {% endif %}
       </div>
-      
+
     </div>
   </div>
-</section> 
+</section>
 
 
 {% schema %}
-{   
-  "name": "Additional content",
+{
+  "name": "Rich text",
   "settings": [
     {
       "type": "text",
@@ -42,7 +42,7 @@
     },
       {
         "type": "richtext",
-        "id": "rich-text",
+        "id": "rich_text",
         "label": "Text",
         "info": "Use basic HTML to format text"
       },
@@ -52,12 +52,11 @@
 	  "label": "Or Show content from a page"
     }
    ],
-   "presets":[  
-      {  
+   "presets":[
+      {
        "name":"Rich text",
        "category":"Text"
       }
    ]
 }
 {% endschema %}
-
