@@ -11,19 +11,24 @@
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="instagram">
     <div id="instagram-card" class="row">
       {% if section.settings.title != blank %}
-      <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2><a href="//instagram.com/{{ settings.instagram_id }}" target="_blank">{{ section.settings.title | escape }}</a></h2></div>
+        <div class="section-title lines desktop-12 tablet-6 mobile-3">
+          <h2>
+            <a href="//instagram.com/{{ settings.instagram_id }}" target="_blank">
+              {{ section.settings.title | escape }}
+            </a>
+          </h2>
+        </div>
       {% endif %}
 
     {% assign token = section.settings.instagram_access_token %}
     {% capture userid %}
-    {{- token | truncate: 9, "" -}}
+      {{- token | truncate: 9, "" -}}
     {% endcapture %}
 
       {% if section.settings.instagram_access_token != blank %}
-      <div id="instafeed-{{ section.id }}" data-access-token="{{ token }}"></div>
+        <div id="instafeed-{{ section.id }}" data-access-token="{{ token }}"></div>
       {% else %}
-
-      {% include 'onboard-instagram' %}
+        {% include 'onboard-instagram' %}
       {% endif %}
     </div>
 </section>
@@ -35,10 +40,6 @@
     height: 0;
     padding-bottom: 100%;
     overflow: hidden;
-<<<<<<< HEAD
-=======
-    margin-bottom: 25px;
->>>>>>> bugfix/instagram
   }
 </style>
 
