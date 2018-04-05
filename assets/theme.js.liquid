@@ -1466,7 +1466,7 @@ $(document).ready(function() {
   $(".prev").click(function(){
     owl.trigger('owl.prev');
   })
-  
+
   // Call Fancybox on all elemnets with class "fancybox"
   $(".fancybox").fancybox({
     helpers: {
@@ -2008,10 +2008,6 @@ theme.ProductGallery = function (context, events) {
       initThumbSlider($('.thumbnail-slider'));
     }
 
-    if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/Android/i))) {
-    } else {
-      initThumbSlider($('.thumbnail-slider'));
-    }
     $(document).on('shopify:section:unload', function(event) {
       var target = $(event.target);
       target.find('.thumbnail-slider').bxSlider("destroy");
