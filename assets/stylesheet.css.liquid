@@ -1796,7 +1796,7 @@ li.seeks {
   margin: 5px;
 }
 
-.homepage-text-promo img {
+.homepage-text-promo .box-ratio {
   margin-bottom: 10px;
 }
 
@@ -2258,6 +2258,11 @@ ol.flex-control-nav {
   margin-bottom: 10px;
 }
 
+#product-price {
+  border-bottom: 1px solid {{ settings.dotted_color }};
+  padding-bottom: 12px;
+}
+
 #product-right {
   padding: 20px;
 }
@@ -2270,9 +2275,7 @@ ol.flex-control-nav {
 #product-description form,
 .product-description form {
   margin-bottom: 10px;
-  border-top: 1px solid {{ settings.dotted_color }};
   border-bottom: 1px solid {{ settings.dotted_color }};
-  padding-top: 10px;
 }
 
 .selector-wrapper {
@@ -3549,9 +3552,10 @@ Swatches Styles
   margin:0;
 }
 /* Label */
-.swatch .header {
+.swatch h5 {
   margin: 0.5em 0;
   font-weight: bold;
+  font-size: 14px;
 }
 /* Hide radio buttons.*/
 .swatch input {
@@ -4264,7 +4268,7 @@ ul.megamenu li > ul.mega-stack li a:hover {
   color: {{ settings.dropdown_link_hover_color }} !important;
 }
 
-.megamenu img {
+.megamenu .box-ratio {
   margin-top: 20px;
 }
 
