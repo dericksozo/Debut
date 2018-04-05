@@ -47,7 +47,7 @@
       "label": "Background image position",
       "options": [{
         "value": "left top",
-        "label": "left top"
+        "label": "Left top"
       }, {
         "value": "left center",
         "label": "left center"
