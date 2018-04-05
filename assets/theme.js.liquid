@@ -1466,6 +1466,15 @@ $(document).ready(function() {
   $(".prev").click(function(){
     owl.trigger('owl.prev');
   })
+  
+  // Call Fancybox on all elemnets with class "fancybox"
+  $(".fancybox").fancybox({
+    helpers: {
+      overlay: {
+        locked: false
+      }
+    }
+  });
 
   // Call Fancybox on all elemnets with class "fancybox"
   $('.product-modal').fancybox({
