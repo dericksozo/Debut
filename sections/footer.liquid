@@ -73,9 +73,11 @@
       </ul>
       <div class="clear"></div>
       <div class="credit desktop-12 tablet-6 mobile-3">
-        {% for type in shop.enabled_payment_types %}
-        <img src="{{ type | payment_type_img_url }}" />
-        {% endfor %}
+        {%- if section.settings.show_credit_cards -%}
+          {% for type in shop.enabled_payment_types %}
+            <img src="{{ type | payment_type_img_url }}" />
+          {% endfor %}
+        {%- endif -%}
         <p>
           {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} •
           <a href="//www.shopifythemes.net" target="_blank" title="Shopify theme">Shopify Theme</a>
@@ -181,6 +183,13 @@
         "unit":       "px",
         "label":     "Footer title size",
         "default":   14
+      },
+      {
+        "type": "checkbox",
+        "id": "show_credit_cards",
+        "label": "Show credit card icons",
+        "default": true,
+        "info": "The icons that show are determined by your store's payment settings."
       }
     ],
    "blocks":[
