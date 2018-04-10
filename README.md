@@ -2,7 +2,7 @@
 
 ## Production (Live) Version
 
-**Version 5.1.5**
+**Version 6.0**
 
 ## Theme Facts
 
@@ -56,6 +56,24 @@
 # Testament Theme Changelog
 
 All notable changes to the Fashionopolism theme will be documented in this file.
+
+## [6.1] - 2018-04-10
+
+### Added
+- New footer setting for showing payment icons
+
+### Changed
+- Change version to 6.1 for bugfixes
+- Change footer block label from "connect" to capital "Connect"
+- Change theme settings colors label left top to Left top
+- Fix rich text heading from h2 to h1
+- Fix related products carousel on product template
+- Fix product price to be above border on product template
+- Fix custom swatchs to check section.settings not settings
+- Fix product popup fancy box intit
+- Fix product thumnail border on active img
+- Fix collection page sidebar image margin bottom
+- Fix product thumbnails bxslider carousel
 
 ## [6.0] - 2018-04-03
 
