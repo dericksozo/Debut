@@ -2,7 +2,7 @@
 
 ## Production (Live) Version
 
-**Version 6.0**
+**Version 6.1**
 
 ## Theme Facts
 
