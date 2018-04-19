@@ -28,36 +28,42 @@
         {% assign column_width = 'desktop-4 tablet-3 mobile-3' %}
       {% when 4 %}
         {% assign column_width = 'desktop-3 tablet-3 mobile-3' %}
+
     {% endcase %}
       {% for block in section.blocks %}
-      {% case block.type %}
-      {% when 'menu' %}
-      <div class="{{ column_width }}">
-        <h4>{{ block.settings.title | escape }}</h4>
-        <ul {{ block.shopify_attributes }}>
-          {% for link in linklists[block.settings.footer_nav].links %}
-            <li>{{ link.title | link_to: link.url }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-      {% when 'newsletter' %}
-      <div class="{{ column_width }}">
-        <h4>{{ block.settings.title | escape }}</h4>
-        <div id="footer_signup">
-          <p>{{ settings.footer_signup_text | escape }}</p>
-            {% form 'customer' %}
-            {{ form.errors | default_errors }}
-            {% if form.posted_successfully? %}
-            <p class="success">{{ 'password.general.thanks' | t }}</p>
-            {% else %}
-            <input type="hidden" name="contact[tags]" value="prospect, password page">
-            <input type="email" name="contact[email]" id="footer-EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
-            <input type="submit" id="footer-subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
-            {% endif %}
-            {% endform %}
-        </div>
-      </div>
-      {% endcase %}
+        {% case block.type %}
+        {% when 'menu' %}
+          <div class="{{ column_width }}">
+            <h4>{{ block.settings.title | escape }}</h4>
+            <ul {{ block.shopify_attributes }}>
+              {% for link in linklists[block.settings.footer_nav].links %}
+                <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% when 'newsletter' %}
+          <div class="{{ column_width }}">
+            <h4>{{ block.settings.title | escape }}</h4>
+            <div id="footer_signup">
+              <p>{{ settings.footer_signup_text | escape }}</p>
+                {% form 'customer' %}
+                {{ form.errors | default_errors }}
+                {% if form.posted_successfully? %}
+                <p class="success">{{ 'password.general.thanks' | t }}</p>
+                {% else %}
+                <input type="hidden" name="contact[tags]" value="prospect, password page">
+                <input type="email" name="contact[email]" id="footer-EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}">
+                <input type="submit" id="footer-subscribe" value="{{ 'general.newsletter_form.submit' | t }}">
+                {% endif %}
+                {% endform %}
+            </div>
+          </div>
+        {% when 'text' %}
+          <div class="{{ column_width }}">
+            <h4>{{ block.settings.title | escape }}</h4>
+            <p>{{ block.settings.footer_text }}</p>
+          </div>
+        {% endcase %}
       {% endfor %}
       <div class="clear"></div>
       <ul id="footer-icons" class="desktop-12 tablet-6 mobile-3">
