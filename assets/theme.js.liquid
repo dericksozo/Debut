@@ -2139,6 +2139,7 @@ theme.Product = (function () {
 
 Events.on("quickview:load", function (container) {
   theme.Product(container);
+  Currency.convertAll( defaultCurrency, Currency.currentCurrency );
 });
 
 /*============================================================================
