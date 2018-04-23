@@ -4,7 +4,6 @@
 <script>
 
 Currency.format = '{{ settings.currency_format | default: 'money_with_currency_format' }}';
-
 var shopCurrency = '{{ shop.currency }}';
 
 /* Sometimes merchants change their shop currency, let's tell our JavaScript file */
@@ -42,31 +41,24 @@ $( document ).ready(function() {
     Currency.currentCurrency = shopCurrency;
     Currency.cookie.write(shopCurrency);
   }
+  // If the cookie value is the same as the shop currency set in settings.
   else if (cookieCurrency === shopCurrency) {
     Currency.currentCurrency = shopCurrency;
   }
+  // If the cookie currency is different than the shop currency.
   else {
-    Currency.convertAll(shopCurrency, cookieCurrency);
+    Currency.currentCurrency = cookieCurrency || {{ shop.currency }};
   }
 
+  // Update (on load) the currency shown in currency picker to currentCurrrency.
   jQuery('[name=currencies]').val(Currency.currentCurrency).change(function() {
     var newCurrency = jQuery(this).val();
+
     Currency.convertAll(Currency.currentCurrency, newCurrency);
-    jQuery('.selected-currency').text(Currency.currentCurrency);
   });
 
-  var original_selectCallback = window.selectCallback;
-  var selectCallback = function(variant, selector) {
-    original_selectCallback(variant, selector);
-    Currency.convertAll(shopCurrency, jQuery('[name=currencies]').val());
-    jQuery('.selected-currency').text(Currency.currentCurrency);
-  };
-
-  $('body').on('ajaxCart.afterCartLoad', function(cart) {
-    Currency.convertAll(shopCurrency, jQuery('[name=currencies]').val());
-    jQuery('.selected-currency').text(Currency.currentCurrency);
-  });
-
-  jQuery('.selected-currency').text(Currency.currentCurrency);
+  // Convert all currencies with span.money to currentCurrrency on doc.ready load.
+  Currency.convertAll(shopCurrency, Currency.currentCurrency);
 });
+
 </script>

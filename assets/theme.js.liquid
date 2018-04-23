@@ -1925,10 +1925,14 @@ theme.ProductForm = function (context, events) {
   })();
 
   function money(cents) {
-    var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
-    var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
+    if ( config.currency_switcher_enabled ) {
+      var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
+      var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
 
-    return Currency.formatMoney(converted, format);
+      return Currency.formatMoney(converted, format);
+    } else {
+      return Shopify.formatMoney(cents, config.money_format);
+    }
   }
 }
 
@@ -2139,8 +2143,13 @@ theme.Product = (function () {
 
 Events.on("quickview:load", function (container) {
   theme.Product(container);
-  Currency.convertAll( defaultCurrency, Currency.currentCurrency );
 });
+
+{% if settings.show_multiple_currencies %}
+  Events.on("quickview:load", function (container) {
+    Currency.convertAll( defaultCurrency, Currency.currentCurrency );
+  });
+{% endif %}
 
 /*============================================================================
   Map Section
