@@ -1376,7 +1376,9 @@ $(document).ready(function() {
       $('.load-wait').addClass('hide');
 
       // Call Fancybox globally on all elements with class fancybox
-      $(".fancybox").fancybox({
+      $(".fancybox").
+
+      fancybox({
         helpers: {
           overlay: {
             locked: false
@@ -1477,6 +1479,9 @@ $(document).ready(function() {
   });
 
   // Call Fancybox on all elemnets with class "fancybox"
+
+  $('.fancybox').fancybox();
+
   $('.product-modal').fancybox({
     afterShow: function () {
       var context = document.querySelector(".product-quick-view");
