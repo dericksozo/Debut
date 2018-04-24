@@ -13,6 +13,7 @@
 - Launched 1.0 on 2013-03
 - Updated with theme sections on 2017-01 in version [5.1.2]
 - Updated to nested navigation on 2018-01-08 in version [5.1.4]
+- Updated product options module on 2018-04-10 in version [6.0]
 
 ## Theme Features
 
@@ -55,7 +56,19 @@
 
 # Testament Theme Changelog
 
-All notable changes to the Fashionopolism theme will be documented in this file.
+All notable changes to the Testament theme will be documented in this file.
+
+## [6.2] - 2018-04-24
+
+### Changed
+- Change version to 6.2 for bugfixes
+- Change all prices to include span.money so span no longer needed in admin settings
+- Fix currency picker with new product module
+- Fix product price when on sale
+- Fix Dynamic Payment Button Init to show only when activated
+- Fix missing text block in footer section
+- Fix header wrapper setting
+- Fix product page popups fancybox
 
 ## [6.1] - 2018-04-10
 
