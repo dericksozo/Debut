@@ -1376,7 +1376,9 @@ $(document).ready(function() {
       $('.load-wait').addClass('hide');
 
       // Call Fancybox globally on all elements with class fancybox
-      $(".fancybox").fancybox({
+      $(".fancybox").
+
+      fancybox({
         helpers: {
           overlay: {
             locked: false
@@ -1477,6 +1479,9 @@ $(document).ready(function() {
   });
 
   // Call Fancybox on all elemnets with class "fancybox"
+
+  $('.fancybox').fancybox();
+
   $('.product-modal').fancybox({
     afterShow: function () {
       var context = document.querySelector(".product-quick-view");
@@ -1771,10 +1776,6 @@ theme.ProductForm = function (context, events) {
       if ( variant.featured_image ) {
         events.trigger("variantchange:image", variant.featured_image.id);
       }
-
-      if ( window.Currency ) {
-        Currency.convertAll(Currency.defaultCurrency, Currency.cookie.read());
-      }
     },
     enableHistoryState: config.enable_history
   });
@@ -1850,10 +1851,10 @@ theme.ProductForm = function (context, events) {
   })();
 
   (function price() {
-    var element = context.querySelector(".product-price");
+    var element = context.querySelector(".product-price .money") || context.querySelector(".product-price");
 
     events.on("variantchange", function (variant) {
-      var price = format_money(variant.price);
+      var price = money(variant.price);
 
       if ( !variant.available ) {
         price = config.sold_out;
@@ -1879,14 +1880,14 @@ theme.ProductForm = function (context, events) {
       var price = "";
 
       if ( variant.compare_at_price > variant.price ) {
-        var price = format_money(variant.compare_at_price);
+        var price = money(variant.compare_at_price);
       }
 
       if ( !variant.available ) {
         price = "";
       }
 
-      element.innerHTML = price;
+      element.innerHTML = '<span class="money">' + price + '</span>';
     });
   })();
 
@@ -1928,10 +1929,16 @@ theme.ProductForm = function (context, events) {
     });
   })();
 
-  function format_money(cents) {
-    return (window.Currency || Shopify).formatMoney(cents, config.money_format);
-  }
+  function money(cents) {
+    if ( config.currency_switcher_enabled ) {
+      var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
+      var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
 
+      return Currency.formatMoney(converted, format);
+    } else {
+      return Shopify.formatMoney(cents, config.money_format);
+    }
+  }
 }
 
 theme.ProductGallery = function (context, events) {
@@ -2142,6 +2149,12 @@ theme.Product = (function () {
 Events.on("quickview:load", function (container) {
   theme.Product(container);
 });
+
+{% if settings.show_multiple_currencies %}
+  Events.on("quickview:load", function (container) {
+    Currency.convertAll( defaultCurrency, Currency.currentCurrency );
+  });
+{% endif %}
 
 /*============================================================================
   Map Section

@@ -2,7 +2,7 @@
 
 ## Production (Live) Version
 
-**Version 6.1**
+**Version 6.2**
 
 ## Theme Facts
 
@@ -113,5 +113,5 @@ All notable changes to the Testament theme will be documented in this file.
 - Fix slideshow caption position on mobile
 - Fix logo margin on mobile
 - Fix blog index section onboarding
-- Fix cart modal currency 
+- Fix cart modal currency
 - Fix content height for empty cart page

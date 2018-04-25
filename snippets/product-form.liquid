@@ -9,15 +9,22 @@
     {{ product | json }}
   </script>
 
+  {%- if settings.show_multiple_currencies -%}
+    {% assign price = current_variant.price | money_with_currency %}
+    {% assign compare_price = current_variant.compare_at_price | money_with_currency %}
+  {%- else -%}
+    {% assign price = current_variant.price | money %}
+    {% assign compare_price = current_variant.compare_at_price | money %}
+  {%- endif -%}
   <p id="product-price">
     <span class="product-price" itemprop="price">
-      {{ current_variant.price | money }}
+      <span class="money">{{ price }}</span>
     </span>
-    {% unless current_variant.compare_at_price > current_variant.price %}
+    {% if current_variant.compare_at_price > current_variant.price %}
       <span class="was">
-          {{ current_variant.compare_at_price | money }}
+        <span class="money">{{ compare_price }}</span>
       </span>
-    {% endunless %}
+    {% endif %}
   </p><div class="clear"></div>
 
   {% if section.settings.show_sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}

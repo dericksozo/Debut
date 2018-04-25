@@ -23,5 +23,7 @@
     });
   });
   {% endif %}
-  Shopify.PaymentButton.init()
+  {% if section.settings.show_payment_button %}
+    Shopify.PaymentButton.init()
+  {% endif %}
 </script>

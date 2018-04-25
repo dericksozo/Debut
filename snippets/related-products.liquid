@@ -42,10 +42,10 @@
           </a>
           <div class="price">
             {% if product.price < prod.compare_at_price %}
-            <div class="onsale">{{ prod.price | money }}</div>
-            <div class="was-related">{{ prod.compare_at_price | money }}</div>
+            <div class="onsale"><span class="money">{{ prod.price | money }}</span></div>
+            <div class="was-related"><span class="money">{{ prod.compare_at_price | money }}</span></div>
             {% else %}
-            <div class="prod-price">{% if prod.price_varies %} {{ 'products.general.from' | t }} {{ prod.price_min | money }} - {{ prod.price_max | money }} {% else %}{{ prod.price | money }}{% endif %}</div>
+            <div class="prod-price">{% if prod.price_varies %} {{ 'products.general.from' | t }} <span class="money">{{ prod.price_min | money }}</span> - <span class="money">{{ prod.price_max | money }}</span> {% else %}<span class="money">{{ prod.price | money }}</span>{% endif %}</div>
             {% endif %}
           </div>
 
