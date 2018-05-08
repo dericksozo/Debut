@@ -301,10 +301,12 @@ var ajaxifyShopify = (function(module, $) {
       enableQtySelectors: true,
       prependDrawerTo: 'body',
       onToggleCallback: function(cart) {
+        {%- if settings.show_multiple_currencies -%}
         if (cart.is_visible) {
           Currency.convertAll(shopCurrency, Currency.currentCurrency);
           jQuery('.selected-currency').text(Currency.currentCurrency);
         }
+        {% endif %}
       }
     };
 
