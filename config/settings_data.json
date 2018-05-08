@@ -2105,9 +2105,9 @@
     "footer_text": "#ffffff",
     "footer_icons_color": "#ffffff",
     "footer_icons_hover_color": "#ffffff",
-    "footer_input": "#000000",
+    "footer_input": "#151515",
     "footer_input_text": "#ffffff",
-    "footer_button": "#000000",
+    "footer_button": "#222222",
     "footer_button_text": "#ffffff",
     "font": "'Open Sans', sans-serif",
     "navigation_font": "'Montserrat', sans-serif",
@@ -2447,8 +2447,8 @@
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
-              "promo_color": "#ffffff",
-              "hidden_color": "#ffffff"
+              "promo_color": "#000000",
+              "hidden_color": "#333333"
             }
           },
           "1521604513411-1": {
@@ -2459,8 +2459,8 @@
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
-              "promo_color": "#ffffff",
-              "hidden_color": "#ffffff"
+              "promo_color": "#000000",
+              "hidden_color": "#333333"
             }
           },
           "1521604513411-2": {
@@ -2471,8 +2471,8 @@
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
-              "promo_color": "#ffffff",
-              "hidden_color": "#ffffff"
+              "promo_color": "#000000",
+              "hidden_color": "#333333"
             }
           }
         },
@@ -2483,7 +2483,7 @@
         ],
         "settings": {
           "full_width": false,
-          "promo_size": 30,
+          "promo_size": 20,
           "hidden_size": 14
         }
       },
