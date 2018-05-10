@@ -58,7 +58,7 @@
 
 All notable changes to the Testament theme will be documented in this file.
 
-## [6.2] - 2018-04-24
+## [6.2] - 2018-04-25
 
 ### Changed
 - Change version to 6.2 for bugfixes
@@ -70,7 +70,7 @@ All notable changes to the Testament theme will be documented in this file.
 - Fix header wrapper setting
 - Fix product page popups fancybox
 
-## [6.1] - 2018-04-10
+## [6.1] - 2018-04-13
 
 ### Added
 - New footer setting for showing payment icons
@@ -88,7 +88,7 @@ All notable changes to the Testament theme will be documented in this file.
 - Fix collection page sidebar image margin bottom
 - Fix product thumbnails bxslider carousel
 
-## [6.0] - 2018-04-03
+## [6.0] - 2018-04-04
 
 #### The main focus of this version was to fix all known bugs, add responsive images, meet section parity requirements, and add smart payment buttons.
 
