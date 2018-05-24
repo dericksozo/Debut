@@ -1811,7 +1811,64 @@ theme.ProductForm = function (context, events) {
   (function swatches() {
     var elements = context.querySelectorAll("[type=radio]");
 
+    var states = {
+      sold_out: function (element) {
+        element.parentElement.classList.add("soldout");
+      },
+      available: function (element) {
+        element.parentElement.classList.remove("soldout");
+      }
+    };
+
+    events.on("variantunavailable", set_unavailable);
+
     elements.forEach(Swatch);
+
+    function set_unavailable() {
+      var selected = {};
+
+      var selected_elements = $(elements).filter(":checked").toArray();
+
+      selected_elements.forEach(function (element) {
+        var option = "option" + element.getAttribute("data-position");
+        var value = element.value;
+
+        selected[option] = value;
+      });
+
+      elements.forEach(function (element) {
+        var available = false;
+
+        var current_option = "option" + element.getAttribute("data-position");
+
+        var current_value = element.value;
+
+        var other_options = ["option1", "option2", "option3"].filter(function (option) {
+          return selected[option] && option != current_option;
+        });
+
+        product.variants.forEach(function (variant) {
+          if ( !variant.available ) {
+            return;
+          }
+
+          if ( variant[current_option] != current_value ) {
+            return;
+          }
+
+          if ( variant[other_options[0]] == selected[other_options[0]] && variant[other_options[1]] == selected[other_options[1]] ) {
+            available = true;
+            return;
+          }
+        });
+
+        if ( available ) {
+          states.available(element);
+        } else {
+          states.sold_out(element);
+        }
+      });
+    }
 
     function Swatch(element) {
       var option_position = element.getAttribute("data-position");
@@ -1857,7 +1914,11 @@ theme.ProductForm = function (context, events) {
           available = true;
         });
 
-        element.parentElement.classList[available ? "remove" : "add"]("soldout");
+        if ( available ) {
+          states.available(element);
+        } else {
+          states.sold_out(element);
+        }
       }
     }
   })();
