@@ -1741,27 +1741,6 @@ theme.ProductForm = function (context, events) {
     }
   })();
 
-  (function related_products() {
-    $('.collection-carousel').owlCarousel({
-        itemsCustom : [
-          [0, 2],
-          [450, 2],
-          [600, 2],
-          [700, 3],
-          [1000, 4],
-          [1200, 5],
-          [1400, 5],
-          [1600, 5]
-        ],
-        lazyLoad : false,
-        pagination : false,
-        navigation: true,
-        navigationText : false,
-        autoPlay : false,
-        stopOnHover : true
-      });
-  })();
-
   if ( product.variants.length == 1 ) {
     return false;
   }
@@ -2197,10 +2176,34 @@ theme.ProductMobileGallery = function (events) {
   };
 }
 
+theme.RelatedProducts = function () {
+  var element = $('.collection-carousel');
+  element.owlCarousel({
+    itemsCustom : [
+      [0, 2],
+      [450, 2],
+      [600, 2],
+      [700, 3],
+      [1000, 4],
+      [1200, 5],
+      [1400, 5],
+      [1600, 5]
+    ],
+    lazyLoad : false,
+    pagination : false,
+    navigation: true,
+    navigationText : false,
+    autoPlay : false,
+    stopOnHover : true
+  });
+}
+
 theme.Product = (function () {
   function Product(container) {
     var events = new EventEmitter3();
     events.trigger = events.emit; // alias
+
+    theme.RelatedProducts();
 
     theme.ProductMobileGallery(events);
 
