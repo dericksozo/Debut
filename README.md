@@ -58,6 +58,24 @@
 
 All notable changes to the Testament theme will be documented in this file.
 
+## [6.3] - 2018-05-30
+#### The main focus of this version was to fix all known bugs and launch the new Shopify Font Picker.
+
+### Added
+- New settings and styles to reflect font picker settings
+
+### Changed
+- Change version to 6.3
+- Change move related products function outside of product form
+- Fix ajax cart callback for currency to run only went activated
+- Fix swatch values when special characters used "" ()
+- Fix swatches background image size and repeat
+- Fix product zoom on IE 
+- Fix crossed out variant change for unavailable variants
+
+### Removed
+- Removed footer title weight in favor of font picker global
+
 ## [6.2] - 2018-04-25
 
 ### Changed
