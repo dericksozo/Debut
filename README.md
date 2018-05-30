@@ -72,6 +72,8 @@ All notable changes to the Testament theme will be documented in this file.
 - Fix swatches background image size and repeat
 - Fix product zoom on IE 
 - Fix crossed out variant change for unavailable variants
+- Fix newsletter subheading to richtext for GDPR requirements
+- Fix newsletter section subheading link color and hover
 
 ### Removed
 - Removed footer title weight in favor of font picker global
