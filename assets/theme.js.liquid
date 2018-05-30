@@ -1943,6 +1943,24 @@ theme.ProductForm = function (context, events) {
     });
   })();
 
+  (function sku() {
+    var element = context.querySelector(".variant_sku");
+
+    if ( !element ) {
+      return false;
+    }
+
+    events.on("variantchange", function (variant) {
+      var variant_sku = variant.sku;
+      element.innerHTML = variant_sku;
+    });
+    events.on("variantunavailable", function (variant) {
+      var variant_sku = config.unavailable;
+      element.innerHTML = variant_sku;
+    });
+
+  })();
+  
   (function add_to_cart() {
     var element = context.querySelector(".add");
 
