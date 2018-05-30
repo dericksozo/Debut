@@ -59,6 +59,13 @@
     line-height: 24px;
     padding-bottom: 20px !important;
   }
+  .homepage-newsletter-{{ section.id }} p a {
+    color: {{ section.settings.subheading_color }} !important;
+    opacity: 0.9;
+  }
+  .homepage-newsletter-{{ section.id }} p a:hover {
+    text-decoration: underline;
+  }
   @media screen and (max-width: 500px) {
     .homepage-newsletter-{{ section.id }} p {
       max-width: 100%;
