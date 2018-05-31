@@ -27,8 +27,6 @@
     {% endif %}
   </p><div class="clear"></div>
 
-  {% if section.settings.show_sku %}<span class="variant-sku">{{ product.variants.first.sku }}</span>{% endif %}
-
   {% if product.options.size > 1 %}
     <div class="select" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
       <select id="product-select-{{ product.id }}" name='id'>
@@ -81,6 +79,12 @@
     <input  type="hidden" id="{{ variant.id }}" name="id" data-sku="{{ variant.sku }}" value="{{ product.variants[0].id }}" />
   {% endif %}
 
+
+  {% if section.settings.show_sku %}
+    <div class="sku">
+      <label style="line-height: 1.6em; display: inline-block;">{{ 'customer.order.details.sku' | t }}:</label> <span class="variant_sku">{{ current_variant.sku }}</span>
+    </div><div class="clear"></div>
+  {% endif %}
   <div class="product-add">
     {% if section.settings.show_quantity %}
       <div class="qty-selection">

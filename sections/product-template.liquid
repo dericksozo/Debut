@@ -174,6 +174,13 @@
     label[for="product-select-option-{{ option_index }}"] { display: none; }
     #product-select-option-{{ option_index }} { display: none; }
     #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    {% if section.settings.use_swatch_images %}
+      .swatch .color label {
+        background-position: center center;
+        background-size: 34px 34px;
+        background-repeat: no-repeat;
+      }
+    {% endif %}
   {% endif %}
   {% if section.settings.swatch_shape == 'circles' %}
     .swatch .color label {

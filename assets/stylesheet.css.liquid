@@ -917,6 +917,33 @@
   margin: 0;
 }
 
+
+/* Assign font picker families from theme settings */
+
+{% assign main_font = settings.main_font %}
+{% assign heading_font = settings.heading_font %}
+{% assign nav_font = settings.nav_font %}
+
+{{ main_font | font_face }}
+{{ nav_font | font_face }}
+{{ heading_font | font_face }}
+
+{%- assign main_font_bold = main_font | font_modify: 'weight', 'bolder' -%}
+{%- assign main_font_italic = main_font | font_modify: 'style', 'italic' -%}
+{%- assign main_font_bold_italic = main_font_bold | font_modify: 'style', 'italic' -%}
+
+{% if main_font_bold %}
+  {{ main_font_bold | font_face }}
+{% endif %}
+
+{% if main_font_italic %}
+  {{ main_font_italic | font_face }}
+{% endif %}
+
+{% if main_font_bold_italic %}
+  {{ main_font_bold_italic | font_face }}
+{% endif %}
+
 html,
 body {
   height: 100%;
@@ -930,7 +957,7 @@ body {
   background-repeat: {{ settings.background_position }};
   {% endif %}
   font-size: {{ settings.font_size }}px;
-  font-family: {{ settings.font }};
+  font-family: {{ main_font.family }};
   line-height: 1.6em;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -977,8 +1004,8 @@ h3,
 h4,
 h5 {
   color: {{ settings.header_color }};
-  font-family:{{ settings.headings_font }};
-  font-weight: {{ settings.heading_weight }};
+  font-family:{{ heading_font.family }};
+  font-weight: {{ heading_font.weight }};
   margin-top: 0;
   margin-bottom: 10px;
   line-height: normal;
@@ -1221,7 +1248,7 @@ input[type="button"] {
   max-width: 100%;
   background: {{ settings.button_color }};
   color: {{ settings.button_text }};
-  font-family: {{ settings.font }};
+  font-family: {{ main_font.family }};
   border: none;
   -webkit-transition: background .5s ease,color .5s ease;
   -moz-transition: background .5s ease,color .5s ease;
@@ -1230,7 +1257,7 @@ input[type="button"] {
   -webkit-appearance: none;
   display: inline-block;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: normal;
   text-decoration: none;
   cursor: pointer;
   margin-bottom: 15px;
@@ -1286,7 +1313,7 @@ select {
   border: 1px solid #ccc;
   height: 44px;
   outline: none;
-  font-family: {{ settings.font }};
+  font-family: {{ main_font.family }};
   font-size: {{ settings.font_size }}px;
   color: {{ settings.text_color }};
   margin: 0;
@@ -1355,7 +1382,7 @@ input[type=email],
 input[type=url],
 input[type=number] {
   width: 100%;
-  font-family: {{ settings.font }};
+  font-family: {{ main_font.family }};
   font-size: {{ settings.font_size }}px;
   color: {{ settings.text_color }};
   border: 1px solid {{ settings.dotted_color }};
@@ -1560,7 +1587,7 @@ li.seeks {
 
 #logo a {
   vertical-align: middle;
-  font-family:{{ settings.headings_font }};
+  font-family:{{ heading_font.family }};
   color: {{ settings.logo_color }};
   text-decoration: none;
 }
@@ -1649,7 +1676,7 @@ li.seeks {
 
 .collection-info h3 {
   margin-bottom: 0;
-  font-weight: 400;
+  font-weight: normal;
 }
 
 .collection-info p {
@@ -2004,7 +2031,7 @@ body.collection h1 {
   color: {{ settings.button_text }};
   height: 44px;
   line-height: 44px;
-  font-weight: 400;
+  font-weight: normal;
   -webkit-transition: background .5s ease,color .5s ease;
   -moz-transition: background .5s ease,color .5s ease;
   -o-transition: background .5s ease,color .5s ease;
@@ -2791,11 +2818,11 @@ li.tags a {
 
 #blog-sidebar ul h3 {
   border-bottom: 1px solid {{ settings.dotted_color }};
-  font-weight: 400;
+  font-weight: normal;
 }
 
 #blog-sidebar h4 {
-  font-weight: 600;
+  font-weight: {{ heading_font.weight }};
   margin-bottom: 5px;
 }
 
@@ -3124,7 +3151,7 @@ dd {
     margin-top: 15px;
     text-align: center;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: {{ main_font.weight }};
 }
 
 #newsletter .section-title {
@@ -3404,7 +3431,7 @@ input#footer-subscribe {
   color: {{ settings.footer_button_text }};
   border: 0;
   border-radius: 0;
-  font-weight: normal;
+  font-weight: {{ main_font.weight }};
 }
 
 ul#footer-icons {
@@ -3508,7 +3535,7 @@ ul#footer-icons li a:hover {
 }
 
 #pagination span.current {
-  font-weight: bold;
+  font-weight: {{ main_font.weight }};
 }
 
 div.paginext,
@@ -3558,7 +3585,7 @@ Swatches Styles
 /* Label */
 .swatch h5 {
   margin: 0.5em 0;
-  font-weight: bold;
+  font-weight: {{ heading_font.weight }};
   font-size: 14px;
 }
 /* Hide radio buttons.*/
@@ -3583,10 +3610,10 @@ Swatches Styles
   position:relative;
   text-transform:uppercase;
   font-size:13px;
-  font-weight: bold;
+  font-weight: {{ heading_font.weight }};
   min-width:{{ width }} !important;
   height:{{ height }} !important;
-  line-height:32px;
+  line-height:34px;
   white-space:nowrap;
   text-transform:uppercase;
   text-align: center;
@@ -4117,8 +4144,8 @@ ul#main-nav li:hover {
 }
 
 ul#main-nav li a {
-  font-family: {{ settings.navigation_font}};
-  font-weight: {{ settings.nav_weight }};
+  font-family: {{ nav_font.family}};
+  font-weight: {{ nav_font.weight }};
   font-size: {{ settings.nav_size }}px;
   color: {{ settings.nav_color }};
   display: block;
@@ -4170,11 +4197,11 @@ ul#main-nav li ul.submenu li:hover {
 
 ul#main-nav li ul.submenu li a{
   text-align: left;
-  font-weight: normal;
+  font-weight: {{ main_font.weight }};
   text-transform: none !important;
   color: {{ settings.dropdown_link_color }};
   font-size: {{ settings.font_size }}px !important;
-  font-family:{{ settings.font }} !important;
+  font-family:{{ main_font.family }} !important;
 }
 
 ul#main-nav li ul.submenu li a:hover {
@@ -4233,9 +4260,9 @@ ul.megamenu {
 
 ul.megamenu h4 {
   padding: 20px 0 5px;
-  font-family: {{ settings.navigation_font}} !important;
+  font-family: {{ nav_font.family}} !important;
   color: {{ settings.dropdown_link_color }};
-  font-weight: bold;
+  font-weight: {{ heading_font.weight }};
   border-bottom: 1px solid {{ settings.dotted_color }};
   margin-bottom: 10px;
   text-align: left;
@@ -4263,7 +4290,7 @@ ul.megamenu li > ul.mega-stack li a {
   font-weight: normal !important;
   color: {{ settings.dropdown_link_color }} !important;
   font-size: {{ settings.font_size }}px !important;
-  font-family:{{ settings.font }} !important;
+  font-family:{{ main_font.family }} !important;
   background: transparent !important;
   text-transform: none !important;
 }
@@ -7911,7 +7938,7 @@ html[xmlns] .slides {
 
 .fancybox-close:before {
   content: "\00D7";
-  font-weight: 300;
+  font-weight: bold;
   line-height: 25px;
 }
 
@@ -8023,7 +8050,7 @@ html[xmlns] .slides {
   padding: 2px 20px;
   background: transparent; /* Fallback for web browsers that doesn't support RGBa */
   color: #000;
-  font-weight: 400;
+  font-weight: normal;
   font-size: 13px;
   line-height: 24px;
   white-space: nowrap;
@@ -8346,7 +8373,7 @@ a.bx-next:after {
 
 .bx-wrapper .bx-caption span {
   color: #fff;
-  font-family: Arial;
+  font-family: {{ main_font.family }};
   display: block;
   font-size: .85em;
   padding: 10px;
@@ -8388,7 +8415,7 @@ ol.flex-control-nav {
   background: #f7f7f7;
   margin-top: 20px;
   margin-bottom: 50px;
-  font-weight: 400;
+  font-weight: normal;
 }
 
 .promo-inner .onboard .placeholder-svg,
@@ -8485,9 +8512,9 @@ ul#accordion li, .accordion-toggle,
 ul#accordion a,
 .accordion-toggle,
 .accordion-toggle2 {
-  font-family: {{ settings.font}};
+  font-family: {{ main_font.family }};
   font-size: {{ settings.font_size }}px;
-  font-weight: 400;
+  font-weight: {{ main_font.weight }};
 }
 
 ul.sub {
@@ -8992,7 +9019,7 @@ ul.sub {
   line-height: 20px;
   text-align: center;
   font-size: 30px;
-  font-weight: 300;
+  font-weight: bold;
   outline: 0 none;
 }
 
