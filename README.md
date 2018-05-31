@@ -2,7 +2,7 @@
 
 ## Production (Live) Version
 
-**Version 6.2**
+**Version 6.3**
 
 ## Theme Facts
 
@@ -58,7 +58,7 @@
 
 All notable changes to the Testament theme will be documented in this file.
 
-## [6.3] - 2018-05-30
+## [6.3] - 2018-05-31
 #### The main focus of this version was to fix all known bugs and launch the new Shopify Font Picker.
 
 ### Added
