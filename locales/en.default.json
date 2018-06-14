@@ -27,7 +27,8 @@
     },
     "newsletter_form": {
       "newsletter_email": "Enter Email Address",
-      "submit": "Join"
+      "submit": "Join",
+      "confirmation": "Thank you for subscribing to our newsletter."
     },
     "search": {
       "no_results_html": "Your search for \"{{ terms }}\" did not yield any results.",
