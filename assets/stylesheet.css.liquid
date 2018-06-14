@@ -8091,7 +8091,7 @@ html[xmlns] .slides {
   margin: 10px;
 }
 
-#password-message {
+.password-page #newsletter-details {
   margin-bottom: 30px;
   text-align: center;
 }
@@ -8114,6 +8114,19 @@ html[xmlns] .slides {
   text-transform: uppercase;
   color: #000;
   height: 48px;
+}
+
+.searchbox #q:focus::-webkit-input-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus:-moz-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus:-ms-input-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus::-moz-placeholder {
+  color:transparent;
 }
 
 input#password-email:focus::-webkit-input-placeholder {
@@ -8141,8 +8154,12 @@ input#password-email:focus:-ms-input-placeholder {
   height: 48px;
 }
 
-body.password p.success {
+.password p.success {
   text-align: center;
+}
+
+.password-page-icons {
+  margin-bottom: 20px;
 }
 
 .password-page-icons li {
@@ -8166,8 +8183,8 @@ body.password form#login_form {
   width: 100%;
   display: block;
   text-align: center;
-  position: absolute;
-  bottom: 50px;
+  position: relative;
+  margin-top: 220px;
 }
 
 .password-page-footer a {
