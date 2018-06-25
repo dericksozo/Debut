@@ -2538,3 +2538,13 @@ $(document).ready(function() {
   sections.register('mobile-navigation', theme.mobileNav);
   sections.register('map', theme.Maps);
 });
+
+
+/* Log Theme Version */
+log = function() {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift(console);
+    return Function.prototype.bind.apply(console.log, args);
+}
+
+log("Testament Version 6.4 by Underground", {bar: 1})();
