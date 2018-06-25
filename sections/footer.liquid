@@ -44,6 +44,7 @@
         {% when 'newsletter' %}
           <div class="{{ column_width }}">
             <h4>{{ block.settings.title | escape }}</h4>
+            {{ block.settings.mailing_subheading }}
             <div id="footer_signup">
               <p>{{ settings.footer_signup_text | escape }}</p>
                 {% form 'customer' %}
@@ -207,7 +208,13 @@
             "id": "title",
             "label": "Mailing list section title",
             "default": "Connect"
-           }
+           },
+           {
+             "type": "richtext",
+             "id": "mailing_subheading",
+             "label": "Mailing list subheading",
+             "default": "<p>Join our mailing list for updates</p>"
+            }
 		    ]
       },
       {
