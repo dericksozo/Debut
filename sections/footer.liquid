@@ -1,18 +1,18 @@
 <div class="footer-section" data-section-id="{{ section.id }}" data-section-type="footer-section">
 {% if section.settings.bottom_logo != blank %}
-<div class="row">
-  <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">
-      {%- assign image_size = '800x' -%}
-      <a href="/">
-        <img src="{{ section.settings.bottom_logo | img_url: image_size }}" alt="{{ section.settings.bottom_logo.alt | default: shop.name }}">
-      </a>
+  <div class="row">
+    <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">
+        {%- assign image_size = '800x' -%}
+        <a href="/">
+          <img src="{{ section.settings.bottom_logo | img_url: image_size }}" alt="{{ section.settings.bottom_logo.alt | default: shop.name }}">
+        </a>
+    </div>
   </div>
-</div>
-<style>
-  @media screen and ( min-width: 740px ) {
-  #bottom-logo img { max-width: {{ section.settings.bottom_logo_max_width }}px; }
-  }
-</style>
+  <style>
+    @media screen and ( min-width: 740px ) {
+    #bottom-logo img { max-width: {{ section.settings.bottom_logo_max_width }}px; }
+    }
+  </style>
 {% endif %}
 
 <footer>
@@ -80,11 +80,13 @@
       </ul>
       <div class="clear"></div>
       <div class="credit desktop-12 tablet-6 mobile-3">
-        {% if section.settings.show_credit_cards %}
-          {% for type in shop.enabled_payment_types %}
-            {{ type | payment_type_svg_tag: class:'payment-icon' }}
-          {% endfor %}
-        {% endif %}
+        <div id="payment">
+          {% if section.settings.show_credit_cards %}
+            {% for type in shop.enabled_payment_types %}
+              {{ type | payment_type_svg_tag: class:'payment-icon' }}
+            {% endfor %}
+          {% endif %}
+        </div>
         <p>
           {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} •
           <a href="//www.shopifythemes.net" target="_blank" title="Shopify theme">Shopify Theme</a>
