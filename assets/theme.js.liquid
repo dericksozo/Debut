@@ -306,7 +306,6 @@ var ajaxifyShopify = (function(module, $) {
       btnClass: null,
       wrapperClass: null,
       useCartTemplate: false,
-      moneyFormat: '{% raw %}${{amount}}{% endraw %}',
       disableAjaxCart: false,
       enableQtySelectors: true,
       prependDrawerTo: 'body',
@@ -406,7 +405,7 @@ var ajaxifyShopify = (function(module, $) {
       }
     }
     if ($cartCostSelector) {
-      $cartCostSelector.html(Shopify.formatMoney(cart.total_price, settings.moneyFormat));
+      $cartCostSelector.html(Shopify.formatMoney(cart.total_price, "{{ shop.money_format }}"));
     }
   };
 
@@ -756,7 +755,7 @@ var ajaxifyShopify = (function(module, $) {
         itemAdd: itemAdd,
         itemMinus: itemMinus,
         itemQty: itemQty,
-        price: Shopify.formatMoney(cartItem.price, settings.moneyFormat)
+        price: Shopify.formatMoney(cartItem.price, "{{ shop.money_format }}")
       };
 
       items.push(item);
@@ -765,7 +764,7 @@ var ajaxifyShopify = (function(module, $) {
     // Gather all cart data and add to DOM
     data = {
       items: items,
-      totalPrice: Shopify.formatMoney(cart.total_price, settings.moneyFormat),
+      totalPrice: Shopify.formatMoney(cart.total_price, "{{ shop.money_format }}"),
       btnClass: $btnClass
     }
     $cartContainer.append(template(data));
@@ -1960,7 +1959,7 @@ theme.ProductForm = function (context, events) {
     });
 
   })();
-  
+
   (function add_to_cart() {
     var element = context.querySelector(".add");
 
