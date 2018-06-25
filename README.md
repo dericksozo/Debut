@@ -58,6 +58,27 @@
 
 All notable changes to the Testament theme will be documented in this file.
 
+## [6.4] - 2018-06-25
+#### The main focus of this version was to fix all known bugs and launch the new Shopify Payment Icons.
+
+### Added
+- Add richtext subheading to footer newsletter for GDPR update
+- Add theme version log to js
+
+### Changed
+- Change to version 6.4 for next release
+- Change password page message to richtext for GDPR update
+- Change payment method icons in footer for Shopify update
+- Fix text with image overlay button color schema setting
+- Fix missing translation for Newsletter Confirmation
+- Fix password page footer on mobile
+- Fix currency setting from setting to shop.money_format
+- Fix product image gallery thumbnail padding so border does not get cut off
+- Fix map section height on mobile
+
+### Removed
+- Remove extra general fancybox call
+
 ## [6.3] - 2018-05-31
 #### The main focus of this version was to fix all known bugs and launch the new Shopify Font Picker.
 
