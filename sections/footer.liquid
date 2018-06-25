@@ -79,11 +79,11 @@
       </ul>
       <div class="clear"></div>
       <div class="credit desktop-12 tablet-6 mobile-3">
-        {%- if section.settings.show_credit_cards -%}
+        {% if section.settings.show_credit_cards %}
           {% for type in shop.enabled_payment_types %}
-            <img src="{{ type | payment_type_img_url }}" />
+            {{ type | payment_type_svg_tag: class:'payment-icon' }}
           {% endfor %}
-        {%- endif -%}
+        {% endif %}
         <p>
           {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} •
           <a href="//www.shopifythemes.net" target="_blank" title="Shopify theme">Shopify Theme</a>
