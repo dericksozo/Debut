@@ -2,7 +2,7 @@
 
 ## Production (Live) Version
 
-**Version 6.3**
+**Version 6.4**
 
 ## Theme Facts
 
@@ -58,7 +58,7 @@
 
 All notable changes to the Testament theme will be documented in this file.
 
-## [6.4] - 2018-06-25
+## [6.4] - 2018-06-27
 #### The main focus of this version was to fix all known bugs and launch the new Shopify Payment Icons.
 
 ### Added
@@ -91,7 +91,7 @@ All notable changes to the Testament theme will be documented in this file.
 - Fix ajax cart callback for currency to run only went activated
 - Fix swatch values when special characters used "" ()
 - Fix swatches background image size and repeat
-- Fix product zoom on IE 
+- Fix product zoom on IE
 - Fix crossed out variant change for unavailable variants
 - Fix newsletter subheading to richtext for GDPR requirements
 - Fix newsletter section subheading link color and hover
