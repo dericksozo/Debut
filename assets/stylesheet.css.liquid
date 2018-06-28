@@ -2533,7 +2533,6 @@ ul#popups li a {
 .product-thumbnail {
   cursor: pointer;
   display: inline-block;
-  margin-left: 5px;
   width: 100%;
 }
 
@@ -3067,11 +3066,6 @@ dd {
   position: relative;
 }
 
-.map-section-wrapper {
-  height: 400px;
-  margin-top: 20px;
-}
-
 .map-section-container {
   height: 400px;
   width: 100%;
@@ -3371,10 +3365,16 @@ a#view_address {
   margin-top: 50px;
 }
 
-#footer-wrapper p {
+#footer-wrapper p,
+#footer-wrapper a {
   color: {{ settings.footer_text }};
 }
-
+#footer-wrapper a {
+  opacity: 0.7;
+}
+#footer-wrapper a:hover {
+  opacity: 1.0;
+}
 #footer-wrapper h4 {
   color: {{ settings.footer_text }};
   border-bottom: 1px solid {{ settings.footer_border }};
@@ -3500,13 +3500,15 @@ ul#footer-icons li a:hover {
 #payment {
   text-align: center;
   margin-top: 30px;
-  margin-bottom: 50px;
+  margin-bottom: 0px;
 }
 
-#payment img {
-  max-width: 60px;
+#payment svg {
+  display: inline;
+  width: 40px;
+  height: 25.25px;
   text-align: center;
-  margin-bottom: 10px;
+  margin: 3px 1px;
 }
 
 /* =============== */
@@ -8091,7 +8093,7 @@ html[xmlns] .slides {
   margin: 10px;
 }
 
-#password-message {
+.password-page #newsletter-details {
   margin-bottom: 30px;
   text-align: center;
 }
@@ -8114,6 +8116,19 @@ html[xmlns] .slides {
   text-transform: uppercase;
   color: #000;
   height: 48px;
+}
+
+.searchbox #q:focus::-webkit-input-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus:-moz-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus:-ms-input-placeholder {
+  color:transparent;
+}
+.searchbox #q:focus::-moz-placeholder {
+  color:transparent;
 }
 
 input#password-email:focus::-webkit-input-placeholder {
@@ -8141,8 +8156,12 @@ input#password-email:focus:-ms-input-placeholder {
   height: 48px;
 }
 
-body.password p.success {
+.password p.success {
   text-align: center;
+}
+
+.password-page-icons {
+  margin-bottom: 20px;
 }
 
 .password-page-icons li {
@@ -8166,8 +8185,8 @@ body.password form#login_form {
   width: 100%;
   display: block;
   text-align: center;
-  position: absolute;
-  bottom: 50px;
+  position: relative;
+  margin-top: 220px;
 }
 
 .password-page-footer a {
