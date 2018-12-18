@@ -587,7 +587,7 @@
       "content": "Separate your currency codes with a space. Use the ISO 4217 3-letter currency code. Click [here](http:\/\/www.xe.com\/iso4217.php) for a complete list of currency codes. Example: CAD USD."
     }, {
       "type": "paragraph",
-      "content": "* For this functionality to work in your shop, you are required to edit your money formats as per [these instructions](http:\/\/wiki.shopify.com\/Do_Tell_Where_The_Money_Is) (â€œDo tell where the money isâ€)."
+      "content": "* For this functionality to work in your shop, you are required to edit your money formats as per [these instructions](https:\/\/help.shopify.com\/en\/themes\/customization\/currencies\/show-multiple-currencies#edit-your-money-formats) (â€œDo tell where the money isâ€)."
     }]
   }
 ]
