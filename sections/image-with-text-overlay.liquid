@@ -1,4 +1,4 @@
-<section class="image-with-text-overlay index-section" data-section-id="{{ section.id }}" data-section-type="image-section">
+<section id="image-{{ section.id }}" class="image-with-text-overlay index-section" data-section-id="{{ section.id }}" data-section-type="image-section">
   <div class="desktop-12 tablet-6 mobile-3">
     {%- if section.settings.image -%}
       <div class="image-wrapper lazyload lazyload-fade" data-bgset="{% include 'bgset', image: section.settings.image %} {% unless section.settings.full_width %}row{% endunless %}" data-sizes="auto">
@@ -29,17 +29,17 @@
 </section>
 
 <style>
-  .image-with-text-overlay .image-overlay h2 {
+  #image-{{ section.id }}.image-with-text-overlay .image-overlay h2 {
     font-size: {{ section.settings.heading_font_size }}px;
     font-weight: {{ section.settings.heading_font_weight }};
     color: {{ section.settings.heading_text_color }};
   }
-  .image-with-text-overlay .image-overlay p {
+  #image-{{ section.id }}.image-with-text-overlay .image-overlay p {
     font-size: {{ section.settings.subheading_font_size }}px;
     font-weight: {{ section.settings.subheading_font_weight }};
     color: {{ section.settings.subheading_text_color }};
   }
-  .image-with-text-overlay .image-overlay .button {
+  #image-{{ section.id }}.image-with-text-overlay .image-overlay .button {
     background-color: {{ section.settings.button_color }};
     color: {{ section.settings.button_text_color }};
   }

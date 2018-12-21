@@ -41,7 +41,7 @@
             <span class="prod-title">{{ prod.title }}</span>
           </a>
           <div class="price">
-            {% if product.price < prod.compare_at_price %}
+            {% if prod.price < prod.compare_at_price %}
             <div class="onsale"><span class="money">{{ prod.price | money }}</span></div>
             <div class="was-related"><span class="money">{{ prod.compare_at_price | money }}</span></div>
             {% else %}
