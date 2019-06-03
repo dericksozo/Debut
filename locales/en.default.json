@@ -85,7 +85,9 @@
       "update": "Update Cart",
       "checkout": "Checkout",
       "note": "Please leave special instructions below:",
-      "recently_viewed": "You also Viewed"
+      "recently_viewed": "You also Viewed",
+      "discount_applied": "Discount Applied:",
+      "savings": "Total Savings"
     }
   },
   "collections": {
@@ -259,7 +261,9 @@
       "quick_view": "QUICK VIEW",
       "from": "From",
       "view_full": "View Full Details",
-      "related": "More in this Collection"
+      "related": "More in this Collection",
+      "sale_price": "Sale Price",
+      "regular_price": "Regular Price"
     },
     "product": {
       "details": "Details",

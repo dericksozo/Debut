@@ -740,9 +740,60 @@ var ajaxifyShopify = (function(module, $) {
        *   - Remove file extension, add _120x, and re-add extension
        *   - Create server relative link
       */
-      var prodImg = cartItem.image.replace(/(\.[^.]*)$/, "_120x$1").replace('http:', '');
-      var prodName = cartItem.title.replace(/(\-[^-]*)$/, "");
-      var prodVariation = cartItem.title.replace(/^[^\-]*/, "").replace(/-/, "");
+      var prodImg;
+      if (cartItem.image !== null) {
+        prodImg = cartItem.image
+          .replace(/(\.[^.]*)$/, '_small$1')
+          .replace('http:', '');
+      } else {
+        prodImg =
+          '//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif';
+      }
+
+      if (cartItem.properties !== null) {
+        $.each(cartItem.properties, function(key, value) {
+          if (key.charAt(0) === '_' || !value) {
+            delete cartItem.properties[key];
+          }
+        });
+      }
+
+      if (cartItem.properties !== null) {
+        $.each(cartItem.properties, function(key, value) {
+          if (key.charAt(0) === '_' || !value) {
+            delete cartItem.properties[key];
+          }
+        });
+      }
+
+      if (cartItem.line_level_discount_allocations.length !== 0) {
+        for (var discount in cartItem.line_level_discount_allocations) {
+          var amount =
+            cartItem.line_level_discount_allocations[discount].amount;
+
+          cartItem.line_level_discount_allocations[
+            discount
+          ].formattedAmount = Shopify.formatMoney(
+            amount,
+            settings.moneyFormat
+          );
+        }
+      }
+
+      if (cart.cart_level_discount_applications.length !== 0) {
+        for (var cartDiscount in cart.cart_level_discount_applications) {
+          var cartAmount =
+            cart.cart_level_discount_applications[cartDiscount]
+              .total_allocated_amount;
+
+          cart.cart_level_discount_applications[
+            cartDiscount
+          ].formattedAmount = Shopify.formatMoney(
+            cartAmount,
+            settings.moneyFormat
+          );
+        }
+      }
 
       // Create item's data object and add to 'items' array
       item = {
@@ -750,12 +801,24 @@ var ajaxifyShopify = (function(module, $) {
         line: index + 1, // Shopify uses a 1+ index in the API
         url: cartItem.url,
         img: prodImg,
-        name: prodName,
-        variation: prodVariation,
-        itemAdd: itemAdd,
-        itemMinus: itemMinus,
-        itemQty: itemQty,
-        price: Shopify.formatMoney(cartItem.price, "{{ shop.money_format }}")
+        name: cartItem.product_title,
+        variation: cartItem.variant_title,
+        properties: cartItem.properties,
+        itemAdd: cartItem.quantity + 1,
+        itemMinus: cartItem.quantity - 1,
+        itemQty: cartItem.quantity,
+        price: Shopify.formatMoney(
+          cartItem.original_line_price,
+          settings.moneyFormat
+        ),
+        discountedPrice: Shopify.formatMoney(
+          cartItem.final_line_price,
+          settings.moneyFormat
+        ),
+        discounts: cartItem.line_level_discount_allocations,
+        discountsApplied:
+          cartItem.line_level_discount_allocations.length === 0 ? false : true,
+        vendor: cartItem.vendor
       };
 
       items.push(item);
@@ -764,9 +827,16 @@ var ajaxifyShopify = (function(module, $) {
     // Gather all cart data and add to DOM
     data = {
       items: items,
-      totalPrice: Shopify.formatMoney(cart.total_price, "{{ shop.money_format }}"),
-      btnClass: $btnClass
-    }
+      note: cart.note,
+      subTotalPrice: Shopify.formatMoney(cart.items_subtotal_price, settings.moneyFormat),
+      totalPrice: Shopify.formatMoney(
+        cart.total_price,
+        settings.moneyFormat
+      ),
+      cartDiscounts: cart.cart_level_discount_applications,
+      cartDiscountsApplied:
+        cart.cart_level_discount_applications.length === 0 ? false : true
+    };
     $cartContainer.append(template(data));
 
     // With new elements we need to relink the adjust cart functions
