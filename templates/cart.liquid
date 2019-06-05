@@ -108,7 +108,7 @@
           <p>{{ 'cart.general.discounts' | t }}</p>
           <ul>
             {%- for discount_application in cart.cart_level_discount_applications -%}
-              <li><i class="la la-tag"></i> {{ discount_application.title }}
+              <li><i class="fa fa-tag"></i> {{ discount_application.title }}
                (-{{ discount_application.total_allocated_amount | money }})</li>
             {%- endfor -%}
             </ul>
