@@ -3,7 +3,7 @@
   <div class="row grid_wrapper">
     <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="4">
       {%- if recommendations.products_count > 0 -%}
-        <div class="section-title lines tablet-6 desktop-12"><h2>{{ section.settings.product_recommendations_heading }}</div>
+        <div class="section-title lines tablet-6 desktop-12"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
           {%- for product in recommendations.products -%}
           <div class="product product-index span-3 desktop-3 tablet-fourth">
             <a href="{{ product.url }}">
