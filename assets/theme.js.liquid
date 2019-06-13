@@ -828,9 +828,16 @@ var ajaxifyShopify = (function(module, $) {
     data = {
       items: items,
       note: cart.note,
-      subTotalPrice: Shopify.formatMoney(cart.items_subtotal_price, settings.moneyFormat),
+      subTotalPrice: Shopify.formatMoney(
+        cart.items_subtotal_price,
+        settings.moneyFormat
+      ),
       totalPrice: Shopify.formatMoney(
         cart.total_price,
+        settings.moneyFormat
+      ),
+      cartTotalDiscounts:Shopify.formatMoney(
+        cart.total_discount,
         settings.moneyFormat
       ),
       cartDiscounts: cart.cart_level_discount_applications,

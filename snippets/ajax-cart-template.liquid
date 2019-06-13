@@ -85,22 +85,21 @@
           <p class="subtotal-price"><span class="cart-original-total money">{{{subTotalPrice}}}</span></p>
         </div>
         <div class="discounts">
-          {% endraw %}{%- if cart.cart_level_discount_applications != blank -%}{% raw %}
+          {{#if cartDiscountsApplied}}
             <p>{% endraw %}{{ 'cart.general.discounts' | t }}{% raw %}</p>
             <ul>
-              {% endraw %}{%- for discount_application in cart.cart_level_discount_applications -%}{% raw %}
-                <li><i class="la la-tag"></i> {% endraw %}{{ discount_application.title }}
-                 (-{{ discount_application.total_allocated_amount | money }}){% raw %}</li>
-              {% endraw %}{%- endfor -%}{% raw %}
-              </ul>
-          {% endraw %}{%- else -%}{% raw %}
-            {% endraw %}{% if cart.total_discounts > 0 %}{% raw %}
-              <div class="cart_savings onsale">
-                <p><em>{% endraw %}{{ 'cart.general.savings' | t }}{% raw %}</em></p>
-                <p class="cart-savings-amount"><em>{% endraw %}{{ cart.total_discounts | money }}{% raw %}</em></p>
-              </div>
-            {% endraw %}{% endif %}{% raw %}
-          {% endraw %}{%- endif -%}{% raw %}
+             {{#each cartDiscounts}}
+                <li><i class="fa fa-tag"></i> (-{{{ this.formattedAmount }}})</li>
+             {{/each}}
+            </ul>
+           {{/if}}
+           <div class="clear">/</div>
+           {{# cartTotalDiscounts}}
+             <div class="cart_savings onsale">
+               <p><em>{% endraw %}{{ 'cart.general.savings' | t }}{% raw %}</em></p>
+               <p class="cart-savings-amount"><em>{{cartTotalDiscounts}}</em></p>
+             </div>
+           {{/if}}
         </div>
         <div class="total">
           <h3 class="title">{% endraw %}{{ 'cart.general.total' | t }}{% raw %}</h3>
