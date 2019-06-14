@@ -69,16 +69,16 @@
             {{ line_item.title | link_to: line_item.product.url }}
             {% if line_item.line_level_discount_allocations.size > 0 %}
               {% for discount_allocation in line_item.line_level_discount_allocations %}
-                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</p>
+                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-<span class="money">{{ discount_allocation.amount | money }}</span>)</p>
               {% endfor %}
             {% endif %}
             {% if line_item.fulfillment %}
-            <div class="note">
-              Fulfilled {{ line_item.fulfillment.created_at | date: "%b %d" }}
-              {% if line_item.fulfillment.tracking_number %}
-              <a href="{{ line_item.fulfillment.tracking_url }}">{{ line_item.fulfillment.tracking_company }} #{{ line_item.fulfillment.tracking_number}}</a>
-              {% endif %}
-            </div>
+              <div class="note">
+                Fulfilled {{ line_item.fulfillment.created_at | date: "%b %d" }}
+                {% if line_item.fulfillment.tracking_number %}
+                <a href="{{ line_item.fulfillment.tracking_url }}">{{ line_item.fulfillment.tracking_company }} #{{ line_item.fulfillment.tracking_number}}</a>
+                {% endif %}
+              </div>
             {% endif %}
           </td>
         <td class="sku note">{{ line_item.sku }}</td>

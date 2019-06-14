@@ -475,8 +475,9 @@ var ajaxifyShopify = (function(module, $) {
     });
 
     $modalContainer.addClass('is-visible');
+    $body.addClass('ajaxify-modal--visible');
 
-    scrollTop();
+    // scrollTop();
 
     toggleCallback({
       'is_visible': true
@@ -484,6 +485,11 @@ var ajaxifyShopify = (function(module, $) {
   };
 
   hideModal = function (e) {
+    // If product page closing modal take back to previous page
+    // if ($body.hasClass('product')) {
+    //   window.history.back();
+    // }
+
     $body.removeClass('ajaxify-modal--visible');
     if (e) {
       e.preventDefault();
@@ -766,6 +772,14 @@ var ajaxifyShopify = (function(module, $) {
         });
       }
 
+      if (cartItem.properties !== null) {
+        $.each(cartItem.properties, function(key, value) {
+          if (key.charAt(0) === '_' || !value) {
+            delete cartItem.properties[key];
+          }
+        });
+      }
+
       if (cartItem.line_level_discount_allocations.length !== 0) {
         for (var discount in cartItem.line_level_discount_allocations) {
           var amount =
@@ -812,17 +826,14 @@ var ajaxifyShopify = (function(module, $) {
           settings.moneyFormat
         ),
         discountedPrice: Shopify.formatMoney(
-          cartItem.final_line_price,
-          settings.moneyFormat
-        ),
+        cartItem.final_line_price,
+        settings.moneyFormat
+      ),
         discounts: cartItem.line_level_discount_allocations,
         discountsApplied:
           cartItem.line_level_discount_allocations.length === 0 ? false : true,
         vendor: cartItem.vendor
       };
-
-      items.push(item);
-    });
 
     // Gather all cart data and add to DOM
     data = {
@@ -836,13 +847,14 @@ var ajaxifyShopify = (function(module, $) {
         cart.total_price,
         settings.moneyFormat
       ),
-      cartTotalDiscounts:Shopify.formatMoney(
+      cartTotalDiscounts: Shopify.formatMoney(
         cart.total_discount,
         settings.moneyFormat
       ),
       cartDiscounts: cart.cart_level_discount_applications,
       cartDiscountsApplied:
-        cart.cart_level_discount_applications.length === 0 ? false : true
+        cart.cart_level_discount_applications.length === 0 ? false : true,
+      cartTotalSavings: cart.cart_level_discount_applications.length === 0
     };
     $cartContainer.append(template(data));
 

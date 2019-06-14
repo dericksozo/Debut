@@ -81,7 +81,7 @@
             </h5>
             {% if item.line_level_discount_allocations.size > 0 %}
               {% for discount_allocation in item.line_level_discount_allocations %}
-                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</p>
+                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-<span class="money">{{ discount_allocation.amount | money }}</span>)</p>
               {% endfor %}
             {% endif %}
           </td>
@@ -109,7 +109,7 @@
           <ul>
             {%- for discount_application in cart.cart_level_discount_applications -%}
               <li><i class="fa fa-tag"></i> {{ discount_application.title }}
-               (-{{ discount_application.total_allocated_amount | money }})</li>
+               (-<span class="money">{{ discount_application.total_allocated_amount | money }}</span>)</li>
             {%- endfor -%}
             </ul>
         {%- else -%}
