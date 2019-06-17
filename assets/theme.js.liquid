@@ -695,7 +695,6 @@ var ajaxifyShopify = (function(module, $) {
     }
   };
 
-
   buildCart = function (cart) {
     // Empty cart if using default layout or not using the .load method to get /cart
     if (!settings.useCartTemplate || cart.item_count === 0) {
@@ -826,59 +825,61 @@ var ajaxifyShopify = (function(module, $) {
           settings.moneyFormat
         ),
         discountedPrice: Shopify.formatMoney(
-        cartItem.final_line_price,
-        settings.moneyFormat
-      ),
+          cartItem.final_line_price,
+          settings.moneyFormat
+        ),
         discounts: cartItem.line_level_discount_allocations,
         discountsApplied:
           cartItem.line_level_discount_allocations.length === 0 ? false : true,
         vendor: cartItem.vendor
       };
 
-    // Gather all cart data and add to DOM
-    data = {
-      items: items,
-      note: cart.note,
-      subTotalPrice: Shopify.formatMoney(
-        cart.items_subtotal_price,
-        settings.moneyFormat
-      ),
-      totalPrice: Shopify.formatMoney(
-        cart.total_price,
-        settings.moneyFormat
-      ),
-      cartTotalDiscounts: Shopify.formatMoney(
-        cart.total_discount,
-        settings.moneyFormat
-      ),
-      cartDiscounts: cart.cart_level_discount_applications,
-      cartDiscountsApplied:
-        cart.cart_level_discount_applications.length === 0 ? false : true,
-      cartTotalSavings: cart.cart_level_discount_applications.length === 0
-    };
-    $cartContainer.append(template(data));
+      // Gather all cart data and add to DOM
+      data = {
+        items: items,
+        note: cart.note,
+        subTotalPrice: Shopify.formatMoney(
+          cart.items_subtotal_price,
+          settings.moneyFormat
+        ),
+        totalPrice: Shopify.formatMoney(
+          cart.total_price,
+          settings.moneyFormat
+        ),
+        cartTotalDiscounts: Shopify.formatMoney(
+          cart.total_discount,
+          settings.moneyFormat
+        ),
+        cartDiscounts: cart.cart_level_discount_applications,
+        cartDiscountsApplied:
+          cart.cart_level_discount_applications.length === 0 ? false : true,
+        cartTotalSavings: cart.cart_level_discount_applications.length === 0
+      };
 
-    // With new elements we need to relink the adjust cart functions
-    adjustCart();
+      $cartContainer.append(template(data));
 
-    // Setup close modal button and size drawer
-    switch (settings.method) {
-      case 'modal':
-        loadCartImages();
-        break;
-      case 'drawer':
-        if (cart.item_count > 0) {
+      // With new elements we need to relink the adjust cart functions
+      adjustCart();
+
+      // Setup close modal button and size drawer
+      switch (settings.method) {
+        case 'modal':
           loadCartImages();
-        } else {
-          sizeDrawer(true);
-        }
-        break;
-      default:
-        break;
-    }
+          break;
+        case 'drawer':
+          if (cart.item_count > 0) {
+            loadCartImages();
+          } else {
+            sizeDrawer(true);
+          }
+          break;
+        default:
+          break;
+      }
 
-    // Mark the cart as built
-    cartInit = true;
+      // Mark the cart as built
+      cartInit = true;
+    });
   };
 
   cartTemplate = function (cart) {
