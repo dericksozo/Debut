@@ -857,7 +857,7 @@ var ajaxifyShopify = (function(module, $) {
       cartDiscounts: cart.cart_level_discount_applications,
       cartDiscountsApplied:
         cart.cart_level_discount_applications.length === 0 ? false : true,
-      cartTotalSavings: cart.cart_level_discount_applications.length === 0
+      cartTotalSavings: cart.cart_level_discount_applications.length === 0 && cart.total_discount > 0
     };
 
     $cartContainer.append(template(data));
