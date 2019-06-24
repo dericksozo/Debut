@@ -1995,6 +1995,9 @@ body.collection h1 {
   color: {{ settings.sale_color }};
   text-decoration: line-through;
 }
+.onsale {
+  color: {{ settings.sale_color }};
+}
 
 .was,
 .was-related {
@@ -2608,7 +2611,45 @@ td.cart-remove {
 #basket-right h4 {
   margin: 20px 0;
 }
+.visually-hidden { display: none;}
 
+#basket-right .subtotal,
+#ajaxifyCart .subtotal,
+#basket-right .discounts,
+#ajaxifyCart .discounts,
+#ajaxifyCart .total,
+#basket-right .total {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 5px;
+  padding-left: 0;
+}
+#ajaxifyCart .discounts ul { list-style: none; }
+#basket-right .subtotal p.subtotal-price,
+#ajaxifyCart .subtotal p.subtotal-price,
+#basket-right .discounts ul,
+#ajaxifyCart .discounts ul,
+#basket-right .discounts .cart_savings .cart-savings-amount,
+#ajaxifyCart .discounts .cart_savings .cart-savings-amount,
+#basket-right .discounts h3.total-price,
+#ajaxifyCart .discounts h3.total-price {
+  float: right;
+}
+
+#basket-right .subtotal p.title,
+#ajaxifyCart .subtotal p.title,
+#basket-right .discounts p,
+#ajaxifyCart .discounts p,
+#basket-right .discounts .cart_savings p,
+#ajaxifyCart .discounts .cart_savings p,
+#basket-right .total h3.title,
+#ajaxifyCart .total h3.title {
+  float: left;
+}
+#ajaxifyCart .cart-summary {
+  width: 40%;
+  float: right;
+}
 #note {
   margin-top: 10px;
 }
@@ -8565,6 +8606,10 @@ ul.sub {
   width: 25%;
 }
 
+.grid-item.one-half {
+  width: 47%;
+}
+
 .grid-item.three-quarters {
   width: 74%;
 }
@@ -8583,10 +8628,9 @@ ul.sub {
   vertical-align: middle;
 }
 
-@media screen and (max-width: 480px) {
-  body.ajaxify-modal--visible {
-    overflow: hidden
-  }
+body.ajaxify-modal--visible,
+.ajaxify-lock {
+  overflow: hidden !important;
 }
 #ajaxifyModal {
   overflow-x: hidden;
@@ -8838,8 +8882,8 @@ ul.sub {
 }
 
 .ajaxify-modal {
-  position: absolute;
-  top: 170px;
+  position: fixed;
+  top: 10%;
   left: -200%;
   margin-left: -500px;
   width: 100%;

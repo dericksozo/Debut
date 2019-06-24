@@ -90,6 +90,8 @@
               }
               .flex-caption.slide-{{ block.id }} h2.slide-title {
                 color: {{ block.settings.slide_text_color }};
+                font-size: {{ section.settings.slide_title_size }}px;
+                font-weight:{{ section.settings.slide_title_weight }};
               }
               .flex-caption.slide-{{ block.id }} p {
                 color: {{ block.settings.slide_text_color }};
@@ -97,17 +99,10 @@
               .flex-caption.slide-{{ block.id }} .cta a {
                 color: {{ block.settings.cta_color }};
                 background: {{ block.settings.cta_background }};
-              }
-              .cta a {
                 font-size: {{ section.settings.cta_size }}px;
                 font-weight: {{ section.settings.cta_weight }};
               }
-              .flex-caption h2.slide-title {
-                font-size: {{ section.settings.slide_title_size }}px;
-                font-family: {{ section.settings.headings_font }};
-                font-weight:{{ section.settings.slide_title_weight }};
-              }
-              .flex-caption p {
+              .flex-caption.slide-{{ block.id }} .flex-caption p {
                 font-size: {{ section.settings.caption_size }}px;
               }
             </style>
