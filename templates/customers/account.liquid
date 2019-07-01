@@ -45,7 +45,7 @@
           <td><span class="note">{{ order.created_at | date: "%b %d, %Y" }}</span></td>
           <td><span class="status_{{ order.financial_status }}">{{ order.financial_status }}</span></td>
           <td><span class="status_{{ order.fulfillment_status }}">{{ order.fulfillment_status }}</span></td>
-          <td><span class="total money"><span class="money">{{ order.total_price | money }}</span></span></td>
+          <td><span class="total">{{ order.total_price | money }}</span></td>
         </tr>
         {% endfor %}
       </tbody>
