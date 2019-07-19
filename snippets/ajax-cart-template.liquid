@@ -36,7 +36,7 @@
                         <span class="visually-hidden">{% endraw %}{{ 'products.general.sale_price' | t }}{% raw %}</span>
                         <span class="ajaxcart__price onsale money">{{{discountedPrice}}}</span>
                         <span class="visually-hidden">{% endraw %}{{ 'products.general.regular_price' | t }}{% raw %}</span>
-                        <del class="ajaxcart__price"><span class="money">{{{price}}}</span></del>
+                        <del class="ajaxcart__price">{{{price}}}</del>
                       {{else}}
                         <span class="ajaxcart__price money">{{{price}}}</span>
                       {{/if}}
@@ -44,7 +44,7 @@
 
                     {{#if discountsApplied}}
                       {{#each discounts}}
-                        <p class="onsale"><i class="fa fa-tag"></i> {{ this.discount_application.title }} (-<span class="money">{{{ this.formattedAmount }}}</span>)</p>
+                        <p class="onsale"><i class="fa fa-tag"></i> {{ this.discount_application.title }} (-{{{ this.formattedAmount }}})</p>
                       {{/each}}
                     {{/if}}
                   </div>
@@ -89,14 +89,14 @@
             <p>{% endraw %}{{ 'cart.general.discounts' | t }}{% raw %}</p>
             <ul>
              {{#each cartDiscounts}}
-                <li><i class="fa fa-tag"></i> (-<span class="money">{{{ this.formattedAmount }}}</span>)</li>
+                <li><i class="fa fa-tag"></i> (-{{{ this.formattedAmount }}})</li>
              {{/each}}
             </ul>
            {{/if}}
            {{#if cartTotalSavings}}
              <div class="cart_savings onsale">
                <p><em>{% endraw %}{{ 'cart.general.savings' | t }}{% raw %}</em></p>
-               <p class="cart-savings-amount"><em><span class="money">{{cartTotalDiscounts}}</span></em></p>
+               <p class="cart-savings-amount"><em>{{cartTotalDiscounts}}</em></p>
              </div>
            {{/if}}
         </div>
