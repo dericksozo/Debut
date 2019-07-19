@@ -309,7 +309,14 @@ var ajaxifyShopify = (function(module, $) {
       disableAjaxCart: false,
       enableQtySelectors: true,
       prependDrawerTo: 'body',
-      onToggleCallback: function(cart) {}
+      onToggleCallback: function(cart) {
+        {%- if settings.show_multiple_currencies -%}
+          if (cart.is_visible) {
+            Currency.convertAll(shopCurrency, Currency.currentCurrency);
+            jQuery('.selected-currency').text(Currency.currentCurrency);
+          }
+        {% endif %}
+      }
     };
 
     // Override defaults with arguments
@@ -2021,7 +2028,7 @@ theme.ProductForm = function (context, events) {
         price = "";
       }
 
-      element.innerHTML = price;
+      element.innerHTML = '<span class="money">' + price + '</span>';
     });
   })();
 
@@ -2082,15 +2089,14 @@ theme.ProductForm = function (context, events) {
   })();
 
   function money(cents) {
-    return Shopify.formatMoney(cents, config.money_format);
-    // if ( config.currency_switcher_enabled ) {
-    //   var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
-    //   var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
-    //
-    //   return Currency.formatMoney(converted, format);
-    // } else {
-    //   return Shopify.formatMoney(cents, config.money_format);
-    // }
+    if ( config.currency_switcher_enabled ) {
+      var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
+      var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
+
+      return Currency.formatMoney(converted, format);
+    } else {
+      return Shopify.formatMoney(cents, config.money_format);
+    }
   }
 }
 
@@ -2327,11 +2333,11 @@ Events.on("quickview:load", function (container) {
   theme.Product(container);
 });
 
-// {% if settings.show_multiple_currencies %}
-//   Events.on("quickview:load", function (container) {
-//     Currency.convertAll( defaultCurrency, Currency.currentCurrency );
-//   });
-// {% endif %}
+{% if settings.show_multiple_currencies %}
+  Events.on("quickview:load", function (container) {
+    Currency.convertAll( defaultCurrency, Currency.currentCurrency );
+  });
+{% endif %}
 
 /*============================================================================
   Map Section
@@ -2519,13 +2525,7 @@ theme.Header = (function() {
         $('nav').stickUp();
       }
     });
-    $(document).ready( function() {
-      $('.shopify-currency-form select').on('change', function() {
-        $(this)
-          .parents('form')
-          .submit();
-      });
-    });
+
     $(document).ready( function() {
       $("ul.submenu li").on('mouseenter mouseleave', function (e) {
           if ($('ul', this).length) {

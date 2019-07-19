@@ -69,7 +69,7 @@
             {{ line_item.title | link_to: line_item.product.url }}
             {% if line_item.line_level_discount_allocations.size > 0 %}
               {% for discount_allocation in line_item.line_level_discount_allocations %}
-                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</p>
+                <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-<span class="money">{{ discount_allocation.amount | money }}</span>)</p>
               {% endfor %}
             {% endif %}
             {% if line_item.fulfillment %}
@@ -82,46 +82,46 @@
             {% endif %}
           </td>
         <td class="sku note">{{ line_item.sku }}</td>
-        <td class="money"><span class="{% if line_item.original_price > line_item.final_price or line_item.variant.compare_at_price > line_item.final_price %}onsale{% endif %}">{{ line_item.final_price | money }}</span><del style="margin-left:5px;">{% if line_item.original_price > line_item.final_price %}{{ line_item.original_price | money }}{% elsif line_item.variant.compare_at_price > line_item.final_price %}{{ line_item.variant.compare_at_price | money }}{% endif %}</del></td>
+        <td class="money"><span class="money {% if line_item.original_price > line_item.final_price or line_item.variant.compare_at_price > line_item.final_price %}onsale{% endif %}">{{ line_item.final_price | money }}</span><span class="money"><del style="margin-left:5px;">{% if line_item.original_price > line_item.final_price %}{{ line_item.original_price | money }}{% elsif line_item.variant.compare_at_price > line_item.final_price %}{{ line_item.variant.compare_at_price | money }}{% endif %}</del></span></td>
         <td class="qty center">{{ line_item.quantity }}</td>
-        <td class="total money center">{{ line_item.final_line_price | money }}</td>
+        <td class="total money center"><span class="money">{{ line_item.final_line_price | money }}</span></td>
       </tr>
       {% endfor %}
     </tbody>
     <tfoot>
       <tr class="order_summary note">
         <td class="label" colspan="4">{{ 'customer.order.details.subtotal' | t }}</td>
-        <td class="total money">{{ order.line_items_subtotal_price | money }}</td>
+        <td class="total money"><span class="money">{{ order.line_items_subtotal_price | money }}</span></td>
       </tr>
 
       {% for discount_application in order.cart_level_discount_applications %}
       <tr class="order_summary discount onsale">
         <td class="label" colspan="4">{{ 'customer.order.discount' | t }}: <i class="fa fa-tag"></i> {{ discount_application.title }}</td>
-        <td class="total money">(-{{ discount_application.total_allocated_amount | money }})</td>
+        <td class="total money"><span class="money">(-{{ discount_application.total_allocated_amount | money }})</span></td>
       </tr>
       {% endfor %}
 
       {% for shipping_method in order.shipping_methods %}
       <tr class="order_summary note">
         <td class="label" colspan="4">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }}):</td>
-        <td class="total money center">{{ shipping_method.price | money }}</td>
+        <td class="total money center"><span class="money">{{ shipping_method.price | money }}</span></td>
       </tr>
       {% endfor %}
 
       {% for tax_line in order.tax_lines %}
       <tr class="order_summary note">
         <td class="label" colspan="4">{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%):</td>
-        <td class="total money center">{{ tax_line.price | money }}</td>
+        <td class="total money center"><span class="money">{{ tax_line.price | money }}</span></td>
       </tr>
       {% endfor %}
 
       <tr class="cart_savings onsale">
         <td class="label" colspan="4"><em>{{ 'cart.general.savings' | t }}</em></td>
-        <td class="cart-savings-amount"><em>{{ order.total_discounts | money }}</em></td>
+        <td class="cart-savings-amount"><em><span class="money">{{ order.total_discounts | money }}</span></em></td>
       </tr>
       <tr class="order_summary order_total">
         <td class="label" colspan="4">{{ 'customer.order.details.total' | t }}:</td>
-        <td class="total money">{{ order.total_price | money }} {{ order.currency }}</td>
+        <td class="total money"><span class="money">{{ order.total_price | money }}</span> {{ order.currency }}</td>
       </tr>
     </tfoot>
   </table>

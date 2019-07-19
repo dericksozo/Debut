@@ -18,11 +18,11 @@
   {%- endif -%}
   <p id="product-price">
     <span class="product-price" itemprop="price">
-      {{ price }}
+      <span class="money">{{ price }}</span>
     </span>
     {% if current_variant.compare_at_price > current_variant.price %}
       <span class="was">
-        {{ compare_price }}
+        <span class="money">{{ compare_price }}</span>
       </span>
     {% endif %}
   </p><div class="clear"></div>

@@ -102,10 +102,10 @@
           {% if item.object_type == 'product' %}
           <div class="price">
             {% if item.price < item.compare_at_price %}
-            <div class="onsale">{{ item.price | money }}</div>
-            <div class="was">{{ item.compare_at_price | money }}</div>
+            <div class="onsale"><span class="money">{{ item.price | money }}</span></div>
+            <div class="was"><span class="money">{{ item.compare_at_price | money }}</span></div>
             {% else %}
-            <div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} {{ item.price_min | money }} - {{ item.price_max | money }}{% else %}{{ item.price | money }}{% endif %}</div>
+            <div class="prod-price">{% if item.price_varies %} {{ 'products.general.from' | t }} <span class="money">{{ item.price_min | money }}</span> - <span class="money">{{ item.price_max | money }}</span> {% else %}<span class="money">{{ item.price | money }}</span>{% endif %}</div>
             {% endif %}
           </div>
           {% if settings.secondary_images_hover == 'alternate_colors' %}
