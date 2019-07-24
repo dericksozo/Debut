@@ -88,10 +88,7 @@
           {% endif %}
         </div>
         <p>
-          {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }} •
-          <a href="//www.shopifythemes.net" target="_blank" title="Shopify theme">Shopify Theme</a>
-          {{ 'layout.footer.theme_title' | t }} Underground • 
-          {{ powered_by_link }}
+          <small><a href="{{ routes.root_url }}">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}</a> • {{ powered_by_link }}</small>
         </p>
       </div>
     </div>
