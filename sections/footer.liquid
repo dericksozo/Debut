@@ -3,7 +3,7 @@
   <div class="row">
     <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">
         {%- assign image_size = '800x' -%}
-        <a href="/">
+        <a href="{{ routes.root_url }}">
           <img src="{{ section.settings.bottom_logo | img_url: image_size }}" alt="{{ section.settings.bottom_logo.alt | default: shop.name }}">
         </a>
     </div>

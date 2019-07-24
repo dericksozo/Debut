@@ -63,11 +63,11 @@
       <div id="logo" class="desktop-12 tablet-6 mobile-3">
         {% if section.settings.logo != blank %}
         {%- assign image_size = '800x' -%}
-        <a href="/">
+        <a href="{{ routes.root_url }}">
           <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
         </a>
         {% else %}
-        <a href="/">{{ shop.name }}</a>
+        <a href="{{ routes.root_url }}">{{ shop.name }}</a>
         {% endif %}
       </div>
     </div>
