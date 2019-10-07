@@ -757,22 +757,6 @@ var ajaxifyShopify = (function(module, $) {
         });
       }
 
-      if (cartItem.properties !== null) {
-        $.each(cartItem.properties, function(key, value) {
-          if (key.charAt(0) === '_' || !value) {
-            delete cartItem.properties[key];
-          }
-        });
-      }
-
-      if (cartItem.properties !== null) {
-        $.each(cartItem.properties, function(key, value) {
-          if (key.charAt(0) === '_' || !value) {
-            delete cartItem.properties[key];
-          }
-        });
-      }
-
       if (cartItem.line_level_discount_allocations.length !== 0) {
         for (var discount in cartItem.line_level_discount_allocations) {
           var amount =
