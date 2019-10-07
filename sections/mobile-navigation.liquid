@@ -34,6 +34,17 @@
     <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
     {% endif %}
     {% endfor %}
+    {% if shop.customer_accounts_enabled %}
+    {% if customer  %}
+      <li class="top-level-link">
+        <a href="/account">
+          <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.account' | t }}
+        </a>&nbsp;&nbsp;<i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.logout' | t }}
+      </li>
+      {% else %}
+      <li class="top-level-link"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;<a href="/account/login">{{ 'layout.mobile_nav.login' | t }}</a></li>
+      {% endif %}
+    {% endif %}
   </ul>
 </div>
 
