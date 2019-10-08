@@ -2,7 +2,7 @@
     "name": "theme_info",
     "theme_name": "Testament",
     "theme_author": "Underground",
-    "theme_version": "6.6.4",
+    "theme_version": "6.7",
     "theme_documentation_url": "https:\/\/\/\/www.weareunderground.com\/products\/testament",
     "theme_support_url": "http:\/\/support.undergroundmedia.co.uk\/"
   }, {
@@ -550,44 +550,20 @@
       "id": "footer_signup_text",
       "label": "Email popup text"
     }]
-  }, {
+  },
+  {
     "name": "Currency",
-    "settings": [{
-      "type": "checkbox",
-      "id": "show_multiple_currencies",
-      "label": "Use currency selector",
-      "default": false
-    }, {
-      "type": "paragraph",
-      "content": "Although you will be able to display prices on your store front in different currencies, Shopify will still process orders in your shop's currency."
-    }, {
-      "type": "select",
-      "id": "currency_format",
-      "label": "Money format",
-      "options": [{
-        "value": "money_format",
-        "label": "Without Currency, ex: $10.00"
-      }, {
-        "value": "money_with_currency_format",
-        "label": "With Currency, ex: $10 CAD"
-      }],
-      "default": "money_with_currency_format"
-    }, {
-      "type": "text",
-      "id": "supported_currencies",
-      "label": "Currencies you wish to support",
-      "default": "CAD USD"
-    }, {
-      "type": "text",
-      "id": "default_currency",
-      "label": "Default currency",
-      "default": "CAD"
-    }, {
-      "type": "paragraph",
-      "content": "Separate your currency codes with a space. Use the ISO 4217 3-letter currency code. Click [here](http:\/\/www.xe.com\/iso4217.php) for a complete list of currency codes. Example: CAD USD."
-    }, {
-      "type": "paragraph",
-      "content": "* For this functionality to work in your shop, you are required to edit your money formats as per [these instructions](https:\/\/help.shopify.com\/en\/themes\/customization\/currencies\/show-multiple-currencies#edit-your-money-formats) (â€œDo tell where the money isâ€)."
-    }]
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_multiple_currencies",
+        "label": "Show currency selector",
+        "default": false
+      },
+      {
+        "type": "paragraph",
+        "content": "Show currency selector to allow customers to shop in different currencies. For this functionality to work in your shop, you will need to use Shopify Payments and with it set to accept multiple currencies. [Learn more](https:\/\/help.shopify.com\/en\/manual\/payments\/multi-currency)."
+      }
+    ]
   }
 ]

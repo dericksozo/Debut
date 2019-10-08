@@ -309,14 +309,7 @@ var ajaxifyShopify = (function(module, $) {
       disableAjaxCart: false,
       enableQtySelectors: true,
       prependDrawerTo: 'body',
-      onToggleCallback: function(cart) {
-        {%- if settings.show_multiple_currencies -%}
-          if (cart.is_visible) {
-            Currency.convertAll(shopCurrency, Currency.currentCurrency);
-            jQuery('.selected-currency').text(Currency.currentCurrency);
-          }
-        {% endif %}
-      }
+      onToggleCallback: function(cart) {}
     };
 
     // Override defaults with arguments
@@ -754,22 +747,6 @@ var ajaxifyShopify = (function(module, $) {
       } else {
         prodImg =
           '//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif';
-      }
-
-      if (cartItem.properties !== null) {
-        $.each(cartItem.properties, function(key, value) {
-          if (key.charAt(0) === '_' || !value) {
-            delete cartItem.properties[key];
-          }
-        });
-      }
-
-      if (cartItem.properties !== null) {
-        $.each(cartItem.properties, function(key, value) {
-          if (key.charAt(0) === '_' || !value) {
-            delete cartItem.properties[key];
-          }
-        });
       }
 
       if (cartItem.properties !== null) {
@@ -2028,7 +2005,7 @@ theme.ProductForm = function (context, events) {
         price = "";
       }
 
-      element.innerHTML = '<span class="money">' + price + '</span>';
+      element.innerHTML = price;
     });
   })();
 
@@ -2089,14 +2066,15 @@ theme.ProductForm = function (context, events) {
   })();
 
   function money(cents) {
-    if ( config.currency_switcher_enabled ) {
-      var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
-      var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
-
-      return Currency.formatMoney(converted, format);
-    } else {
-      return Shopify.formatMoney(cents, config.money_format);
-    }
+    return Shopify.formatMoney(cents, config.money_format);
+    // if ( config.currency_switcher_enabled ) {
+    //   var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
+    //   var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
+    //
+    //   return Currency.formatMoney(converted, format);
+    // } else {
+    //   return Shopify.formatMoney(cents, config.money_format);
+    // }
   }
 }
 
@@ -2333,11 +2311,11 @@ Events.on("quickview:load", function (container) {
   theme.Product(container);
 });
 
-{% if settings.show_multiple_currencies %}
-  Events.on("quickview:load", function (container) {
-    Currency.convertAll( defaultCurrency, Currency.currentCurrency );
-  });
-{% endif %}
+// {% if settings.show_multiple_currencies %}
+//   Events.on("quickview:load", function (container) {
+//     Currency.convertAll( defaultCurrency, Currency.currentCurrency );
+//   });
+// {% endif %}
 
 /*============================================================================
   Map Section
@@ -2525,7 +2503,13 @@ theme.Header = (function() {
         $('nav').stickUp();
       }
     });
-
+    $(document).ready( function() {
+      $('.shopify-currency-form select').on('change', function() {
+        $(this)
+          .parents('form')
+          .submit();
+      });
+    });
     $(document).ready( function() {
       $("ul.submenu li").on('mouseenter mouseleave', function (e) {
           if ($('ul', this).length) {
@@ -2651,4 +2635,4 @@ log = function() {
     return Function.prototype.bind.apply(console.log, args);
 }
 
-log("Testament Version 6.6.4 by Underground", {bar: 1})();
+log("Testament Version 6.7 by Underground", {bar: 1})();

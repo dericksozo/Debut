@@ -1,4 +1,4 @@
-<div class="footer-section" data-section-id="{{ section.id }}" data-section-type="footer-section">
+h<div class="footer-section" data-section-id="{{ section.id }}" data-section-type="footer-section">
 {% if section.settings.bottom_logo != blank %}
   <div class="row">
     <div id="bottom-logo" class="desktop-12 tablet-6 mobile-3">
@@ -88,7 +88,7 @@
           {% endif %}
         </div>
         <p>
-          <small><a href="{{ routes.root_url }}">&copy; {{ 'now' | date: "%Y" }} {{ shop.name }}</a> • {{ powered_by_link }}</small>
+          {{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} {{ shop.name | link_to: '/' }}
         </p>
       </div>
     </div>

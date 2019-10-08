@@ -252,6 +252,11 @@
       "onboarding": {
         "no_content": "This section doesn’t currently include any content. Add content to this section using the sidebar."
       }
+    },
+    "mobile_nav": {
+      "account": "Account",
+      "login": "Log In/Create Account",
+      "logout": "Logout"
     }
   },
   "products": {
