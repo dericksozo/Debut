@@ -95,15 +95,14 @@
       <textarea name="note" id="note" rows="5" cols="60">{{cart.note}}</textarea>
     </div>
     {% endif %}
-    <div id="continue-shopping" class="desktop-5 tablet-6 mobile-3">
+    <div id="continue-shopping" class="desktop-3 tablet-6 mobile-3">
       <a href="/collections">{{ 'cart.general.continue' | t }}</a>
     </div>
-    <div id="basket-right" class="desktop-5 tablet-6 mobile-3">
+    <div id="basket-right" class="desktop-3 tablet-6 mobile-3">
       <div class="subtotal">
         <p class="title">{{ 'cart.general.subtotal' | t }}</p>
         <p class="subtotal-price"><span class="cart-original-total money">{{ cart.items_subtotal_price | money }}</span></p>
       </div>
-     {%- if cart.cart_level_discount_applications != blank -%}
       <div class="discounts">
         {%- if cart.cart_level_discount_applications != blank -%}
           <p>{{ 'cart.general.discounts' | t }}</p>
@@ -119,9 +118,9 @@
               <p><em>{{ 'cart.general.savings' | t }}</em></p>
               <p class="cart-savings-amount"><em>{{ cart.total_discounts | money }}</em></p>
             </div>
-          </div>
-        {% endif %}
-      {%- endif -%}
+          {% endif %}
+        {%- endif -%}
+      </div>
      <div class="total">
         <h3 class="title">{{ 'cart.general.total' | t }}</h3>
         <h3 class="total-price"><span class="cart-original-total money">{{ cart.total_price | money }}</span>
@@ -129,21 +128,18 @@
       </div>
       <input type="submit" name="update" id="update-cart" value="{{ 'cart.general.update' | t }}" class="button" />
       <input type="submit" name="checkout" id="checkout" value="{{ 'cart.general.checkout' | t }}" class="button" />
+
+      {% for type in shop.enabled_payment_types %}
+      <img src="{{ type | payment_type_img_url }}" />
+      {% endfor %}
+
       <div class="clear"></div>
 
       {% if additional_checkout_buttons %}
-        <div class="additional-checkout-buttons">
-         {{ content_for_additional_checkout_buttons }}
-        </div>
+      {{ content_for_additional_checkout_buttons }}
       {% endif %}
 
       <div class="clear"></div>
-
-      <div class="payment-types">
-        {% for type in shop.enabled_payment_types %}
-        <img src="{{ type | payment_type_img_url }}" />
-        {% endfor %}
-      </div>
 
     </div>
 
