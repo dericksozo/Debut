@@ -228,8 +228,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "#000000",
@@ -245,8 +243,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "rgba(0,0,0,0)",
@@ -350,7 +346,6 @@
             "text_size": 18,
             "text_color": "#000000",
             "logo": "",
-            "logo_width": 100,
             "background_color": "#f5f5f5",
             "background_image": "",
             "show_overlay_color": false,
@@ -376,8 +371,8 @@
             "1521604513411-0": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -388,8 +383,8 @@
             "1521604513411-1": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -400,8 +395,8 @@
             "1521604513411-2": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -442,14 +437,9 @@
           "settings": {
             "full_width": true,
             "image": "",
-            "page_text": "Image with Text Overlay",
-            "text_color": "#ffffff",
-            "link": "",
             "button_text": "Add a button",
-            "font_size": 26,
-            "font_weight": "400",
-            "button_text_color": "#fff",
-            "button_background_color": "#000"
+            "link": "",
+            "button_text_color": "#fff"
           }
         },
         "1521640705228": {
@@ -739,8 +729,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "#000000",
@@ -756,8 +744,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "rgba(0,0,0,0)",
@@ -861,7 +847,6 @@
             "text_size": 18,
             "text_color": "#000000",
             "logo": "",
-            "logo_width": 100,
             "background_color": "#f5f5f5",
             "background_image": "",
             "show_overlay_color": false,
@@ -887,8 +872,8 @@
             "1521604513411-0": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -899,8 +884,8 @@
             "1521604513411-1": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -911,8 +896,8 @@
             "1521604513411-2": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -953,14 +938,9 @@
           "settings": {
             "full_width": true,
             "image": "",
-            "page_text": "Image with Text Overlay",
-            "text_color": "#ffffff",
-            "link": "",
             "button_text": "Add a button",
-            "font_size": 26,
-            "font_weight": "400",
-            "button_text_color": "#fff",
-            "button_background_color": "#000"
+            "link": "",
+            "button_text_color": "#fff"
           }
         },
         "1521640705228": {
@@ -1258,8 +1238,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "#000000",
@@ -1275,8 +1253,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "rgba(0,0,0,0)",
@@ -1380,7 +1356,6 @@
             "text_size": 18,
             "text_color": "#000000",
             "logo": "",
-            "logo_width": 100,
             "background_color": "#f5f5f5",
             "background_image": "",
             "show_overlay_color": false,
@@ -1406,8 +1381,8 @@
             "1521604513411-0": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1418,8 +1393,8 @@
             "1521604513411-1": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1430,8 +1405,8 @@
             "1521604513411-2": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1472,14 +1447,9 @@
           "settings": {
             "full_width": true,
             "image": "",
-            "page_text": "Image with Text Overlay",
-            "text_color": "#ffffff",
-            "link": "",
             "button_text": "Add a button",
-            "font_size": 26,
-            "font_weight": "400",
-            "button_text_color": "#fff",
-            "button_background_color": "#000"
+            "link": "",
+            "button_text_color": "#fff"
           }
         },
         "1521640705228": {
@@ -1777,8 +1747,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "#000000",
@@ -1794,8 +1762,6 @@
                 "subheading": "Tell your brand's story through images",
                 "button_text": "Add a call to action",
                 "link": "",
-                "caption_horizontal": "left",
-                "caption_vertical": 50,
                 "slide_text_color": "#000000",
                 "cta_color": "#ffffff",
                 "cta_background": "rgba(0,0,0,0)",
@@ -1899,7 +1865,6 @@
             "text_size": 18,
             "text_color": "#000000",
             "logo": "",
-            "logo_width": 100,
             "background_color": "#f5f5f5",
             "background_image": "",
             "show_overlay_color": false,
@@ -1925,8 +1890,8 @@
             "1521604513411-0": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1937,8 +1902,8 @@
             "1521604513411-1": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1949,8 +1914,8 @@
             "1521604513411-2": {
               "type": "image",
               "settings": {
-                "image_width": "33%",
                 "image": "",
+                "image_width": "33%",
                 "link": "",
                 "title_text": "Our collections",
                 "hidden_text": "Shop now",
@@ -1991,14 +1956,9 @@
           "settings": {
             "full_width": true,
             "image": "",
-            "page_text": "Image with Text Overlay",
-            "text_color": "#ffffff",
-            "link": "",
             "button_text": "Add a button",
-            "font_size": 26,
-            "font_weight": "400",
-            "button_text_color": "#fff",
-            "button_background_color": "#000"
+            "link": "",
+            "button_text_color": "#fff"
           }
         },
         "1521640705228": {
@@ -2094,6 +2054,9 @@
     "dropdown_hover_background": "#ffffff",
     "dropdown_link_color": "#000000",
     "dropdown_link_hover_color": "#000000",
+    "accordion_header_bg": "#000000",
+    "accordion_header_text": "#ffffff",
+    "accordion_content_text": "#000000",
     "icons": "#000000",
     "icons_hover": "#000000",
     "footer_border": "#000000",
@@ -2106,8 +2069,8 @@
     "footer_button": "#222222",
     "footer_button_text": "#ffffff",
     "main_font": "open_sans_n4",
-    "nav_font": "montserrat_n4",
-    "heading_font": "montserrat_n4",
+    "nav_font": "montserrat_n5",
+    "heading_font": "montserrat_n5",
     "font_size": 13,
     "nav_size": 14,
     "h1_size": 22,
@@ -2115,9 +2078,7 @@
     "h3_size": 17,
     "h4_size": 16,
     "h5_size": 15,
-    "nav_weight": "400",
     "navigation_transform": "uppercase",
-    "heading_weight": "normal",
     "link_decoration": "none",
     "breadcrumb": false,
     "quickview": true,
@@ -2141,9 +2102,6 @@
     "email_popup_title": "",
     "footer_signup_text": "",
     "show_multiple_currencies": false,
-    "currency_format": "money_with_currency_format",
-    "supported_currencies": "CAD EUR GBP",
-    "default_currency": "USD",
     "checkout_header_image": "",
     "checkout_logo_image": "",
     "checkout_logo_position": "left",
@@ -2158,6 +2116,11 @@
     "checkout_accent_color": "#616161",
     "checkout_button_color": "#000000",
     "checkout_error_color": "#ff6d6d",
+    "nav_weight": "400",
+    "heading_weight": "normal",
+    "currency_format": "money_with_currency_format",
+    "supported_currencies": "CAD EUR GBP",
+    "default_currency": "USD",
     "background-position": "left top",
     "background-repeat": "no-repeat",
     "header-wrapper-background": "#ffffff",
@@ -2262,7 +2225,8 @@
           "1480352634086": {
             "type": "newsletter",
             "settings": {
-              "title": "Connect"
+              "title": "Connect",
+              "mailing_subheading": "<p>Join our mailing list for updates<\/p>"
             }
           }
         },
@@ -2275,7 +2239,8 @@
           "bottom_logo_max_width": 300,
           "footer_text_align": "left",
           "footer_title_transform": "uppercase",
-          "footer_title_size": 14
+          "footer_title_size": 14,
+          "show_credit_cards": true
         }
       },
       "1480352639511": {
@@ -2289,8 +2254,9 @@
               "subheading": "Tell your brand's story through images",
               "button_text": "Add a call to action",
               "link": "",
-              "caption_horizontal": "left",
-              "caption_vertical": 50,
+              "text_align": "center",
+              "caption_horizontal_position": 50,
+              "caption_vertical_position": 40,
               "slide_text_color": "#000000",
               "cta_color": "#ffffff",
               "cta_background": "#000000",
@@ -2306,8 +2272,9 @@
               "subheading": "Tell your brand's story through images",
               "button_text": "Add a call to action",
               "link": "",
-              "caption_horizontal": "left",
-              "caption_vertical": 50,
+              "text_align": "center",
+              "caption_horizontal_position": 50,
+              "caption_vertical_position": 40,
               "slide_text_color": "#000000",
               "cta_color": "#ffffff",
               "cta_background": "rgba(0,0,0,0)",
@@ -2323,9 +2290,9 @@
         "settings": {
           "display_wide": true,
           "slider_speed": 5,
-          "slide_title_size": 22,
+          "slide_title_size": 24,
           "slide_title_weight": "700",
-          "caption_size": 14,
+          "caption_size": 15,
           "cta_size": 14,
           "cta_weight": "400"
         }
@@ -2408,10 +2375,11 @@
       "password-template": {
         "type": "password-template",
         "settings": {
+          "newsletter_details": "<p>Coming Soon<\/p><p>Signup for our newsletter and get updated when we launch our site <a href=\"https:\/\/example.com\/\">see our newsletter policy.<\/a><\/p>",
           "text_size": 18,
           "text_color": "#000000",
           "logo": "",
-          "logo_width": 100,
+          "logo_max_width": "500",
           "background_color": "#f5f5f5",
           "background_image": "",
           "show_overlay_color": false,
@@ -2437,8 +2405,8 @@
           "1521604513411-0": {
             "type": "image",
             "settings": {
-              "image_width": "33%",
               "image": "",
+              "image_width": "33%",
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
@@ -2449,8 +2417,8 @@
           "1521604513411-1": {
             "type": "image",
             "settings": {
-              "image_width": "33%",
               "image": "",
+              "image_width": "33%",
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
@@ -2461,8 +2429,8 @@
           "1521604513411-2": {
             "type": "image",
             "settings": {
-              "image_width": "33%",
               "image": "",
+              "image_width": "33%",
               "link": "",
               "title_text": "Our collections",
               "hidden_text": "Shop now",
@@ -2478,8 +2446,8 @@
         ],
         "settings": {
           "full_width": false,
-          "promo_size": 20,
-          "hidden_size": 14
+          "promo_size": 18,
+          "hidden_size": 13
         }
       },
       "1521640547286": {
@@ -2503,14 +2471,18 @@
         "settings": {
           "full_width": true,
           "image": "",
-          "page_text": "Image with Text Overlay",
-          "text_color": "#ffffff",
-          "link": "",
+          "heading": "Image with Text Overlay",
+          "heading_font_size": 22,
+          "heading_font_weight": "700",
+          "heading_text_color": "#000",
+          "subheading_text": "Pair text with a large full width image to give focus to areas of your store. Add a button to encourage clicks.",
+          "subheading_font_size": 14,
+          "subheading_font_weight": "400",
+          "subheading_text_color": "#000",
           "button_text": "Add a button",
-          "font_size": 26,
-          "font_weight": "400",
+          "link": "",
           "button_text_color": "#fff",
-          "button_background_color": "#000"
+          "button_color": "#000"
         }
       },
       "1521640705228": {
@@ -2559,6 +2531,43 @@
         "settings": {
           "grid": 4,
           "rows": 4
+        }
+      },
+      "page-custom-one": {
+        "type": "page-custom-one",
+        "blocks": {
+          "page-custom-one-0": {
+            "type": "page_title",
+            "settings": {
+              "text_align": "center",
+              "block_padding": 15
+            }
+          },
+          "page-custom-one-1": {
+            "type": "page_content",
+            "settings": {
+              "text_align": "left",
+              "max_width": 100,
+              "block_padding": 15
+            }
+          }
+        },
+        "block_order": [
+          "page-custom-one-0",
+          "page-custom-one-1"
+        ],
+        "settings": {
+          "section_spacing": 40,
+          "section_heading_size": 20
+        }
+      },
+      "collections-list-template": {
+        "type": "collections-list-template",
+        "settings": {
+          "image": "",
+          "text": "<p>Add some descriptive text to your all collections page.<\/p>",
+          "grid": 3,
+          "collection_count": false
         }
       }
     },
