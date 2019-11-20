@@ -239,6 +239,24 @@
       "default": "#000000"
     }, {
       "type": "header",
+      "content": "Accordions"
+    }, {
+      "type": "color",
+      "id": "accordion_header_bg",
+      "label": "Accordion header background",
+      "default": "#000000"
+    }, {
+      "type": "color",
+      "id": "accordion_header_text",
+      "label": "Accordion header text",
+      "default": "#ffffff"
+    }, {
+      "type": "color",
+      "id": "accordion_content_text",
+      "label": "Accordion content text",
+      "default": "#000000"
+    }, {
+      "type": "header",
       "content": "Social sharing icons"
     }, {
       "type": "color",
