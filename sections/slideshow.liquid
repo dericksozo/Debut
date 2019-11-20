@@ -71,10 +71,6 @@
               </div>
             </li>
             <style>
-              .flex-caption.slide-{{ block.id }} {
-                bottom: {{ block.settings.caption_vertical_position }}%;
-                left: {{ block.settings.caption_horizontal_position }}%;
-              }
               .flex-caption.slide-{{ block.id }} .caption-inners {
                 {% assign bg_color = block.settings.caption_background %}
                 {% assign caption_opacity = block.settings.caption_opacity | plus: 0 %}
@@ -103,6 +99,14 @@
               }
               .flex-caption.slide-{{ block.id }} .flex-caption p {
                 font-size: {{ section.settings.caption_size }}px;
+              }
+              .flex-caption.slide-{{ block.id }} {
+                bottom: {{ block.settings.caption_vertical_position }}%;
+                left: {{ block.settings.caption_horizontal_position }}%;
+                {% if block.settings.caption_horizontal_position == 50 %}
+                text-align: center;
+                margin-left: -50%;
+                {% endif %}
               }
             </style>
           {% endfor %}
