@@ -129,9 +129,16 @@
   "contact": {
     "form": {
       "name": "Name",
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "subject": "Subject",
+      "companyname": "Company",
+      "address": "Address",
       "email": "Email",
       "phone": "Phone Number",
       "message": "Message",
+      "websiteurl": "Website URL",
+      "acceptsmarketing": "Subscribe to stay updated with new products and offers!",
       "send": "Send",
       "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
     }
