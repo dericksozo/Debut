@@ -1,4 +1,4 @@
-<li id="slide--{{ slide.id }}" data-slide-id="{{ slide.id }}" class="slide--{{ slide.id }} slide_image{% if block.settings.image == blank %} onboard{% endif %}" data-flexslider-index="{{ forloop.index0 }}" {{ slide.shopify_attributes }}>
+    <li id="slide--{{ slide.id }}" data-slide-id="{{ slide.id }}" class="slide--{{ slide.id }} slide_image{% if block.settings.image == blank %} onboard{% endif %}" data-flexslider-index="{{ forloop.index0 }}" {{ slide.shopify_attributes }}>
       {% if slide.settings.image == blank %}
         {% capture current %}{% cycle 1, 2 %}{% endcapture %}
         {%- assign placeholder = 'lifestyle-' | append: current -%}
