@@ -5,7 +5,6 @@
     <div class="desktop-12 tablet-6 mobile-3">
       {% endif %}
 
-
   {% case section.settings.slider_speed %}
   {% when 3 %}
   {%- assign slider_speed = 3000 -%}
@@ -73,11 +72,10 @@
             </li>
             <style>
               .flex-caption.slide-{{ block.id }} {
-                top: {{ block.settings.caption_vertical }}%;
-                text-align: {{ block.settings.caption_horizontal }};
+                bottom: {{ block.settings.caption_vertical_position }}%;
+                left: {{ block.settings.caption_horizontal_position }}%;
               }
               .flex-caption.slide-{{ block.id }} .caption-inners {
-
                 {% assign bg_color = block.settings.caption_background %}
                 {% assign caption_opacity = block.settings.caption_opacity | plus: 0 %}
                 {% if block.settings.caption_background == 'rgba(0,0,0,0)' %}
@@ -86,7 +84,8 @@
                 background: {{ bg_color | color_modify: 'alpha', caption_opacity }};
                 {% endif %}
                 display: inline-block;
-                padding: 10px 20px;
+                padding: 20px;
+                text-align: {{ block.settings.text_align }};
               }
               .flex-caption.slide-{{ block.id }} h2.slide-title {
                 color: {{ block.settings.slide_text_color }};
@@ -155,17 +154,6 @@
           "default": "Tell your brand's story through images"
         },
         {
-          "type": "color",
-          "id": "slide_text_color",
-          "label": "Heading and subheading",
-          "default": "#000000"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        },
-        {
           "type": "text",
           "id": "button_text",
           "label": "Button text",
@@ -173,21 +161,14 @@
 		      "info": "Visible only if a link is chosen"
         },
         {
-          "type": "color",
-          "id": "cta_color",
-          "label": "Button text",
-          "default": "#ffffff"
+          "type": "url",
+          "id": "link",
+          "label": "Link"
         },
         {
-          "type": "color",
-          "id": "cta_background",
-          "label": "Button background",
-          "default": "#000000"
-        },
-  		  {
           "type": "select",
-          "id": "caption_horizontal",
-          "label": "Caption horizontal position",
+          "id": "text_align",
+          "label": "Text align",
           "options": [
             {
               "value": "left",
@@ -205,13 +186,43 @@
         },
         {
           "type":      "range",
-          "id":        "caption_vertical",
-          "min":       5,
-          "max":       50,
-          "step":      1,
+          "id":        "caption_horizontal_position",
+          "min":       2,
+          "max":       80,
+          "step":      2,
+          "unit":      "%",
+          "label":     "Caption horizontal position",
+          "default":   50,
+          "info":      "Distance from left of slide"
+        },
+        {
+          "type":      "range",
+          "id":        "caption_vertical_position",
+          "min":       2,
+          "max":       80,
+          "step":      2,
           "unit":      "%",
           "label":     "Caption vertical position",
-          "default":   50
+          "default":   50,
+          "info":      "Distance from bottom of slide"
+        },
+        {
+          "type": "color",
+          "id": "slide_text_color",
+          "label": "Heading and subheading",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "cta_color",
+          "label": "Button text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "cta_background",
+          "label": "Button background",
+          "default": "#000000"
         },
         {
           "type": "color",
