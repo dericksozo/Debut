@@ -30,7 +30,7 @@
         <ul class="slides">
           {%- assign image_size = '2000x' -%}
           {% for block in section.blocks %}
-            <li id="slide--{{ block.id }}" data-block-id="{{ block.id }}" class="slide--{{ block.id }} slide_image" data-flexslider-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <li id="slide--{{ block.id }}" data-block-id="{{ block.id }}" class="slide--{{ block.id }} slide_image{% if block.settings.image == blank %} onboard{% endif %}" data-flexslider-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
 
               {% if block.settings.image != blank %}
                 {% assign image_box_ratio = block.settings.image.height | append: ".0" | times: 1 | divided_by: block.settings.image.width | times: 100 | append: "%" %}
