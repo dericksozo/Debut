@@ -2612,6 +2612,103 @@ theme.mobileNav = (function() {
   return mobileNav;
 })();
 
+/*============================================================================
+  Custom Page Modules
+==============================================================================*/
+theme.CustomPageSlideshow = function (context, events) {
+
+  (function page_slideshow() {
+    var speed = $('.flexslider').data('speed');
+    var initSlider = function(custom_page_slideshow) {
+	    $('.flexslider').flexslider({
+	      animation: 'fade',
+	      slideshowSpeed: speed,
+	      animationSpeed: 600,
+	      directionNav: true,
+	      controlNav: false,
+	      pauseOnHover: true,
+	      pauseOnAction: true,
+	      nextText: '',
+	      prevText: ''
+	    });
+    };
+
+    initSlider($('.thumbnail-slider'));
+
+    $(document).on('shopify:section:unload', function(event) {
+      var target = $(event.target);
+      target.find('.flexslider').flexslider('destroy');
+      $(document).off('.flexslider');
+    });
+
+    $(document).on('shopify:section:load', function(event) {
+      initSlider($(event.target).find('.flexslider'));
+    });
+
+  })();
+}
+
+theme.CustomPageCollection = function (context, events) {
+
+      (function Carousel() {
+      var initCarousel = function(Carousel) {
+        $('.collection-carousel').owlCarousel({
+          itemsCustom : [
+            [0, 2],
+            [450, 2],
+            [600, 2],
+            [700, 3],
+            [1000, 4],
+            [1200, 4],
+            [1400, 4],
+            [1600, 4]
+          ],
+          lazyLoad : false,
+          pagination : false,
+          navigation: true,
+          navigationText : false,
+          autoPlay : false,
+          stopOnHover : true
+        });
+      };
+
+      initCarousel($('.collection-carousel'));
+
+      $(document).on('shopify:section:unload', function(event) {
+        var target = $(event.target);
+        target.find('.collection-carousel').owlCarousel("destroy");
+        $(document).off('.collection-carousel');
+      });
+
+      $(document).on('shopify:section:load', function(event) {
+        initCarousel($(event.target).find('.collection-carousel'));
+        $('.prod-image').matchHeight({ remove: true });
+        setTimeout(heightFix, 500);
+        function heightFix() {
+        $('.prod-image').matchHeight();
+        }
+      });
+
+    })();
+
+}
+
+theme.CustomPage = (function () {
+  function CustomPage(container) {
+    var events = new EventEmitter3();
+    events.trigger = events.emit; // alias
+
+    theme.CustomPageSlideshow();
+    theme.CustomPageCollection(events);
+
+  }
+
+  CustomPage.prototype = _.assignIn({}, CustomPage.prototype, {});
+
+  return CustomPage;
+})();
+
+
 /*======================================================
   Register Sections
 ========================================================*/
@@ -2625,6 +2722,7 @@ $(document).ready(function() {
   sections.register('collection-section', theme.Collection);
   sections.register('mobile-navigation', theme.mobileNav);
   sections.register('map', theme.Maps);
+  sections.register('custom-page-section', theme.CustomPage);
 });
 
 
@@ -2635,4 +2733,4 @@ log = function() {
     return Function.prototype.bind.apply(console.log, args);
 }
 
-log("Testament Version 6.7.1 by Underground", {bar: 1})();
+log("Testament Version 6.8 by Underground", {bar: 1})();
