@@ -299,7 +299,9 @@
       "add_to_cart_success_html": "Item Added {{ link }}",
       "brand": "Vendor",
       "product_type": "Type",
-      "product_sku": "SKU"
+      "product_sku": "SKU",
+      "view_in_space": "View in your space",
+      "view_in_space_label": "View in your space, loads item in augmented reality window"
     }
   },
   "gift_cards": {
