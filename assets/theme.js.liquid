@@ -1346,6 +1346,113 @@ a.prototype[n]=function(){var n=arguments;return e&&!this.__chain__?t.apply(this
 // sections.js
 window.theme = window.theme || {};
 
+/* Shopify Library Loader */
+theme.LibraryLoader = (function() {
+  var types = {
+    link: 'link',
+    script: 'script'
+  };
+
+  var status = {
+    requested: 'requested',
+    loaded: 'loaded'
+  };
+
+  var cloudCdn = 'https://cdn.shopify.com/shopifycloud/';
+
+  var libraries = {
+    youtubeSdk: {
+      tagId: 'youtube-sdk',
+      src: 'https://www.youtube.com/iframe_api',
+      type: types.script
+    },
+    plyrShopify: {
+      tagId: 'plyr-shopify',
+      src: cloudCdn + 'shopify-plyr/v1.0/shopify-plyr-legacy.en.js',
+      type: types.script
+    },
+    plyrShopifyStyles: {
+      tagId: 'plyr-shopify-styles',
+      src: cloudCdn + 'shopify-plyr/v1.0/shopify-plyr.css',
+      type: types.link
+    },
+    shopifyXr: {
+      tagId: 'shopify-model-viewer-xr',
+      src: cloudCdn + 'shopify-xr-js/assets/v1.0/shopify-xr.en.js',
+      type: types.script
+    },
+    modelViewerUi: {
+      tagId: 'shopify-model-viewer-ui',
+      src: cloudCdn + 'model-viewer-ui/assets/v1.0/model-viewer-ui.en.js',
+      type: types.script
+    },
+    modelViewerUiStyles: {
+      tagId: 'shopify-model-viewer-ui-styles',
+      src: cloudCdn + 'model-viewer-ui/assets/v1.0/model-viewer-ui.css',
+      type: types.link
+    }
+  };
+
+  function load(libraryName, callback) {
+    var library = libraries[libraryName];
+
+    if (!library) return;
+    if (library.status === status.requested) return;
+
+    callback = callback || function() {};
+    if (library.status === status.loaded) {
+      callback();
+      return;
+    }
+
+    library.status = status.requested;
+
+    var tag;
+
+    switch (library.type) {
+      case types.script:
+        tag = createScriptTag(library, callback);
+        break;
+      case types.link:
+        tag = createLinkTag(library, callback);
+        break;
+    }
+
+    tag.id = library.tagId;
+    library.element = tag;
+
+    var firstScriptTag = document.getElementsByTagName(library.type)[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  function createScriptTag(library, callback) {
+    var tag = document.createElement('script');
+    tag.src = library.src;
+    tag.addEventListener('load', function() {
+      library.status = status.loaded;
+      callback();
+    });
+    return tag;
+  }
+
+  function createLinkTag(library, callback) {
+    var tag = document.createElement('link');
+    tag.href = library.src;
+    tag.rel = 'stylesheet';
+    tag.type = 'text/css';
+    tag.addEventListener('load', function() {
+      library.status = status.loaded;
+      callback();
+    });
+    return tag;
+  }
+
+  return {
+    load: load
+  };
+})();
+
+
 theme.Sections = function Sections() {
   this.constructors = {};
   this.instances = [];
@@ -1454,8 +1561,6 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   }
 });
 
-
-
 $(document).ready(function() {
   (function() {
     $(document).on('shopify:section:load', function(event) {
@@ -1504,7 +1609,6 @@ $(document).ready(function() {
 
   }());
 });
-
 
 $(document).ready(function() {
 
@@ -1619,7 +1723,6 @@ $(document).ready(function() {
   });
 
 });
-
 
 /*======================================================
   Slideshow Section
@@ -1762,7 +1865,6 @@ theme.Instagram = (function() {
 ==============================================================================*/
 
 var Events = new EventEmitter3();
-
 Events.trigger = Events.emit; // trigger alias
 
 theme.ProductForm = function (context, events) {
@@ -1825,13 +1927,12 @@ theme.ProductForm = function (context, events) {
       }
 
       events.trigger("variantchange", variant);
-
       events.trigger("variantchange:option1:" + variant.option1);
       events.trigger("variantchange:option2:" + variant.option2);
       events.trigger("variantchange:option3:" + variant.option3);
 
-      if ( variant.featured_image ) {
-        events.trigger("variantchange:image", variant.featured_image.id);
+      if ( variant.featured_media ) {
+        events.trigger("variantchange:image", variant.featured_media.id);
       }
     },
     enableHistoryState: config.enable_history
@@ -2067,14 +2168,6 @@ theme.ProductForm = function (context, events) {
 
   function money(cents) {
     return Shopify.formatMoney(cents, config.money_format);
-    // if ( config.currency_switcher_enabled ) {
-    //   var converted = Currency.convert(cents, defaultCurrency, Currency.currentCurrency);
-    //   var format = Currency.moneyFormats[Currency.currentCurrency][Currency.format];
-    //
-    //   return Currency.formatMoney(converted, format);
-    // } else {
-    //   return Shopify.formatMoney(cents, config.money_format);
-    // }
   }
 }
 
@@ -2203,8 +2296,7 @@ theme.ProductGallery = function (context, events) {
   })();
 
   (function zoom() {
-    var elements = context.querySelectorAll(".product-main-image");
-
+    var elements = context.querySelectorAll(".product-main-image.media-image");
     elements.forEach(function (element) {
       var src = element.querySelector("img"),
           src = src.getAttribute("data-zoom-src"),
@@ -2283,26 +2375,378 @@ theme.RelatedProducts = function () {
   });
 }
 
+// Youtube API callback
+// eslint-disable-next-line no-unused-vars
+function onYouTubeIframeAPIReady() {
+  theme.ProductVideo.loadVideos(theme.ProductVideo.hosts.youtube);
+}
+
+theme.ProductVideo = (function() {
+
+  var videos = {};
+
+  var hosts = {
+    html5: 'html5',
+    youtube: 'youtube'
+  };
+
+  var selectors = {
+    productMediaWrapper: '[data-product-media-wrapper]'
+  };
+
+  var attributes = {
+    enableVideoLooping: 'enable-video-looping',
+    videoId: 'video-id'
+  };
+
+  function init(videoContainer, sectionId) {
+
+    if (!videoContainer.length) {
+      return;
+    }
+
+    var videoElement = videoContainer.find('iframe, video')[0];
+    var mediaId = videoContainer.data('mediaId');
+
+    if (!videoElement) {
+      return;
+    }
+
+    videos[mediaId] = {
+      mediaId: mediaId,
+      sectionId: sectionId,
+      host: hostFromVideoElement(videoElement),
+      container: videoContainer,
+      element: videoElement,
+      ready: function() {
+        createPlayer(this);
+      }
+    };
+
+    var video = videos[mediaId];
+
+    switch (video.host) {
+      case hosts.html5:
+        theme.LibraryLoader.load(
+          'plyrShopify',
+          loadVideos.bind(this, hosts.html5)
+        );
+        // window.Shopify.loadFeature({
+        //   feature: 'shopify-plyr@1.0',
+        //   callback: setupPlyrVideos
+        // });
+        theme.LibraryLoader.load('plyrShopifyStyles');
+        break;
+      case hosts.youtube:
+        theme.LibraryLoader.load('youtubeSdk');
+        break;
+    }
+  }
+
+  // function setupPlyrVideos(errors) {
+  //   if (errors) {
+  //     When loadFeature is implemented, you can console or throw errors by doing something like this:
+  //     errors.forEach((error) => { console.warn(error.message); });
+  //     return;
+  //   }
+
+  //   loadVideos(hosts.html5);
+  // }
+
+  function createPlayer(video) {
+    if (video.player) {
+      return;
+    }
+
+//    var productMediaWrapper = video.container.closest(
+//      selectors.productMediaWrapper
+//    );
+
+    var productMediaWrapper = $('.product-media-container');
+    var enableLooping = productMediaWrapper.data(attributes.enableVideoLooping);
+
+    switch (video.host) {
+      case hosts.html5:
+        // eslint-disable-next-line no-undef
+        video.player = new Shopify.Plyr(video.element, {
+          controls: [
+            'play',
+            'progress',
+            'mute',
+            'volume',
+            'play-large',
+            'fullscreen'
+          ],
+          loop: { active: enableLooping },
+          hideControlsOnPause: true,
+          iconUrl:
+            '//cdn.shopify.com/shopifycloud/shopify-plyr/v1.0/shopify-plyr.svg',
+          tooltips: { controls: false, seek: true }
+        });
+        break;
+      case hosts.youtube:
+        var videoId = productMediaWrapper.data(attributes.videoId);
+        video.player = new YT.Player(video.element, {
+          videoId: videoId,
+          events: {
+            onStateChange: function(event) {
+              if (event.data === 0 && enableLooping) event.target.seekTo(0);
+            }
+          }
+        });
+        break;
+    }
+
+
+    // RICH SORT THIS MESS OUT
+    (function updateMedia() {
+
+        $(".product-thumbnail").on("click", function(event) {
+          var mediaId = $(this).data('image-id');
+
+          var selectedMedia = productMediaWrapper.data("[data-media-id=" + mediaId + "]");
+          var unselectedMedia = !productMediaWrapper.data("[data-media-id=" + mediaId + "]");
+
+          selectedMedia.trigger('mediaVisible');
+          unselectedMedia.trigger('mediaHidden');
+
+            selectedMedia.on('mediaHidden', function() {
+                if (!video.player) return;
+
+                if (video.host === hosts.html5) {
+                    video.player.pause();
+                }
+                if (video.host === hosts.youtube && video.player.pauseVideo) {
+                    video.player.pauseVideo();
+                }
+            });
+
+            selectedMedia.on('mediaVisible', function() {
+                if (!video.player) return;
+
+                if (video.host === hosts.html5) {
+                    video.player.play();
+                }
+                if (video.host === hosts.youtube && video.player.playVideo) {
+                    video.player.playVideo();
+                }
+            });
+        });
+    })();
+
+
+  }
+
+  function hostFromVideoElement(video) {
+    if (video.tagName === 'VIDEO') {
+      return hosts.html5;
+    }
+    if (video.tagName === 'IFRAME') {
+      if (
+        /^(https?:\/\/)?(www\.)?(youtube\.com|youtube-nocookie\.com|youtu\.?be)\/.+$/.test(
+          video.src
+        )
+      ) {
+        return hosts.youtube;
+      }
+    }
+    return null;
+  }
+
+  function loadVideos(host) {
+    for (var key in videos) {
+      if (videos.hasOwnProperty(key)) {
+        var video = videos[key];
+        if (video.host === host) {
+          video.ready();
+        }
+      }
+    }
+  }
+
+  function removeSectionVideos(sectionId) {
+    for (var key in videos) {
+      if (videos.hasOwnProperty(key)) {
+        var video = videos[key];
+        if (video.sectionId === sectionId) {
+          if (video.player) video.player.destroy();
+          delete videos[key];
+        }
+      }
+    }
+  }
+
+  return {
+    init: init,
+    hosts: hosts,
+    loadVideos: loadVideos,
+    removeSectionVideos: removeSectionVideos
+  };
+
+})();
+
+theme.ProductModel = (function() {
+  var modelJsonSections = {};
+  var models = {};
+  var xrButtons = {};
+
+  var selectors = {
+    mediaGroup: '[data-product-single-media-group]',
+    xrButton: '[data-shopify-xr]'
+  };
+
+  function init(modelViewerContainers, sectionId) {
+    // loadFeature will use mutation observer.
+    // Final version of debut will not check this.
+    // if (Shopify.designMode) {
+      // window.Shopify.detectLoadJS();
+    // }
+
+    modelJsonSections[sectionId] = {
+      loaded: false
+    };
+
+    modelViewerContainers.each(function(index) {
+      var $modelViewerContainer = $(this);
+      var mediaId = $modelViewerContainer.data('media-id');
+      var $modelViewerElement = $(
+        $modelViewerContainer.find('model-viewer')[0]
+      );
+      var modelId = $modelViewerElement.data('model-id');
+
+      if (index === 0) {
+        var $xrButton = $modelViewerContainer
+          .closest(selectors.mediaGroup)
+          .find(selectors.xrButton);
+        xrButtons[sectionId] = {
+          $element: $xrButton,
+          defaultId: modelId
+        };
+      }
+
+      models[mediaId] = {
+        modelId: modelId,
+        sectionId: sectionId,
+        $container: $modelViewerContainer,
+        $element: $modelViewerElement
+      };
+    });
+
+    theme.LibraryLoader.load('shopifyXr', setupShopifyXr);
+    // window.Shopify.loadFeature({
+    //   feature: 'shopify-xr@1.0',
+    //   callback: setupShopifyXr
+    // });
+
+    theme.LibraryLoader.load('modelViewerUi', setupModelViewerUi);
+    // window.Shopify.loadFeature({
+    //   feature: 'model-viewer-ui@1.0',
+    //   callback: setupModelViewerUi
+    // });
+    theme.LibraryLoader.load('modelViewerUiStyles');
+  }
+
+  function setupShopifyXr(errors) {
+    if (errors) {
+      // When loadFeature is implemented, you can console or throw errors by doing something like this:
+      // errors.forEach((error) => { console.warn(error.message); });
+      return;
+    }
+    if (!window.ShopifyXR) {
+      document.addEventListener('shopify_xr_initialized', function() {
+        setupShopifyXr();
+      });
+      return;
+    }
+
+    for (var sectionId in modelJsonSections) {
+      if (modelJsonSections.hasOwnProperty(sectionId)) {
+        var modelSection = modelJsonSections[sectionId];
+
+        if (modelSection.loaded) continue;
+        var $modelJson = $('#ModelJson-' + sectionId);
+
+        window.ShopifyXR.addModels(JSON.parse($modelJson.html()));
+        modelSection.loaded = true;
+      }
+    }
+    window.ShopifyXR.setupXRElements();
+  }
+
+  function setupModelViewerUi(errors) {
+    if (errors) {
+      // When loadFeature is implemented, you can console or throw errors by doing something like this:
+      // errors.forEach((error) => { console.warn(error.message); });
+      return;
+    }
+    for (var key in models) {
+      if (models.hasOwnProperty(key)) {
+        var model = models[key];
+        if (!model.modelViewerUi) {
+          model.modelViewerUi = new Shopify.ModelViewerUI(model.$element);
+        }
+        setupModelViewerListeners(model);
+      }
+    }
+  }
+
+  function setupModelViewerListeners(model) {
+    var xrButton = xrButtons[model.sectionId];
+    model.$container.on('mediaVisible', function() {
+      xrButton.$element.attr('data-shopify-model3d-id', model.modelId);
+      if (theme.Helpers.isTouch()) return;
+      model.modelViewerUi.play();
+    });
+    model.$container
+      .on('mediaHidden', function() {
+        xrButton.$element.attr('data-shopify-model3d-id', xrButton.defaultId);
+        model.modelViewerUi.pause();
+      })
+      .on('xrLaunch', function() {
+        model.modelViewerUi.pause();
+      });
+  }
+
+  function removeSectionModels(sectionId) {
+    for (var key in models) {
+      if (models.hasOwnProperty(key)) {
+        var model = models[key];
+        if (model.sectionId === sectionId) {
+          delete models[key];
+        }
+      }
+    }
+    delete modelJsonSections[sectionId];
+  }
+
+  return {
+    init: init,
+    removeSectionModels: removeSectionModels
+  };
+})();
+
 theme.Product = (function () {
   function Product(container) {
     var events = new EventEmitter3();
     events.trigger = events.emit; // alias
-
+    var sectionId = container.dataset.sectionId;
     theme.RelatedProducts();
-
     theme.ProductMobileGallery(events);
-
     container.querySelectorAll("[data-product-gallery]").forEach(function (context) {
       theme.ProductGallery(context, events);
     });
-
     container.querySelectorAll("[data-product-form]").forEach(function (context) {
       theme.ProductForm(context, events);
     });
-
+    container.querySelectorAll("[data-product-media-type-video]").forEach(function (context, sectionId) {
+      var $el = $(context);
+      console.log(context);
+      theme.ProductVideo.init($el, sectionId);
+    });
+    var $modelViewerElements = $('[data-product-media-type-model]', this.$container);
+    if ($modelViewerElements.length < 1) return;
+      theme.ProductModel.init($modelViewerElements, sectionId);
   }
-
-  Product.prototype = _.assignIn({}, Product.prototype, {});
 
   return Product;
 })();
@@ -2707,7 +3151,6 @@ theme.CustomPage = (function () {
 
   return CustomPage;
 })();
-
 
 /*======================================================
   Register Sections
