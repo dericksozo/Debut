@@ -30,27 +30,15 @@ data-section-type="product-section">
  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
  <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
- <div class="featured-product-gallery product-flex-gallery flexslider desktop-6 tablet-3 mobile-3" data-product-gallery>
-   {%- if product.featured_image -%}
-     <ul class="slides">
-      {% for image in product.images %}
-        {% assign selected = "" %}
-        {%- assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image -%}
-        {% if image == featured_image %}
-          {% assign selected = "flex-active-slide" %}
-        {% endif %}
-        {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+ {% include 'product-json' %}
 
-        <li id="slide" class="product-slide slide_image {{ selected }}" data-image-id="{{ image.id }}">
-         <img class="slideshow__image slideshow__image--{{ block.id }} lazyload lazyload-fade"
-           src="{{ image | product_img_url: '300x' }}"
-           data-src="{{ img_url }}"
-           data-sizes="auto"
-           data-zoom-src="{{ img_url }}"
-           alt="{{ image.alt | escape }}">
-        </li>
-      {% endfor %}
-     </ul>
+ {% assign thumbnail_position = section.settings.thumbnail_position %}
+ {% assign zoom_image_position = section.settings.zoom_image_position %}
+ {% assign enable_video_looping = section.settings.enable_video_looping %}
+
+ <div class="product-photos desktop-6 tablet-3 mobile-3" data-product-gallery data-product-single-media-group>
+   {%- if product.featured_media -%}
+     {% include 'product-image-gallery' %}
    {%- else -%}
      {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
      {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
@@ -71,12 +59,12 @@ data-section-type="product-section">
 
   {% capture product_form_config %}
    { "money_format": {{ shop.money_format | json }},
-   "enable_history": false,
-   "currency_switcher_enabled": {{ settings.show_multiple_currencies | json }},
-   "sold_out": {{ "products.product.sold_out" | t | json }},
-   "button": {{ 'products.product.add_to_cart' | t | json }},
-   "unavailable": {{ 'products.product.unavailable' | t | json }}
-  }
+     "enable_history": false,
+     "currency_switcher_enabled": {{ settings.show_multiple_currencies | json }},
+     "sold_out": {{ "products.product.sold_out" | t | json }},
+     "button": {{ 'products.product.add_to_cart' | t | json }},
+     "unavailable": {{ 'products.product.unavailable' | t | json }}
+    }
   {% endcapture %}
   {% include 'product-form' %}
 
@@ -87,6 +75,7 @@ data-section-type="product-section">
   {% assign product_vendor = section.settings.show_product_vendor %}
   {% assign product_type = section.settings.show_product_type  %}
   {% assign product_sku = section.settings.show_product_sku  %}
+
   {% if product_vendor or product_type or product_sku %}
     <ul class="product-details">
      {% if product_vendor %}
@@ -167,7 +156,25 @@ section.homepage-featured-product.product-{{ product.id }} h2 a {
     outline: 0 !important;
   }
 {% endif %}
+{% if zoom_image_position == 'zoom_on_right' %}
+  .product-top .zoom-box {
+    left: 57.5%;
+  }
+{% else %}
+  .product-top .zoom-box {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+{% endif %}
 </style>
+
+{% unless product == empty %}
+  <script type="application/json" id="ModelJson-{{ section.id }}">
+    {{ product.media | where: 'media_type', 'model' | json }}
+  </script>
+{% endunless %}
 
 {% schema %}
 {
@@ -284,7 +291,55 @@ section.homepage-featured-product.product-{{ product.id }} h2 a {
    "id": "product_details_bg",
    "label": "Product details background color",
    "default": "#eee"
-  }
+ },
+ {
+   "type": "header",
+   "content": "Media"
+ },
+ {
+   "type": "select",
+   "id": "thumbnail_position",
+   "label": "Thumbnail position",
+   "options": [
+     {
+       "value": "right",
+       "label": "Right"
+     },
+     {
+       "value": "left",
+       "label": "Left"
+     },
+     {
+       "value": "bottom",
+       "label": "Bottom"
+     }
+   ]
+ },
+ {
+   "type": "select",
+   "id": "zoom_image_position",
+   "label": "Zoom image position",
+   "options": [
+     {
+       "value": "zoom_on_right",
+       "label": "To right of main image"
+     },
+     {
+       "value": "zoom_over_main",
+       "label": "Over top of main image"
+     }
+   ]
+   },
+   {
+     "type": "checkbox",
+     "id": "enable_video_looping",
+     "label": "Enable video looping",
+     "default": false
+   },
+   {
+     "type": "paragraph",
+     "content": "Learn more about [Media types](https:\/\/help.shopify.com/en\/manual\/products\/product-media\)"
+   }
  ],
  "presets": [
  {

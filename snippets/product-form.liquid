@@ -5,9 +5,6 @@
 {% endunless %}
 
 {% form 'product', product, id: "AddToCartForm", class: "product_form", data-product-form:product_form_config %}
-  <script class="product-json" type="application/json">
-    {{ product | json }}
-  </script>
 
   {%- if settings.show_multiple_currencies -%}
     {% assign price = current_variant.price | money_with_currency %}
