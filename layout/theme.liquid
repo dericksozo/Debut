@@ -130,6 +130,11 @@
     </script>
   {% endif %}
 
+  <script>
+    window.lazySizesConfig = window.lazySizesConfig || {};
+    window.lazySizesConfig.minSize = 360;
+  </script>
+
   <!-- Responsive Images -->
   {{ 'ls.rias.min.js' | asset_url | script_tag }}
   {{ 'ls.bgset.min.js' | asset_url | script_tag }}
