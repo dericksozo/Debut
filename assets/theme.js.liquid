@@ -698,6 +698,7 @@ var ajaxifyShopify = (function(module, $) {
     // Show empty cart
     if (cart.item_count === 0) {
       $cartContainer.append('<h2>' + {{ 'cart.general.empty' | t | json }} + '</h2>');
+      Events.trigger("ajaxcart:cartUpdate");
 
       switch (settings.method) {
         case 'modal':
@@ -1680,6 +1681,13 @@ $(document).ready(function() {
   		}
   	}
   });
+
+ // Close fancybox after add to cart
+  Events.on("ajaxcart:cartUpdate", function() {
+   if ($.fancybox.isOpen) {
+     $.fancybox.close();
+   }
+ });
 
   // Call Fancybox for product modal + stop scroll to top
   $('.product-modal').fancybox({
