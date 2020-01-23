@@ -4,7 +4,7 @@
     <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="{{ section.settings.limit }}">
       {%- if recommendations.products_count > 0 -%}
         <div class="section-title lines tablet-6 desktop-12"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
-        <div class="recommendations-carousel">
+        <div class="product-carousel">
           {%- for product in recommendations.products -%}
             <div class="lazyOwl product product-index">
               {% include 'product-listing' %}

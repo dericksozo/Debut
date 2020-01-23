@@ -4170,41 +4170,33 @@ theme.Product = (function () {
 
 theme.RelatedProducts = function (context, events) {
   (function Carousel() {
-      var initCarousel = function(Carousel) {
-        $('.recommendations-carousel').owlCarousel({
-          itemsCustom : [
-            [0, 2],
-            [450, 2],
-            [600, 2],
-            [700, 3],
-            [1000, 4],
-            [1200, 4],
-            [1400, 4],
-            [1600, 4]
-          ],
-          lazyLoad : false,
-          pagination : false,
-          navigation: true,
-          navigationText : false,
-          autoPlay : false,
-          stopOnHover : true
-        });
-      };
-
-      initCarousel($('.recommendations-carousel'));
-
-      $(document).on('shopify:section:unload', function(event) {
-        var target = $(event.target);
-        target.find('.recommendations-carousel').owlCarousel("destroy");
-        $(document).off('.recommendations-carousel');
+      var $window = $(window);
+      $('.product-carousel').owlCarousel({
+        itemsCustom : [
+          [0, 2],
+          [450, 2],
+          [600, 2],
+          [700, 3],
+          [1000, 4],
+          [1200, 4],
+          [1400, 4],
+          [1600, 5]
+        ],
+        lazyLoad : false,
+        pagination : false,
+        navigation: true,
+        navigationText : false,
+        autoPlay : false,
+        stopOnHover : true
       });
 
-      $(document).on('shopify:section:load', function(event) {
-        initCarousel($(event.target).find('.recommendations-carousel'));
+      $window.on( 'load', Carousel);
+      Events.on("editor:section:select", function() {
+          Carousel();
       });
-
   })();
 }
+
 
 Events.on("quickview:load", function (container) {
   theme.Product(container);
