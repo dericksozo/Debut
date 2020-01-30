@@ -467,6 +467,13 @@
         "label": "Enable quick view"
       },
       {
+        "type": "checkbox",
+        "id": "quick_show_payment_button",
+        "label": "Show dynamic checkout button",
+        "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
+        "default": true
+      },
+      {
         "type": "select",
         "id": "thumbnail_position",
         "label": "Thumbnail position",

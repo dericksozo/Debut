@@ -10,14 +10,30 @@
     {% assign thumbnail_position = settings.thumbnail_position %}
     {% assign zoom_image_position = settings.zoom_image_position %}
     {% assign enable_video_looping = settings.enable_video_looping %}
+    {% capture product_gallery_config %}{
+      "thumbPosition": {{ settings.thumbnail_position | json }},
+      "zoomPosition": {{ settings.zoom_image_position | json }},
+      "enableVideoLooping": {{ settings.enable_video_looping | json }},
+      "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+      "productId": {{ product.id | json }},
+      "isQuick": true
+   }{% endcapture %}
   {% else %}
     {% assign thumbnail_position = section.settings.thumbnail_position %}
     {% assign zoom_image_position = section.settings.zoom_image_position %}
     {% assign enable_video_looping = section.settings.enable_video_looping %}
+    {% capture product_gallery_config %}{
+      "thumbPosition": {{ section.settings.thumbnail_position | json }},
+      "zoomPosition": {{ section.settings.zoom_image_position | json }},
+      "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
+      "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+      "productId": {{ product.id | json }},
+      "isQuick": false
+   }{% endcapture %}
   {% endif %}
 
   <div class="product-top">
-    <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group>
+    <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
       {%- if product.featured_media -%}
         {% include 'product-image-gallery' %}
       {%- else -%}

@@ -87,6 +87,7 @@
 
 })();
 (function vendorFlexslider() {
+
   /*
    * jQuery FlexSlider v2.7.2
    * Copyright 2012 WooThemes
@@ -2904,23 +2905,6 @@ $(document).ready(function() {
   // Call Fancybox on all elemnets with class "fancybox"
   $('.fancybox').fancybox();
 
-  $('.product-modal').fancybox({
-    afterShow: function () {
-      var context = document.querySelector(".product-quick-view");
-      Events.trigger("quickview:load", context);
-    },
-    helpers: {
-      overlay: {
-        locked: false
-      }
-    },
-    iframe : {
-  		css : {
-  			width : '600px'
-  		}
-  	}
-  });
-
  // Close fancybox after add to cart
   Events.on("ajaxcart:cartUpdate", function() {
    if ($.fancybox.isOpen) {
@@ -3007,7 +2991,6 @@ theme.Slideshow.prototype = _.assignIn({}, theme.Slideshow.prototype, {
     var slideIndex = $slide.data('flexslider-index');
     // Go to selected slide, pause autoplay
 
-    console.log(slideIndex);
 
     Slider.flexslider(slideIndex);
     Slider.flexslider("pause");
@@ -3415,8 +3398,10 @@ theme.ProductForm = function (context, events, Product) {
 }
 
 theme.ProductGallery = function (context, events) {
-
   events.trigger = events.emit;
+
+  var config = JSON.parse(context.querySelector('.product-photos').dataset.galleryConfig || '{}');
+  var sync, direction, width, margin;
 
   (function main_images() {
     var $element = $("#slider", context);
@@ -3424,12 +3409,11 @@ theme.ProductGallery = function (context, events) {
     if ( !$element.length ) {
       return false;
     }
-    var position = $('.thumbnail-slider', context).data('thumbnail-position');
 
-    if (position == 'bottom') {
-      var sync = '.thumbnail-slider';
+    if (config.thumbPosition == 'bottom' && config.thumbSlider == true ) {
+      sync = '.thumbnail-slider';
     } else {
-      var sync = false;
+      sync = false;
     }
 
     $element.flexslider({
@@ -3516,17 +3500,29 @@ theme.ProductGallery = function (context, events) {
       return false;
     }
 
+    if ( config.thumbPosition == 'bottom' && config.thumbSlider == true ) {
+      sync = '.thumbnail-slider';
+    } else {
+      sync = false;
+    }
+
     var initThumbSlider = function(prodSlideshow, position) {
-      if (position == 'bottom') {
-        var direction = 'horizontal';
-        var width = 120;
-        var margin = 5;
+      if ( config.thumbPosition == 'bottom' ) {
+        direction = 'horizontal';
+        width = 120;
+        margin = 5;
+
+        if ( config.thumbSlider == true ) {
+          sync = '#slider';
+        } else {
+          sync = false;
+        }
 
         flexSlider();
       } else {
-        var direction = 'vertical';
-        var width = 210;
-        var margin = 15;
+        direction = 'vertical';
+        width = 210;
+        margin = 15;
 
         bxSlider();
       }
@@ -3541,9 +3537,53 @@ theme.ProductGallery = function (context, events) {
           pager: false,
           prevText: "",
           nextText: "",
-          hideControlOnEnd: true
+          hideControlOnEnd: true,
+          onSliderLoad: function(currentIndex) {
+            var current = $('.slides', prodSlideshow).children().eq(currentIndex);
+            $(current).addClass('active-slide');
+            var width = $(current).width() - 1;
+            $('.slides', prodSlideshow).children().width(width);
+          }
         });
 
+        var $elements = $('.product-single__thumbnails-item', prodSlideshow);
+
+        $elements.mousedown(function(){
+          event.preventDefault();
+
+          var id = this.dataset.imageId;
+
+          select(id);
+
+          events.trigger("thumbnail:click", id);
+        });
+
+        function select(id) {
+          var slides = $elements.find("[data-image-id]");
+          var slide = slides.filter("[data-image-id=" + id + "]");
+          var index = slides.index(slide);
+
+          $elements.removeClass('active-slide');
+          $elements.eq(index).addClass('active-slide');
+
+          $('#slider', context).flexslider(index);
+        };
+      }
+
+      function flexSlider() {
+        prodSlideshow.flexslider({
+          animation: "slide",
+          controlNav: false,
+          animationLoop: true,
+          slideshow: false,
+          itemWidth: width,
+          itemMargin: margin,
+          nextText: '',
+          prevText: '',
+          asNavFor: sync
+         });
+      }
+      if ( config.thumbSlider == false ) {
         var $elements = $('.product-single__thumbnails-item', prodSlideshow);
 
         $elements.mousedown(function(){
@@ -3564,20 +3604,6 @@ theme.ProductGallery = function (context, events) {
           $('#slider', context).flexslider(index);
         };
       }
-      function flexSlider() {
-        prodSlideshow.flexslider({
-          animation: "slide",
-          controlNav: false,
-          animationLoop: true,
-          slideshow: false,
-          itemWidth: width,
-          itemMargin: margin,
-          nextText: '',
-          prevText: '',
-          direction: direction,
-          asNavFor: '#slider'
-         });
-      }
     };
 
     if ($(window).width() > 740 ) { triggerThumbSlider(); }
@@ -3585,15 +3611,15 @@ theme.ProductGallery = function (context, events) {
 
     function triggerThumbSlider() {
       thumbnailSlider.each(function (element) {
-        var position = $(this).data('thumbnail-position');
+        var position = config.thumbPosition;
         initThumbSlider($(this), position);
       });
     }
 
     $(document).on('shopify:section:unload', function(event) {
       var target = $(event.target);
-      var position = $('.thumbnail-slider', target).data('thumbnail-position');
-      if (position == 'bottom') {
+      var position = config.thumbPosition;
+      if (config.thumbPosition == 'bottom') {
         target.find('.thumbnail-slider').flexslider("destroy");
       } else {
         target.find('.thumbnail-slider').bxSlider("destroy");
@@ -4060,38 +4086,33 @@ theme.Product = (function () {
     });
 
     var $modelViewerElements = $('[data-product-media-type-model]', this.$container);
+
     if ($modelViewerElements.length < 1) return;
       theme.ProductModel.init($modelViewerElements, sectionId);
 
+    var that = this;
 
-    this._initMediaSwitch();
-    this._setActiveThumbnail();
-    this._initShopifyXrLaunch();
-
-  }
-
-  Product.prototype = _.assignIn({}, Product.prototype, {
-    _initMediaSwitch: function() {
-      if (!$(this.selectors.productThumbImages).length) {
+    (function initMediaSwitch() {
+      if (!that.selectors.productThumbImages.length) {
         return;
       }
 
-      var self = this;
-
-      $(this.selectors.productThumbImages)
-        .on('click', function(evt) {
+      $(that.selectors.productThumbImages)
+        .on('mousedown', function(evt) {
           evt.preventDefault();
           var $el = $(this);
 
           var mediaId = $el.data('thumbnail-id');
 
-          self._switchMedia(mediaId);
-          self._setActiveThumbnail(mediaId);
+          switchMedia(mediaId);
+          setActiveThumbnail(mediaId);
         });
-    },
-    _initShopifyXrLaunch: function() {
-      var self = this;
+
+    })();
+    (function initShopifyXrLaunch() {
+      var self = that;
       $(document).on('shopify_xr_launch', function() {
+
         var $currentMedia = $(
           self.selectors.productMediaWrapper +
             ':not(.' +
@@ -4099,71 +4120,76 @@ theme.Product = (function () {
             ')',
           self.$container
         );
+
         $currentMedia.trigger('xrLaunch');
       });
-    },
-    _setActiveThumbnail: function(mediaId) {
+    })();
+
+    function setActiveThumbnail(mediaId) {
       // If there is no element passed, find it by the current product image
       if (typeof mediaId === 'undefined') {
         mediaId = $(
-          this.selectors.productMediaWrapper + ':not(.inactive)',
-          this.$container
+          that.selectors.productMediaWrapper + ':not(.inactive)',
+          that.$container
         ).data('media-id');
       }
 
       var $thumbnailWrappers = $(
-        this.selectors.productThumbListItem,
-        this.$container
+        that.selectors.productThumbListItem,
+        that.$container
       );
 
       var $activeThumbnail = $thumbnailWrappers.find(
-        this.selectors.productThumbImages +
+        that.selectors.productThumbImages +
           "[data-thumbnail-id='" +
           mediaId +
           "']"
       );
 
-      $(this.selectors.productThumbImages)
-        .removeClass(this.classes.activeClass)
+      $(that.selectors.productThumbImages)
+        .removeClass(that.classes.activeClass)
         .removeAttr('aria-current');
 
-      $activeThumbnail.addClass(this.classes.activeClass);
+      $activeThumbnail.addClass(that.classes.activeClass);
       $activeThumbnail.attr('aria-current', true);
-    },
-    _switchMedia: function(mediaId) {
-      var wrapper = $('#slider');
 
-      if (!wrapper) return false;
 
-      var $currentMedia = $(
-        this.selectors.productMediaWrapper +
-          ':not(.' +
-          this.classes.hidden +
-          ')',
-        wrapper
-      );
-
-      var $newMedia = $(
-        this.selectors.productMediaWrapper +
-          "[data-thumbnail-id='" +
-          mediaId +
-          "']",
-        wrapper
-      );
-
-      var $otherMedia = $(
-        this.selectors.productMediaWrapper +
-          ":not([data-thumbnail-id='" +
-          mediaId +
-          "'])",
-        wrapper
-      );
-
-      $currentMedia.trigger('mediaHidden');
-      $newMedia.removeClass(this.classes.hidden).trigger('mediaVisible');
-      $otherMedia.addClass(this.classes.hidden);
+      return setActiveThumbnail;
     }
-  });
+    function switchMedia(mediaId) {
+        var wrapper = $('#slider');
+
+        if (!wrapper) return false;
+
+        var $currentMedia = $(
+            that.selectors.productMediaWrapper +
+            ':not(.' +
+            that.classes.hidden +
+            ')',
+            wrapper
+        );
+
+        var $newMedia = $(
+            that.selectors.productMediaWrapper +
+            "[data-thumbnail-id='" +
+            mediaId +
+            "']",
+            wrapper
+        );
+
+        var $otherMedia = $(
+            that.selectors.productMediaWrapper +
+            ":not([data-thumbnail-id='" +
+            mediaId +
+            "'])",
+            wrapper
+        );
+
+        $currentMedia.trigger('mediaHidden');
+        $newMedia.removeClass(that.classes.hidden).trigger('mediaVisible');
+        $otherMedia.addClass(that.classes.hidden);
+    }
+  }
 
   return Product;
 })();

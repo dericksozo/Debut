@@ -10,12 +10,12 @@
      {% assign thumb_type = "flexslider" %}
      {% assign thumb_grid_width = "desktop-12 tablet-6 mobile-hide" %}
     {% endif %}
-    {% if product.media.size > 4 %}
-      {% assign thumb_slider = "thumbnail-slider" %}
+    {% if product.media.size > 5 %}
+      {% assign thumb_slider = true %}
     {% endif %}
     <div id="thumbnail-gallery"
-    class="{{ thumb_type }} {{ thumb_grid_width }} {{ thumb_slider }}"
-    data-thumbnail-position="{{ thumbnail_position }}" data-thumbnail-type="{{ thumb_type }}">
+    class="{{ thumb_type }} {{ thumb_grid_width }} thumbnail-slider"
+    data-thumbnail-position="{{ thumbnail_position }}" data-thumbnail-type="{{ thumb_slider }}">
       <ul class="slides product-single__thumbnails-{{ section.id }}">
         {% for media in product.media %}
           {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}

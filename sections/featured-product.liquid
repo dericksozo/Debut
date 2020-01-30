@@ -27,16 +27,24 @@ data-section-type="product-section">
 </div>
 
 <div class="row">
- <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
- <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+  <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+  <meta itemprop="image" content="{{ product.featured_media.media | img_url: '1024x1024' }}">
 
  {% include 'product-json' %}
 
  {% assign thumbnail_position = section.settings.thumbnail_position %}
  {% assign zoom_image_position = section.settings.zoom_image_position %}
  {% assign enable_video_looping = section.settings.enable_video_looping %}
+ {% capture product_gallery_config %}{
+   "thumbPosition": {{ section.settings.thumbnail_position | json }},
+   "zoomPosition": {{ section.settings.zoom_image_position | json }},
+   "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
+   "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+   "productId": {{ product.id | json }},
+   "isQuick": false
+}{% endcapture %}
 
- <div class="product-photos desktop-6 tablet-3 mobile-3" data-product-gallery data-product-single-media-group>
+ <div class="product-photos desktop-6 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
    {%- if product.featured_media -%}
      {% include 'product-image-gallery' %}
    {%- else -%}
