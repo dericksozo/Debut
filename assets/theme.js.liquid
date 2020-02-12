@@ -1725,38 +1725,6 @@ theme.FeaturedProducts = (function() {
   return FeaturedProducts;
 })();
 
-/*======================================================
-  Instagram Section
-========================================================*/
-theme.Instagram = (function() {
-  function Instagram(container) {
-
-    var $container = this.$container = $(container);
-    var id = $container.attr('data-section-id');
-    var instafeedEl = this.instagram = $('#instafeed-' + id);
-    var instafeedId = this.instagram = 'instafeed-' + id;
-    var template = $("#instagram-template").html();
-
-    var userFeed = new Instafeed({
-      get: 'user',
-      limit: 6,
-      userId: 'self',
-      target: instafeedId,
-      accessToken: instafeedEl.attr('data-access-token'),
-      resolution: 'standard_resolution',
-      template: template
-    });
-
-    if( !_.isUndefined( userFeed.options.accessToken) ){
-      userFeed.run();
-    }
-  }
-
-  Instagram.prototype = _.assignIn({}, Instagram.prototype, {});
-
-  return Instagram;
-})();
-
 /*============================================================================
   Product Modules
 ==============================================================================*/
@@ -2714,7 +2682,6 @@ theme.CustomPage = (function () {
 ========================================================*/
 $(document).ready(function() {
   var sections = new theme.Sections();
-  sections.register('instagram', theme.Instagram);
   sections.register('homepage-products', theme.FeaturedProducts);
   sections.register('slideshow-section', theme.Slideshow);
   sections.register('product-section', theme.Product);
@@ -2733,4 +2700,4 @@ log = function() {
     return Function.prototype.bind.apply(console.log, args);
 }
 
-log("Testament Version 6.8 by Underground", {bar: 1})();
+log("Testament Version 6.8.1 by Underground", {bar: 1})();
