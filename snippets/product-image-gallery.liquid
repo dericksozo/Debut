@@ -1,52 +1,80 @@
 {% capture thumbnails %}
   {% if product.media.size > 1 %}
-    {% assign thumb_slider = "" %}
-    {% assign thumb_grid_width = "" %}
-    {% assign thumb_type = "" %}
-    {% if thumbnail_position != 'bottom' %}
-     {% assign thumb_type = "bx" %}
-     {% assign thumb_grid_width = "vertical-carousel desktop-2 tablet-1 mobile-hide" %}
+    {% if thumbnail_position == 'bottom' %}
+     {% assign style = 'horizontal-carousel' %}
+     {% assign width = 'desktop-12' %}
     {% else %}
-     {% assign thumb_type = "flexslider" %}
-     {% assign thumb_grid_width = "desktop-12 tablet-6 mobile-hide" %}
+     {% assign style = 'vertical-carousel' %}
+     {% assign width = 'desktop-2' %}
     {% endif %}
-    {% if product.media.size > 5 %}
-      {% assign thumb_slider = true %}
+
+    {% if product.media.size >= 4 and section.settings.thumbnail_position == 'bottom' %}
+      <div id="thumbnail-gallery"
+      class="flexslider desktop-12 tablet-6 mobile-hide thumbnail-slider"
+      data-thumbnail-position="{{ thumbnail_position }}">
+        <ul class="slides product-single__thumbnails-{{ section.id }}">
+          {% for media in product.media %}
+            {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+            <li class="{{ media.media_type }}-thumbnail product-single__thumbnails-item" data-image-id="{{ media.id }}" data-index="{{ forloop.index0 }}">
+                <img class="lazyload lazyload-fade"
+                  src="{{ media | img_url: '150x' }}"
+                  data-src="{{ img_url }}"
+                  data-sizes="auto"
+                  data-image-id="{{ media.id }}"
+                  alt="{{ media.alt | escape }}">
+                <noscript>
+                  <img src="{{ media | img_url: '100x' }}" alt="{{ media.alt | escape }}" />
+                </noscript>
+                {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
+                  <div class="thumbnail-icon">
+                    {% include 'media-icons', width: '25', icon: 'play' %}
+                  </div>
+                {%- endif -%}
+                {%- if media.media_type == 'model' -%}
+                  <div class="thumbnail-icon">
+                    {% include 'media-icons', width: '25', icon: '3d-icon' %}
+                  </div>
+                {%- endif -%}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <div class="thumb-slider thumbnail-slider custom {{ style }} {{ width }} tablet-1 mobile-hide"
+      data-thumbnail-position="{{ thumbnail_position }}">
+        <div class="thumb-slider-control thumb-slider-control-up {% if product.media.size < 4 %}hide{% endif %}"></div>
+        <div class="thumb-slider-wrapper" id="thumb-slider-wrapper">
+          <ul class="thumb-slider-slides slides product-single__thumbnails-{{ section.id }}">
+            {% for media in product.media %}
+              {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+              <li class="{{ media.media_type }}-thumbnail product-single__thumbnails-item"
+              data-image-id="{{ media.id }}">
+                  <img class="lazyload lazyload-fade"
+                    src="{{ media | img_url: '150x' }}"
+                    data-src="{{ img_url }}"
+                    data-sizes="auto"
+                    data-image-id="{{ media.id }}"
+                    alt="{{ media.alt | escape }}">
+                  <noscript>
+                    <img src="{{ media | img_url: '100x' }}" alt="{{ media.alt | escape }}" />
+                  </noscript>
+                  {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
+                    <div class="thumbnail-icon">
+                      {% include 'media-icons', width: '25', icon: 'play' %}
+                    </div>
+                  {%- endif -%}
+                  {%- if media.media_type == 'model' -%}
+                    <div class="thumbnail-icon">
+                      {% include 'media-icons', width: '25', icon: '3d-icon' %}
+                    </div>
+                  {%- endif -%}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="thumb-slider-control thumb-slider-control-down {% if product.media.size < 4 %}hide{% endif %}"></div>
+      </div>
     {% endif %}
-    <div id="thumbnail-gallery"
-    class="{{ thumb_type }} {{ thumb_grid_width }} thumbnail-slider"
-    data-thumbnail-position="{{ thumbnail_position }}" data-thumbnail-type="{{ thumb_slider }}">
-      <ul class="slides product-single__thumbnails-{{ section.id }}">
-        {% for media in product.media %}
-          {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-          <li class="{{ media.media_type }}-thumbnail product-single__thumbnails-item" data-image-id="{{ media.id }}">
-            <a href="{{ media.preview_image | img_url: product_image_zoom_size, scale: product_image_scale }}"
-               class="text-link product-single__thumbnail product-single__thumbnail--{{ section.id }}"
-               data-thumbnail-id="{{ section.id }}-{{ media.id }}">
-              <img class="lazyload lazyload-fade"
-                src="{{ media | img_url: '150x' }}"
-                data-src="{{ img_url }}"
-                data-sizes="auto"
-                data-image-id="{{ media.id }}"
-                alt="{{ media.alt | escape }}">
-              <noscript>
-                <img src="{{ media | img_url: '100x' }}" alt="{{ media.alt | escape }}" />
-              </noscript>
-              {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
-                <div class="thumbnail-icon">
-                  {% include 'media-icons', width: '25', icon: 'play' %}
-                </div>
-              {%- endif -%}
-              {%- if media.media_type == 'model' -%}
-                <div class="thumbnail-icon">
-                  {% include 'media-icons', width: '25', icon: '3d-icon' %}
-                </div>
-              {%- endif -%}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
   {% endif %}
 {% endcapture %}
 
@@ -60,7 +88,7 @@
   <div id="slider" class="flexslider {{ grid_width }}">
     <ul class="slides product-image-container">
       {% for media in product.media %}
-        <li class="{{ media.media_type }}-slide" data-image-id="{{ media.id }}" data-flex-index="{{ forloop.index0 }}">
+        <li class="{{ media.media_type }}-slide" data-image-id="{{ media.id }}" data-flex-index="{{ forloop.index0 }}" tabindex="-1">
           <div class="product-media-container product-media--{{ media.id }}"
           data-product-single-media-wrapper
           {% if media.media_type == 'video' %} data-product-media-type-video data-enable-video-looping="{{ enable_video_looping }}"{% endif %}
@@ -71,7 +99,7 @@
             {% case media.media_type %}
               {% when 'image' %}
                 {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-                <a class="product-fancybox" rel="product-images" href="{{ media | img_url: '2400x' }}">
+                <a class="product-fancybox" rel="product-images" href="{{ media | img_url: '2400x' }}" tabindex="-1">
                   <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
                     src="{{ media | img_url: '800x' }}"
                     data-src="{{ img_url }}"

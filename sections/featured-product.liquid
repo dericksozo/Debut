@@ -39,7 +39,7 @@ data-section-type="product-section">
    "thumbPosition": {{ section.settings.thumbnail_position | json }},
    "zoomPosition": {{ section.settings.zoom_image_position | json }},
    "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
-   "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+   "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
    "productId": {{ product.id | json }},
    "isQuick": false
 }{% endcapture %}

@@ -14,7 +14,7 @@
       "thumbPosition": {{ settings.thumbnail_position | json }},
       "zoomPosition": {{ settings.zoom_image_position | json }},
       "enableVideoLooping": {{ settings.enable_video_looping | json }},
-      "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+      "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
       "productId": {{ product.id | json }},
       "isQuick": true
    }{% endcapture %}
@@ -26,12 +26,11 @@
       "thumbPosition": {{ section.settings.thumbnail_position | json }},
       "zoomPosition": {{ section.settings.zoom_image_position | json }},
       "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
-      "thumbSlider": {% if product.media.size > 5 %}true{% else %}false{% endif %},
+      "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
       "productId": {{ product.id | json }},
       "isQuick": false
    }{% endcapture %}
   {% endif %}
-
   <div class="product-top">
     <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
       {%- if product.featured_media -%}
