@@ -44,7 +44,7 @@ data-section-type="product-section">
    "isQuick": false
 }{% endcapture %}
 
- <div class="product-photos desktop-6 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
+ <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
    {%- if product.featured_media -%}
      {% include 'product-image-gallery' %}
    {%- else -%}
@@ -53,7 +53,7 @@ data-section-type="product-section">
    {%- endif -%}
  </div>
 
- <div class="featured-product-form desktop-6 tablet-3 mobile-3">
+ <div class="featured-product-form desktop-5 tablet-3 mobile-3">
 
    {% if section.settings.vendor %}
      <h4>{{ product.vendor }}</h4>
@@ -122,6 +122,16 @@ section.homepage-featured-product.product-{{ product.id }} h2 a {
 .homepage-featured-product .product-details {
   background: {{ section.settings.product_details_bg }};
 }
+{% if section.settings.thumbnail_position == 'bottom' %}
+  .homepage-featured-product.product-{{ product.id }} .thumb-slider-slides {
+    transition: left 0.5s ease-in-out;
+  }
+{% else %}
+  .homepage-featured-product.product-{{ product.id }} .thumb-slider-slides {
+    transition: top 0.5s ease-in-out;
+  }
+{% endif %}
+
 {% if section.settings.product_variants == 'swatches' %}
   .homepage-featured-product.product-{{ product.id }} .selector-wrapper {
     display: none;

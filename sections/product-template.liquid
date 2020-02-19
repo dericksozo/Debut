@@ -141,6 +141,16 @@
     padding: 20px;
     border: 7px double {{ section.settings.product_page_border }};
   }
+  {% if section.settings.thumbnail_position == 'bottom' %}
+    #product-{{ product.id }} .thumb-slider-slides {
+      transition: left 0.5s ease-in-out;
+    }
+  {% else %}
+    #product-{{ product.id }} .thumb-slider-slides {
+      transition: top 0.5s ease-in-out;
+    }
+  {% endif %}
+
   {% if thumbnail_position == 'left' %}
     .product-main-images {
       float: right !important;

@@ -258,7 +258,14 @@
         "id": "direction_hover",
         "label": "Arrow background hover",
         "default": "#aaa"
-      },{
+      },
+      {
+        "type": "color",
+        "id": "keyboard_focus",
+        "label": "Keyboard focus",
+        "default": "#007ace"
+      },
+      {
       "type": "header",
       "content": "Accordions"
     }, {
