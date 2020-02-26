@@ -1,15 +1,15 @@
 <div class="product-index-inner">
   {% if product.available %}
-  {% for col in product.collections %}
-  {% if col.handle == 'new' %}
-  <div class="new icn">{{ 'products.general.new' | t }}</div>
-  {% endif %}
-  {% endfor %}
-  {% if product.price < product.compare_at_price %}
-  <div class="sale-item icn">{{ 'products.general.sale' | t }}</div>
-  {% endif %}
+    {% for col in product.collections %}
+      {% if col.handle == 'new' %}
+        <div class="new icn">{{ 'products.general.new' | t }}</div>
+      {% endif %}
+    {% endfor %}
+    {% if product.price < product.compare_at_price %}
+      <div class="sale-item icn">{{ 'products.general.sale' | t }}</div>
+    {% endif %}
   {% else %}
-  <div class="so icn">{{ 'products.general.sold' | t }}</div>
+    <div class="so icn">{{ 'products.general.sold' | t }}</div>
   {% endif %}
 </div>
 
@@ -39,7 +39,14 @@
           <div class="hidden">
             {% include 'basic-responsive-image', type: product.media[1] %}
             <noscript>
-              <img src="{{ second_image | img_url: '500x' }}" alt="{{ second_image.alt | escape }}">
+              <img src="{{ product.media[1] | img_url: '500x' }}" alt="{{ product.media[1].alt | escape }}">
+            </noscript>
+          </div>
+        {% elsif settings.secondary_images_hover == 'image_flip' and product.media.size > 1 and second_image.media_type != 'image' %}
+          <div class="hidden">
+            {% include 'basic-responsive-image', type: product.media[1].preview_image %}
+            <noscript>
+              <img src="{{ product.media[1].preview_image | img_url: '500x' }}" alt="{{ product.media[1].preview_image.alt | escape }}">
             </noscript>
           </div>
         {% endif %}

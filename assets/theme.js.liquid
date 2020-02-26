@@ -2592,6 +2592,22 @@
 window.theme = window.theme || {};
 
 /* Shopify Library Loader */
+theme.Helpers = (function() {
+  var touchDevice = false;
+
+  function setTouch() {
+    touchDevice = true;
+  }
+
+  function isTouch() {
+    return touchDevice;
+  }
+  return {
+    setTouch: setTouch,
+    isTouch: isTouch
+  };
+})();
+
 theme.LibraryLoader = (function() {
   var types = {
     link: 'link',
@@ -2611,25 +2627,10 @@ theme.LibraryLoader = (function() {
       src: 'https://www.youtube.com/iframe_api',
       type: types.script
     },
-    plyrShopify: {
-      tagId: 'plyr-shopify',
-      src: cloudCdn + 'shopify-plyr/v1.0/shopify-plyr-legacy.en.js',
-      type: types.script
-    },
     plyrShopifyStyles: {
       tagId: 'plyr-shopify-styles',
       src: cloudCdn + 'shopify-plyr/v1.0/shopify-plyr.css',
       type: types.link
-    },
-    shopifyXr: {
-      tagId: 'shopify-model-viewer-xr',
-      src: cloudCdn + 'shopify-xr-js/assets/v1.0/shopify-xr.en.js',
-      type: types.script
-    },
-    modelViewerUi: {
-      tagId: 'shopify-model-viewer-ui',
-      src: cloudCdn + 'model-viewer-ui/assets/v1.0/model-viewer-ui.en.js',
-      type: types.script
     },
     modelViewerUiStyles: {
       tagId: 'shopify-model-viewer-ui-styles',
@@ -2694,22 +2695,6 @@ theme.LibraryLoader = (function() {
 
   return {
     load: load
-  };
-})();
-
-theme.Helpers = (function() {
-  var touchDevice = false;
-
-  function setTouch() {
-    touchDevice = true;
-  }
-
-  function isTouch() {
-    return touchDevice;
-  }
-  return {
-    setTouch: setTouch,
-    isTouch: isTouch
   };
 })();
 
@@ -3449,13 +3434,13 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
   })();
 
   (function main_images() {
-    var $element = $("#slider", context);
+    var main = $("#slider", context);
 
-    if ( !$element.length ) {
+    if ( !main.length ) {
       return false;
     }
 
-    $element.flexslider({
+    main.flexslider({
       animation: "fade",
       controlNav: false,
       animationLoop: true,
@@ -3463,64 +3448,77 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       nextText: '',
       prevText: '',
       smoothHeight: false,
-      before: function(slider){
-        var curSlide = slider.find("li.flex-active-slide");
-        var $slide = curSlide.find("[data-thumbnail-id]");
-        var mediaId = $slide.data('thumbnailId');
-
-        var wrapper = slider;
-
-        if (!wrapper) return false;
-
-        var $currentMedia = $(
-          '[data-product-single-media-wrapper]' +
-            ':not(.inactive)',
-          wrapper
-        );
-
-        var $otherMedia = $(
-          '[data-product-single-media-wrapper]' +
-            ":not([data-thumbnail-id='" +
-            mediaId +
-            "'])",
-          wrapper
-        );
-
-        $currentMedia.trigger('mediaHidden');
-        $otherMedia.addClass('inactive');
-
-      },
       after: function(slider){
-        var curSlide = slider.find("li.flex-active-slide");
-        var $slide = curSlide.find("[data-thumbnail-id]");
-        var mediaId = $slide.data('thumbnailId');
+        var curSlide = slider.find("li.flex-active-slide"),
+            $el = $(curSlide),
+            mediaId = $el.data('image-id');
 
-        var wrapper = slider;
-
-        if (!wrapper) return false;
-
-        var $newMedia = $(
-          '[data-product-single-media-wrapper]' +
-            "[data-thumbnail-id='" +
-            mediaId +
-            "']",
-          wrapper
-        );
-
-        $newMedia.removeClass('inactive').trigger('mediaVisible');
-        events.trigger("flexslider:after", curSlide.data('imageId'));
+        console.log("from flex", $el, mediaId)
+        switchMedia(mediaId)
+        setActiveThumbnail(mediaId, $el)
+        // events.trigger("flexslider:after", curSlide.data('imageId'));
       }
     });
 
-    events.on("variantchange:image", select);
+    var switchMedia = function(mediaId) {
+      var $currentMedia = $(
+        '[data-product-single-media-wrapper]' +
+          ':not(.inactive)',
+        main
+      );
 
-    function select(id) {
-      var slides = $element.find("[data-image-id]");
-      var slide = slides.filter("[data-image-id=" + id + "]");
-      var index = slides.index(slide);
+      var $newMedia = $(
+        '[data-product-single-media-wrapper]' +
+          "[data-thumbnail-id='product-template-" +
+          mediaId +
+          "']",
+        main
+      );
+      var $otherMedia = $(
+        '[data-product-single-media-wrapper]' +
+          ":not([data-thumbnail-id='product-template-" +
+          mediaId +
+          "'])",
+        main
+      );
 
-      $('#slider', context).flexslider(index);
-    };
+      $currentMedia.trigger('mediaHidden');
+      $newMedia.addClass('active-slide').removeClass('inactive').trigger('mediaVisible');
+      $otherMedia.removeClass('active-slide').addClass('inactive');
+    }
+    var setActiveThumbnail = function(mediaId, $el) {
+      if (typeof mediaId === 'undefined') {
+        mediaId = $(
+          '[data-product-single-media-wrapper]:not(.hide)',
+          main
+        ).data('media-id');
+      }
+      var $thumbnailWrappers = $('.product-single__thumbnails-item', thumbsWrapper);
+      var $activeThumbnail = $(".product-single__thumbnails-item[data-image-id='" + mediaId + "']")
+
+      $thumbnailWrappers
+        .removeClass('active-slide')
+        .removeAttr('aria-current');
+
+
+      $activeThumbnail.addClass('active-slide');
+      $activeThumbnail.attr('aria-current', true);
+
+      var index = $(main).find("[data-image-id=" + mediaId + "]").data('flexIndex');
+
+      $(main).flexslider(index);
+
+      var newPos = $el.position(),
+          topPos = parseInt(newPos.top) - 5;
+
+        if ( topPos < 1 ) topPos = 0;
+
+        if ( direction == 'left' ) {
+          $(thumbsSlide).css('left', '-' + newPos.left + 'px');
+        } else if ( direction == 'top' ) {
+          $(thumbsSlide).css('top', '-' + topPos + 'px');
+        }
+    }
 
     $(document).on('shopify:section:unload', function(event) {
       var target = $(event.target);
@@ -3529,63 +3527,63 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
     });
   })();
 
-  (function thumbnail_images(){
-    if ( config.thumbSlider ) return false;
-
-    var $elements = $('.product-single__thumbnails-item', context);
-
-    $elements.click(function() {
-      event.preventDefault();
-
-      var id = this.dataset.imageId;
-      var element = this;
-
-      select(id, element);
-    });
-
-    $elements.keypress(function(e){
-      if(e.which == 13){ //Enter key pressed
-        var element = this;
-        var id = this.dataset.imageId;
-        select(id, element);
-      }
-    });
-
-    events.on('variantchange:image', selectThumb);
-    events.on("flexslider:after", selectThumb);
-
-    function selectThumb(id) {
-      var index = $("#slider", context).find("[data-image-id=" + id + "]").data('flexIndex');
-
-      if ( index == null || index == undefined ) return false;
-
-      $elements
-        .removeClass('active-slide')
-        .attr('aria-current', false)
-        .attr('aria-hidden', true);
-
-      $elements.eq(index)
-        .addClass('active-slide')
-        .attr('aria-current', true)
-        .attr('aria-hidden', false);
-    }
-    function select(id, element){
-      var slides = $elements.find("[data-image-id]");
-      var slide = slides.filter("[data-image-id=" + id + "]");
-      var index = slides.index(slide);
-
-      $elements.removeClass('active-slide')
-      .attr('aria-current', false)
-      .attr('aria-hidden', true);
-
-      $(element).addClass('active-slide')
-        .attr('aria-current', true)
-        .attr('aria-hidden', false);
-
-      $('#slider', context).flexslider(index);
-    }
-
-  })();
+  // (function thumbnail_images(){
+  //   if ( config.thumbSlider ) return false;
+  //
+  //   var $elements = $('.product-single__thumbnails-item', context);
+  //
+  //   $elements.click(function() {
+  //     event.preventDefault();
+  //
+  //     var id = this.dataset.imageId;
+  //     var element = this;
+  //
+  //     select(id, element);
+  //   });
+  //
+  //   $elements.keypress(function(e){
+  //     if(e.which == 13){ //Enter key pressed
+  //       var element = this;
+  //       var id = this.dataset.imageId;
+  //       select(id, element);
+  //     }
+  //   });
+  //
+  //   events.on('variantchange:image', selectThumb);
+  //   events.on("flexslider:after", selectThumb);
+  //
+  //   function selectThumb(id) {
+  //     var index = $("#slider", context).find("[data-image-id=" + id + "]").data('flexIndex');
+  //
+  //     if ( index == null || index == undefined ) return false;
+  //
+  //     $elements
+  //       .removeClass('active-slide')
+  //       .attr('aria-current', false)
+  //       .attr('aria-hidden', true);
+  //
+  //     $elements.eq(index)
+  //       .addClass('active-slide')
+  //       .attr('aria-current', true)
+  //       .attr('aria-hidden', false);
+  //   }
+  //   function select(id, element){
+  //     var slides = $elements.find("[data-image-id]");
+  //     var slide = slides.filter("[data-image-id=" + id + "]");
+  //     var index = slides.index(slide);
+  //
+  //     $elements.removeClass('active-slide')
+  //     .attr('aria-current', false)
+  //     .attr('aria-hidden', true);
+  //
+  //     $(element).addClass('active-slide')
+  //       .attr('aria-current', true)
+  //       .attr('aria-hidden', false);
+  //
+  //     $('#slider', context).flexslider(index);
+  //   }
+  //
+  // })();
 
   (function thumbnail_slider() {
     if ( config.thumbSlider == false ) return false;
@@ -3692,45 +3690,84 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       }
       thumbSlider.init();
 
-      var switchThumb = function(element) {
-        var id = element.dataset.imageId;
-        var newPos = $(element).position();
-        var topPos = parseInt(newPos.top) - 5;
-        if ( topPos < 1 ) topPos = 0;
+      var switchMedia = function(mediaId) {
+        var $currentMedia = $(
+          '[data-product-single-media-wrapper]' +
+            ':not(.inactive)',
+          main
+        );
 
-        if ( direction == 'left' ) {
-          $(thumbsSlide).css('left', '-' + newPos.left + 'px');
-        } else if ( direction == 'top' ) {
-          $(thumbsSlide).css('top', '-' + topPos + 'px');
+        var $newMedia = $(
+          '[data-product-single-media-wrapper]' +
+            "[data-thumbnail-id='product-template-" +
+            mediaId +
+            "']",
+          main
+        );
+        var $otherMedia = $(
+          '[data-product-single-media-wrapper]' +
+            ":not([data-thumbnail-id='product-template-" +
+            mediaId +
+            "'])",
+          main
+        );
+
+        $currentMedia.trigger('mediaHidden');
+        $newMedia.addClass('active-slide').removeClass('inactive').trigger('mediaVisible');
+        $otherMedia.removeClass('active-slide').addClass('inactive');
+      }
+      var setActiveThumbnail = function(mediaId, $el) {
+        if (typeof mediaId === 'undefined') {
+          mediaId = $(
+            '[data-product-single-media-wrapper]:not(.hide)',
+            main
+          ).data('media-id');
         }
+        var $thumbnailWrappers = $('.product-single__thumbnails-item', thumbsWrapper);
+        var $activeThumbnail = $(".product-single__thumbnails-item[data-image-id='" + mediaId + "']")
 
-        var index = $(main).find("[data-image-id=" + id + "]").data('flexIndex');
-
-        $(thumb)
+        $thumbnailWrappers
           .removeClass('active-slide')
-          .attr('aria-current', false)
-          .attr('aria-hidden', true);
+          .removeAttr('aria-current');
 
-        $(thumb).eq(index)
-          .addClass('active-slide')
-          .attr('aria-current', true)
-          .attr('aria-hidden', false);
+
+        $activeThumbnail.addClass('active-slide');
+        $activeThumbnail.attr('aria-current', true);
+
+        var index = $(main).find("[data-image-id=" + mediaId + "]").data('flexIndex');
 
         $(main).flexslider(index);
+
+        var newPos = $el.position(),
+            topPos = parseInt(newPos.top) - 5;
+
+          if ( topPos < 1 ) topPos = 0;
+
+          if ( direction == 'left' ) {
+            $(thumbsSlide).css('left', '-' + newPos.left + 'px');
+          } else if ( direction == 'top' ) {
+            $(thumbsSlide).css('top', '-' + topPos + 'px');
+          }
       }
 
       /* Select flexslide on thumbnail click */
-      $(thumb).on('click', function() {
-        event.preventDefault();
-        var element = this;
-        switchThumb(element);
+      $(thumb).on('click', function(evt) {
+        evt.preventDefault();
+        var $el = $(this);
+        var mediaId = $el.data('image-id');
+
+        switchMedia(mediaId, $el);
+        setActiveThumbnail(mediaId, $el);
       });
 
       /* Select flexslide on thumbnail key enter */
       $(thumb).keypress(function(e){
         if(e.which == 13){ //Enter key pressed
-          var element = this;
-          switchThumb(element);
+          var $el = $(this);
+          var mediaId = $el.data('image-id');
+
+          switchMedia(mediaId, $el);
+          setActiveThumbnail(mediaId, $el);
         }
       });
 
@@ -3753,33 +3790,14 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
 
       /* Select thumbnail on variant change and flexslider change */
       events.on('variantchange:image', selectThumb);
-      events.on("flexslider:after", selectThumb);
+      // events.on("flexslider:after", selectThumb);
 
       function selectThumb(id) {
-        var index = $(main).find("[data-image-id=" + id + "]").data('flexIndex');
+        var index = $(main).find("[data-image-id=" + id + "]").data('flexIndex'),
+            $el = $(thumb).eq(index);
 
-        if ( index == null || index == undefined ) return false;
-
-        $(thumb)
-          .removeClass('active-slide')
-          .attr('aria-current', false)
-          .attr('aria-hidden', true);
-
-        $(thumb).eq(index)
-          .addClass('active-slide')
-          .attr('aria-current', true)
-          .attr('aria-hidden', false);
-
-        var newPos = $(thumb).eq(index).position();
-        var topPos = parseInt(newPos.top) - 5;
-        if ( topPos < 1 ) topPos = 0;
-
-        if ( direction == 'left' ) {
-          $(thumbsSlide).css('left', '-' + newPos.left + 'px');
-        } else if ( direction == 'top' ) {
-          $(thumbsSlide).css('top', '-' + topPos + 'px');
-        }
-
+        switchMedia(id, $el);
+        setActiveThumbnail(id, $el);
       }
     }
 
@@ -3854,7 +3872,7 @@ function onYouTubeIframeAPIReady() {
   theme.ProductVideo.loadVideos(theme.ProductVideo.hosts.youtube);
 }
 
-theme.ProductVideo = (function(context) {
+theme.ProductVideo = (function() {
 
   var videos = {};
 
@@ -3909,7 +3927,7 @@ theme.ProductVideo = (function(context) {
         theme.LibraryLoader.load('plyrShopifyStyles');
         break;
       case hosts.youtube:
-        theme.LibraryLoader.load('youtubeSdk');
+        theme.LibraryLoader.load('youtubeSdk', setupYouTubeVideos);
         break;
     }
   }
@@ -3921,6 +3939,12 @@ theme.ProductVideo = (function(context) {
     }
 
     loadVideos(hosts.html5);
+  }
+
+  function setupYouTubeVideos() {
+    if (!window.YT.Player) return;
+
+    loadVideos(hosts.youtube);
   }
 
   function createPlayer(video) {
@@ -3956,6 +3980,7 @@ theme.ProductVideo = (function(context) {
     }
 
     productMediaWrapper.on('mediaHidden xrLaunch', function() {
+              console.log("VIDEO media hidden");
       if (!video.player) return;
 
       if (video.host === hosts.html5) {
@@ -3980,6 +4005,7 @@ theme.ProductVideo = (function(context) {
     });
 
     productMediaWrapper.on('mediaVisible', function() {
+        console.log("VIDEO media visible");
       if (theme.Helpers.isTouch()) return;
 
       if (!video.player) return;
@@ -4012,6 +4038,7 @@ theme.ProductVideo = (function(context) {
     if (video.tagName === 'VIDEO') {
       return hosts.html5;
     }
+
     if (video.tagName === 'IFRAME') {
       if (
         /^(https?:\/\/)?(www\.)?(youtube\.com|youtube-nocookie\.com|youtu\.?be)\/.+$/.test(
@@ -4054,6 +4081,7 @@ theme.ProductVideo = (function(context) {
     for (var key in videos) {
       if (videos.hasOwnProperty(key)) {
         var video = videos[key];
+
         if (video.sectionId === sectionId) {
           if (video.player) video.player.destroy();
           delete videos[key];
@@ -4071,7 +4099,7 @@ theme.ProductVideo = (function(context) {
 
 })();
 
-theme.ProductModel = (function(context) {
+theme.ProductModel = (function() {
   var modelJsonSections = {};
   var models = {};
   var xrButtons = {};
@@ -4098,6 +4126,7 @@ theme.ProductModel = (function(context) {
         var $xrButton = $modelViewerContainer
           .closest(selectors.mediaGroup)
           .find(selectors.xrButton);
+
         xrButtons[sectionId] = {
           $element: $xrButton,
           defaultId: modelId
@@ -4158,7 +4187,16 @@ theme.ProductModel = (function(context) {
       if (models.hasOwnProperty(key)) {
         var model = models[key];
         if (!model.modelViewerUi) {
-          model.modelViewerUi = new Shopify.ModelViewerUI(model.$element);
+          var config = {
+              controls: [
+              'zoom-in',
+              'zoom-out',
+              'fullscreen',
+            ],
+            focusOnPlay: false
+          };
+
+          model.modelViewerUi = new Shopify.ModelViewerUI(model.$element, config);
         }
         setupModelViewerListeners(model);
       }
@@ -4167,12 +4205,12 @@ theme.ProductModel = (function(context) {
 
   function setupModelViewerListeners(model) {
     var xrButton = xrButtons[model.sectionId];
-
+    console.log(model.$container)
     model.$container.on('mediaVisible', function() {
       xrButton.$element.attr('data-shopify-model3d-id', model.modelId);
       if (theme.Helpers.isTouch()) return;
       model.modelViewerUi.play();
-
+        console.log("Model Media Visible");
       $('.shopify-model-viewer-ui__controls-area', model.$container)
         .children()
         .addBack()
@@ -4192,7 +4230,7 @@ theme.ProductModel = (function(context) {
       .on('mediaHidden', function() {
         xrButton.$element.attr('data-shopify-model3d-id', xrButton.defaultId);
         model.modelViewerUi.pause();
-
+          console.log("MODEL media hidden");
         $('.shopify-model-viewer-ui__controls-area', model.$container)
           .children()
           .addBack()
@@ -4217,6 +4255,7 @@ theme.ProductModel = (function(context) {
       if (models.hasOwnProperty(key)) {
         var model = models[key];
         if (model.sectionId === sectionId) {
+          models[key].modelViewerUi.destroy();
           delete models[key];
         }
       }
@@ -4260,135 +4299,142 @@ theme.Product = (function () {
     var $container = (this.$container = $context);
     this.ajaxEnabled = context.dataset.ajaxEnabled;
 
-    this.settings = {
-      namespace: '.slideshow-' + sectionId,
-      sectionId: sectionId
-    };
+    // this.settings = {
+    //   namespace: '.slideshow-' + sectionId,
+    //   sectionId: sectionId
+    // };
+    //
+    // this.selectors = {
+    //   productForm: '[data-product-form]',
+    //   productMediaWrapper: '[data-product-single-media-wrapper]',
+    //   productThumbImages: '.product-single__thumbnail--' + sectionId,
+    //   productThumbs: '.product-single__thumbnails-' + sectionId,
+    //   productThumbListItem: '.product-single__thumbnails-item'
+    // };
+    //
+    // this.classes = {
+    //   hidden: 'inactive',
+    //   visibilityHidden: 'visibility-hidden',
+    //   activeClass: 'active-thumb'
+    // };
 
-    this.selectors = {
-      productForm: '[data-product-form]',
-      productMediaWrapper: '[data-product-single-media-wrapper]',
-      productThumbImages: '.product-single__thumbnail--' + sectionId,
-      productThumbs: '.product-single__thumbnails-' + sectionId,
-      productThumbListItem: '.product-single__thumbnails-item'
-    };
-
-    this.classes = {
-      hidden: 'inactive',
-      visibilityHidden: 'visibility-hidden',
-      activeClass: 'active-thumb'
-    };
-
-    this.$loader = $(this.selectors.loader, this.$addToCart);
-    this.$loaderStatus = $(this.selectors.loaderStatus, $context);
+    // this.$loader = $(this.selectors.loader, this.$addToCart);
+    // this.$loaderStatus = $(this.selectors.loaderStatus, $context);
 
     context.querySelectorAll("[data-product-media-type-video]").forEach(function (context, sectionId) {
       var $el = $(context);
-      theme.ProductVideo.init($el, sectionId, context);
+      theme.ProductVideo.init($el, sectionId);
     });
 
     var $modelViewerElements = $('[data-product-media-type-model]', this.$container);
 
     if ($modelViewerElements.length < 1) return;
-      theme.ProductModel.init($modelViewerElements, sectionId, context);
+      theme.ProductModel.init($modelViewerElements, sectionId);
 
-    var that = this;
+    var self = this;
 
-    (function initMediaSwitch() {
-      if (!that.selectors.productThumbImages.length) {
-        return;
-      }
-
-      $(that.selectors.productThumbImages)
-        .on('click', function(evt) {
-          evt.preventDefault();
-          var $el = $(this);
-          var mediaId = $el.data('thumbnail-id');
-
-          switchMedia(mediaId);
-          setActiveThumbnail(mediaId);
-        });
-
-    })();
-    (function initShopifyXrLaunch() {
-      var self = that;
-      $(document).on('shopify_xr_launch', function() {
-
-        var $currentMedia = $(
-          self.selectors.productMediaWrapper +
-            ':not(.' +
-            self.classes.hidden +
-            ')',
-          self.$container
-        );
-
-        $currentMedia.trigger('xrLaunch');
-      });
-    })();
-
-    function setActiveThumbnail(mediaId) {
-      // If there is no element passed, find it by the current product image
-      if (typeof mediaId === 'undefined') {
-        mediaId = $(
-          that.selectors.productMediaWrapper + ':not(.inactive)',
-          that.$container
-        ).data('media-id');
-      }
-
-      var $thumbnailWrappers = $(
-        that.selectors.productThumbListItem,
-        that.$container
+    $(document).on('shopify_xr_launch', function() {
+      var $currentMedia = $(
+        '[data-product-single-media-wrapper]' +
+          ':not(.inactive)',
+        self.$container
       );
 
-      var $activeThumbnail = $thumbnailWrappers.find(
-        that.selectors.productThumbImages +
-          "[data-thumbnail-id='" +
-          mediaId +
-          "']"
-      );
+      $currentMedia.trigger('xrLaunch');
+    });
 
-      $(that.selectors.productThumbImages)
-        .removeClass(that.classes.activeClass)
-        .removeAttr('aria-current');
+    // (function initMediaSwitch() {
+    //   if (!self.selectors.productThumbImages.length) {
+    //     return;
+    //   }
+    //
+    //   $(self.selectors.productThumbImages)
+    //     .on('click', function(evt) {
+    //       evt.preventDefault();
+    //       var $el = $(this);
+    //       var mediaId = $el.data('thumbnail-id');
+    //
+    //       switchMedia(mediaId);
+    //       setActiveThumbnail(mediaId);
+    //     });
+    //
+    // })();
+    // (function initShopifyXrLaunch() {
+    //   $(document).on('shopify_xr_launch', function() {
+    //     var $currentMedia = $(
+    //       self.selectors.productMediaWrapper +
+    //         ':not(.' +
+    //         self.classes.hidden +
+    //         ')',
+    //       self.$container
+    //     );
+    //     $currentMedia.trigger('xrLaunch');
+    //   });
+    // })();
 
-      $activeThumbnail.addClass(that.classes.activeClass);
-      $activeThumbnail.attr('aria-current', true);
-
-      return setActiveThumbnail;
-    }
-    function switchMedia(mediaId) {
-        var wrapper = $('#slider');
-
-        if (!wrapper) return false;
-
-        var $currentMedia = $(
-            that.selectors.productMediaWrapper +
-            ':not(.' +
-            that.classes.hidden +
-            ')',
-            wrapper
-        );
-
-        var $newMedia = $(
-            that.selectors.productMediaWrapper +
-            "[data-thumbnail-id='" +
-            mediaId +
-            "']",
-            wrapper
-        );
-
-        var $otherMedia = $(
-            that.selectors.productMediaWrapper +
-            ":not([data-thumbnail-id='" +
-            mediaId +
-            "'])",
-            wrapper
-        );
-
-        $currentMedia.trigger('mediaHidden');
-        $newMedia.removeClass(that.classes.hidden).trigger('mediaVisible');
-        $otherMedia.addClass(that.classes.hidden);
-    }
+    // function setActiveThumbnail(mediaId) {
+    //   // If there is no element passed, find it by the current product image
+    //   if (typeof mediaId === 'undefined') {
+    //     mediaId = $(
+    //       self.selectors.productMediaWrapper + ':not(.inactive)',
+    //       self.$container
+    //     ).data('media-id');
+    //   }
+    //
+    //   var $thumbnailWrappers = $(
+    //     self.selectors.productThumbListItem,
+    //     self.$container
+    //   );
+    //
+    //   var $activeThumbnail = $thumbnailWrappers.find(
+    //     self.selectors.productThumbImages +
+    //       "[data-thumbnail-id='" +
+    //       mediaId +
+    //       "']"
+    //   );
+    //
+    //   $(self.selectors.productThumbImages)
+    //     .removeClass(self.classes.activeClass)
+    //     .removeAttr('aria-current');
+    //
+    //   $activeThumbnail.addClass(self.classes.activeClass);
+    //   $activeThumbnail.attr('aria-current', true);
+    //
+    //   return setActiveThumbnail;
+    // }
+    // function switchMedia(mediaId) {
+    //     var wrapper = $('#slider', context);
+    //
+    //     if (!wrapper) return false;
+    //
+    //     var $currentMedia = $(
+    //         self.selectors.productMediaWrapper +
+    //         ':not(.' +
+    //         self.classes.hidden +
+    //         ')',
+    //         wrapper
+    //     );
+    //
+    //     var $newMedia = $(
+    //         self.selectors.productMediaWrapper +
+    //         "[data-thumbnail-id='" +
+    //         mediaId +
+    //         "']",
+    //         wrapper
+    //     );
+    //
+    //     var $otherMedia = $(
+    //         self.selectors.productMediaWrapper +
+    //         ":not([data-thumbnail-id='" +
+    //         mediaId +
+    //         "'])",
+    //         wrapper
+    //     );
+    //
+    //     $currentMedia.trigger('mediaHidden');
+    //     $newMedia.removeClass(self.classes.hidden).trigger('mediaVisible');
+    //     $otherMedia.addClass(self.classes.hidden);
+    // }
   }
 
   return Product;
