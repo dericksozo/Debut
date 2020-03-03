@@ -96,6 +96,7 @@
 {% section 'mobile-navigation' %}
 
   <a href="#" class="scrollup"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
+  <div class="fancybox-wrapper"></div>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -140,5 +141,8 @@
     document.documentElement.className =
        document.documentElement.className.replace("no-js","js");
   </script>
+
+ <!-- Fancybox JS -->
+ {{ 'jquery.fancybox.js' | asset_url | script_tag }}
 </body>
 </html>

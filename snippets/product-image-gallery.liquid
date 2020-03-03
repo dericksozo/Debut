@@ -8,16 +8,15 @@
      {% assign width = 'desktop-2' %}
     {% endif %}
 
-    <div class="thumb-slider thumbnail-slider custom {{ style }} {{ width }} tablet-1 mobile-hide"
+    <div id="thumbnails" class="thumb-slider thumbnail-slider custom {{ style }} {{ width }} tablet-1 mobile-hide"
     data-thumbnail-position="{{ thumbnail_position }}">
-      <div class="thumb-slider-control thumb-slider-control-prev {% if product.media.size < 4 %}hide{% endif %}"></div>
       <div class="thumb-slider-wrapper" id="thumb-slider-wrapper">
-        <ul class="thumb-slider-slides slides product-single__thumbnails-{{ section.id }}">
+        <ul class="carousel-nav thumb-slider-slides slides product-single__thumbnails-{{ section.id }}">
           {% for media in product.media %}
             {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-            <li class="{{ media.media_type }}-thumbnail product-single__thumbnails-item"
+            <li class="{{ media.media_type }}-thumbnail product-single__thumbnails-item carousel-cell {% if forloop.first %}is-nav-selected{% endif %}" data-slide-index="{{ forloop.index0 }}"
             data-image-id="{{ media.id }}" tabindex="0">
-              <div class="product-single__thumbnail product-single__thumbnail--{{ section.id }}" data-thumbnail-id="{{ section.id }}-{{ media.id }}">
+              <div class="product-single__thumbnail product-single__thumbnail--{{ section.id }}" data-thumbnail-id="product-template-{{ media.id }}">
                 <img class="lazyload lazyload-fade"
                   src="{{ media | img_url: '150x' }}"
                   data-src="{{ img_url }}"
@@ -42,7 +41,6 @@
           {% endfor %}
         </ul>
       </div>
-      <div class="thumb-slider-control thumb-slider-control-next {% if product.media.size < 4 %}hide{% endif %}"></div>
     </div>
   {% endif %}
 {% endcapture %}
@@ -54,29 +52,32 @@
   {% else %}
    {% assign grid_width = "desktop-12 tablet-6 mobile-3" %}
   {% endif %}
-  <div id="slider" class="flexslider {{ grid_width }}">
-    <ul class="slides product-image-container">
+  <div id="slider" class=" {{ grid_width }}">
+    <ul class="slides product-image-container carousel carousel-main">
       {% for media in product.media %}
-        <li class="{{ media.media_type }}-slide" data-image-id="{{ media.id }}" data-flex-index="{{ forloop.index0 }}" tabindex="-1">
+        <li class="{{ media.media_type }}-slide carousel-cell" data-image-id="{{ media.id }}" data-slide-index="{{ forloop.index0 }}" tabindex="-1">
           <div class="product-media-container product-media--{{ media.id }} {{ media.media_type }}"
           data-product-single-media-wrapper
           {% if media.media_type == 'video' %} data-product-media-type-video data-enable-video-looping="{{ enable_video_looping }}"{% endif %}
           {% if media.media_type == 'external_video' %} data-product-media-type-video data-enable-video-looping="{{ enable_video_looping }}" data-video-id="{{ media.external_id }}"{% endif %}
           {% if media.media_type == 'model' %} data-product-media-type-model{% endif %}
-          data-thumbnail-id="{{ section.id }}-{{ media.id }}"
-          data-media-id="{{ section.id }}-{{ media.id }}">
+          data-thumbnail-id="product-template-{{ media.id }}"
+          data-media-id="product-template-{{ media.id }}">
             {% case media.media_type %}
               {% when 'image' %}
                 {% assign img_url = media | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-                <a class="product-fancybox product-single__media" rel="product-images" href="{{ media | img_url: '2400x' }}" tabindex="-1">
-                  <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
-                    src="{{ media | img_url: '800x' }}"
-                    data-src="{{ img_url }}"
-                    data-sizes="auto"
-                    data-zoom-src="{{ media | img_url: '2400x' }}"
-                    data-aspectratio="{{ media.preview_image.aspect_ratio }}"
-                    alt="{{ media.alt | escape }}">
-                </a>
+                <img id="{{ product.id }}" class="product__image lazyload lazyload-fade"
+                  src="{{ media | img_url: '800x' }}"
+                  data-src="{{ img_url }}"
+                  data-sizes="auto"
+                  data-zoom-src="{{ media | img_url: '2400x' }}"
+                  data-aspectratio="{{ media.preview_image.aspect_ratio }}"
+                  alt="{{ media.alt | escape }}">
+                {% if section.settings.click_to_enlarge and template != 'product.quick' %}
+                  <a class="zoom_btn" data-fancybox="product-{{ product.id }}" title="click to zoom-in" href="{{ media | img_url: '2400x' }}" itemprop="contentUrl" tabindex="-1">
+                    <i class="fa fa-search-plus" aria-hidden="true"></i>
+                  </a>
+                {% endif %}
               {% when 'external_video' %}
                 <div class="product-video videoWrapper product-single__media">
                   {{ media | external_video_tag }}

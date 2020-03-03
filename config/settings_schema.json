@@ -500,19 +500,10 @@
           ]
         },
         {
-          "type": "select",
-          "id": "zoom_image_position",
-          "label": "Zoom image position",
-          "options": [
-            {
-              "value": "zoom_on_right",
-              "label": "To right of main image"
-            },
-            {
-              "value": "zoom_over_main",
-              "label": "Over top of main image"
-            }
-          ]
+          "type": "checkbox",
+          "id": "click_to_enlarge",
+          "label": "Enable click to enlarge",
+          "default": true
         },
         {
           "type": "checkbox",

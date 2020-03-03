@@ -33,11 +33,10 @@ data-section-type="product-section">
  {% include 'product-json' %}
 
  {% assign thumbnail_position = section.settings.thumbnail_position %}
- {% assign zoom_image_position = section.settings.zoom_image_position %}
+ {% assign click_to_enlarge = section.settings.click_to_enlarge %}
  {% assign enable_video_looping = section.settings.enable_video_looping %}
  {% capture product_gallery_config %}{
    "thumbPosition": {{ section.settings.thumbnail_position | json }},
-   "zoomPosition": {{ section.settings.zoom_image_position | json }},
    "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
    "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
    "productId": {{ product.id | json }},
@@ -333,20 +332,11 @@ section.homepage-featured-product.product-{{ product.id }} h2 a {
      }
    ]
  },
- {
-   "type": "select",
-   "id": "zoom_image_position",
-   "label": "Zoom image position",
-   "options": [
-     {
-       "value": "zoom_on_right",
-       "label": "To right of main image"
-     },
-     {
-       "value": "zoom_over_main",
-       "label": "Over top of main image"
-     }
-   ]
+   {
+     "type": "checkbox",
+     "id": "click_to_enlarge",
+     "label": "Enable click to enlarge",
+     "default": true
    },
    {
      "type": "checkbox",

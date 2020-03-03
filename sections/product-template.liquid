@@ -8,31 +8,31 @@
 
   {% if template == 'product.quick' %}
     {% assign thumbnail_position = settings.thumbnail_position %}
-    {% assign zoom_image_position = settings.zoom_image_position %}
+    {% assign click_to_enlarge = settings.click_to_enlarge %}
     {% assign enable_video_looping = settings.enable_video_looping %}
     {% capture product_gallery_config %}{
       "thumbPosition": {{ settings.thumbnail_position | json }},
-      "zoomPosition": {{ settings.zoom_image_position | json }},
       "enableVideoLooping": {{ settings.enable_video_looping | json }},
+      "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
       "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
       "productId": {{ product.id | json }},
       "isQuick": true
    }{% endcapture %}
   {% else %}
     {% assign thumbnail_position = section.settings.thumbnail_position %}
-    {% assign zoom_image_position = section.settings.zoom_image_position %}
+    {% assign click_to_enlarge = section.settings.click_to_enlarge %}
     {% assign enable_video_looping = section.settings.enable_video_looping %}
     {% capture product_gallery_config %}{
       "thumbPosition": {{ section.settings.thumbnail_position | json }},
-      "zoomPosition": {{ section.settings.zoom_image_position | json }},
       "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
+      "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
       "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
       "productId": {{ product.id | json }},
       "isQuick": false
    }{% endcapture %}
   {% endif %}
   <div class="product-top">
-    <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
+    <div class="product-photos carousel-container desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
       {%- if product.featured_media -%}
         {% include 'product-image-gallery' %}
       {%- else -%}
@@ -136,6 +136,12 @@
   {% endif %}
 </div>
 <style>
+  {% if template == 'product.quick' %}
+    #thumb-slider-wrapper .product-single__thumbnails-item img {
+      width: 55px !important;
+      height: 55px !important;
+    }
+  {% endif %}
   #product-right {
     background: {{ section.settings.product_form_background }};
     padding: 20px;
@@ -316,19 +322,10 @@
         ]
       },
       {
-        "type": "select",
-        "id": "zoom_image_position",
-        "label": "Zoom image position",
-        "options": [
-          {
-            "value": "zoom_on_right",
-            "label": "To right of main image"
-          },
-          {
-            "value": "zoom_over_main",
-            "label": "Over top of main image"
-          }
-        ]
+        "type": "checkbox",
+        "id": "click_to_enlarge",
+        "label": "Enable click to enlarge",
+        "default": true
       },
       {
         "type": "checkbox",
