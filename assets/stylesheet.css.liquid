@@ -10711,10 +10711,10 @@ https://flickity.metafizzy.co
   color: {{ settings.direction_color }};
 }
 
-.product-photos .flickity-prev-next-button {
+#slider .flickity-prev-next-button {
   top: 32px;
 }
-.product-photos .flickity-prev-next-button.next {
+#slider .flickity-prev-next-button.next {
   left: 59px;
   right: unset;
 }
@@ -10729,13 +10729,13 @@ https://flickity.metafizzy.co
   100% { opacity: 0; }
 }
 
-.product-photos .carousel-cell {
+#slider .carousel-cell {
   opacity: 0 !important;
 }
-.product-photos .carousel-cell:not(.is-selected){
+#slider .carousel-cell:not(.is-selected){
   animation: slidefadeOut ease 0.2s;
 }
-.product-photos .carousel-cell.is-selected {
+#slider .carousel-cell.is-selected {
   z-index: 99;
   opacity: 1 !important;
   animation: slidefadeIn ease 0.2s;
