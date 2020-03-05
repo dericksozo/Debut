@@ -5,9 +5,6 @@
 {% endunless %}
 
 {% form 'product', product, id: "AddToCartForm", class: "product_form", data-product-form:product_form_config %}
-  <script class="product-json" type="application/json">
-    {{ product | json }}
-  </script>
 
   {%- if settings.show_multiple_currencies -%}
     {% assign price = current_variant.price | money_with_currency %}
@@ -95,7 +92,9 @@
       </div>
     {% endif %}
     <input id="addToCart" type="submit" name="button" class="add clearfix AddtoCart {% if section.settings.show_payment_button %} secondary-button{% endif %}" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
-    {% if section.settings.show_payment_button %}
+    {% if section.settings.show_payment_button and template != 'product.quick' %}
+     {{ form | payment_button }}
+    {% elsif settings.quick_show_payment_button and template == 'product.quick' %}
      {{ form | payment_button }}
     {% endif %}
   </div>

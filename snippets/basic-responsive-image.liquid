@@ -5,7 +5,7 @@
   {%- if template == 'product' -%}
     {% assign imageid = product.id %}
   {%- else -%}
-    {% assign imageid = image.id %}
+    {% assign imageid = media.id %}
   {%- endif -%}
 
   <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">

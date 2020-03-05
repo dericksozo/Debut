@@ -1,36 +1,24 @@
 {% if section.settings.show_product_recommendations %}
-<div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}">
+<div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section">
   <div class="row grid_wrapper">
-    <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="4">
+    <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="{{ section.settings.limit }}">
       {%- if recommendations.products_count > 0 -%}
-        <div class="section-title lines tablet-6 desktop-12"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
+        <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
+        <div class="product-carousel">
           {%- for product in recommendations.products -%}
-          <div class="product product-index span-3 desktop-3 tablet-fourth">
-            <a href="{{ product.url }}">
-              <div class="prod-image">
-                <img class="product__img" src="{{ product.featured_image | img_url: '300x300' }}" alt="{{ product.featured_image.alt }}" />
-              </div>
-              <div class="product-info">
-                <div class="product-info-inner">
-                  {% if section.settings.show_recommendations_vendor %}<span class="prod-vendor">{{ product.vendor }}</span>{% endif %}
-                  <span class="prod-title">{{ product.title }}</span>
-                  <div class="price">
-                    {% if product.price < product.compare_at_price %}
-                    <div class="onsale">{{ product.price | money }}</div>
-                    <div class="was-related">{{ product.compare_at_price | money }}</div>
-                    {% else %}
-                    <div class="prod-price">{% if product.price_varies %} {{ 'products.general.from' | t }}{{ product.price_min | money }} - {{ product.price_max | money }}{% else %}{{ product.price | money }}{% endif %}</div>
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-            </a>
-
-          </div>
+            <div class="lazyOwl product product-index">
+              {% include 'product-listing' %}
+            </div>
           {%- endfor -%}
+        </div>
       {%- endif -%}
     </div>
   </div>
+  <style>
+    .product-carousel {
+      opacity: 0;
+    }
+  </style>
 </div>
 {% endif %}
 
@@ -87,6 +75,15 @@
       "id": "product_recommendations_heading",
       "label": "Heading",
       "default": "You may also like"
+    },
+    {
+      "type":      "range",
+      "id":        "limit",
+      "min":       4,
+      "max":       30,
+      "step":      1,
+      "label":     "Products shown",
+      "default":   4
     },
     {
       "type": "checkbox",

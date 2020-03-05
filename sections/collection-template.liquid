@@ -34,7 +34,7 @@
 
     {% for product in collection.products %}
       {% assign products_per_row = section.settings.products_per_row %}
-      <div id="product-listing-{{ product.id }}" class="product-index {% if products_per_row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products_per_row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products_per_row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products_per_row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products_per_row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+      <div id="product-listing-{{ product.id }}" class="product-index {% if products_per_row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products_per_row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products_per_row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products_per_row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products_per_row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ product.title }}" data-price="{{ product.price }}"  data-product-id="{{ product.id }}">
         {% include 'product-listing' %}
       </div>
     {% endfor %}

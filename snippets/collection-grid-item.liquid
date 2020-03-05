@@ -5,7 +5,6 @@
 {% else %}
   {% capture collection_title %}{{ collection.title }}{% endcapture %}
 {% endif %}
-
 <div class="collection-image">
   <a href="{{ collection.url }}" title="{{ collection_title }}">
     {% if collection.image %}
@@ -13,10 +12,15 @@
       <noscript>
         <img src="{{ collection.image | img_url: '800x' }}"  class="collection-grid-image">
       </noscript>
-    {% else %}
-      {% include 'basic-responsive-image', type: collection.products.first.featured_image %}
+    {% elsif collection.products.first and collection.products.first.media != empty %}
+      {% include 'basic-responsive-image', type: collection.products.first.featured_media.preview_image %}
       <noscript>
-        <img src="{{ collection.products.first.featured_image | img_url: '800x' }}" class="collection-grid-image">
+        <img src="{{ collection.products.first.featured_media.preview_image | img_url: '800x' }}" class="collection-grid-image">
+      </noscript>
+    {% else %}
+      {% include 'basic-responsive-image', type: blank %}
+      <noscript>
+        <img src="{{ blank | img_url: '800x' }}" class="collection-grid-image">
       </noscript>
     {% endif %}
   </a>

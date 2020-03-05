@@ -2,7 +2,7 @@
     "name": "theme_info",
     "theme_name": "Testament",
     "theme_author": "Underground",
-    "theme_version": "6.8",
+    "theme_version": "7.0",
     "theme_documentation_url": "https:\/\/\/\/www.weareunderground.com\/products\/testament",
     "theme_support_url": "http:\/\/support.undergroundmedia.co.uk\/"
   }, {
@@ -237,7 +237,35 @@
       "id": "dropdown_link_hover_color",
       "label": "Drop down link hover",
       "default": "#000000"
-    }, {
+    },{
+        "type": "header",
+        "content": "Other navigational elements"
+      },
+      {
+        "type": "color",
+        "id": "direction_color",
+        "label": "Arrow color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "direction_background",
+        "label": "Arrow background",
+        "default": "#ccc"
+      },
+      {
+        "type": "color",
+        "id": "direction_hover",
+        "label": "Arrow background hover",
+        "default": "#aaa"
+      },
+      {
+        "type": "color",
+        "id": "keyboard_focus",
+        "label": "Keyboard focus",
+        "default": "#007ace"
+      },
+      {
       "type": "header",
       "content": "Accordions"
     }, {
@@ -434,10 +462,11 @@
       "label": "Show breadcrumb trail"
     }]
   }, {
-    "name": "Product grid",
-    "settings": [{
-        "type": "paragraph",
-        "content": "These options control lists of products shown on the Featured Collection homepage section and the Collection Pages."
+    "name": "Global",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Quick View"
       },
       {
         "type": "checkbox",
@@ -446,35 +475,85 @@
       },
       {
         "type": "checkbox",
-        "id": "vendor",
-        "label": "Show product vendor"
+        "id": "quick_show_payment_button",
+        "label": "Show dynamic checkout button",
+        "info": "Lets customers check out directly using a familiar payment method. [Learn more](https:\/\/help.shopify.com\/manual\/using-themes\/change-the-layout\/dynamic-checkout)",
+        "default": true
       },
       {
-        "type": "checkbox",
-        "id": "product_border",
-        "label": "Border each item"
-      },
-      {
-        "type": "radio",
-        "id": "secondary_images_hover",
-        "label": "Secondary image options:",
-        "options": [{
-            "value": "image_flip",
-            "label": "On image hover"
-          },
-          {
-            "value": "alternate_colors",
-            "label": "On swatch hover"
-          },
-          {
-            "value": "no_hover_effect",
-            "label": "No secondary image"
-          }
-        ],
-        "default": "no_hover_effect",
-        "info": "On swatch hover requires an image to be assigned to a variant [See instructions](https:\/\/help.shopify.com\/manual\/products\/product-variant-images#add-images-to-existing-variants)"
-      }
-    ]
+        "type": "select",
+        "id": "thumbnail_position",
+        "label": "Thumbnail position",
+        "options": [
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "bottom",
+              "label": "Bottom"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "click_to_enlarge",
+          "label": "Enable click to enlarge",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_video_looping",
+          "label": "Enable video looping",
+          "default": false
+        },
+        {
+          "type": "paragraph",
+          "content": "Learn more about [Media types](https:\/\/help.shopify.com/en\/manual\/products\/product-media\)"
+        },
+        {
+          "type": "header",
+          "content": "Product Grid"
+        },
+        {
+            "type": "paragraph",
+            "content": "These options control lists of products shown on the Featured Collection homepage section and the Collection Pages."
+        },
+        {
+          "type": "checkbox",
+          "id": "vendor",
+          "label": "Show product vendor"
+        },
+        {
+          "type": "checkbox",
+          "id": "product_border",
+          "label": "Border each item"
+        },
+        {
+          "type": "radio",
+          "id": "secondary_images_hover",
+          "label": "Secondary image options:",
+          "options": [{
+              "value": "image_flip",
+              "label": "On image hover"
+            },
+            {
+              "value": "alternate_colors",
+              "label": "On swatch hover"
+            },
+            {
+              "value": "no_hover_effect",
+              "label": "No secondary image"
+            }
+          ],
+          "default": "no_hover_effect",
+          "info": "On swatch hover requires an image to be assigned to a variant [See instructions](https:\/\/help.shopify.com\/manual\/products\/product-variant-images#add-images-to-existing-variants)"
+        }
+     ]
   },
   {
     "name": "Cart page",
