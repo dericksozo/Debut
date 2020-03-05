@@ -62,6 +62,8 @@
       {% endfor %}],
       "images": {{ product.images | json }},
       "featured_image": {{ product.featured_image | json }},
+      "featured_media": {{ product.featured_media | json }},
+      "featured_media_id": {{ product.featured_media.id | json }},
       "options": {{ product.options | json }},
       "url": {{ product.url | json }},
       "media": [{% for media in product.media %}

@@ -9,7 +9,7 @@
 
     <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ section.id }}" data-slideout-ignore>
       {% for product in collection.products limit: prod_limit %}
-        <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+        <div class="lazyOwl" id="product-listing-{{ product.id }}" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
           {% include 'product-listing' %}
         </div>
       {% endfor %}

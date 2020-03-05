@@ -38,6 +38,7 @@ data-section-type="product-section">
  {% capture product_gallery_config %}{
    "thumbPosition": {{ section.settings.thumbnail_position | json }},
    "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
+   "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
    "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
    "productId": {{ product.id | json }},
    "isQuick": false

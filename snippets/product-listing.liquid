@@ -56,7 +56,7 @@
 
   {% if template contains 'collection' or template == 'index' %}
     {% if settings.quickview %}
-      <a rel="nofollow" data-fancybox="quick-view" class="fancybox.ajax product-modal" href="{{ product.url }}?view=quick">{{ 'products.general.quick_view' | t }}</a>
+      <a rel="nofollow" data-fancybox="quick-view-{{ product.id }}" class="fancybox.ajax product-modal" href="{{ product.url }}?view=quick">{{ 'products.general.quick_view' | t }}</a>
     {% endif %}
   {% endif %}
 </div>
