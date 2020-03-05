@@ -3787,12 +3787,7 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       autoPlay: false,
       selectedAttraction: 0.01,
       dragThreshold: 15,
-      adaptiveHeight: true,
-      on: {
-        ready: function() {
-          // $('.flickity-slider').css("transform", "translateY(0%)");
-        }
-      }
+      adaptiveHeight: true
     });
 
     var flkty = $carousel.data('flickity');
