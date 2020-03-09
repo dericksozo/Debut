@@ -260,12 +260,6 @@
         "default": "#aaa"
       },
       {
-        "type": "color",
-        "id": "keyboard_focus",
-        "label": "Keyboard focus",
-        "default": "#007ace"
-      },
-      {
       "type": "header",
       "content": "Accordions"
     }, {
@@ -552,6 +546,50 @@
           ],
           "default": "no_hover_effect",
           "info": "On swatch hover requires an image to be assigned to a variant [See instructions](https:\/\/help.shopify.com\/manual\/products\/product-variant-images#add-images-to-existing-variants)"
+        },
+        {
+          "type": "header",
+          "content": "Keyboard Focus"
+        },
+        {
+          "type": "paragraph",
+          "content": "These options control the style of the keyboard focus"
+        },
+        {
+          "type": "color",
+          "id": "keyboard_focus",
+          "label": "Border color",
+          "default": "#007ace"
+        },
+        {
+          "type": "select",
+          "id": "focus_border_style",
+          "label": "Border style",
+          "default": "dashed",
+          "options": [
+            {
+              "value": "dashed",
+              "label": "Dashed"
+            },
+            {
+              "value": "solid",
+              "label": "Solid"
+            },
+            {
+              "value": "dotted",
+              "label": "Dotted"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "focus_border_weight",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "unit": "px",
+          "label": "Border weight",
+          "default": 2
         }
      ]
   },

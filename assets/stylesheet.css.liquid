@@ -7987,8 +7987,8 @@ html[xmlns] .flexslider .slides {
 }
 .flexslider#slider .flex-next:focus,
 .flexslider#slider .flex-prev:focus {
-  outline: {{ settings.keyboard_focus }} dashed 2px !important;
-  outline-offset: -2px !important;
+  outline: {{ settings.keyboard_focus }} {{ settings.focus_border_style }} {{ settings.focus_border_weight }}px !important;
+  outline-offset: -{{ settings.focus_border_weight }}px !important;
 }
 
 .flexslider.thumbnail-slider li.flex-active-slide,
@@ -8001,8 +8001,8 @@ html[xmlns] .flexslider .slides {
 }
 .product-single__thumbnails-item:focus,
 .product-single__thumbnail--product-template:focus {
-  outline: {{ settings.keyboard_focus }} dashed 2px !important;
-  outline-offset: -2px !important;
+  outline: {{ settings.keyboard_focus }} {{ settings.focus_border_style }} {{ settings.focus_border_weight }}px !important;
+  outline-offset: -{{ settings.focus_border_weight }}px !important;
 }
 .product-single__thumbnails-item.active-slide img,
 .product-single__thumbnails-item.is-nav-selected img,
@@ -10466,8 +10466,8 @@ button[hidden] {
 body .focus-visible,
 .product-video .plyr:focus,
 .plyr__video-wrapper.plyr__tab-focus:focus {
-  outline: {{ settings.keyboard_focus }} dashed 2px !important;
-  outline-offset: -2px !important;
+  outline: {{ settings.keyboard_focus }} {{ settings.focus_border_style }} {{ settings.focus_border_weight }}px !important;
+  outline-offset: -{{ settings.focus_border_weight }}px !important;
 }
 
 .thumb-slider {
