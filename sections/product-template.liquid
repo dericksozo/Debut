@@ -59,7 +59,8 @@
               "currency_switcher_enabled": {{ settings.show_multiple_currencies | json }},
               "sold_out": {{ "products.product.sold_out" | t | json }},
               "button": {{ 'products.product.add_to_cart' | t | json }},
-              "unavailable": {{ 'products.product.unavailable' | t | json }}
+              "unavailable": {{ 'products.product.unavailable' | t | json }},
+              "quickview": {% if template == 'product.quick' %}true{% else %}false{% endif %}
             }
           {% endcapture %}
 

@@ -3498,7 +3498,13 @@ theme.ProductForm = function (context, events, Product) {
       return false;
     }
 
-    new Shopify.OptionSelectors("product-select-" + Product.id, {
+    if ( config.quickview ) {
+      var prodSelector = "qv-product-select-" + Product.id;
+    } else {
+      var prodSelector = "product-select-" + Product.id;
+    }
+
+    new Shopify.OptionSelectors(prodSelector, {
       product: Product,
       onVariantSelected: function(variant, selector) {
 

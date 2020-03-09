@@ -26,7 +26,7 @@
 
   {% if product.options.size > 1 %}
     <div class="select" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
-      <select id="product-select-{{ product.id }}" name='id'>
+      <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name='id'>
         {% for variant in product.variants %}
           <option value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
             {{ variant.title }} - {{ variant.price | money }}
@@ -42,7 +42,7 @@
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
     <div class="select">
       <label>{{ product.options[0] }}</label>
-      <select id="product-select-{{ product.id }}" name='id'>
+      <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name='id'>
         {% for variant in product.variants %}
           <option data-sku="{{ variant.sku }}" value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
             {{ variant.title }} - {{ variant.price | money }}
@@ -56,7 +56,7 @@
       {% endfor %}
     {% endif %}
   {% elsif product.variants.size == 1 %}
-    <select id="product-select-{{ product.id }}" name="id" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
+    <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name="id" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
       {% for variant in product.variants %}
         <option value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
           {{ variant.title }} - {{ variant.price | money }}
