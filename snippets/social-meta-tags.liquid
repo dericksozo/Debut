@@ -29,7 +29,7 @@ Open graph tags.
 {% elsif template == 'password' %}
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{ shop.name | escape }}">
-<meta property="og:url" content="{{ shop.url }}">
+<meta property="og:url" content="{{ routes.root_url }}">
 <meta property="og:description" content="{% unless shop.description == blank %}{{ shop.description | escape }}{% else %}{{ shop.name | escape }}{% endunless %}">
 {% if settings.use_logo_image %}
 <meta property="og:image" content="http:{{ 'logo.png' | asset_url }}">

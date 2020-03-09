@@ -94,7 +94,7 @@
               <h3>{{ block.settings.title | escape }}</h3>
               {% for tag in blog.all_tags %}
               <li class="tags">
-                <a href="{{ shop.url}}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+                <a href="{{ routes.root_url }}/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
               </li>
               {% endfor %}
             </ul>

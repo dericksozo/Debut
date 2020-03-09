@@ -40,17 +40,17 @@
               </form>
               <a href="#" class="search-icon"><i class="fa fa-search fa-2x" aria-hidden="true"></i></a>
             </li>
-            <li><a href="{{ shop.url }}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+            <li><a href="{{ routes.account_collections_url }}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             {% if shop.customer_accounts_enabled %}
             {% if customer  %}
-            <li class="cust"><a href="/account"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
-            <li class="cust"><a href="/account/logout"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a></li>
+            <li class="cust"><a href="{{ routes.account_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+            <li class="cust"><a href="{{ routes.account_logout_url }}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a></li>
             {% else %}
-            <li class="cust"><a href="/account/login"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+            <li class="cust"><a href="{{ routes.account_login_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
             {% endif %}
             {% endif %}
             {% if settings.show_multiple_currencies %}<li>{% include 'currency-change' %}</li>{% endif %}
-            <li><a class="my-cart-link" href="/cart">{{ 'layout.header.my_cart' | t }}&nbsp; {% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
+            <li><a class="my-cart-link" href="{{ routes.cart_url }}">{{ 'layout.header.my_cart' | t }}&nbsp; {% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
         {% if section.settings.full_width_header %}
