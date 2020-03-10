@@ -1,3 +1,14 @@
+{%- assign hd_locale_selector = false -%}
+{%- assign hd_currency_selector = false -%}
+
+{%- if section.settings.show_currency_selector and shop.enabled_currencies.size > 1 -%}
+  {%- assign hd_currency_selector = true -%}
+{%- endif -%}
+
+{%- if section.settings.show_locale_selector and shop.published_locales.size > 1 -%}
+  {%- assign hd_locale_selector = true -%}
+{%- endif -%}
+
 <div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
   <header>
     {% if section.settings.full_width_header %}
@@ -42,14 +53,67 @@
             </li>
             <li><a href="{{ routes.account_collections_url }}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             {% if shop.customer_accounts_enabled %}
-            {% if customer  %}
-            <li class="cust"><a href="{{ routes.account_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
-            <li class="cust"><a href="{{ routes.account_logout_url }}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a></li>
-            {% else %}
-            <li class="cust"><a href="{{ routes.account_login_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+              {% if customer  %}
+                <li class="cust"><a href="{{ routes.account_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+                <li class="cust"><a href="{{ routes.account_logout_url }}"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a></li>
+              {% else %}
+                <li class="cust"><a href="{{ routes.account_login_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
+              {% endif %}
             {% endif %}
-            {% endif %}
-            {% if settings.show_multiple_currencies %}<li>{% include 'currency-change' %}</li>{% endif %}
+            {%- if hd_locale_selector -%}
+              <li class="lang-selector">
+                {%- form 'localization', class: 'selectors-form' -%}
+                  <div class="selectors-form__item">
+                    <h2 class="visually-hidden" id="lang-heading">
+                      {{ 'general.language.dropdown_label' | t }}
+                    </h2>
+
+                    <div class="disclosure" data-disclosure-locale>
+                      <button type="button" class="disclosure__toggle" aria-expanded="false" aria-controls="lang-list" aria-describedby="lang-heading" data-disclosure-toggle>
+                        {{ form.current_locale.endonym_name }}
+                      </button>
+                      <ul id="lang-list" class="disclosure-list" data-disclosure-list>
+                        {% for locale in form.available_locales %}
+                          <li class="disclosure-list__item {% if locale.iso_code == form.current_locale.iso_code %}disclosure-list__item--current{% endif %}">
+                            <a class="disclosure-list__option" href="#" lang="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %} data-value="{{ locale.iso_code }}" data-disclosure-option>
+                              {{ locale.endonym_name }}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                      <input type="hidden" name="locale_code" id="LocaleSelector" value="{{ form.current_locale.iso_code }}" data-disclosure-input/>
+                    </div>
+                  </div>
+                {%- endform -%}
+              </li>
+            {%- endif -%}
+            {%- if hd_currency_selector -%}
+              <li class="curr-selector">
+                {%- form 'localization', class: 'selectors-form' -%}
+                  <div class="selectors-form__item">
+                    <h2 class="visually-hidden" id="currency-heading">
+                      {{ 'general.currency.dropdown_label' | t }}
+                    </h2>
+
+                    <div class="disclosure" data-disclosure-currency>
+                      <button type="button" class="disclosure__toggle" aria-expanded="false" aria-controls="currency-list" aria-describedby="currency-heading" data-disclosure-toggle>
+                        {{ form.current_currency.iso_code }} {%- if form.current_currency.symbol -%}{{ form.current_currency.symbol }}{%- endif -%}
+                      </button>
+                      <ul id="currency-list" class="disclosure-list" data-disclosure-list>
+                        {% for currency in form.available_currencies %}
+                          <li class="disclosure-list__item {% if currency.iso_code == form.current_currency.iso_code %}disclosure-list__item--current{% endif %}">
+                            <a class="disclosure-list__option" href="#" {% if currency.iso_code == form.current_currency.iso_code %}aria-current="true"{% endif %} data-value="{{ currency.iso_code }}" data-disclosure-option>
+                              {{ currency.iso_code }} {%- if currency.symbol -%}{{ currency.symbol }}{%- endif -%}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                      <input type="hidden" name="currency_code" id="CurrencySelector" value="{{ form.current_currency.iso_code }}" data-disclosure-input/>
+                    </div>
+                  </div>
+                {%- endform -%}
+              </li>
+            {%- endif -%}
             <li><a class="my-cart-link" href="{{ routes.cart_url }}">{{ 'layout.header.my_cart' | t }}&nbsp; {% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
@@ -295,6 +359,28 @@
         "unit":       "px",
         "label":     "Bottom border size",
         "default":   1
+      },
+      {
+        "type": "header",
+        "content": "Language Selector",
+        "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+      },
+      {
+       "type": "checkbox",
+       "id": "show_locale_selector",
+       "label": "Show language selector",
+       "default": false
+      },
+      {
+        "type": "header",
+        "content": "Currency Selector",
+        "info": "To add a currency, go to your [currency settings.](/admin/settings/payments)"
+      },
+      {
+       "type": "checkbox",
+       "id": "show_currency_selector",
+       "label": "Show currency selector",
+       "default": false
       }
     ],
     "blocks": [
