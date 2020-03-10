@@ -36,6 +36,12 @@
       "title": "Search our store",
       "placeholder": "Search",
       "submit": "Search"
+    },
+    "currency": {
+      "dropdown_label": "Currency"
+    },
+    "language": {
+      "dropdown_label": "Language"
     }
   },
   "blogs": {
