@@ -3212,6 +3212,131 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   }
 });
 
+theme.Disclosure = (function() {
+  var selectors = {
+    disclosureList: '[data-disclosure-list]',
+    disclosureToggle: '[data-disclosure-toggle]',
+    disclosureInput: '[data-disclosure-input]',
+    disclosureOptions: '[data-disclosure-option]'
+  };
+
+  var classes = {
+    listVisible: 'disclosure-list--visible'
+  };
+
+  function Disclosure($disclosure) {
+    this.$container = $disclosure;
+    this.cache = {};
+    this._cacheSelectors();
+    this._connectOptions();
+    this._connectToggle();
+    this._onFocusOut();
+  }
+
+  Disclosure.prototype = _.assignIn({}, Disclosure.prototype, {
+    _cacheSelectors: function() {
+      this.cache = {
+        $disclosureList: this.$container.find(selectors.disclosureList),
+        $disclosureToggle: this.$container.find(selectors.disclosureToggle),
+        $disclosureInput: this.$container.find(selectors.disclosureInput),
+        $disclosureOptions: this.$container.find(selectors.disclosureOptions)
+      };
+    },
+
+    _connectToggle: function() {
+      this.cache.$disclosureToggle.on(
+        'click',
+        function(evt) {
+          var ariaExpanded =
+            $(evt.currentTarget).attr('aria-expanded') === 'true';
+          $(evt.currentTarget).attr('aria-expanded', !ariaExpanded);
+            console.log("clicked disclosure")
+          this.cache.$disclosureList.toggleClass(classes.listVisible);
+        }.bind(this)
+      );
+    },
+
+    _connectOptions: function() {
+      this.cache.$disclosureOptions.on(
+        'click',
+        function(evt) {
+          this._submitForm($(evt.currentTarget).data('value'));
+        }.bind(this)
+      );
+    },
+
+    _onFocusOut: function() {
+      this.cache.$disclosureToggle.on(
+        'focusout',
+        function(evt) {
+          var disclosureLostFocus =
+            this.$container.has(evt.relatedTarget).length === 0;
+
+          if (disclosureLostFocus) {
+            this._hideList();
+          }
+        }.bind(this)
+      );
+
+      this.cache.$disclosureList.on(
+        'focusout',
+        function(evt) {
+          var childInFocus =
+            $(evt.currentTarget).has(evt.relatedTarget).length > 0;
+          var isVisible = this.cache.$disclosureList.hasClass(
+            classes.listVisible
+          );
+
+          if (isVisible && !childInFocus) {
+            this._hideList();
+          }
+        }.bind(this)
+      );
+
+      this.$container.on(
+        'keyup',
+        function(evt) {
+          if (evt.which !== slate.utils.keyboardKeys.ESCAPE) return;
+          this._hideList();
+          this.cache.$disclosureToggle.focus();
+        }.bind(this)
+      );
+
+      this.bodyOnClick = function(evt) {
+        var isOption = this.$container.has(evt.target).length > 0;
+        var isVisible = this.cache.$disclosureList.hasClass(
+          classes.listVisible
+        );
+
+        if (isVisible && !isOption) {
+          this._hideList();
+        }
+      }.bind(this);
+
+      $('body').on('click', this.bodyOnClick);
+    },
+
+    _submitForm: function(value) {
+      this.cache.$disclosureInput.val(value);
+      this.$container.parents('form').submit();
+    },
+
+    _hideList: function() {
+      this.cache.$disclosureList.removeClass(classes.listVisible);
+      this.cache.$disclosureToggle.attr('aria-expanded', false);
+    },
+
+    unload: function() {
+      $('body').off('click', this.bodyOnClick);
+      this.cache.$disclosureOptions.off();
+      this.cache.$disclosureToggle.off();
+      this.cache.$disclosureList.off();
+      this.$container.off();
+    }
+  });
+
+  return Disclosure;
+})();
 
 $(document).ready(function() {
 
@@ -4897,6 +5022,11 @@ theme.Collection = (function() {
 /*======================================================
   Header Section
 ========================================================*/
+var selectors = {
+  disclosureLocale: '[data-disclosure-locale]',
+  disclosureCurrency: '[data-disclosure-currency]'
+};
+
 theme.Header = (function() {
   function Header(container) {
     var $container = this.$container = $(container);
@@ -4938,8 +5068,41 @@ theme.Header = (function() {
       $("nav #main-nav li.dropdown:has(ul)").doubleTapToGo();
       $("nav #main-nav .submenu li.has_sub_menu").doubleTapToGo();
     }
+
+    this.$container = $(container);
+    this.cache = {};
+    this.cacheSelectors();
+
+    if (this.cache.$localeDisclosure.length) {
+      this.localeDisclosure = new theme.Disclosure(
+        this.cache.$localeDisclosure
+      );
+    }
+
+    if (this.cache.$currencyDisclosure.length) {
+      this.currencyDisclosure = new theme.Disclosure(
+        this.cache.$currencyDisclosure
+      );
+    }
   }
-  Header.prototype = _.assignIn({}, Header.prototype, {});
+  Header.prototype = _.assignIn({}, Header.prototype, {
+    cacheSelectors: function() {
+      this.cache = {
+        $localeDisclosure: this.$container.find(selectors.disclosureLocale),
+        $currencyDisclosure: this.$container.find(selectors.disclosureCurrency)
+      };
+    },
+
+    onUnload: function() {
+      if (this.cache.$localeDisclosure.length) {
+        this.localeDisclosure.unload();
+      }
+
+      if (this.cache.$currencyDisclosure.length) {
+        this.currencyDisclosure.unload();
+      }
+    }
+  });
   return Header;
 })();
 
@@ -5111,6 +5274,54 @@ theme.CustomPage = (function () {
 })();
 
 /*============================================================================
+  Footer Section
+==============================================================================*/
+var selectors = {
+  disclosureLocale: '[data-disclosure-locale]',
+  disclosureCurrency: '[data-disclosure-currency]'
+};
+
+theme.Footer = (function() {
+  function Footer(container) {
+    this.$container = $(container);
+    this.cache = {};
+    this.cacheSelectors();
+
+    if (this.cache.$localeDisclosure.length) {
+      this.localeDisclosure = new theme.Disclosure(
+        this.cache.$localeDisclosure
+      );
+    }
+
+    if (this.cache.$currencyDisclosure.length) {
+      this.currencyDisclosure = new theme.Disclosure(
+        this.cache.$currencyDisclosure
+      );
+    }
+  }
+
+  Footer.prototype = _.assignIn({}, Footer.prototype, {
+    cacheSelectors: function() {
+      this.cache = {
+        $localeDisclosure: this.$container.find(selectors.disclosureLocale),
+        $currencyDisclosure: this.$container.find(selectors.disclosureCurrency)
+      };
+    },
+
+    onUnload: function() {
+      if (this.cache.$localeDisclosure.length) {
+        this.localeDisclosure.unload();
+      }
+
+      if (this.cache.$currencyDisclosure.length) {
+        this.currencyDisclosure.unload();
+      }
+    }
+  });
+
+  return Footer;
+})();
+/*============================================================================
   Global Events
 ==============================================================================*/
 $(document).ready(function(){
@@ -5182,6 +5393,7 @@ $(document).ready(function() {
   sections.register('mobile-navigation', theme.mobileNav);
   sections.register('map', theme.Maps);
   sections.register('custom-page-section', theme.CustomPage);
+  sections.register('footer-section', theme.Footer);
 });
 
 
