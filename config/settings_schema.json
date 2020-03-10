@@ -685,20 +685,5 @@
       "id": "footer_signup_text",
       "label": "Email popup text"
     }]
-  },
-  {
-    "name": "Currency",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "show_multiple_currencies",
-        "label": "Show currency selector",
-        "default": false
-      },
-      {
-        "type": "paragraph",
-        "content": "Show currency selector to allow customers to shop in different currencies. For this functionality to work in your shop, you will need to use Shopify Payments and with it set to accept multiple currencies. [Learn more](https:\/\/help.shopify.com\/en\/manual\/payments\/multi-currency)."
-      }
-    ]
   }
 ]
