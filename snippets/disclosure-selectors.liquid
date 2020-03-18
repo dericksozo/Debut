@@ -7,7 +7,7 @@
 
       <div class="disclosure" data-disclosure-locale>
         <button type="button" class="disclosure__toggle" aria-expanded="false" aria-controls="lang-list" aria-describedby="lang-heading" data-disclosure-toggle>
-          {{ form.current_locale.endonym_name }}
+          {{ form.current_locale.iso_code | uppercase }}
         </button>
         <ul id="lang-list" class="disclosure-list" data-disclosure-list>
           {% for locale in form.available_locales %}
