@@ -1105,12 +1105,12 @@ color: {{ settings.link_color }};
 
 a:hover {
   color: {{ settings.link_color }};
-  text-decoration: {{ settings.link_decoration }};
+  {% if settings.link_decoration == 'underline' %} border-bottom: 1px solid {{ settings.link_color }};{% endif %}
 }
 
 a:visited {
   color:{{ settings.link_color }};
-  text-decoration: {{ settings.link_decoration }};
+  {% if settings.link_decoration == 'underline' %} border-bottom: 1px solid {{ settings.link_color }};{% endif %}
 }
 
 /* .row hr, .row p, .row ul, .row ol, .row dl, .row pre, .row address, .row table, .row form {margin-bottom: 1.6em;} */
@@ -4200,7 +4200,7 @@ nav {
   width: 100%;
   background: {{ settings.navigation }};
   margin-bottom: 0px;
-  z-index: 3;
+  z-index: 2;
 }
 
 ul#main-nav {
