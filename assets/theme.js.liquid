@@ -3250,7 +3250,7 @@ theme.Disclosure = (function() {
           var ariaExpanded =
             $(evt.currentTarget).attr('aria-expanded') === 'true';
           $(evt.currentTarget).attr('aria-expanded', !ariaExpanded);
-            console.log("clicked disclosure")
+
           this.cache.$disclosureList.toggleClass(classes.listVisible);
         }.bind(this)
       );
@@ -3319,6 +3319,7 @@ theme.Disclosure = (function() {
     _submitForm: function(value) {
       this.cache.$disclosureInput.val(value);
       this.$container.parents('form').submit();
+      this.cache.$disclosureToggle.html(value);
     },
 
     _hideList: function() {
@@ -5069,6 +5070,7 @@ theme.Header = (function() {
       $("nav #main-nav .submenu li.has_sub_menu").doubleTapToGo();
     }
 
+    /* lang and currency disclosure */
     this.$container = $(container);
     this.cache = {};
     this.cacheSelectors();
