@@ -84,9 +84,34 @@
         <div class="so icn">{{ 'products.general.sold' | t }}</div>
         {% endif %}
         <div class="prod-image">
-          <a href="{{ item.url }}" title="{{ item.title | escape }}">
-            {{ item.featured_image | img_url: 'grande' | img_tag: item.featured_image.alt }}
-          </a>
+          {% if item.featured_media %}
+            <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+              <div class="reveal">
+                {%- assign preview_image = item.featured_media.preview_image -%}
+                {%- assign second_image = item.media[1] -%}
+                {% include "basic-responsive-image", type: preview_image %}
+                <noscript>
+                  <img src="{{ preview_image | img_url: '1024x' }}" alt="{{ preview_image.alt | escape }}">
+                </noscript>
+
+                {% if settings.secondary_images_hover == 'image_flip' and item.media.size > 1 %}
+                  <div class="hidden">
+                    <img class="lazyload lazyload-fade"
+                      id="{{ preview_image.id }}"
+                      data-src="{{ item.media[1] | img_url: '1024x' }}"
+                      data-sizes="auto"
+                      alt="{{ preview_image.alt | escape }}">
+                    <noscript>
+                      <img src="{{ item.media[1] | img_url: '1024x' }}" alt="{{ item.media[1].alt | escape }}">
+                    </noscript>
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+          {%- else -%}
+            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
         </div>
         {% endif %}
 
