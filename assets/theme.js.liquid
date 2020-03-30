@@ -4037,6 +4037,8 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       thumbnailSlider();
     }
 
+    if ( !$carouselNav.length ) return false;
+    
     function thumbnailSlider() {
       $carouselNav.flickity({
         asNavFor: $main,
