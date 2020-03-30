@@ -3459,6 +3459,11 @@ theme.FeaturedProducts = (function() {
 var Events = new EventEmitter3();
 Events.trigger = Events.emit; // trigger alias
 
+var mobile = window.matchMedia('(max-width: 740px)');
+var tablet = window.matchMedia('(max-width: 979px) and (min-width: 741px)');
+var device = window.matchMedia('(max-width: 980px)');
+var desktop = window.matchMedia('(min-width: 980px)');
+
 theme.ProductForm = function (context, events, Product) {
     var formConfig = context.querySelector('#AddToCartForm');
     var config = JSON.parse(formConfig.dataset.productForm || '{}');
@@ -3780,20 +3785,29 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       fade: true,
       wrapAround: true,
       cellAlign: 'left',
-      draggable: false,
+      draggable: true,
       contain: true,
-      imagesLoaded: true,
-      accessibility: false,
-      lazyLoad: 2,
       pageDots: false,
       prevNextButtons: config.mainSlider,
       autoPlay: false,
       selectedAttraction: 0.01,
-      dragThreshold: 15,
-      adaptiveHeight: true
+      dragThreshold: 5,
+      adaptiveHeight: false
     });
 
     var flkty = $carousel.data('flickity');
+
+    /* Pause flickity drag on model play */
+    $('.carousel-main', context).on('model:start', function(event, id) {
+      if (flkty) {
+       flkty.unbindDrag();
+      }
+    });
+    $('.carousel-main', context).on('model:stop', function(event, id) {
+      if (flkty) {
+       flkty.bindDrag();
+      }
+    });
 
   (function focusControl() {
     /* set focus on load after flickity is ready */
@@ -3811,61 +3825,52 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .removeClass('focus-visible')
             .addClass('js-hide-focus');
           $('.shopify-model-viewer-ui__controls-overlay', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .removeClass('focus-visible')
             .addClass('js-hide-focus');
           $('.product-video.videoWrapper iframe', context).removeAttr("tabIndex");
       } else if ( $newMedia.hasClass('video') ) {
         $('.product-video.videoWrapper iframe', context)
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
         $('.shopify-model-viewer-ui__controls-overlay', context)
           .find('*')
           .addBack()
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
       } else if ( $newMedia.hasClass('model') ) {
         $('.product-video.videoWrapper iframe', context)
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
         $('.product-video .plyr', context)
           .find('*')
           .addBack()
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
       } else if ( $newMedia.hasClass('image') ) {
         $('.product-video.videoWrapper iframe', context)
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
         $('.product-video .plyr', context)
           .find('*')
           .addBack()
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
         $('.shopify-model-viewer-ui__controls-overlay', context)
           .find('*')
           .addBack()
           .attr('tabIndex', '-1')
-          .focus()
           .removeClass('focus-visible')
           .addClass('js-hide-focus');
       }
@@ -3874,12 +3879,10 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
         .find('*')
         .addBack()
         .attr('tabIndex', '-1')
-        .focus()
         .addClass('js-hide-focus');
 
       $('.carousel-main.flickity-enabled', context)
         .attr('tabIndex', '-1')
-        .focus()
         .addClass('js-hide-focus');
 
     });
@@ -3898,13 +3901,11 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.shopify-model-viewer-ui__controls-overlay', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.product-video.videoWrapper iframe', context).removeAttr("tabIndex");
         });
@@ -3913,45 +3914,38 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
         $( window ).on( "load", function() {
           $('.product-video.videoWrapper iframe', context)
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.shopify-model-viewer-ui__controls-overlay', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
         });
       } else if ( $newMedia.hasClass('model') ) {
         $( window ).on( "load", function() {
           $('.product-video.videoWrapper iframe', context)
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.product-video .plyr', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
         });
       } else if ( $newMedia.hasClass('image') ) {
         $( window ).on( "load", function(){
           $('.product-video.videoWrapper iframe', context)
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.product-video .plyr', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
           $('.shopify-model-viewer-ui__controls-overlay', context)
             .find('*')
             .addBack()
             .attr('tabIndex', '-1')
-            .focus()
             .addClass('js-hide-focus');
         });
       }
@@ -3962,12 +3956,10 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
           .find('*')
           .addBack()
           .attr('tabIndex', '-1')
-          .focus()
           .addClass('js-hide-focus');
 
         $('.carousel-main.flickity-enabled', context)
           .attr('tabIndex', '-1')
-          .focus()
           .addClass('js-hide-focus');
       });
     });
@@ -4038,7 +4030,7 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
     }
 
     if ( !$carouselNav.length ) return false;
-    
+
     function thumbnailSlider() {
       $carouselNav.flickity({
         asNavFor: $main,
@@ -4051,16 +4043,18 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
         pageDots: false,
         autoPlay: false,
         selectedAttraction: 0.01,
-        dragThreshold: 15
+        dragThreshold: 5,
+        accessibility: false
       });
     }
 
-    var $carouselNavCells = $carouselNav.find('.carousel-cell', context),
-        navTop  = $carouselNav.position().top,
+    var $carouselNavCells = $carouselNav.find('.carousel-cell', context);
+
+    if ( !$carouselNavCells.length ) return false;
+
+    var navTop  = $carouselNav.position().top,
         navCellHeight = $carouselNavCells.height(),
         navHeight = $carouselNav.height();
-
-    if ( !$carouselNavCells ) return false;
 
 
     /* on thumbnail click and key enter */
@@ -4096,6 +4090,18 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
         });
 
     });
+
+    /* adjust thumbnail sizes */
+    if (config.thumbPosition != 'bottom') {
+      var thumbWrapper = $('.vertical-carousel .thumb-slider-wrapper',context).width();
+      $('#thumb-slider-wrapper .product-single__thumbnails-item', context).css("max-width", thumbWrapper);
+      $('#thumb-slider-wrapper .product-single__thumbnails-item img', context).width(thumbWrapper + 20);
+      $('#thumb-slider-wrapper .product-single__thumbnails-item img', context).height(thumbWrapper + 20);
+
+      var thumbHeight = $('#thumb-slider-wrapper .product-single__thumbnails-item img', context).width();
+      var thumbWrapHeight = (thumbHeight * config.thumbsShown) + 40;
+      $('.vertical-carousel .thumb-slider-wrapper .thumb-slider-slides', context).css("max-height", thumbWrapHeight);
+    }
 
     /* on slide change */
     $carousel.on( 'change.flickity', function( event, index ) {
@@ -4176,9 +4182,14 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
 
     /* Editor Events */
     $(document).on('shopify:section:unload', function(event) {
-      $carousel.flickity('destroy');
-      if ( config.thumbPosition == 'bottom' && config.thumbSlider == true ) {
-        $carouselNav.flickity('destroy');
+      var $carousel = $main.flickity();
+      var isFlickity = true;
+
+      if (isFlickity) {
+        $carousel.flickity('destroy');
+        if ( config.thumbPosition == 'bottom' && config.thumbSlider == true ) {
+          $carouselNav.flickity('destroy');
+        }
       }
     });
   })();
@@ -4190,7 +4201,7 @@ function onYouTubeIframeAPIReady() {
   theme.ProductVideo.loadVideos(theme.ProductVideo.hosts.youtube);
 }
 
-theme.ProductVideo = (function() {
+theme.ProductVideo = (function(context, sectionId) {
 
   var videos = {};
 
@@ -4285,6 +4296,16 @@ theme.ProductVideo = (function() {
           hideControlsOnPause: true,
           tooltips: { controls: false, seek: true }
         });
+        video.player.on('playing', event => {
+          var mediaId = video.container.data('mediaId');
+          var $otherMedia = $(
+            '[data-product-single-media-wrapper]' +
+              ":not([data-media-id='" +
+              mediaId +
+              "'])", context);
+
+          $otherMedia.trigger('mediaHidden');
+        });
         break;
       case hosts.youtube:
         var videoId = productMediaWrapper.data(attributes.videoId);
@@ -4293,6 +4314,16 @@ theme.ProductVideo = (function() {
           videoId: videoId,
           events: {
             onStateChange: function(event) {
+              if (event.data == 1) {
+                var mediaId = video.container.data('mediaId');
+                var $otherMedia = $(
+                  '[data-product-single-media-wrapper]' +
+                    ":not([data-media-id='" +
+                    mediaId +
+                    "'])", context);
+
+                $otherMedia.trigger('mediaHidden');
+              }
               if (event.data === 0 && enableLooping) event.target.seekTo(0);
             },
             onReady: function(event) {
@@ -4308,6 +4339,7 @@ theme.ProductVideo = (function() {
 
       if (video.host === hosts.html5) {
         video.player.pause();
+
         $('.plyr', productMediaWrapper)
           .find('*')
           .addBack()
@@ -4336,7 +4368,11 @@ theme.ProductVideo = (function() {
       if (!video.player) return;
 
       if (video.host === hosts.html5) {
-        video.player.play();
+
+        if (desktop.matches) {
+          video.player.play();
+        }
+
         $('.plyr__controls', productMediaWrapper)
           .children()
           .addBack()
@@ -4347,7 +4383,9 @@ theme.ProductVideo = (function() {
       }
 
       if (video.host === hosts.youtube && video.player.playVideo) {
-        video.player.playVideo();
+        if (desktop.matches) {
+          video.player.playVideo();
+        }
 
         $(".product-video.videoWrapper iframe", productMediaWrapper)
           .removeAttr("tabIndex")
@@ -4533,7 +4571,14 @@ theme.ProductModel = (function() {
     model.$container.on('mediaVisible', function() {
       xrButton.$element.attr('data-shopify-model3d-id', model.modelId);
       if (theme.Helpers.isTouch()) return;
-      model.modelViewerUi.play();
+
+      var prodContext = $('#shopify-section-' + model.sectionId);
+
+      if (desktop.matches) {
+        model.modelViewerUi.play();
+      }
+
+      $('.carousel-main', prodContext).trigger('model:start', [model.modelId]);
 
       $('.shopify-model-viewer-ui__controls-area', model.$container)
         .children()
@@ -4553,7 +4598,13 @@ theme.ProductModel = (function() {
     model.$container
       .on('mediaHidden', function() {
         xrButton.$element.attr('data-shopify-model3d-id', xrButton.defaultId);
-        model.modelViewerUi.pause();
+        var prodContext = $('#shopify-section-' + model.sectionId);
+
+        if (model.modelViewerUi) {
+          model.modelViewerUi.pause();
+        }
+
+        $('.carousel-main', prodContext).trigger('model:stop', [model.modelId]);
 
         $('.shopify-model-viewer-ui__controls-area', model.$container)
           .children()
@@ -4570,7 +4621,9 @@ theme.ProductModel = (function() {
           .addClass('js-hide-focus');
       })
       .on('xrLaunch', function() {
-        model.modelViewerUi.pause();
+        if (model.modelViewerUi) {
+          model.modelViewerUi.pause();
+        }
       });
   }
 
