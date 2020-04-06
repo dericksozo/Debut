@@ -22,6 +22,7 @@
         {{ compare_price }}
       </span>
     {% endif %}
+    <span class="was"></span>
   </p><div class="clear"></div>
 
   {% if product.options.size > 1 %}
@@ -55,14 +56,6 @@
         {% include 'swatch' %}
       {% endfor %}
     {% endif %}
-  {% elsif product.variants.size == 1 %}
-    <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name="id" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
-      {% for variant in product.variants %}
-        <option value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
   {% else %}
     <div class="what-is-it">
       {% if product.options.first != 'Title' %}
