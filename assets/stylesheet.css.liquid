@@ -956,18 +956,16 @@ body {
 
 body {
   color: {{ settings.text_color }};
-  background: {{ settings.content_wrapper_background }}{% if settings.bg != "no_bg" %} url({{ 'background.jpg' | asset_url }}) {% endif %};
-  {% if settings.bg != "no_bg" %}
-  background-position: {{ settings.background_position }};
-  background-repeat: {{ settings.background_position }};
-  {% endif %}
+  background: {{ settings.content_wrapper_background }};
   font-size: {{ settings.font_size }}px;
   font-family: {{ main_font.family }};
   line-height: 1.6em;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
-
+body .slideout-panel {
+  background: {{ settings.content_wrapper_background }};
+}
 img {
   max-width: 100%;
   border: 0;
