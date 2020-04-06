@@ -1,7 +1,7 @@
 {% if section.settings.show_product_recommendations %}
-<div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section">
+<div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section" data-per-row="{{ section.settings.products_per_row }}">
   <div class="row grid_wrapper">
-    <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="{{ section.settings.limit }}">
+    <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="{{ section.settings.products_shown }}">
       {%- if recommendations.products_count > 0 -%}
         <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
         <div class="product-carousel">
@@ -71,25 +71,28 @@
       "default": true
     },
     {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Products per row",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_shown",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "label": "Products shown",
+      "default": 8
+    },
+    {
       "type": "text",
       "id": "product_recommendations_heading",
       "label": "Heading",
       "default": "You may also like"
-    },
-    {
-      "type":      "range",
-      "id":        "limit",
-      "min":       4,
-      "max":       30,
-      "step":      1,
-      "label":     "Products shown",
-      "default":   4
-    },
-    {
-      "type": "checkbox",
-      "id": "show_recommendations_vendor",
-      "label": "Show product vendor",
-      "default": false
     }
   ]
 }

@@ -4704,16 +4704,18 @@ theme.Product = (function () {
 theme.RelatedProducts = function (context, events) {
   (function Carousel() {
       var $window = $(window);
+      var perRow = context.dataset.perRow;
+
       $('.product-carousel').owlCarousel({
         itemsCustom : [
           [0, 2],
           [450, 2],
           [600, 2],
           [700, 3],
-          [1000, 4],
-          [1200, 4],
-          [1400, 4],
-          [1600, 5]
+          [1000, perRow],
+          [1200, perRow],
+          [1400, perRow],
+          [1600, perRow]
         ],
         lazyLoad : false,
         pagination : false,
