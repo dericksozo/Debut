@@ -56,17 +56,6 @@
         .homepage-promo.promo-{{ block.id }} .promo-inner p {
           color: {{ block.settings.hidden_color }};
         }
-
-        #shopify-section-{{ section.id }} .homepage-promo .promo-inner h3 {
-          font-size: {{ section.settings.promo_size }}px;
-        }
-
-        #shopify-section-{{ section.id }} .homepage-promo .promo-inner p {
-          font-size: {{ section.settings.hidden_size }}px;
-        }
-      </style>
-
-      <style>
         .promo-{{ block.id }} .promo-inner { float: none; }
       </style>
 
@@ -77,6 +66,20 @@
 
   </div>
   {% if section.settings.full_width %}</div></div>{% endif %}
+  <style>
+    #shopify-section-{{ section.id }} .homepage-promo .promo-inner h3 {
+      font-size: {{ section.settings.promo_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .homepage-promo .promo-inner p {
+      font-size: {{ section.settings.hidden_size }}px;
+    }
+    #shopify-section-{{ section.id }} .homepage-promo > a {
+      display: inline-block;
+      width: 100%;
+      padding: {{ settings.focus_border_weight }}px;
+    }
+  </style>
 </section>
 <div class="clear"></div>
 
