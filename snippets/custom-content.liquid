@@ -168,15 +168,15 @@
                {% assign color = block.settings[color] | default: false %}
                {% assign size = "size_" | append: n %}
                {% assign size = block.settings[size] | default: false %}
-                 .homepage-promo.promo-{{ n }} .promo-inner .caption-content h3 {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo.promo-{{ n }} .promo-inner .caption-content h3 {
                    color: {{ color }} !important;
                    font-size: {{ size }}px !important;
                  }
-                 .homepage-promo.promo-{{ n }} .promo-inner .caption-content {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo.promo-{{ n }} .promo-inner .caption-content {
                    text-align: {{ align_text }};
                  }
                  {% if text_options == 'on_image' %}
-                 .homepage-promo.promo-{{ n }} .promo-inner .caption-content {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo.promo-{{ n }} .promo-inner .caption-content {
                    position: absolute;
                    bottom: {{ vertical_position }}%;
                    left: {{horizontal_position }}%;
@@ -187,19 +187,19 @@
                    {% endif %}
                  }
                  {% endif %}
-                 .homepage-promo.promo-{{ n }} .promo-inner .cta a {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo.promo-{{ n }} .promo-inner .cta a {
                    color: {{ button_color }};
                    background: {{ button_background }};
                  }
                  {% if text_options == 'on_image' %}
-                 .homepage-promo.promo-{{ n }} .promo-inner .caption {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo.promo-{{ n }} .promo-inner .caption {
                    position: absolute;
                    width: 100%;
                    height: 100%;
                    top: 0;
                  }
                  {% else %}
-                 .homepage-promo .promo-inner .caption {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo .promo-inner .caption {
                    margin-top: 10px;
                    position: initial;
                    top: initial;
@@ -208,14 +208,14 @@
                    height: initial;
                  }
                  {% endif %}
-                 .homepage-promo .promo-inner {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo .promo-inner {
                    width: 100%;
                  }
-                 .homepage-promo {
+                 .cp-{{ block.type }}-{{ block.id }} .homepage-promo {
                    margin-top: 0;
                  }
                  @media screen and (max-width: 740px) {
-                   .homepage-promo {
+                   .cp-{{ block.type }}-{{ block.id }} .homepage-promo {
                      margin-bottom: 15px;
                    }
                  }
