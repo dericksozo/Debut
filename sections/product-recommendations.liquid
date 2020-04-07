@@ -1,17 +1,17 @@
 {% if section.settings.show_product_recommendations %}
 <div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section" data-per-row="{{ section.settings.products_per_row }}">
   <div class="row grid_wrapper">
-    <div class="product-recommendations" data-product-id="{{ product.id }}" data-limit="{{ section.settings.products_shown }}">
-      {%- if recommendations.products_count > 0 -%}
-        <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
-        <div class="product-carousel">
-          {%- for product in recommendations.products -%}
-            <div class="lazyOwl product product-index">
-              {% include 'product-listing' %}
-            </div>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
+    <div class="product-recommendations" data-product-id="{{ product.id }}" data-base-url="{{ routes.product_recommendations_url }}" data-limit="{{ section.settings.products_shown }}">
+        {%- if recommendations.products_count > 0 -%}
+          <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
+          <div class="product-carousel">
+            {%- for product in recommendations.products -%}
+              <div class="lazyOwl product product-index">
+                {% include 'product-listing' %}
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
     </div>
   </div>
   <style>
@@ -26,13 +26,16 @@
   var loadProductRecommendationsIntoSection = function() {
     // Look for an element with class 'product-recommendations'
     var productRecommendationsSection = document.querySelector(".product-recommendations");
+    var recommended_url = productRecommendationsSection.dataset.baseUrl;;
+
     if (productRecommendationsSection === null) { return; }
     // Read product id from data attribute
     var productId = productRecommendationsSection.dataset.productId;
     // Read limit from data attribute
     var limit = productRecommendationsSection.dataset.limit;
     // Build request URL
-    var requestUrl = "/recommendations/products?section_id=product-recommendations&limit="+limit+"&product_id="+productId;
+    var requestUrl = recommended_url + '?section_id=product-recommendations&limit=' + limit + '&product_id=' + productId;
+
     // Create request and submit it using Ajax
     var request = new XMLHttpRequest();
     request.open("GET", requestUrl);
@@ -45,10 +48,6 @@
     };
     request.send();
   };
-  // If your section has theme settings, the theme editor
-  // reloads the section as you edit those settings. When that happens, the
-  // recommendations need to be fetched again.
-  // See https://help.shopify.com/en/themes/development/sections#understand-the-interaction-between-theme-javascript-and-the-theme-editor
   document.addEventListener("shopify:section:load", function(event) {
     if (event.detail.sectionId === "product-recommendations") {
       loadProductRecommendationsIntoSection();
