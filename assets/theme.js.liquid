@@ -3792,7 +3792,8 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
       autoPlay: false,
       selectedAttraction: 0.01,
       dragThreshold: 5,
-      adaptiveHeight: false
+      adaptiveHeight: false,
+      imagesLoaded: true
     });
 
     var flkty = $carousel.data('flickity');
@@ -5244,4 +5245,4 @@ log = function() {
     return Function.prototype.bind.apply(console.log, args);
 }
 
-log("Testament Version 7.1 by Underground", {bar: 1})();
+log("Testament Version 7.1.1 by Underground", {bar: 1})();
