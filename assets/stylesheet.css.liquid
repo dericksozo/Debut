@@ -4215,8 +4215,11 @@ ul#main-nav li a {
 ul#main-nav li a:hover {
   color: {{ settings.nav_hover_link_color }};
   text-decoration: none;
+  border-bottom: none;
 }
-
+ul#main-nav li a:visited {
+  border-bottom: none;
+}
 ul#main-nav li.dropdown > a:after {
   font-family: 'FontAwesome';
   content: "\f107";
