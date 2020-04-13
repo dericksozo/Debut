@@ -1,15 +1,21 @@
-{% if section.settings.show_product_recommendations and recommendations.products_count > 0 %}
+{% if section.settings.show_product_recommendations %}
 <div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section" data-per-row="{{ section.settings.products_per_row }}">
   <div class="row grid_wrapper">
     <div class="product-recommendations" data-product-id="{{ product.id }}" data-base-url="{{ routes.product_recommendations_url }}" data-limit="{{ section.settings.products_shown }}">
-          <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
-          <div class="product-carousel">
-            {%- for product in recommendations.products -%}
-              <div class="lazyOwl product product-index">
-                {% include 'product-listing' %}
-              </div>
-            {%- endfor -%}
-          </div>
+    {%- if recommendations.performed -%}
+      {%- if recommendations.products_count > 0 -%}
+        <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
+        <div class="product-carousel">
+          {%- for product in recommendations.products -%}
+            <div class="lazyOwl product product-index">
+              {% include 'product-listing' %}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- else  -%}
+      <div data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
+    {%- endif -%}
     </div>
   </div>
   <style>
@@ -56,13 +62,6 @@
   // Fetching the recommendations on page load
   loadProductRecommendationsIntoSection();
 {% endjavascript %}
-{% if recommendations.products_count == 0 %}
-<style>
-  #shopify-section-product-recommendations {
-    display: none;
-  }
-</style>
-{% endif %}
 
 {% schema %}
 {
