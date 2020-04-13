@@ -110,7 +110,9 @@
             </a>
           {%- else -%}
             {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
           {%- endif -%}
         </div>
         {% endif %}
