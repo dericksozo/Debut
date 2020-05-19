@@ -184,13 +184,13 @@
         "type": "color",
         "id": "direction_background",
         "label": "Arrow background",
-        "default": "#ccc"
+        "default": "#000"
       },
       {
         "type": "color",
         "id": "direction_hover",
         "label": "Arrow background hover",
-        "default": "#aaa"
+        "default": "#000"
       },
       {
       "type": "header",
