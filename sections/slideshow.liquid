@@ -32,6 +32,7 @@
             <li id="slide--{{ block.id }}" data-block-id="{{ block.id }}" class="slide--{{ block.id }} slide_image{% if block.settings.image == blank %} onboard{% endif %}" data-flexslider-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
 
               {% if block.settings.image != blank %}
+                <div class="desktop-image">
                 {% assign image_box_ratio = block.settings.image.height | append: ".0" | times: 1 | divided_by: block.settings.image.width | times: 100 | append: "%" %}
                 {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
                 {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
@@ -46,6 +47,7 @@
                     <img src="{{ block.settings.image | img_url: '1024x' }}" alt="{{ block.settings.image.alt | escape }}" class="slideshow__image slideshow__image--{{ block.id }}">
                   </noscript>
                 {% if block.settings.link != blank %}</a>{% endif %}
+              </div>
               {% endif %}
 
               {% if block.settings.image == blank %}
@@ -119,6 +121,49 @@
                 -ms-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
                 -moz-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%); -o-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%); transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
               }
+
+              @media screen and (max-width: 740px) {
+                  {%- assign mobile_image = block.settings.mobile_image -%}
+                  {% assign image_box_ratio = mobile_image.height | append: ".0" | times: 1 | divided_by: mobile_image.width | times: 100 | append: "%" %}
+
+                  {% if mobile_image != blank %}
+                  .slide--{{ block.id }} {
+                    background-image: url('{{ mobile_image | img_url: '600x' }}') !important;
+                    opacity: 1;
+                    padding-bottom: {{ image_box_ratio }} !important;
+                    background-size: contain;
+                    bacground-position: top center;
+                    background-repeat: no-repeat;
+                  }
+                  .slide--{{ block.id }} .desktop-image {
+                    display: none;
+                  }
+                  {% else %}
+                  .slide--{{ block.id }} .desktop-image .box-ratio {
+                    padding-bottom: 360px !important;
+                  }
+                  .slide--{{ block.id }} .desktop-image img {
+                    object-fit: cover;
+                    object-position: center;
+                    height: 360px !important;
+                  }
+                  .slide--{{ block.id }} .desktop-image {
+                    display: block;
+                  }
+                  .flex-caption.slide-{{ block.id }} {
+                    position: relative !important;
+                    padding: 0 0 0 0 !important;
+                    left: 0 !important;
+                    top: 0 !important;
+                    width: unset !important;
+                    webkit-transform: translate(0,0);
+                    -ms-transform: translate(0,0);
+                    -moz-transform: translate(0,0);
+                    -o-transform: translate(0,0);
+                    transform: translate(0,0);
+                  }
+                  {% endif %}
+              }
             </style>
           {% endfor %}
         </ul>
@@ -151,6 +196,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
         },
         {
           "type": "header",
@@ -221,6 +271,7 @@
           "default":   50,
           "info":      "Distance from bottom of slide"
         },
+
         {
           "type": "color",
           "id": "slide_text_color",
