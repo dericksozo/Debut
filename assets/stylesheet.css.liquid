@@ -2167,32 +2167,34 @@ body.collection h1 {
   margin-bottom: 10px;
 }
 
-ul#sortme {
-  text-align: right;
-  list-style-type: none;
-  width: 100%;
+div#full-width-filter {
+    text-align: center;
 }
 
-ul#sortme li {
-  text-align: left;
-  display: inline-block;
-  margin: 0 0 0 10px;
+div#full-width-filter .filter {
+    margin: 0px auto 30px;
+    max-width: 200px;
+    display: inline-block;
 }
 
-ul#sortme li p {
-  text-align: center;
+@media screen and (max-width: 740px) {
+  div#full-width-filter .filter {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 #sidebar h4 {
   margin-bottom: 10px;
 }
 
-ul#sort-me li.filter ul li.current a:before {
+.filter ul li.current a:before {
   color: {{ settings.text_color }};
   margin-bottom: 0;
 }
 
-ul#sort-me li.filter ul li a:before {
+.filter ul li a:before {
   content: "\f00c";
   font-family: fontAwesome;
   border: 1px solid #eee;
@@ -2203,8 +2205,12 @@ ul#sort-me li.filter ul li a:before {
   color: transparent;
 }
 
-ul#sort-me li.filter ul li {
+.filter ul li {
   margin: 5px 0;
+}
+
+.clearfix.filter {
+  margin-bottom: 30px;
 }
 
 #side-filter .clearfix.filter {
@@ -2217,9 +2223,8 @@ ul#sort-me li.filter ul li {
   -webkit-appearance: none;
   -moz-appearance: none;
   padding-left: 8px;
-  font-size: 11px;
-  height: 38px;
-  line-height: 36px;
+  height: 44px;
+  line-height: 42px;
   min-width: 165px;
   margin-bottom: 0;
   background: url({{ 'select-arrow.png' | asset_url }}) no-repeat right #fff;
@@ -2489,8 +2494,8 @@ ul#popups li a {
   -moz-appearance: none;
   padding-left: 8px;
   font-size: 13px;
-  height: 38px;
-  line-height: 36px;
+  height: 44px;
+  line-height: 42px;
   background: url({{ 'select-arrow.png' | asset_url }}) no-repeat right #fff;
   margin: 5px auto;
 }

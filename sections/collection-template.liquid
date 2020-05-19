@@ -16,17 +16,46 @@
 
 
 <!-- Start Sidebar -->
-{% if section.blocks.size > 0 %}
-  {% include 'collection-sidebar' %}
+{% if section.settings.show_sidebar %}
+{% include 'collection-sidebar' %}
 {% endif %}
 <!-- End Sidebar -->
 
 
-<div class="{% if section.blocks.size > 0 %}desktop-9 tablet-6{% else %}desktop-12 tablet-6{% endif %} mobile-3">
+<div class="{% if section.settings.show_sidebar %}desktop-9 tablet-6{% else %}desktop-12 tablet-6{% endif %} mobile-3">
 
-  {% if section.blocks.size == 0 %}
+  {% if section.settings.show_sidebar == false and section.blocks.size >= 1 %}
     <div id="full-width-filter" class="desktop-12 tablet-6 mobile-3">
-      {% include 'filter' %}
+      {% for block in section.blocks %}
+      {% if block.type == 'filter' %}
+        <div class="filter">
+          {% assign tags = block.settings.tags  | replace: ' ,', ',' | replace: ', ', ',' | split: ',' %}
+          <select class="styled-select coll-filter alpha">
+            <option value="">{{ block.settings.title | escape }}</option>
+            {% for tag in tags %}
+            {% if current_tags contains tag %}
+            <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+            {% elsif collection.all_tags contains tag %}
+            <option value="{{ tag | handle }}">{{ tag }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+      {% elsif block.type == 'sort' %}
+      <div class="filter">
+        <select id="sort-by" class="styled-select">
+          <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+          <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+          <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+          <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+          <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+          <option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+          <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+          <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+        </select>
+      </div>
+      {% endif %}
+      {% endfor %}
     </div>
   {% endif %}
 
@@ -42,6 +71,31 @@
   </div>
 </div>
 
+<script>
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+  jQuery('#sort-by')
+  .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+       .bind('change', function() {
+    Shopify.queryParams.sort_by = jQuery(this).val();
+    location.search = jQuery.param(Shopify.queryParams);
+  });
+  $(document).on('shopify:section:load', function(event) {
+    jQuery('#sort-by')
+    .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+         .bind('change', function() {
+      Shopify.queryParams.sort_by = jQuery(this).val();
+      location.search = jQuery.param(Shopify.queryParams);
+    });
+  });
+</script>
 
 {% include 'pagination' %}
 
@@ -51,7 +105,7 @@
 {% schema %}
   {
     "name": "Collection page",
-    "max_blocks":4,
+    "max_blocks":8,
     "settings": [
       {
         "type":      "range",
@@ -72,66 +126,10 @@
         "default":   4
       },
       {
-        "type": "header",
-        "content": "Filter with tags"
-      },
-      {
-        "type": "paragraph",
-        "content": "Your customers can filter collections using tags that you have added to your products. [See our setup instructions for these filters](https:\/\/support.weareunderground.com\/article\/78-filter-collections-with-tags)."
-      },
-      {
-        "type": "checkbox",
-        "id": "sort_by",
-        "label": "Show sort by",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "sort_dropdown_a_check",
-        "label": "Show first filter",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "filter_1_title",
-        "label": "Filter 1 title"
-      },
-	  {
-        "type": "textarea",
-        "id": "sort_a",
-        "label": "First filter tags"
-      },
-      {
-        "type": "checkbox",
-        "id": "sort_dropdown_b_check",
-        "label": "Show second filter",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "filter_2_title",
-        "label": "Filter 2 title"
-      },
-      {
-        "type": "textarea",
-        "id": "sort_b",
-        "label": "Second filter tags"
-      },
-      {
-        "type": "checkbox",
-        "id": "sort_dropdown_c_check",
-        "label": "Show third filter",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "filter_3_title",
-        "label": "Filter 3 title"
-      },
-      {
-        "type": "textarea",
-        "id": "sort_c",
-        "label": "Third filter tags"
+         "type": "checkbox",
+         "id": "show_sidebar",
+         "default": true,
+         "label": "Show sidebar"
       }
     ],
 	"blocks":[
@@ -139,34 +137,99 @@
          "type":"menu",
          "name":"Menu",
          "settings":[
-            {
-               "type": "link_list",
-               "id": "side_nav",
-               "label": "Sidebar menu",
-               "info": "This menu won't show dropdown items"
-            },
-           {
+          {
             "type": "text",
             "id": "title",
             "label": "Menu title",
             "default": "Explore"
-           }
-         ]
+          },
+          {
+            "type": "link_list",
+            "id": "side_nav",
+            "label": "Sidebar menu",
+            "info": "This menu won't show dropdown items"
+          }
+        ]
       },
       {
-         "type":"vendor_list",
-         "name":"Vendor list",
-	       "limit": 1,
+        "type":"vendor_list",
+        "name":"Vendor list",
+        "limit": 1,
+        "settings":[
+          {
+            "type": "text",
+            "id": "shop_by_designer_title",
+            "label": "Vendor list title",
+            "default": "Shop by Designer"
+          }
+        ]
+      },
+      {
+         "type":"filter",
+         "name":"Tag filter",
          "settings":[
           {
-          "type": "text",
-          "id": "shop_by_designer_title",
-          "label": "Vendor list title",
-          "default": "Shop by Designer"
+            "type": "text",
+            "id": "title",
+            "label": "Tag title",
+            "default": "Filter by"
+          },
+          {
+            "type": "textarea",
+            "id": "tags",
+            "label": "Tags to filter",
+            "info": "Add each tag for this filter, separated by a comma"
           }
-         ]
+        ]
+      },
+      {
+       "type":"image",
+       "name":"Image",
+       "settings":[
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "id": "link",
+            "type": "url",
+            "label": "Link"
+          }
+        ]
+      },
+      {
+         "type":"text",
+         "name":"Rich text",
+         "settings":[
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Made for you"
+          },
+          {
+           "type": "richtext",
+           "id": "sidebar_text",
+           "label": "Text",
+           "default": "<p>Add some text to the sidebar</p>"
+          }
+        ]
+      },
+      {
+         "type":"sort",
+         "name":"Sort by",
+         "limit": 1,
+         "settings":[
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Tag title",
+            "default": "Sort by"
+          }
+        ]
       }
     ]
-  }
+}
 
 {% endschema %}
