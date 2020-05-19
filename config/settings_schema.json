@@ -79,6 +79,19 @@
       "id": "link_color",
       "label": "Links and accents",
       "default": "#000000"
+    },  {
+      "type": "color",
+      "id": "sale_color",
+      "label": "Sale tags",
+      "default": "#d5d5d5"
+    }, {
+      "type": "color",
+      "id": "dotted_color",
+      "label": "Borders and lines",
+      "default": "#d5d5d5"
+    }, {
+      "type": "header",
+      "content": "Buttons"
     }, {
       "type": "color",
       "id": "button_color",
@@ -94,20 +107,7 @@
       "id": "button_text",
       "label": "Button text",
       "default": "#000000"
-    }, {
-      "type": "color",
-      "id": "sale_color",
-      "label": "Sale tags",
-      "default": "#d5d5d5"
-    }, {
-      "type": "color",
-      "id": "dotted_color",
-      "label": "Borders and lines",
-      "default": "#d5d5d5"
-    }, {
-      "type": "header",
-      "content": "Buttons"
-    }, {
+    },{
       "type": "color",
       "id": "secondary_button_color",
       "label": "Secondary buttons",
