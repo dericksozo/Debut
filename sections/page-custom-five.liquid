@@ -666,10 +666,19 @@
         {
           "type": "range",
           "id": "image_height",
-          "min": 200,
-          "max": 1000,
+          "min": 300,
+          "max": 700,
           "step": 100,
-          "label": "Image height",
+          "label": "Desktop section height",
+          "default": 400
+        },
+        {
+          "type": "range",
+          "id": "mobile_image_height",
+          "min": 200,
+          "max": 600,
+          "step": 100,
+          "label": "Mobile section height",
           "default": 400
         },
         {
@@ -680,7 +689,7 @@
           "type": "range",
           "id": "horizontal_position",
           "min": 2,
-          "max": 98,
+          "max": 100,
           "step": 2,
           "unit": "%",
           "label": "Horizontal position",
@@ -690,7 +699,7 @@
           "type": "range",
           "id": "vertical_position",
           "min": 2,
-          "max": 80,
+          "max": 100,
           "step": 2,
           "unit": "%",
           "label": "Vertical position",
@@ -726,6 +735,24 @@
           "default": "Image with text overlay"
         },
         {
+          "type": "richtext",
+          "id": "subheading",
+          "label": "Text",
+          "default": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Button text",
+          "default": "Add a button",
+          "info": "Visible only if a link is chosen"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
           "type": "range",
           "id": "heading_font_size",
           "min": 12,
@@ -755,22 +782,6 @@
           ]
         },
         {
-          "type": "color",
-          "id": "heading_color",
-          "label": "Heading",
-          "default": "#000"
-        },
-        {
-          "type": "header",
-          "content": "Overlay Text"
-        },
-        {
-          "type": "richtext",
-          "id": "subheading",
-          "label": "Text",
-          "default": "<p>Use overlay text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
-        },
-        {
           "type": "range",
           "id": "subheading_font_size",
           "min": 12,
@@ -782,25 +793,9 @@
         },
         {
           "type": "color",
-          "id": "subheading_color",
+          "id": "text_color",
           "label": "Text color",
           "default": "#000"
-        },
-        {
-          "type": "header",
-          "content": "Overlay Button"
-        },
-        {
-          "id": "button_text",
-          "type": "text",
-          "label": "Button text",
-          "default": "Add a button",
-          "info": "Visible only if a link is chosen"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Button link"
         },
         {
           "type": "color",

@@ -248,7 +248,7 @@
                       <h3>{{ block.settings.heading }}</h3>
                     {% endif %}
                     {% if block.settings.subheading != blank %}
-                      <p>{{ block.settings.subheading }}</p>
+                      {{ block.settings.subheading }}
                     {% endif %}
                     {% if block.settings.button_text != blank and block.settings.link != blank %}
                     <span class="cta">
@@ -261,12 +261,14 @@
               <style>
                 .container-{{ block.id }} .caption h3 {
                   font-size: {{ block.settings.heading_font_size }}px !important;
-                  color: {{ block.settings.heading_color }};
+                  color: {{ block.settings.text_color }};
                   font-weight: {{ block.settings.heading_font_weight }} !important;
+                  text-align: {{ block.settings.text_align }};
                 }
                 .container-{{ block.id }} .caption p {
                   font-size: {{ block.settings.subheading_font_size }}px !important;
-                  color: {{ block.settings.subheading_color }};
+                  color: {{ block.settings.text_color }};
+                  text-align: {{ block.settings.text_align }};
                 }
                 .container-{{ block.id }} .caption .cta a {
                   background: {{ block.settings.button_color }};
@@ -285,13 +287,20 @@
                   padding: 15px;
                   text-align: {{ block.settings.text_align }};
                   position: absolute;
-                  bottom: {{ block.settings.vertical_position }}%;
+                  top: {{ block.settings.vertical_position }}%;
                   left: {{ block.settings.horizontal_position }}%;
-                  {% if block.settings.horizontal_position == 50 %}
-                  width: 100%;
-                  margin-left: -50%;
-                  text-align: center;
-                  {% endif %}
+                  width: 500px;
+                  -webkit-transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position }}%);
+                  -ms-transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position }}%);
+                  -moz-transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position }}%); -o-transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position }}%); transform: translate(-{{ block.settings.horizontal_position }}%, -{{ block.settings.vertical_position }}%);
+                }
+                @media screen and (max-width: 740px) {
+                  .container-{{ block.id }} .image-with-text-overlay .caption {
+                    width: 100%;
+                  }
+                  .container-{{ block.id }} .background-image {
+                    height: {{ block.settings.mobile_image_height }}px;
+                  }
                 }
             </style>
             </div>
