@@ -1,6 +1,12 @@
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" >
 {% if section.settings.full_width %}<div class="gridlock-fluid"><div class="row">{% endif %}
   <div class="row">
+
+    {% assign is_odd = false %}
+    {% if section.blocks.size == 1 or section.blocks.size == 3 or section.blocks.size == 5 or section.blocks.size == 7 %}
+    {% assign is_odd = true %}
+    {% endif %}
+
     {% for block in section.blocks %}
       {% case block.settings.image_width %}
       {% when '25%' %}
@@ -24,7 +30,7 @@
       {% endcase %}
 
      {%- assign img_url = block.settings.image | img_url: image_size -%}
-      <div class="homepage-promo {{ image_width }} mobile-3 promo-{{ block.id }}" {{ block.shopify_attributes }}>
+      <div class="homepage-promo {{ image_width }} {% if is_odd and forloop.first %}mobile-3{% else %}mobile-half{% endif %} promo-{{ block.id }}" {{ block.shopify_attributes }}>
         <div class="promo-inner">
           {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
             {% if block.settings.image != blank %}
