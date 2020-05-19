@@ -54,6 +54,11 @@
                 {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
               {% endif %}
 
+              {% if block.settings.title == blank and block.settings.subheading == blank and block.settings.button_text == blank %}
+              {% assign hide_caption = true %}
+              {% endif %}
+
+              {% unless hide_caption %}
               <div class="flex-caption slide-{{ block.id }}">
                 <div class="caption-inners">
                   {% if block.settings.title != blank %}
@@ -69,6 +74,7 @@
                   {% endif %}
                 </div>
               </div>
+              {% endunless %}
             </li>
             <style>
               .flexslider.index_Slider {
@@ -104,12 +110,14 @@
                 font-size: {{ section.settings.caption_size }}px;
               }
               .flex-caption.slide-{{ block.id }} {
-                bottom: {{ block.settings.caption_vertical_position }}%;
-                left: {{ block.settings.caption_horizontal_position }}%;
-                {% if block.settings.caption_horizontal_position == 50 %}
+                position: absolute;
+                width: 500px;
+                top: {{ block.settings.caption_vertical }}%;
+                left: {{ block.settings.caption_horizontal }}%;
                 text-align: center;
-                margin-left: -50%;
-                {% endif %}
+                -webkit-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
+                -ms-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
+                -moz-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%); -o-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%); transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
               }
             </style>
           {% endfor %}
@@ -193,7 +201,7 @@
         },
         {
           "type":      "range",
-          "id":        "caption_horizontal_position",
+          "id":        "caption_horizontal",
           "min":       2,
           "max":       80,
           "step":      2,
@@ -204,7 +212,7 @@
         },
         {
           "type":      "range",
-          "id":        "caption_vertical_position",
+          "id":        "caption_vertical",
           "min":       2,
           "max":       80,
           "step":      2,
