@@ -65,7 +65,11 @@
             </div>
           </td>
           <td class="cart-price">
-            <span class="cart-item-price {% if item.original_price > item.final_price or item.variant.compare_at_price > item.final_price %}onsale{% endif %}" data-key="{{item.key}}" style="margin-right: 5px;">{{ item.final_price | money }}</span>
+            <span class="cart-item-price {% if item.original_price > item.final_price or item.variant.compare_at_price > item.final_price %}onsale{% endif %}"
+              data-key="{{item.key}}"
+              style="margin-right: 5px;">
+              {{ item.final_price | money }}
+            </span>
             <del>{% if item.original_price > item.final_price %}{{ item.original_price | money }}{% elsif item.variant.compare_at_price > item.final_price %}{{ item.variant.compare_at_price | money }}{% endif %}</del>
           </td>
           <td class="cart-quantity">
@@ -75,10 +79,12 @@
             <a href="#" onclick="remove_item({{ item.variant.id }}); return false;"><i class="fa fa-times" aria-hidden="true"></i></a>
           </td>
           <td class="cart-total">
-            <h5>
-              <p><span class="cart-item-price money {% if item.original_price > item.final_price or item.variant.compare_at_price > item.final_price %}onsale{% endif %}" data-key="{{item.key}}" style="margin-right: 5px;">{{ item.final_line_price | money }}</span>
-                {% if item.original_line_price > item.final_line_price %}<del>{{ item.original_line_price | money }}</del>{% endif %}</p>
-            </h5>
+              <span class="cart-item-price money {% if item.original_price > item.final_price or item.variant.compare_at_price > item.final_price %}onsale{% endif %}"
+                data-key="{{item.key}}"
+                style="margin-right: 5px;">
+                {{ item.final_line_price | money }}
+              </span>
+                {% if item.original_line_price > item.final_line_price %}<del>{{ item.original_line_price | money }}</del>{% endif %}
             {% if item.line_level_discount_allocations.size > 0 %}
               {% for discount_allocation in item.line_level_discount_allocations %}
                 <p class="onsale"><i class="fa fa-tag"></i> {{ 'cart.general.discount_applied' | t }} {{ discount_allocation.discount_application.title }} (-{{ discount_allocation.amount | money }})</p>
