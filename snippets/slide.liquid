@@ -37,10 +37,13 @@
     </li>
     <style>
       .flex-caption.slide-{{ slide.id }} {
-        bottom: {{ slide.settings.caption_vertical_position }}%;
+        top: {{ slide.settings.caption_vertical_position }}%;
         left: {{ slide.settings.caption_horizontal_position }}%;
-        width: 100%;
+        width: 500px;
         padding: 0;
+        -webkit-transform: translate(-{{ slide.settings.caption_horizontal_position }}%, -{{ slide.settings.caption_vertical_position }}%);
+        -ms-transform: translate(-{{ slide.settings.caption_horizontal_position }}%, -{{ slide.settings.caption_vertical_position }}%);
+        -moz-transform: translate(-{{ slide.settings.caption_horizontal_position }}%, -{{ slide.settings.caption_vertical_position }}%); -o-transform: translate(-{{ slide.settings.caption_horizontal_position }}%, -{{ slide.settings.caption_vertical_position }}%); transform: translate(-{{ slide.settings.caption_horizontal_position }}%, -{{ slide.settings.caption_vertical_position }}%);
       }
       .flex-caption.slide-{{ slide.id }} .caption-inners {
         {% assign bg_color = slide.settings.caption_background %}
