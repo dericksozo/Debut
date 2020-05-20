@@ -1,67 +1,53 @@
 {% if section.settings.show_product_recommendations %}
-<div class="desktop-12 tablet-6 span-12 mobile-3" id="related" data-aos="{{ settings.scroll_animation }}" data-section-type="related-products-section" data-per-row="{{ section.settings.products_per_row }}">
-  <div class="row grid_wrapper">
-    <div class="product-recommendations" data-product-id="{{ product.id }}" data-base-url="{{ routes.product_recommendations_url }}" data-limit="{{ section.settings.products_shown }}">
-    {%- if recommendations.performed -%}
-      {%- if recommendations.products_count > 0 -%}
-        <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
-        <div class="product-carousel">
-          {%- for product in recommendations.products -%}
-            <div class="lazyOwl product product-index">
-              {% include 'product-listing' %}
-            </div>
+<section
+  class="product-page relative mt7" id="related-products"
+  data-section-id="{{ section.id }}" data-limit="{{ section.settings.limit }}">
+  {%- if recommendations.performed -%}
+    {%- if recommendations.products_count > 0 -%}
+      <div class="product-recommendations" data-product-id="{{ product.id }}">
+        <div class="row">
+          <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.product_recommendations_heading }}</h2></div>
+        </div>
+        <div class="product-loop row">
+          {%- case section.settings.per_row -%}
+            {%- when 2 -%}
+              {% assign grid_width = 'desktop-6 tablet-3 mobile-half' %}
+            {%- when 3 -%}
+              {% assign grid_width = 'desktop-4 tablet-2 mobile-half' %}
+            {%- when 4 -%}
+              {% assign grid_width = 'desktop-3 tablet-fourth mobile-half' %}
+            {%- when 5 -%}
+              {% assign grid_width = 'desktop-fifth tablet-2 mobile-half' %}
+            {%- when 6 -%}
+              {% assign grid_width = 'desktop-2 tablet-1 mobile-half' %}
+          {%- endcase -%}
+          {%- for product in recommendations.products limit: section.settings.limit -%}
+          <div class="product product-index {{ grid_width }}">
+            {% include 'product-listing', template: 'product' %}
+          </div>
           {%- endfor -%}
         </div>
-      {%- endif -%}
-    {%- else  -%}
-      <div data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
     {%- endif -%}
-    </div>
-  </div>
+  {%- else  -%}
+    <div class="page-width" data-base-url="{{ routes.product_recommendations_url }}" data-product-id="{{ product.id }}" data-section-id="{{ section.id }}" data-section-type="product-recommendations"></div>
+  {%- endif -%}
   <style>
-    .product-carousel {
-      opacity: 0;
+    #related-products .product-loop {
+      margin: 20px 0;
     }
+    #related-products .product-index a {
+      width: 100%;
+      display: block;
+    }
+    #related-products .product-index a:hover,
+    #related-products .product-index a:visited {
+      border-bottom: none;
+    }
+    #related-products .product-index { padding: 0 10px; }
   </style>
-</div>
+
+</section>
 {% endif %}
-
-{% javascript %}
-  var loadProductRecommendationsIntoSection = function() {
-    // Look for an element with class 'product-recommendations'
-    var productRecommendationsSection = document.querySelector(".product-recommendations");
-
-    if (productRecommendationsSection === null) { return; }
-    // Read product id from data attribute
-    var recommended_url = productRecommendationsSection.dataset.baseUrl;
-    var productId = productRecommendationsSection.dataset.productId;
-
-    // Read limit from data attribute
-    var limit = productRecommendationsSection.dataset.limit;
-
-    // Build request URL
-    var requestUrl = recommended_url + '?section_id=product-recommendations&limit=' + limit + '&product_id=' + productId;
-
-    // Create request and submit it using Ajax
-    var request = new XMLHttpRequest();
-    request.open("GET", requestUrl);
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 300) {
-        var container = document.createElement("div");
-        container.innerHTML = request.response;
-        productRecommendationsSection.parentElement.innerHTML = container.querySelector(".product-recommendations").innerHTML;
-      }
-    };
-    request.send();
-  };
-  document.addEventListener("shopify:section:load", function(event) {
-    if (event.detail.sectionId === "product-recommendations") {
-      loadProductRecommendationsIntoSection();
-    }
-  });
-  // Fetching the recommendations on page load
-  loadProductRecommendationsIntoSection();
-{% endjavascript %}
 
 {% schema %}
 {
@@ -75,28 +61,28 @@
       "default": true
     },
     {
-      "type": "range",
-      "id": "products_per_row",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "label": "Products per row",
-      "default": 4
-    },
-    {
-      "type": "range",
-      "id": "products_shown",
-      "min": 2,
-      "max": 16,
-      "step": 1,
-      "label": "Products shown",
-      "default": 8
-    },
-    {
       "type": "text",
       "id": "product_recommendations_heading",
       "label": "Heading",
       "default": "You may also like"
+    },
+    {
+      "type":      "range",
+      "id":        "per_row",
+      "min":       2,
+      "max":       6,
+      "step":      1,
+      "label":     "Products per row",
+      "default":   5
+    },
+    {
+      "type":      "range",
+      "id":        "limit",
+      "min":       2,
+      "max":       12,
+      "step":      1,
+      "label":     "Products shown",
+      "default":   5
     }
   ]
 }

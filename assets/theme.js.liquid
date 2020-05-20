@@ -4834,37 +4834,45 @@ theme.Product = (function () {
   return Product;
 })();
 
-theme.RelatedProducts = function (context, events) {
-  (function Carousel() {
-      var $window = $(window);
-      var perRow = context.dataset.perRow;
+theme.ProductRecommendations = (function (context) {
+  function ProductRecommendations(container) {
 
-      $('.product-carousel').owlCarousel({
-        itemsCustom : [
-          [0, 2],
-          [450, 2],
-          [600, 2],
-          [700, 3],
-          [1000, perRow],
-          [1200, perRow],
-          [1400, perRow],
-          [1600, perRow]
-        ],
-        lazyLoad : false,
-        pagination : false,
-        navigation: true,
-        navigationText : false,
-        autoPlay : false,
-        stopOnHover : true
-      });
+    var loadProductRecommendationsIntoSection = function() {
+      // Look for an element with class 'product-recommendations'
+      var productRecommendationsSection = document.querySelector(".page-width");
+      var recommended_url = productRecommendationsSection.dataset.baseUrl;
 
-      $window.on( 'load', Carousel);
-      Events.on("editor:section:select", function() {
-          Carousel();
-      });
-  })();
-}
+      if (productRecommendationsSection === null) { return; }
+      // Read product id from data attribute
+      var productId = productRecommendationsSection.dataset.productId;
 
+      // Build request URL
+      var requestUrl = recommended_url + '?section_id=product-recommendations&limit=12&product_id=' + productId;
+
+      // Create request and submit it using Ajax
+      var request = new XMLHttpRequest();
+      request.open("GET", requestUrl);
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 300) {
+          var container = document.createElement("div");
+          container.innerHTML = request.response;
+          productRecommendationsSection.parentElement.innerHTML = container.querySelector(".product-recommendations").innerHTML;
+        }
+      };
+      request.send();
+    };
+    document.addEventListener("shopify:section:load", function(event) {
+      if (event.detail.sectionId === "product-recommendations") {
+        loadProductRecommendationsIntoSection();
+      }
+    });
+    // Fetching the recommendations on page load
+    loadProductRecommendationsIntoSection();
+
+  }
+
+  return ProductRecommendations;
+})();
 
 Events.on("quickview:load", function (container) {
   theme.Product(container);
@@ -5448,7 +5456,7 @@ $(document).ready(function() {
   sections.register('homepage-products', theme.FeaturedProducts);
   sections.register('slideshow-section', theme.Slideshow);
   sections.register('product-section', theme.Product);
-  sections.register('related-products-section', theme.RelatedProducts);
+  sections.register('product-recommendations', theme.ProductRecommendations);
   sections.register('header-section', theme.Header);
   sections.register('collection-section', theme.Collection);
   sections.register('mobile-navigation', theme.mobileNav);
