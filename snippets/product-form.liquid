@@ -4,7 +4,7 @@
   {% assign call_to_action = 'products.product.sold_out' | t %}
 {% endunless %}
 
-{% form 'product', product, id: "AddToCartForm", class: "product_form", data-product-form:product_form_config %}
+{% form 'product', product, id: "AddToCartForm", class: "product_form", data-product-form:product_form_config, data-product-id: product.id %}
 
   {%- if settings.show_multiple_currencies -%}
     {% assign price = current_variant.price | money_with_currency %}
