@@ -141,7 +141,7 @@
                        {% if c_heading != blank %}
                          <div class="caption-content">
                            <h3>{{ c_heading | escape }}</h3>
-                           {% if c_button != blank %}
+                           {% if c_button != blank and c_link != blank %}
                            <span class="cta">
                              <a href="{{ c_link }}">{{ c_button | escape }}</a>
                            </span>
