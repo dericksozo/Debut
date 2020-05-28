@@ -4876,6 +4876,9 @@ theme.ProductRecommendations = (function (context) {
 
 Events.on("quickview:load", function (container) {
   theme.Product(container);
+  if (container.dataset.paymentButton === true ) {
+    Shopify.PaymentButton.init()
+  }
 });
 
 /*============================================================================
