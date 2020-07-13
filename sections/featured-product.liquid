@@ -14,7 +14,7 @@ data-section-id="{{ section.id }}"
 data-section-type="product-section">
 
 {% if section_onboarding %}
-{% include 'onboard-single-product' %}
+  {% render 'onboard-single-product' %}
 {% else %}
 <div class="row">
   <div class="section-title lines">
@@ -30,7 +30,7 @@ data-section-type="product-section">
   <meta itemprop="url" content="{{ routes.root_url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_media.media | img_url: '1024x1024' }}">
 
- {% include 'product-json' %}
+ {% render 'product-json', product: product %}
 
  {% assign thumbnail_position = section.settings.thumbnail_position %}
  {% assign click_to_enlarge = section.settings.click_to_enlarge %}
@@ -46,7 +46,11 @@ data-section-type="product-section">
 
  <div class="product-photos desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
    {%- if product.featured_media -%}
-     {% include 'product-image-gallery' %}
+     {% render 'product-image-gallery',
+       product: product,
+       thumbnail_position: thumbnail_position,
+       click_to_enlarge: click_to_enlarge,
+       enable_video_looping: enable_video_looping %}
    {%- else -%}
      {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
      {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
@@ -74,10 +78,12 @@ data-section-type="product-section">
      "quickview": {% if template == 'product.quick' %}true{% else %}false{% endif %}
     }
   {% endcapture %}
-  {% include 'product-form' %}
+  {% render 'product-form',
+     product_form_config: product_form_config,
+     product: product %}
 
   {% if section.settings.show_social_share %}
-   {% include 'social' with product %}
+   {% render 'social' with product %}
   {% endif %}
 
   {% assign product_vendor = section.settings.show_product_vendor %}

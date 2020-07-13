@@ -18,14 +18,14 @@
 	    {% endif %}
 
       {% if article.image %}
-        {% include 'basic-responsive-image', type: article.image %}
+        {% render 'basic-responsive-image', type: article.image %}
         <noscript>
         <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.image.alt }}">
       </noscript>
       {% endif %}
 
       <div class="rte">{{ article.content }}</div>
-      {% include 'social' with article %}
+      {% render 'social' with article %}
 
       <div id="product-navigation" class="desktop-12 tablet-6 mobile-3">
         <div class="section-title lines"><h2>{{ 'blogs.article.more_posts' | t }}</h2></div>

@@ -37,14 +37,14 @@
         </noscript>
         {% if settings.secondary_images_hover == 'image_flip' and product.media.size > 1 and second_image.media_type == 'image' %}
           <div class="hidden">
-            {% include 'basic-responsive-image', type: product.media[1] %}
+            {% render 'basic-responsive-image', type: product.media[1] %}
             <noscript>
               <img src="{{ product.media[1] | img_url: '500x' }}" alt="{{ product.media[1].alt | escape }}">
             </noscript>
           </div>
         {% elsif settings.secondary_images_hover == 'image_flip' and product.media.size > 1 and second_image.media_type != 'image' %}
           <div class="hidden">
-            {% include 'basic-responsive-image', type: product.media[1].preview_image %}
+            {% render 'basic-responsive-image', type: product.media[1].preview_image %}
             <noscript>
               <img src="{{ product.media[1].preview_image | img_url: '500x' }}" alt="{{ product.media[1].preview_image.alt | escape }}">
             </noscript>
@@ -80,7 +80,7 @@
     {% if template contains 'collection' or template == 'index' %}
     {% if settings.secondary_images_hover == 'alternate_colors' and product.media.size > 1 %}
       <div class="prod-colors">
-        {% include 'product-listing-swatches' %}
+        {% render 'product-listing-swatches', product: product %}
       </div>
     {% endif %}
     {% endif %}

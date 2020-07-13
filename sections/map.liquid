@@ -247,7 +247,7 @@
         <div class="map-section-background-wrapper contained desktop-9 tablet-4 mobile-3">
           {%- if bg_image -%}
             <div class="map-section-image lazyload lazyload-fade"
-              data-bgset="{% include 'bgset', image: bg_image %}"
+              data-bgset="{% render 'bgset', image: bg_image %}"
               data-sizes="auto"
               data-parent-fit="cover"
               data-bg-image

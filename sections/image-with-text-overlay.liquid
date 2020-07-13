@@ -1,7 +1,7 @@
 <section id="image-{{ section.id }}" class="image-with-text-overlay index-section" data-section-id="{{ section.id }}" data-section-type="image-section">
   <div class="desktop-12 tablet-6 mobile-3">
     {%- if section.settings.image -%}
-      <div class="image-wrapper lazyload lazyload-fade{% unless section.settings.full_width %} row{% endunless %}" data-bgset="{% include 'bgset', image: section.settings.image %}" data-sizes="auto">
+      <div class="image-wrapper lazyload lazyload-fade{% unless section.settings.full_width %} row{% endunless %}" data-bgset="{% render 'bgset', image: section.settings.image %}" data-sizes="auto">
         <div class="image-overlay">
           <h2>{{ section.settings.heading }}</h2>
           <p>{{ section.settings.subheading_text }}</p>

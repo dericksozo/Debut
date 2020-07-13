@@ -44,7 +44,7 @@
           <!--'item' is an article All article object properties can be accessed. -->
           {% if item.image %}
             <a href="{{ item.url }}" title="{{ item.title | escape }}">
-              {%- include 'basic-responsive-image', type: item.image  -%}
+              {%- render 'basic-responsive-image', type: item.image  -%}
               <noscript>
                 <img src="{{ item.image | img_url: '800x' }}" alt="{{ item.image.alt }}">
               </noscript>
@@ -89,7 +89,7 @@
               <div class="reveal">
                 {%- assign preview_image = item.featured_media.preview_image -%}
                 {%- assign second_image = item.media[1] -%}
-                {% include "basic-responsive-image", type: preview_image %}
+                {% render "basic-responsive-image", type: preview_image %}
                 <noscript>
                   <img src="{{ preview_image | img_url: '1024x' }}" alt="{{ preview_image.alt | escape }}">
                 </noscript>
@@ -137,7 +137,7 @@
           </div>
           {% if settings.secondary_images_hover == 'alternate_colors' %}
             <div class="prod-colors">
-              {% include 'product-listing-swatches' %}
+              {% render 'product-listing-swatches', product: product %}
             </div>
           {% endif %}
           {% endif %}
@@ -147,7 +147,7 @@
     {% endfor %}
   </div>
 
-  {% include 'pagination' %}
+  {% render 'pagination', paginate: paginate %}
 
   {% endif %}
 

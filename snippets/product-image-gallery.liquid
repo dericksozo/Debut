@@ -28,12 +28,12 @@
                 </noscript>
                 {%- if media.media_type == 'video' or media.media_type =='external_video' -%}
                   <div class="thumbnail-icon">
-                    {% include 'media-icons', width: '25', icon: 'play' %}
+                    {% render 'media-icons', width: '25', icon: 'play' %}
                   </div>
                 {%- endif -%}
                 {%- if media.media_type == 'model' -%}
                   <div class="thumbnail-icon">
-                    {% include 'media-icons', width: '25', icon: '3d-icon' %}
+                    {% render 'media-icons', width: '25', icon: '3d-icon' %}
                   </div>
                 {%- endif -%}
               </div>
@@ -127,7 +127,7 @@
               data-shopify-title="{{ product.title | escape }}"
               data-shopify-xr-hidden
             >
-              {% include 'media-icons', width: '25', icon: '3d-icon' %}<span class='product-single__view-in-space-text'>{{ 'products.product.view_in_space' | t }}</span>
+              {% render 'media-icons', width: '25', icon: '3d-icon' %}<span class='product-single__view-in-space-text'>{{ 'products.product.view_in_space' | t }}</span>
             </button>
           {%- endif -%}
         </li>

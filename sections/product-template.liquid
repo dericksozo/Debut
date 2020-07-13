@@ -4,7 +4,7 @@
   <meta itemprop="url" content="{{ routes.root_url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_media.media | img_url: '1024x1024' }}">
 
-  {% include 'product-json' %}
+  {% render 'product-json', product: product %}
 
   {% if template == 'product.quick' %}
     {% assign thumbnail_position = settings.thumbnail_position %}
@@ -34,7 +34,11 @@
   <div class="product-top">
     <div class="product-photos carousel-container desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
       {%- if product.featured_media -%}
-        {% include 'product-image-gallery' %}
+        {% render 'product-image-gallery',
+          product: product,
+          thumbnail_position: thumbnail_position,
+          click_to_enlarge: click_to_enlarge,
+          enable_video_looping: enable_video_looping %}
       {%- else -%}
         {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
         {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
@@ -63,7 +67,9 @@
             }
           {% endcapture %}
 
-          {% include 'product-form' %}
+          {% render 'product-form',
+             product_form_config: product_form_config,
+             product: product %}
 
           {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
             {% if section.settings.product_description == 'right' %}
@@ -73,7 +79,7 @@
 
           <div class="desc">
             {%- if section.settings.show_social -%}
-              {% include 'social' with product %}
+              {% render 'social' with product %}
             {%- endif -%}
             {% if template == 'product.quick' %}
               <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
@@ -114,7 +120,7 @@
             <div id="pop-three" style="display: none">{{ pages[section.settings.popup_three].content }}</div>
           {% endif %}
           {% if section.settings.popup_four %}
-            <div id="pop-four" style="display: none">{% include 'question' %}</div>
+            <div id="pop-four" style="display: none">{% render 'question' %}</div>
           {% endif %}
         {% endif %}
       </div>

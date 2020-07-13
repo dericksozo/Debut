@@ -3,7 +3,7 @@
 
   {% if collection.image %}
     <div class="collection-page-image clearfix filter">
-      {% include 'basic-responsive-image', type: collection.image %}
+      {% render 'basic-responsive-image', type: collection.image %}
       <noscript>
         <img src="{{ collection.image | img_url: '220x' }}" class="collection-sidebar-image">
       </noscript>
@@ -89,7 +89,7 @@
   {% if block.settings.image != blank %}
   <div class="clearfix filter">
     {% if block.settings.link != blank %}<a href="{{ block.settings.link }}">{% endif %}
-      {% include 'basic-responsive-image', type: block.settings.image %}
+      {% render 'basic-responsive-image', type: block.settings.image %}
     {% if block.settings.link != blank %}</a>{% endif %}
   {% endif %}
   </div>

@@ -10,10 +10,14 @@
       {%- assign post_limit = section.settings.post_limit -%}
       <div id="article-loop">
         {% if blog.articles.size == 0 %}
-          {% include 'onboard-blog' %}
+          {% render 'onboard-blog' %}
         {% else %}
           {% for article in blog.articles limit: post_limit %}
-            {% include 'article-loop' %}
+            {% capture current %}
+              {% cycle ' first', '', ' last' %}
+            {% endcapture %}
+
+            {% render 'article-loop', article: article, blog: blog, current: current %}
           {% endfor %}
         {% endif %}
       </div>

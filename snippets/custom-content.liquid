@@ -48,7 +48,7 @@
                 <h3>{{ block.settings.heading | escape }}</h3>
               </div>
               {% endif %}
-              {% include 'custom-contact' type: block %}
+              {% render 'custom-contact' type: block %}
             </div>
 
           {% when 'accordion' %}
@@ -104,7 +104,7 @@
                   {%- assign image_size = '2000x' -%}
                   {% assign slide_images = section.blocks | where: "type", "slideshow_image" %}
                   {% for slide in slide_images %}
-                    {% include 'slide' %}
+                    {% render 'slide', slide: slide, image_size: image_size %}
                   {% endfor %}
                 </ul>
               </div>
@@ -127,7 +127,7 @@
                  <div class="promo-inner">
                      {% if c_image != blank %}
                      <a href="{{ c_link }}">
-                       {% include 'basic-responsive-image' | type: c_image %}
+                       {% render 'basic-responsive-image' | type: c_image %}
                        <noscript>
                          <img src="{{ c_image | img_url: '800x' }}" alt="{{ c_image.alt }}">
                        </noscript>
@@ -222,7 +222,7 @@
                </style>
              {% endfor %}
             {% if section.blocks.size == 0 %}
-            {% include 'no-blocks' %}
+            {% render 'no-blocks' %}
             {% endif %}
             </div>
 
@@ -233,7 +233,7 @@
                 <div class="image-with-text-overlay centered contained desktop-12 tablet-6 mobile-3">
                   {% if block.settings.image %}
                     <div class="background-image lazyload"
-                    data-bgset="{% include 'bgset', image: block.settings.image %}"
+                    data-bgset="{% render 'bgset', image: block.settings.image %}"
                     data-sizes="auto"></div>
                     <noscript>
                       <div class="background-image" style="background-image: url({{ block.settings.image | img_url: '1024x' }});"></div>
@@ -327,7 +327,7 @@
               {% assign collection = collections[block.settings[collection]] | default: false %}
               <div class="product-index {{ column_width }}" data-alpha="{{ collection.title }}">
               {% if collection %}
-                {% include 'collection-grid-item' %}
+                {% render 'collection-grid-item', collection: collection %}
               {% else %}
                 {% capture current %}{{ forloop.index }}{% endcapture %}
                 {%- assign placeholder = 'collection-' | append: current -%}
@@ -384,7 +384,7 @@
               {% endform %}
 
               <div class="section-icons">
-                {% include "social-icons" %}
+                {% render "social-icons" %}
               </div>
 
               <style>
@@ -461,13 +461,13 @@
             <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}" data-slideout-ignore>
               {% for product in collection.products limit: prod_limit %}
                 <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-                  {% include 'product-listing' %}
+                  {% render 'product-listing', product: product, collection: collection %}
                 </div>
               {% endfor %}
             </div>
 
             {% if block.settings.collection == blank %}
-              {% include 'onboard-product' %}
+              {% render 'onboard-product', prod_limit: prod_limit %}
             {% endif %}
 
             <style>

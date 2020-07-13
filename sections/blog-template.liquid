@@ -2,7 +2,7 @@
 
   {% if section.settings.image != blank %}
     <div class="collection-banner">
-      {% include 'basic-responsive-image', type: section.settings.image %}
+      {% render 'basic-responsive-image', type: section.settings.image %}
       <noscript>
         <img src="{{ section.settings.image | img_url: '1024x' }}" alt="{{ section.settings.image.alt }}">
       </noscript>
@@ -11,7 +11,7 @@
 
   <div id="content" class="row">
     {% if settings.breadcrumb %}
-      {% include 'breadcrumb' %}
+      {% render 'breadcrumb' %}
     {% endif %}
 
     <h1 class="page-title desktop-12 tablet-6 mobile-3">
@@ -35,7 +35,12 @@
       <div class="desktop-12 tablet-6 mobile-3">
         <div id="article-loop">
           {% for article in blog.articles  %}
-            {% include 'article-loop' %}
+
+            {% capture current %}
+              {% cycle ' first', '', ' last' %}
+            {% endcapture %}
+
+            {% render 'article-loop', article: article, blog: blog, current: current %}
           {% endfor %}
         </div>
       </div>
@@ -55,7 +60,7 @@
               <div class="article-content">
                 {% if article.image %}
                   <a href="{{ article.url }}">
-                    {% include 'basic-responsive-image', type: article.image %}
+                    {% render 'basic-responsive-image', type: article.image %}
                     <noscript>
                       <img src="{{ article.image | img_url: '800x' }}" alt="{{ sarticle.image.alt }}">
                     </noscript>
@@ -99,7 +104,6 @@
               {% endfor %}
             </ul>
           <div class="clear"></div>
-
           {% elsif block.type == 'social-icons' %}
             <ul id="social-icons">
               <h3>{{ block.settings.title | escape }}</h3>
@@ -114,18 +118,14 @@
                 {% if settings.weibo_id != blank %}<li><a href="//weibo.com/{{ settings.weibo_id }}" target="_blank"><i class="fa fa-weibo fa-2x" aria-hidden="true"></i></a></li>{% endif %}
             </ul>
             <div class="clear"></div>
-
           {% elsif block.type == 'image' %}
-
-
-
           {% elsif block.type == 'collection' %}
             <ul id="blog-collection">
               <h3>{{ block.settings.title | escape }}</h3>
               {%- assign collection = collections[block.settings.collection] -%}
               {% for product in collection.products limit: 5 %}
                 <li class="blog-product" data-alpha="{{ collection.title }}" {{ block.shopify_attributes }}>
-                  {% include 'product-listing' %}
+                  {% render 'product-listing', product: product, collection: collection %}
                 </li>
               {% endfor %}
             </ul>
@@ -137,7 +137,7 @@
       </div>
       <div class="clear"></div>
     {% endif %}
-    {% include 'pagination' %}
+    {% render 'pagination', paginate: paginate %}
     {% endpaginate %}
   </div>
 </div>

@@ -10,13 +10,13 @@
     <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ section.id }}" data-slideout-ignore>
       {% for product in collection.products limit: prod_limit %}
         <div class="lazyOwl" id="product-listing-{{ product.id }}" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-          {% include 'product-listing' %}
+          {% render 'product-listing', product: product, collection: collection %}
         </div>
       {% endfor %}
     </div>
 
     {% if section.settings.collection == blank %}
-      {% include 'onboard-product' %}
+      {% render 'onboard-product', prod_limit: prod_limit %}
     {% endif %}
 
   </div>

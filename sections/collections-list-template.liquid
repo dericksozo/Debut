@@ -2,7 +2,7 @@
 
   {% if section.settings.image != blank %}
     <div class="collection-banner">
-      {% include 'basic-responsive-image', type: section.settings.image %}
+      {% render 'basic-responsive-image', type: section.settings.image %}
       <noscript>
         <img src="{{ section.settings.image | img_url: '1024x' }}" alt="{{ section.settings.image.alt }}">
       </noscript>
@@ -11,7 +11,7 @@
 
   <div id="content" class="row">
     {% if settings.breadcrumb %}
-    {% include 'breadcrumb' %}
+    {% render 'breadcrumb' %}
     {% endif %}
 
     <div id="collection-description" class="desktop-12 tablet-6 mobile-3">
@@ -28,7 +28,7 @@
         {% assign products-per-row = section.settings.grid %}
         {% for collection in collections %}
         <div class="collection-index {% if products-per-row == 6 %}desktop-2{% cycle ' first', '', '', '', '', ' last' %}{% elsif products-per-row == 4 %}desktop-3{% cycle ' first', '', '', ' last' %}{% elsif products-per-row == 3 %}desktop-4{% cycle ' first', '', ' last' %}{% elsif products-per-row == 5 %}desktop-fifth{% cycle ' first', '', '', '', ' last' %}{% elsif products-per-row == 2 %}desktop-6{% cycle ' first', ' last' %}{% endif %} tablet-half mobile-half" data-alpha="{{ collection.title }}" {{ block.shopify_attributes }}>
-          {% include 'collection-grid-item' %}
+          {% render 'collection-grid-item', collection: collection %}
         </div>
         {% endfor %}
       </div>
@@ -36,7 +36,7 @@
       {% else %}
       <p>{{ 'collections.general.no_matches' | t }}</p>
       {% endif %}
-      {% include 'pagination' %}
+      {% render 'pagination', paginate: paginate %}
       {% endpaginate %}
 
   </div>

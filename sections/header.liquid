@@ -140,7 +140,7 @@
       <ul id="main-nav" class="row">
       	{% assign menu = linklists[section.settings.main_nav] %}
         {% for link in menu.links %}
-        {% include 'navigation' %}
+          {% render 'navigation', link: link, menu: menu %}
         {% endfor %}
       </ul>
     </nav>

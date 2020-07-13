@@ -6,7 +6,7 @@
 <head>
 
   <meta charset="utf-8" />
-  {% include 'social-meta-tags' %}
+  {% render 'social-meta-tags' %}
   <!-- Basic Page Needs
 ================================================== -->
 
@@ -80,7 +80,7 @@
         <div id="content" class="row">
           {% if template != 'index' %}
             {% if settings.breadcrumb %}
-              {% include 'breadcrumb' %}
+              {% render 'breadcrumb' %}
             {% endif %}
           {% endif %}
           {{ content_for_layout }}
@@ -90,7 +90,7 @@
   </div>
   {% section 'footer' %}
   {% if settings.popup %}
-    {% include 'popup' %}
+    {% render 'popup' %}
   {% endif %}
 </main>
 {% section 'mobile-navigation' %}
@@ -107,7 +107,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
   {% if settings.ajax_cart_method != 'page' %}
-    {% include 'ajax-cart-template' %}
+    {% render 'ajax-cart-template' %}
     <script>
     jQuery(function($) {
       ajaxifyShopify.init({
