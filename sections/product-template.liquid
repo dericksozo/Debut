@@ -6,33 +6,21 @@
 
   {% render 'product-json', product: product %}
 
-  {% if template == 'product.quick' %}
-    {% assign thumbnail_position = settings.thumbnail_position %}
-    {% assign click_to_enlarge = settings.click_to_enlarge %}
-    {% assign enable_video_looping = settings.enable_video_looping %}
-    {% capture product_gallery_config %}{
-      "thumbPosition": {{ settings.thumbnail_position | json }},
-      "enableVideoLooping": {{ settings.enable_video_looping | json }},
-      "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
-      "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
-      "productId": {{ product.id | json }},
-      "isQuick": true
-   }{% endcapture %}
-  {% else %}
-    {% assign thumbnail_position = section.settings.thumbnail_position %}
-    {% assign click_to_enlarge = section.settings.click_to_enlarge %}
-    {% assign enable_video_looping = section.settings.enable_video_looping %}
-    {% capture product_gallery_config %}{
-      "thumbPosition": {{ section.settings.thumbnail_position | json }},
-      "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
-      "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
-      "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
-      "productId": {{ product.id | json }},
-      "isQuick": false
-   }{% endcapture %}
-  {% endif %}
+  {% assign thumbnail_position = section.settings.thumbnail_position %}
+  {% assign click_to_enlarge = section.settings.click_to_enlarge %}
+  {% assign enable_video_looping = section.settings.enable_video_looping %}
+  {% capture product_gallery_config %}{
+    "thumbPosition": {{ section.settings.thumbnail_position | json }},
+    "enableVideoLooping": {{ section.settings.enable_video_looping | json }},
+    "mainSlider": {% if product.media.size <= 1 %}false{% else %}true{% endif %},
+    "thumbSlider": {% if product.media.size >= 4 %}true{% else %}false{% endif %},
+    "productId": {{ product.id | json }},
+    "isQuick": false
+ }{% endcapture %}
+
   <div class="product-top">
-    <div class="product-photos carousel-container desktop-7 tablet-3 mobile-3" data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
+    <div class="product-photos carousel-container desktop-7 tablet-3 mobile-3"
+      data-product-gallery data-product-single-media-group data-gallery-config='{{ product_gallery_config }}'>
       {%- if product.featured_media -%}
         {% render 'product-image-gallery',
           product: product,
@@ -63,89 +51,76 @@
               "sold_out": {{ "products.product.sold_out" | t | json }},
               "button": {{ 'products.product.add_to_cart' | t | json }},
               "unavailable": {{ 'products.product.unavailable' | t | json }},
-              "quickview": {% if template == 'product.quick' %}true{% else %}false{% endif %}
+              "quickview": false
             }
           {% endcapture %}
 
           {% render 'product-form',
              product_form_config: product_form_config,
-             product: product %}
+             product: product,
+             current_variant: current_variant,
+             show_sku: section.settings.show_sku %}
 
-          {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-            {% if section.settings.product_description == 'right' %}
+          {% if section.settings.product_description == 'right' %}
             <div class="rte" itemprop="description">{{ product.description }}</div>
-            {% endif %}
           {% endif %}
 
           <div class="desc">
             {%- if section.settings.show_social -%}
               {% render 'social' with product %}
             {%- endif -%}
-            {% if template == 'product.quick' %}
-              <a href="{{ product.url | within_collection }}" class="full-click">{{ 'products.general.view_full' | t }}</a>
-            {% endif %}
           </div>
         </div>
 
-        {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-          <ul id="popups">
-            {% if section.settings.popup_one != blank %}
-              <li class="first">
-                <a href="#pop-one" class="fancybox">{{ pages[section.settings.popup_one].title }}</a>
-              </li>
-            {% endif %}
-            {% if section.settings.popup_two != blank %}
-              <li>
-                <a href="#pop-two" class="fancybox">{{ pages[section.settings.popup_two].title }}</a>
-              </li>
-            {% endif %}
-            {% if section.settings.popup_three != blank %}
-              <li>
-                <a href="#pop-three" class="fancybox">{{ pages[section.settings.popup_three].title }}</a>
-              </li>
-            {% endif %}
-            {% if section.settings.popup_four %}
-              <li class="last">
-                <a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a>
-              </li>
-            {% endif %}
-          </ul>
+        <ul id="popups">
           {% if section.settings.popup_one != blank %}
-            <div id="pop-one" style="display: none">{{ pages[section.settings.popup_one].content }}</div>
+            <li class="first">
+              <a href="#pop-one" class="fancybox">{{ pages[section.settings.popup_one].title }}</a>
+            </li>
           {% endif %}
           {% if section.settings.popup_two != blank %}
-            <div id="pop-two" style="display: none">{{ pages[section.settings.popup_two].content }}</div>
+            <li>
+              <a href="#pop-two" class="fancybox">{{ pages[section.settings.popup_two].title }}</a>
+            </li>
           {% endif %}
           {% if section.settings.popup_three != blank %}
-            <div id="pop-three" style="display: none">{{ pages[section.settings.popup_three].content }}</div>
+            <li>
+              <a href="#pop-three" class="fancybox">{{ pages[section.settings.popup_three].title }}</a>
+            </li>
           {% endif %}
           {% if section.settings.popup_four %}
-            <div id="pop-four" style="display: none">{% render 'question' %}</div>
+            <li class="last">
+              <a href="#pop-four" class="fancybox">{{ 'products.product.popup_question' | t }}</a>
+            </li>
           {% endif %}
+        </ul>
+        {% if section.settings.popup_one != blank %}
+          <div id="pop-one" style="display: none">{{ pages[section.settings.popup_one].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_two != blank %}
+          <div id="pop-two" style="display: none">{{ pages[section.settings.popup_two].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_three != blank %}
+          <div id="pop-three" style="display: none">{{ pages[section.settings.popup_three].content }}</div>
+        {% endif %}
+        {% if section.settings.popup_four %}
+          <div id="pop-four" style="display: none">{% render 'question' %}</div>
         {% endif %}
       </div>
 
     </div>
   </div>
 
-  {% if template != 'product.quick' %} {% comment %} Don't show in quick view popup {% endcomment %}
-    {% if section.settings.product_description == 'bottom' %}
-      <div class="clear"></div>
-      <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
-        <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
-        <div class="rte" itemprop="description">{{ product.description }}</div>
-      </div>
-    {% endif %}
+  {% if section.settings.product_description == 'bottom' %}
     <div class="clear"></div>
+    <div id="lower-description" class="desktop-8 desktop-push-2 tablet-6 mobile-3">
+      <div class="section-title lines"><h2>{{ 'products.product.details' | t }}</h2></div>
+      <div class="rte" itemprop="description">{{ product.description }}</div>
+    </div>
   {% endif %}
+  <div class="clear"></div>
 </div>
 <style>
-  {% if template == 'product.quick' %}
-    #thumb-slider-wrapper .product-single__thumbnails-item img {
-      width: 65px !important;
-      height: 65px !important;
-    }
-  {% endif %}
   #product-right {
     background: {{ section.settings.product_form_background }};
     padding: 20px;

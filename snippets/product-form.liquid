@@ -27,7 +27,7 @@
 
   {% if product.options.size > 1 %}
     <div class="select" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>
-      <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name='id'>
+      <select id="{{ section.id }}-product-select-{{ product.id }}" name='id'>
         {% for variant in product.variants %}
           <option value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
             {{ variant.title }} - {{ variant.price | money }}
@@ -37,13 +37,13 @@
     </div>
     {% if section.settings.product_variants == 'swatches' %}
       {% for option in product.options_with_values %}
-        {% render 'swatch', option: option, product: product %}
+        {% render 'swatch', option: option, product: product, current_variant: current_variant %}
       {% endfor %}
     {% endif %}
   {% elsif product.options.size == 1 and product.variants.size > 1 %}
     <div class="select">
       <label>{{ product.options[0] }}</label>
-      <select id="{% if template == 'product.quick' %}qv-{% endif %}product-select-{{ product.id }}" name='id'>
+      <select id="{{ section.id }}-product-select-{{ product.id }}" name='id'>
         {% for variant in product.variants %}
           <option data-sku="{{ variant.sku }}" value="{{ variant.id }}" {% if variant == current_variant %}selected="selected"{% endif %}>
             {{ variant.title }} - {{ variant.price | money }}
@@ -53,7 +53,7 @@
     </div>
     {% if section.settings.product_variants == 'swatches' %}
       {% for option in product.options_with_values %}
-        {% render 'swatch', option: option, product: product %}
+        {% render 'swatch', option: option, product: product, current_variant: current_variant %}
       {% endfor %}
     {% endif %}
   {% else %}
@@ -70,7 +70,7 @@
   {% endif %}
 
 
-  {% if section.settings.show_sku %}
+  {% if show_sku %}
     <div class="sku">
       <label style="line-height: 1.6em; display: inline-block;">{{ 'customer.order.details.sku' | t }}:</label> <span class="variant_sku">{{ current_variant.sku }}</span>
     </div><div class="clear"></div>
@@ -85,9 +85,7 @@
       </div>
     {% endif %}
     <input id="addToCart" type="submit" name="button" class="add clearfix AddtoCart {% if section.settings.show_payment_button %} secondary-button{% endif %}" value="{{ call_to_action }}" {% unless current_variant.available %}disabled{% endunless %} />
-    {% if section.settings.show_payment_button and template != 'product.quick' %}
-     {{ form | payment_button }}
-    {% elsif settings.quick_show_payment_button and template == 'product.quick' %}
+    {% if section.settings.show_payment_button %}
      {{ form | payment_button }}
     {% endif %}
   </div>

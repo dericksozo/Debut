@@ -75,12 +75,13 @@ data-section-type="product-section">
      "sold_out": {{ "products.product.sold_out" | t | json }},
      "button": {{ 'products.product.add_to_cart' | t | json }},
      "unavailable": {{ 'products.product.unavailable' | t | json }},
-     "quickview": {% if template == 'product.quick' %}true{% else %}false{% endif %}
+     "quickview": false
     }
   {% endcapture %}
   {% render 'product-form',
      product_form_config: product_form_config,
-     product: product %}
+     product: product,
+     show_sku: section.settings.show_sku %}
 
   {% if section.settings.show_social_share %}
    {% render 'social' with product %}

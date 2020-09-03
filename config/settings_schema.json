@@ -408,6 +408,55 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "quickview_show_sku",
+        "label": "Show variant SKU",
+        "default": true
+      },
+      {
+         "type": "checkbox",
+         "id": "quickview_show_quantity_selector",
+         "label": "Show quantity selector",
+         "default": true
+       },
+      {
+         "type": "select",
+         "id": "quickview_product_variants",
+         "label": "Product variant display",
+         "options": [
+          {
+            "value": "swatches",
+            "label": "Swatches"
+          },
+          {
+            "value": "drop-downs",
+            "label": "Drop-downs"
+          }
+         ],
+         "default": "swatches"
+      },
+      {
+        "type": "checkbox",
+        "id": "quickview_use_swatch_images",
+        "label": "Show custom swatch images",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "quickview_swatch_shape",
+        "label": "Color swatch shape",
+        "options": [
+          {
+            "value": "circles",
+            "label": "Circles"
+          },
+          {
+            "value": "rectangles",
+            "label": "Rectangles"
+          }
+        ]
+      },
+      {
         "type": "select",
         "id": "thumbnail_position",
         "label": "Thumbnail position",

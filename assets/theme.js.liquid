@@ -3590,7 +3590,7 @@ var tablet = window.matchMedia('(max-width: 979px) and (min-width: 741px)');
 var device = window.matchMedia('(max-width: 980px)');
 var desktop = window.matchMedia('(min-width: 980px)');
 
-theme.ProductForm = function (context, events, Product) {
+theme.ProductForm = function (context, sectionId, events, Product) {
     var formConfig = context.querySelector('#AddToCartForm');
     var config = JSON.parse(formConfig.dataset.productForm || '{}');
 
@@ -3635,7 +3635,7 @@ theme.ProductForm = function (context, events, Product) {
     if ( config.quickview ) {
       var prodSelector = "qv-product-select-" + Product.id;
     } else {
-      var prodSelector = "product-select-" + Product.id;
+      var prodSelector = sectionId + "-product-select-" + Product.id;
     }
 
     new Shopify.OptionSelectors(prodSelector, {
@@ -3657,12 +3657,7 @@ theme.ProductForm = function (context, events, Product) {
         events.trigger("variantchange:option3:" + variant.option3);
 
         if ( variant.featured_media ) {
-          if ( variant.featured_media.id == null ) {
-            events.trigger("variantchange:image", Product.featured_media_id);
-          } else {
-
-            events.trigger("variantchange:image", variant.featured_media.id);
-          }
+          Events.trigger("variantchange:image", variant.featured_media.id, context);
         }
       },
       enableHistoryState: config.enable_history
@@ -4021,7 +4016,7 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
     });
 
     /* set focus on load after first variant is selected */
-    events.on('variantchange:image', function(id){
+    Events.on('variantchange:image', function(id, context){
       var $newMedia = $(
         '[data-product-single-media-wrapper]' +
           "[data-thumbnail-id='" + sectionId + "-" + id + "']",
@@ -4248,7 +4243,10 @@ theme.ProductGallery = function (context, sectionId, events, Product) {
     });
 
     /* on variant change */
-    events.on('variantchange:image', function(id) {
+    Events.on('variantchange:image', function(id, context) {
+      if ( id === null ) return false;
+      if ( $main.context != context ) return false;
+
       var index = $main.find("[data-image-id=" + id + "]").data('slideIndex'),
           $el = $('.carousel-cell', $carouselNav).eq(index);
 
@@ -4800,7 +4798,7 @@ theme.Product = (function () {
     }
 
     if ( context.querySelector("[data-product-form]") ) {
-      theme.ProductForm(context, events, Product);
+      theme.ProductForm(context, sectionId, events, Product);
     }
 
     /* Product media */
