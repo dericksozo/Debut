@@ -79,9 +79,10 @@ data-section-type="product-section">
     }
   {% endcapture %}
   {% render 'product-form',
-     product_form_config: product_form_config,
-     product: product,
-     show_sku: section.settings.show_sku %}
+    product_form_config: product_form_config,
+    product: product,
+    current_variant: current_variant,
+    show_sku: section.settings.show_sku %}
 
   {% if section.settings.show_social_share %}
    {% render 'social' with product %}

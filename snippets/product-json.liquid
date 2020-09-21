@@ -40,6 +40,14 @@
           "available": {{ variant.available | json }},
           "options": {{ variant.options | json }},
           "price": {{ variant.price | json }},
+          "unit_price_measurement": {
+            "measured_type": {{ variant.unit_price_measurement.measured_type | json }},
+            "quantity_unit": {{ variant.unit_price_measurement.quantity_unit | json }},
+            "quantity_value": {{ variant.unit_price_measurement.quantity_value	| json }},
+            "reference_unit": {{ variant.unit_price_measurement.reference_unit | json }},
+            "reference_value": {{ variant.unit_price_measurement.reference_value | json }}
+          },
+          "unit_price": {{ variant.unit_price | json }},
           "weight": {{ variant.weight | json }},
           "weight_unit": {{ variant.weight_unit | json }},
           "weight_in_unit": {{ variant.weight_in_unit | json }},

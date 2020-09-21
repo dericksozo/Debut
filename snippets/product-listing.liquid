@@ -68,21 +68,14 @@
       <span class="prod-title">{{ product.title }}</span>
     </a>
 
-    <div class="price">
-      {% if product.price < product.compare_at_price %}
-      <div class="onsale">{{ product.price | money }}</div>
-      <div class="was">{{ product.compare_at_price | money }}</div>
-      {% else %}
-      <div class="prod-price">{% if product.price_varies %} {{ 'products.general.from' | t }} {{ product.price_min | money }} - {{ product.price_max | money }}{% else %}{{ product.price | money }}{% endif %}</div>
-      {% endif %}
-    </div>
+    {% render 'product-price-listing', product: product %}
 
-    {% if template contains 'collection' or template == 'index' %}
-    {% if settings.secondary_images_hover == 'alternate_colors' and product.media.size > 1 %}
-      <div class="prod-colors">
-        {% render 'product-listing-swatches', product: product %}
-      </div>
-    {% endif %}
+    {% if template contains 'collection' or template == 'index' or template == 'search' %}
+      {% if settings.secondary_images_hover == 'alternate_colors' and product.media.size > 1 %}
+        <div class="prod-colors">
+          {% render 'product-listing-swatches', product: product %}
+        </div>
+      {% endif %}
     {% endif %}
   </div>
 </div>

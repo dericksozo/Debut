@@ -6,24 +6,7 @@
 
 {% form 'product', product, id: "AddToCartForm", class: "product_form", data-product-form:product_form_config, data-product-id: product.id %}
 
-  {%- if settings.show_multiple_currencies -%}
-    {% assign price = current_variant.price | money_with_currency %}
-    {% assign compare_price = current_variant.compare_at_price | money_with_currency %}
-  {%- else -%}
-    {% assign price = current_variant.price | money %}
-    {% assign compare_price = current_variant.compare_at_price | money %}
-  {%- endif -%}
-  <p id="product-price">
-    <span class="product-price" itemprop="price">
-      {{ price }}
-    </span>
-    {% if current_variant.compare_at_price > current_variant.price %}
-      <span class="was">
-        {{ compare_price }}
-      </span>
-    {% endif %}
-    <span class="was"></span>
-  </p><div class="clear"></div>
+  {% render 'product-price', variant: current_variant, product: product %}
 
   {% if product.options.size > 1 %}
     <div class="select" {% if product.variants.size == 1 %}style="display: none;"{% endif %}>

@@ -2602,6 +2602,22 @@ window.themeInfo = {name: "Testament"};
             );
           }
         }
+        if ( cartItem.unit_price ) {
+          var unitPrice = Shopify.formatMoney(cartItem.unit_price, settings.moneyFormat);
+        } else {
+          var unitPrice = '';
+        }
+        if ( cartItem.unit_price_measurement ) {
+          var unitPriceMeasurement = cartItem.unit_price_measurement,
+          unitPriceBaseUnit = cartItem.unit_price_measurement.reference_unit,
+          unitReferenceValue = cartItem.unit_price_measurement.reference_value,
+          showUnitReferenceValue = cartItem.unit_price_measurement.reference_value != 1 ? false : true;
+        } else {
+          var unitPriceMeasurement = '',
+          unitPriceBaseUnit = '',
+          unitReferenceValue = '',
+          showUnitReferenceValue = false;
+        }
 
         // Create item's data object and add to 'items' array
         item = {
@@ -2619,6 +2635,14 @@ window.themeInfo = {name: "Testament"};
             cartItem.original_line_price,
             settings.moneyFormat
           ),
+          unitPrice: Shopify.formatMoney(
+            cartItem.unit_price,
+            settings.moneyFormat
+          ),
+          unitPriceMeasurement: unitPriceMeasurement,
+          unitPriceBaseUnit: unitPriceBaseUnit,
+          unitReferenceValue: unitReferenceValue,
+          showUnitReferenceValue: showUnitReferenceValue,
           discountedPrice: Shopify.formatMoney(
             cartItem.final_line_price,
             settings.moneyFormat
@@ -3439,6 +3463,19 @@ $(document).ready(function() {
     return false;
   });
 
+  // Show Hide Function
+  function Toggle(show, hide) {
+    var show = document.getElementById(show);
+    show.classList.remove("hide");
+    show.classList.add("show");
+    show.style.display = 'block';
+
+    var hide = document.getElementById(hide);
+    hide.classList.remove("show");
+    hide.classList.add("hide");
+    hide.style.display='none';
+  }
+
 });
 
 /*======================================================
@@ -3795,15 +3832,10 @@ theme.ProductForm = function (context, sectionId, events, Product) {
     })();
 
     (function price() {
-      var element = context.querySelector(".product-price .money") || context.querySelector(".product-price");
+      var element = context.querySelector(".price__regular .price-item--regular");
 
       events.on("variantchange", function (variant) {
         var price = money(variant.price);
-
-        if ( !variant.available ) {
-          price = config.sold_out;
-        }
-
         element.innerHTML = price;
 
         events.on("variantunavailable", function (variant) {
@@ -3813,25 +3845,80 @@ theme.ProductForm = function (context, sectionId, events, Product) {
       });
     })();
 
-    (function compare_price() {
-      var element = context.querySelector(".was");
+    (function price_classes() {
+      var element = context.querySelector("[data-price]");
+
+      events.on("variantchange", function (variant) {
+        if ( variant.available && variant.compare_at_price > variant.price ) {
+          element.classList.add('price--on-sale');
+          element.classList.remove('price--sold-out');
+        } else if ( !variant.available && variant.compare_at_price > variant.price ) {
+          element.classList.add('price--sold-out');
+          element.classList.add('price--on-sale');
+        } else if ( !variant.available ) {
+          element.classList.add('price--sold-out');
+          element.classList.remove('price--on-sale');
+        } else {
+          element.classList.remove('price--on-sale');
+          element.classList.remove('price--sold-out');
+        }
+
+        if (variant.unit_price_measurement) {
+          element.classList.add('price--unit-available');
+        } else {
+          element.classList.remove('price--unit-available');
+        }
+      });
+
+    })();
+
+    (function unit_price() {
+      var element = context.querySelector("[data-unit-price]");
+      var wrapper = context.querySelector(".price__unit");
 
       if ( !element ) {
         return false;
       }
 
       events.on("variantchange", function (variant) {
-        var price = "";
+        var unitPrice = "";
+
+        if (variant.unit_price) {
+          unitPrice =
+            Shopify.formatMoney(variant.unit_price, config.money_format); +
+            ' ' +
+            "{{ 'general.accessibility.unit_price_separator' | t }}" +
+            ' ' +
+            getBaseUnit(variant);
+
+            wrapper.style.display = "flex";
+        } else {
+          wrapper.style.display = "none";
+        }
+
+        element.innerHTML = unitPrice;
+      });
+    })();
+
+    (function compare_price() {
+      var saleEl = context.querySelector(".price__sale .price-item--sale");
+      var regEl = context.querySelector(".price__sale .price-item--regular");
+
+      if ( !saleEl ) {
+        return false;
+      }
+
+      events.on("variantchange", function (variant) {
+        var salePrice = "",
+            regPrice = "";
 
         if ( variant.compare_at_price > variant.price ) {
-          var price = money(variant.compare_at_price);
+          regPrice = money(variant.compare_at_price);
+          salePrice = money(variant.price);
         }
 
-        if ( !variant.available ) {
-          price = "";
-        }
-
-        element.innerHTML = price;
+        saleEl.innerHTML = salePrice;
+        regEl.innerHTML = regPrice;
       });
     })();
 
@@ -3894,6 +3981,13 @@ theme.ProductForm = function (context, sectionId, events, Product) {
     function money(cents) {
       return Shopify.formatMoney(cents, config.money_format);
     }
+
+    function getBaseUnit(variant) {
+     return variant.unit_price_measurement.reference_value === 1
+       ? variant.unit_price_measurement.reference_unit
+       : variant.unit_price_measurement.reference_value +
+           variant.unit_price_measurement.reference_unit;
+   }
 }
 
 theme.ProductGallery = function (context, sectionId, events, Product) {

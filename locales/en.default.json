@@ -42,6 +42,9 @@
     },
     "language": {
       "dropdown_label": "Language"
+    },
+    "accessibility": {
+      "unit_price_separator": "per"
     }
   },
   "blogs": {
@@ -152,7 +155,9 @@
   "customer": {
     "account": {
       "title": "Account",
+      "link": "Back to Account",
       "details": "Account Details",
+      "returns_content": "Return/Exchange",
       "view_addresses": "View Addresses",
       "return": "Return to Account Details"
     },
@@ -166,7 +171,7 @@
     },
     "addresses": {
       "title": "Your Addresses",
-      "default": "Default",
+      "default": "Primary Address",
       "add_new": "Add a New Address",
       "edit_address": "Edit address",
       "first_name": "First Name",
@@ -217,6 +222,7 @@
       "discount": "Discount",
       "shipping": "Shipping",
       "tax": "Tax",
+      "order_details": "Order Details",
       "details": {
         "product": "Product",
         "sku": "SKU",
@@ -287,6 +293,7 @@
     "product": {
       "details": "Details",
       "sold_out": "Sold Out",
+      "from_lowest_price_html": "from {{ lowest_price }}",
       "unavailable": "Unavailable",
       "compare_at": "Compare at",
       "add_to_cart": "Add to Cart",
@@ -307,7 +314,8 @@
       "product_type": "Type",
       "product_sku": "SKU",
       "view_in_space": "View in your space",
-      "view_in_space_label": "View in your space, loads item in augmented reality window"
+      "view_in_space_label": "View in your space, loads item in augmented reality window",
+      "unit_price_label": "Unit Price"
     }
   },
   "gift_cards": {

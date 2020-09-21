@@ -31,7 +31,6 @@
                     {{/properties}}
                   </div>
                   <div class="grid-item one-half">
-                    <p>
                       {{#if discountsApplied}}
                         <span class="visually-hidden">{% endraw %}{{ 'products.general.sale_price' | t }}{% raw %}</span>
                         <span class="ajaxcart__price onsale money">{{{discountedPrice}}}</span>
@@ -40,7 +39,23 @@
                       {{else}}
                         <span class="ajaxcart__price money">{{{price}}}</span>
                       {{/if}}
-                    </p>
+                      <span {{#unless unitPriceMeasurement}}class="hide"{{/unless}} data-unit-price-group>
+                        <dt>
+                          <span class="visually-hidden visually-hidden--inline">{% endraw %}{{ 'products.product.unit_price_label' | t }}{% raw %}</span>
+                        </dt>
+                        <dd>
+                          <span class="price-unit-price">
+                            <span data-unit-price>{{unitPrice}}</span>
+                            <span aria-hidden="true">/</span><span class="visually-hidden">{% endraw %}{{ 'general.accessibility.unit_price_separator' | t }}{% raw %}&nbsp;</span>
+                            <span data-unit-price-base-unit>
+                              {{#if showUnitReferenceValue}}
+                              {{unitReferenceValue}}
+                              {{/if}}
+                              {{unitPriceBaseUnit}}
+                            </span>
+                          </span>
+                        </dd>
+                      </span>
 
                     {{#if discountsApplied}}
                       {{#each discounts}}
