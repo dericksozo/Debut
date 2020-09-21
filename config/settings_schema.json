@@ -21,7 +21,24 @@
       "label": "Search",
       "info": "Show products only"
     }]
-  }, {
+  },
+  {
+    "name": "Customer Accounts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_ca_returns",
+        "label": "Show Return/Exchanges Info",
+        "default": true
+      },
+      {
+         "type": "page",
+         "id": "ca_returns_page",
+         "label": "Return/Exchanges Info"
+      }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [{
       "type": "header",

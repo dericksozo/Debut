@@ -4948,6 +4948,7 @@ theme.ProductRecommendations = (function (context) {
         if (request.status >= 200 && request.status < 300) {
           var container = document.createElement("div");
           container.innerHTML = request.response;
+          if (!container.querySelector(".product-recommendations")) return false;
           productRecommendationsSection.parentElement.innerHTML = container.querySelector(".product-recommendations").innerHTML;
         }
       };
