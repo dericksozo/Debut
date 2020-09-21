@@ -100,6 +100,8 @@
   "customer": {
     "account": {
       "details": "Détails du compte",
+      "link": "Retour au compte",
+      "returns_content": "Retour / échange",
       "return": "Retour aux détails du compte",
       "title": "Compte",
       "view_addresses": "Afficher les adresses"
@@ -121,7 +123,7 @@
       "city": "Ville",
       "company": "Entreprise",
       "country": "Pays",
-      "default": "Défaut",
+      "default": "Adresse principale",
       "delete": "Supprimer",
       "edit": "Éditer",
       "edit_address": "Modifier l'adresse",
@@ -148,6 +150,7 @@
       "billing_address": "Adresse de facturation",
       "cancelled": "Commande annulée le",
       "date": "Placé sur",
+      "order_details": "Détails de la commande",
       "details": {
         "price": "Prix",
         "product": "Produit",
@@ -215,6 +218,9 @@
     },
     "language": {
       "dropdown_label": "Langue"
+    },
+    "accessibility": {
+      "unit_price_separator": "par"
     },
     "newsletter_form": {
       "confirmation": "Merci pour votre inscription à notre newsletter.",
@@ -303,9 +309,11 @@
       "product_type": "Type",
       "quantity": "Quantité",
       "sold_out": "Épuisé",
+      "from_lowest_price_html": "de {{ lowest_price }}",
       "unavailable": "Non disponible",
       "view_in_space": "Voir dans votre espace",
-      "view_in_space_label": "Visualisez dans votre espace, charge l'élément dans la fenêtre de réalité augmentée"
+      "view_in_space_label": "Visualisez dans votre espace, charge l'élément dans la fenêtre de réalité augmentée",
+      "unit_price_label": "Prix unitaire"
     }
   },
   "social": {

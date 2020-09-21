@@ -42,6 +42,9 @@
     },
     "language": {
       "dropdown_label": "Idioma"
+    },
+    "accessibility": {
+      "unit_price_separator": "por"
     }
   },
   "blogs": {
@@ -152,7 +155,9 @@
   "customer": {
     "account": {
       "title": "Conta",
+      "link": "Voltar para a conta",
       "details": "Detalhes da conta",
+      "returns_content": "Devolução / Troca",
       "view_addresses": "Ver endereços",
       "return": "Voltar para os detalhes da conta"
     },
@@ -166,7 +171,7 @@
     },
     "addresses": {
       "title": "Seus endereços",
-      "default": "Padrão",
+      "default": "Endereço primário",
       "add_new": "Adicionar um novo endereço",
       "edit_address": "Editar endereço",
       "first_name": "Nome",
@@ -217,6 +222,7 @@
       "discount": "Desconto",
       "shipping": "Frete",
       "tax": "Imposto",
+      "order_details": "Detalhes do pedido",
       "details": {
         "product": "Produto",
         "sku": "SKU",
@@ -287,6 +293,7 @@
     "product": {
       "details": "Detalhes",
       "sold_out": "Esgotado",
+      "from_lowest_price_html": "de {{ lowest_price }}",
       "unavailable": "Indisponível",
       "compare_at": "Comparar em",
       "add_to_cart": "Adicionar ao carrinho",
@@ -307,7 +314,8 @@
       "product_type": "Tipo",
       "product_sku": "SKU",
       "view_in_space": "Ver no seu espaço",
-      "view_in_space_label": "Ver no seu espaço. Carrega o item com realidade aumentada janela"
+      "view_in_space_label": "Ver no seu espaço. Carrega o item com realidade aumentada janela",
+      "unit_price_label": "Preço unitário"
     }
   },
   "gift_cards": {

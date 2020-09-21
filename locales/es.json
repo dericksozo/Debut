@@ -42,6 +42,9 @@
     },
     "language": {
       "dropdown_label": "Idioma"
+    },
+    "accessibility": {
+      "unit_price_separator": "por"
     }
   },
   "blogs": {
@@ -152,7 +155,9 @@
   "customer": {
     "account": {
       "title": "Cuenta",
+      "link": "Volver a la cuenta",
       "details": "Detalles de la cuenta",
+      "returns_content": "Devoluciones y Cambio",
       "view_addresses": "Ver direcciones",
       "return": "Volver a los detalles de la cuenta"
     },
@@ -166,7 +171,7 @@
     },
     "addresses": {
       "title": "Tus direcciones",
-      "default": "Por defecto",
+      "default": "dirección primaria",
       "add_new": "Añadir una nueva dirección",
       "edit_address": "Editar la dirección",
       "first_name": "Nombre",
@@ -217,6 +222,7 @@
       "discount": "Descuento",
       "shipping": "Envío",
       "tax": "Impuesto",
+      "order_details": "Detalles del pedido",
       "details": {
         "product": "Producto",
         "sku": "Referencia de producto",
@@ -287,6 +293,7 @@
     "product": {
       "details": "Detalles",
       "sold_out": "Agotado",
+      "from_lowest_price_html": "de {{ lowest_price }}",
       "unavailable": "No disponible",
       "compare_at": "Comparar en",
       "add_to_cart": "Añadir a la cesta",
@@ -307,7 +314,8 @@
       "product_type": "Tipo",
       "product_sku": "Referencia de producto",
       "view_in_space": "Ver en tu espacio",
-      "view_in_space_label": "Velo en tu espacio, carga el artículo en realidad aumentada ventana"
+      "view_in_space_label": "Velo en tu espacio, carga el artículo en realidad aumentada ventana",
+      "unit_price_label": "Precio unitario"
     }
   },
   "gift_cards": {

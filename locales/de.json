@@ -42,6 +42,9 @@
     },
     "language": {
       "dropdown_label": "Sprache"
+    },
+    "accessibility": {
+      "unit_price_separator": "pro"
     }
   },
   "blogs": {
@@ -152,7 +155,9 @@
   "customer": {
     "account": {
       "title": "Konto",
+      "link": "Zurück zum Konto",
       "details": "Kontodetails",
+       "returns_content": "Rückgabe / Umtausch",
       "view_addresses": "Adressen ansehen",
       "return": "Zu den Kontodetails zurückkehren"
     },
@@ -166,7 +171,7 @@
     },
     "addresses": {
       "title": "Ihre Adressen",
-      "default": "Standardeinstellung",
+      "default": "Hauptadresse",
       "add_new": "Neue Adresse hinzufügen",
       "edit_address": "Adresse ändern",
       "first_name": "Vorname",
@@ -217,6 +222,7 @@
       "discount": "Rabatt",
       "shipping": "Versand",
       "tax": "Steuer",
+      "order_details": "Bestelldetails",
       "details": {
         "product": "Produkt",
         "sku": "Lagereinheit",
@@ -287,6 +293,7 @@
     "product": {
       "details": "Details",
       "sold_out": "Ausverkauft",
+      "from_lowest_price_html": "von {{ lowest_price }}",
       "unavailable": "Nicht erhältlich",
       "compare_at": "Vergleichen bei",
       "add_to_cart": "Zum Einkaufswagen hinzufügen",
@@ -307,7 +314,8 @@
       "product_type": "Art",
       "product_sku": "Lagereinheit",
       "view_in_space": "In Ihrem Raum anzeigen",
-      "view_in_space_label": "In Ihrem Raum anzeigen, lädt Artikel in Augmented-Reality-Fenster"
+      "view_in_space_label": "In Ihrem Raum anzeigen, lädt Artikel in Augmented-Reality-Fenster",
+      "unit_price_label": "Stückpreis"
     }
   },
   "gift_cards": {
