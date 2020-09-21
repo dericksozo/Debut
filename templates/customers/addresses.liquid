@@ -11,7 +11,7 @@
       {% paginate customer.addresses by 12 %}
         <div class="row">
           {% for address in customer.addresses %}
-            <div id="view_address_{{address.id}}" class="customer_address desktop-4 tablet-2 mobile-3">
+            <div id="view_address_{{address.id}}" class="customer_address desktop-4 tablet-6 mobile-3">
               <h4 class="address_title">
                 {% if address == customer.default_address %}{{ 'customer.addresses.default' | t }}{% endif %}
               </h4>
