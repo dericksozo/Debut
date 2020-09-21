@@ -14,7 +14,7 @@
           <a class="order-history" onClick="Toggle('order-history')" href="javascript:void(0)">{{ 'customer.orders.title' | t }}</a>
         </li>
         <li>
-          <a class="account-addresses" onClick="Toggle('account-addresses')" href="javascript:void(0)">{{ 'customer.account.view_addresses' | t }}</a>
+          <a class="account-addresses" onClick="Toggle('account-addresses')" href="javascript:void(0)">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
         </li>
         {% if settings.show_ca_returns and settings.ca_returns_page != blank %}
           <li>
@@ -22,7 +22,7 @@
           </li>
         {% endif %}
         <li>
-          <a href="{{ routes.account_logout_url }}">{{ 'layout.header.logout' | t }}({{ customer.addresses_count }})</a>
+          <a href="{{ routes.account_logout_url }}">{{ 'layout.header.logout' | t }}</a>
         </li>
       </ul>
     </div>
