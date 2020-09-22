@@ -151,7 +151,6 @@
     #logo a {
       font-size: {{ section.settings.logo_size }}px;
       text-transform: {{ section.settings.logo_transform }};
-      font-weight: {{ section.settings.logo_weight }};
     }
     {% endif %}
 
@@ -275,25 +274,6 @@
           {
             "value": "none",
             "label": "Normal"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "logo_weight",
-        "label": "Logo text weight",
-        "options": [
-          {
-            "value": "400",
-            "label": "Normal"
-          },
-          {
-            "value": "300",
-            "label": "Light"
-          },
-          {
-            "value": "700",
-            "label": "Bold"
           }
         ]
       },
