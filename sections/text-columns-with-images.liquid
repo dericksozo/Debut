@@ -28,6 +28,10 @@
             <noscript>
               <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.image.alt }}">
             </noscript>
+          {% else %}
+          <div class="onboard">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
           {% endif %}
         {% if block.settings.link != blank %}</a>{% endif %}
         <div class="text-promo-content">
@@ -52,7 +56,10 @@
 
 
 <style>
-  #text-promo-{{ section.id }} .homepage-text-promo  { text-align: {{ section.settings.align_text }}; }
+#text-promo-{{ section.id }} .homepage-text-promo  { text-align: {{ section.settings.align_text }}; }
+.homepage-text-promo .onboard {
+  margin-bottom: 10px;
+}
 </style>
 
 
