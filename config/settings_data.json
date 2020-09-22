@@ -204,17 +204,7 @@
           "type": "collection-template",
           "settings": {
             "products_per_page": 30,
-            "products_per_row": 4,
-            "sort_by": true,
-            "sort_dropdown_a_check": false,
-            "filter_1_title": "Filter by",
-            "sort_a": "",
-            "sort_dropdown_b_check": false,
-            "filter_2_title": "",
-            "sort_b": "",
-            "sort_dropdown_c_check": false,
-            "filter_3_title": "",
-            "sort_c": ""
+            "products_per_row": 3
           }
         },
         "product-template": {
@@ -640,17 +630,7 @@
           "type": "collection-template",
           "settings": {
             "products_per_page": 30,
-            "products_per_row": 4,
-            "sort_by": true,
-            "sort_dropdown_a_check": false,
-            "filter_1_title": "Filter by",
-            "sort_a": "",
-            "sort_dropdown_b_check": false,
-            "filter_2_title": "",
-            "sort_b": "",
-            "sort_dropdown_c_check": false,
-            "filter_3_title": "",
-            "sort_c": ""
+            "products_per_row": 3
           }
         },
         "product-template": {
@@ -1084,17 +1064,7 @@
           "type": "collection-template",
           "settings": {
             "products_per_page": 30,
-            "products_per_row": 4,
-            "sort_by": true,
-            "sort_dropdown_a_check": false,
-            "filter_1_title": "Filter by",
-            "sort_a": "",
-            "sort_dropdown_b_check": false,
-            "filter_2_title": "",
-            "sort_b": "",
-            "sort_dropdown_c_check": false,
-            "filter_3_title": "",
-            "sort_c": ""
+            "products_per_row": 3
           }
         },
         "product-template": {
@@ -1528,17 +1498,7 @@
           "type": "collection-template",
           "settings": {
             "products_per_page": 30,
-            "products_per_row": 4,
-            "sort_by": true,
-            "sort_dropdown_a_check": false,
-            "filter_1_title": "Filter by",
-            "sort_a": "",
-            "sort_dropdown_b_check": false,
-            "filter_2_title": "",
-            "sort_b": "",
-            "sort_dropdown_c_check": false,
-            "filter_3_title": "",
-            "sort_c": ""
+            "products_per_row": 3
           }
         },
         "product-template": {
@@ -1897,22 +1857,26 @@
           "1480352634086": {
             "type": "newsletter",
             "settings": {
-              "title": "Connect",
-              "mailing_subheading": "<p>Join our mailing list for updates<\/p>"
+              "title": "Connect"
+            }
+          },
+          "1521642145917": {
+            "type": "text",
+            "settings": {
+              "title": "About",
+              "footer_text": "<p>Adding text to your footer helps introduce your business to new customers.<\/p>"
             }
           }
         },
         "block_order": [
+          "1521642145917",
           "1480352627697",
           "1480352634086"
         ],
         "settings": {
-          "bottom_logo": "",
-          "bottom_logo_max_width": 300,
           "footer_text_align": "left",
           "footer_title_transform": "uppercase",
-          "footer_title_size": 14,
-          "show_credit_cards": true
+          "footer_title_size": 15
         }
       },
       "1480352639511": {
@@ -1973,17 +1937,7 @@
         "type": "collection-template",
         "settings": {
           "products_per_page": 30,
-          "products_per_row": 4,
-          "sort_by": true,
-          "sort_dropdown_a_check": false,
-          "filter_1_title": "Filter by",
-          "sort_a": "",
-          "sort_dropdown_b_check": false,
-          "filter_2_title": "",
-          "sort_b": "",
-          "sort_dropdown_c_check": false,
-          "filter_3_title": "",
-          "sort_c": ""
+          "products_per_row": 3
         }
       },
       "product-template": {
