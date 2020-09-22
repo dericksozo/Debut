@@ -5,7 +5,8 @@
     "theme_version": "7.3.2",
     "theme_documentation_url": "https:\/\/\/\/www.weareunderground.com\/products\/testament",
     "theme_support_url": "http:\/\/support.undergroundmedia.co.uk\/"
-  }, {
+  },
+  {
     "name": "Favicon",
     "settings": [{
       "type": "image_picker",
@@ -13,30 +14,6 @@
       "label": "Favicon image",
       "info": "Will be scaled down to 32 x 32px"
     }]
-  }, {
-    "name": "Search",
-    "settings": [{
-      "type": "checkbox",
-      "id": "search_products",
-      "label": "Search",
-      "info": "Show products only"
-    }]
-  },
-  {
-    "name": "Customer Accounts",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "show_ca_returns",
-        "label": "Show Return/Exchanges Info",
-        "default": true
-      },
-      {
-         "type": "page",
-         "id": "ca_returns_page",
-         "label": "Return/Exchanges Info"
-      }
-    ]
   },
   {
     "name": "Colors",
@@ -289,7 +266,8 @@
       "label": "Submit button text",
       "default": "#ffffff"
     }]
-    }, {
+    },
+    {
       "name": "Typography",
       "settings": [{
         "type": "header",
@@ -405,7 +383,8 @@
       "id": "breadcrumb",
       "label": "Show breadcrumb trail"
     }]
-  }, {
+  },
+  {
     "name": "Global",
     "settings": [
       {
@@ -591,6 +570,31 @@
           "default": 2
         }
      ]
+  },
+  {
+    "name": "Search",
+    "settings": [{
+      "type": "checkbox",
+      "id": "search_products",
+      "label": "Search",
+      "info": "Show products only"
+    }]
+  },
+  {
+    "name": "Customer Accounts",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_ca_returns",
+        "label": "Show Return/Exchanges Info",
+        "default": true
+      },
+      {
+         "type": "page",
+         "id": "ca_returns_page",
+         "label": "Return/Exchanges Info"
+      }
+    ]
   },
   {
     "name": "Cart page",
