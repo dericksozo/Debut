@@ -614,7 +614,7 @@
     "name": "Social media",
     "settings": [{
       "type": "text",
-      "id": "twittername",
+      "id": "twitter_url",
       "label": "Twitter",
       "info": "https:\/\/twitter.com\/shopify"
     }, {

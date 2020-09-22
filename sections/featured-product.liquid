@@ -27,8 +27,6 @@ data-section-type="product-section">
 </div>
 
 <div class="row">
-  <meta itemprop="url" content="{{ routes.root_url }}{{ product.url }}">
-  <meta itemprop="image" content="{{ product.featured_media.media | img_url: '1024x1024' }}">
 
  {% render 'product-json', product: product %}
 
