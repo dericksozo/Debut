@@ -4227,7 +4227,7 @@ ul#main-nav li ul.submenu {
   display: none;
   position: absolute;
   top: 0;
-  margin-left: 20px;
+  padding: 10px 0;
   z-index: 5;
   background: {{ settings.dropdown_background }};
   border-bottom: 1px solid {{ settings.nav_border_color }};
@@ -4288,7 +4288,8 @@ ul#main-nav li ul.submenu li.nest:after {
   display: none;
   position: absolute;
   left: 100%;
-  top: 0;
+  padding: 10px 0;
+  top: -10px;
   background: {{ settings.dropdown_background }};
   border: 1px solid {{ settings.nav_border_color }};
 }
@@ -4305,16 +4306,9 @@ ul.megamenu {
   left: 0;
   z-index: 2;
   line-height: initial;
-}
-
-ul.megamenu li > ul {
-  width: 100%;
-}
-
-ul.megamenu {
+  padding: 10px 10px 30px;
   background: {{ settings.dropdown_background }};
   border: 1px solid {{ settings.nav_border_color }};
-  padding-bottom: 20px;
 }
 
 ul.megamenu h4 {
@@ -4327,6 +4321,10 @@ ul.megamenu h4 {
   text-align: left;
   font-size: {{ settings.nav_size }}px;
   letter-spacing: initial;
+}
+
+ul.megamenu li > ul {
+  width: 100%;
 }
 
 ul.megamenu li:hover {
