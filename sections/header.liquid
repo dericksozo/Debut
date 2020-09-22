@@ -9,6 +9,29 @@
   {%- assign hd_locale_selector = true -%}
 {%- endif -%}
 
+{% assign nav_full = false %}
+{% assign nav_inline = false %}
+
+{% case section.settings.nav_style %}
+{% when 'full' %}
+  {% assign nav_full = true %}
+{% when 'inline' %}
+  {% assign nav_inline = true %}
+{% endcase %}
+
+{% capture logo %}
+<div id="logo"{% if nav_inline == false %} class="desktop-12 tablet-6 mobile-3"{% endif %}>
+  {% if section.settings.logo != blank %}
+  {%- assign image_size = '800x' -%}
+  <a href="{{ routes.root_url }}">
+    <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
+  </a>
+  {% else %}
+  <a href="{{ routes.root_url }}">{{ shop.name }}</a>
+  {% endif %}
+</div>
+{% endcapture %}
+
 <div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
   <header>
     {% if section.settings.full_width_header %}
@@ -34,7 +57,15 @@
           {%- endunless -%}
           <ul id="cart" class="{% if section.settings.show_announcement_text %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
             <li class="mm-trigger">
-              <i class="fa fa-bars" aria-hidden="true"></i> {{ 'layout.header.menu' | t }}
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </li>
+            <li class="mobile-logo">
+              {% if section.settings.logo != blank %}
+              {%- assign image_size = '500x' -%}
+              <a href="{{ routes.root_url }}"><img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo"></a>
+              {% else %}
+              <a href="{{ routes.root_url }}">{{ shop.name }}</a>
+              {% endif %}
             </li>
             <li class="seeks">
               <form action="/search" method="get" id="searchbox">
@@ -45,7 +76,6 @@
               </form>
               <a href="#" class="search-icon"><i class="fa fa-search fa-2x" aria-hidden="true"></i></a>
             </li>
-            <li><a href="{{ routes.root_url }}"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
             {% if shop.customer_accounts_enabled %}
               {% if customer  %}
                 <li class="cust"><a href="{{ routes.account_url }}"><i class="fa fa-user fa-2x" aria-hidden="true"></i></a></li>
@@ -108,7 +138,7 @@
                 {%- endform -%}
               </li>
             {%- endif -%}
-            <li><a class="my-cart-link" href="{{ routes.cart_url }}">{{ 'layout.header.my_cart' | t }}&nbsp; {% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
+            <li><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
         {% if section.settings.full_width_header %}
@@ -116,31 +146,29 @@
     </div>
     {% endif %}
   </header>
-  <div class="header-wrapper">
+  <div class="header-wrapper{% if nav_inline %} is_sticky{% endif %}">
+    {% if nav_inline == false %}
     <div class="row">
-      <div id="logo" class="desktop-12 tablet-6 mobile-3">
-        {% if section.settings.logo != blank %}
-        {%- assign image_size = '800x' -%}
-        <a href="{{ routes.root_url }}">
-          <img src="{{ section.settings.logo | img_url: image_size }}" alt="{{ section.settings.logo.alt | default: shop.name }}" itemprop="logo">
-        </a>
-        {% else %}
-        <a href="{{ routes.root_url }}">{{ shop.name }}</a>
-        {% endif %}
-      </div>
+      {{ logo }}
     </div>
+    {% endif %}
     <div class="clear"></div>
-    <nav>
-      <ul id="main-nav" class="row">
+    <nav{% if nav_inline == false %} class="is_sticky"{% endif %}>
+      {% if nav_inline %}
+      <div class="nav-inner-container">
+      {{ logo }}
+      {% endif %}
+      <ul id="main-nav"{% if nav_inline == false %} class="row"{% endif %}>
       	{% assign menu = linklists[section.settings.main_nav] %}
         {% for link in menu.links %}
           {% render 'navigation', link: link, menu: menu %}
         {% endfor %}
       </ul>
-    </nav>
-    {% if section.settings.nav_style != 'mobile' %}
-    <div class="clear header-spacer"></div>
+      {% if nav_inline %}
+    </div>{% comment %} close nav-inner-container {% endcomment %}
     {% endif %}
+    </nav>
+    <div class="clear header-spacer"></div>
   </div>
   <style>
     {% if section.settings.logo != blank %}
@@ -159,13 +187,6 @@
       margin-bottom: 0;
     }
 
-    {% if section.settings.nav_style == 'full' %}
-    @media screen and (min-width: 740px ) {
-      ul#cart li.mm-trigger { display: none; }
-    }
-    {% else %}
-    nav { display: none; }
-    {% endif %}
     ul#main-nav li {
       line-height: {{ section.settings.nav_height }}px;
     }
@@ -179,6 +200,133 @@
       border-top: {{ section.settings.nav_top_border_height }}px solid {{ settings.nav_border_color }};
       border-bottom: {{ section.settings.nav_bottom_border_height }}px solid {{ settings.nav_border_color }};
     }
+    {% if nav_inline %}
+      .nav-inner-container {
+        display: grid;
+        grid-template-columns: 3fr 8fr 3fr;
+        margin: 0 auto;
+        align-items: center;
+        line-height: {{ section.settings.nav_height }}px;
+        position: relative;
+      }
+      ul#main-nav {
+        position: unset;
+      }
+      ul#main-nav li {
+        line-height: unset;
+      }
+      div#logo {
+        line-height: unset;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      #logo a {
+        line-height: unset;
+        display: block;
+      }
+      #logo a img {
+        vertical-align: middle;
+        display: block;
+        max-height: {{ section.settings.nav_height | minus: 10 }}px;
+      }
+      @media screen and (min-width: 740px) {
+        .nav-inner-container {
+          width: 720px;
+        }
+      }
+      @media screen and (min-width: 980px) {
+        .nav-inner-container {
+          width: 960px;
+        }
+      }
+      @media screen and (min-width: 1220px) {
+        .nav-inner-container {
+          width: 1200px;
+        }
+      }
+      @media screen and (min-width: 1680px) {
+        .nav-inner-container {
+          width: 1400px;
+        }
+      }
+      .gridlock-fluid .row {
+        width: 98%;
+      }
+      @media screen and (max-width: 740px) {
+        .nav-inner-container {
+          width: 98%;
+        }
+      }
+    {% endif %}
+
+    @media screen and (min-width: 981px) {
+      ul#cart li.mm-trigger,
+      ul#cart li.mobile-logo { display: none; }
+    }
+
+    @media screen and (max-width: 980px) {
+      ul#cart li.seeks,
+      ul#cart li.cust,
+      ul#cart li.lang-selector,
+      ul#cart li.curr-selector,
+      ul#cart li span.my-cart-text,
+      ul#social-icons,
+      #logo,
+      nav  {
+        display: none;
+      }
+      ul#cart {
+        display: grid;
+        width: 100%;
+        margin: 0;
+        padding: 10px 0;
+        background: {{ settings.header_wrapper_background }};
+        grid-template-columns: 1fr 3fr 1fr;
+        align-items: center;
+      }
+      ul#cart li.mm-trigger {
+        text-align: left;
+        font-size: 18px;
+      }
+      ul#cart li.mobile-logo {
+        text-align: center;
+      }
+      li.mobile-logo a img {
+        vertical-align: middle;
+        max-width: 300px;
+      }
+      div#upper-content {
+        width: 100%;
+      }
+      ul#cart li {
+        padding: 0 15px;
+      }
+      ul#cart li a,ul#cart li i {
+        color: {{ settings.mobile_header_icons }};
+      }
+    }
+    @media screen and (max-width: 740px) {
+      header {
+        line-height: 40px;
+      }
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 5;
+      }
+      .header-wrapper {
+        {% if section.settings.show_announcement_text %}
+        margin-top: 80px;
+        {% else %}
+        margin-top: 40px;
+        {% endif %}
+      }
+      li.mobile-logo a img {
+        max-width: 200px;
+      }
+    }
+
   </style>
 </div>
 
@@ -290,15 +438,15 @@
       {
         "type": "select",
         "id": "nav_style",
-        "label": "Style",
+        "label": "Navigation layout",
         "options": [
-          {
-            "value": "mobile",
-            "label": "Mobile"
-          },
           {
             "value": "full",
             "label": "Full"
+          },
+          {
+            "value": "inline",
+            "label": "Inline"
           }
         ]
       },
@@ -306,7 +454,7 @@
         "type":      "range",
         "id":        "nav_height",
         "min":       30,
-        "max":        60,
+        "max":        80,
         "step":       5,
         "unit":       "px",
         "label":     "Height",

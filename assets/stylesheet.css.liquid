@@ -1475,6 +1475,11 @@ textarea {
   background: {{ settings.header_wrapper_background }};
 }
 
+.header-wrapper.is_sticky {
+  width: 100%;
+  z-index: 5;
+}
+
 header {
   background: {{ settings.header }};
   line-height: 48px;
@@ -10815,9 +10820,13 @@ body.index div#footer-wrapper {
    background-color: {{ settings.header }};
    margin: 0;
    padding: 0;
-   vertical-align: middle;
+   vertical-align: unset;
    display: inline-block;
    text-transform: uppercase;
+   font-size: {{ settings.font_size }}px;
+   font-family: {{ main_font.family }};
+   height: unset;
+   line-height: unset;
 }
 .header-section form#localization_form {
    margin: 0;
