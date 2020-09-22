@@ -29,13 +29,7 @@
           </ul>
           {%- unless section.settings.show_announcement_text == false -%}
             <div id="hello" class="desktop-4 tablet-6 mobile-3">
-              {%- if section.settings.announcement_link -%}
-                <a href="{{ section.settings.announcement_link }}">
-                  {{ section.settings.announcement_text }}
-                </a>
-              {%- else -%}
                 {{ section.settings.announcement_text }}
-              {%- endif -%}
             </div>
           {%- endunless -%}
           <ul id="cart" class="{% if section.settings.show_announcement_text %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
@@ -161,7 +155,10 @@
     }
     {% endif %}
 
-    #hello { font-size: {{ section.settings.announcement_text_size }}px; }
+    #hello p {
+      font-size: {{ section.settings.announcement_text_size }}px;
+      margin-bottom: 0;
+    }
 
     {% if section.settings.nav_style == 'full' %}
     @media screen and (min-width: 740px ) {
@@ -206,10 +203,10 @@
         "label": "Show announcement text"
       },
       {
-        "type": "text",
+        "type": "richtext",
         "id": "announcement_text",
         "label": "Announcement text",
-        "default": "Share a shop announcement or message"
+        "default": "<p>Share a shop announcement or message</p>"
       },
       {
         "type":      "range",
@@ -220,11 +217,6 @@
         "unit":       "px",
         "label":     "Text size",
         "default":   13
-      },
-      {
-        "type": "url",
-        "id": "announcement_link",
-        "label": "Announcement link"
       },
       {
         "type": "select",
