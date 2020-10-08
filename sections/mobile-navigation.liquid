@@ -49,15 +49,19 @@
 </div>
 
 <style>
-  .slideout-menu { background: {{ section.settings.background_color }}; }
-  .slideout-menu ul#accordion li, .slideout-menu .accordion-toggle, .slideout-menu .accordion-toggle2 {
+  #menu.slideout-menu { background: {{ section.settings.background_color }}; }
+  #menu.slideout-menu ul#accordion li,
+  #menu.slideout-menu .accordion-toggle,
+  #menu.slideout-menu .accordion-toggle2 {
     color: {{ section.settings.link_color }};
     border-bottom: 1px solid {{ section.settings.border_color }};
   }
-  .slideout-menu ul#accordion li a, .slideout-menu ul#accordion a {
+  #menu.slideout-menu ul#accordion li a,
+  #menu.slideout-menu ul#accordion a {
     color: {{ section.settings.link_color }} !important;
   }
-  .accordion-toggle:after, .accordion-toggle2:after { border-left: 1px solid {{ section.settings.border_color }}; }
+  .accordion-toggle:after,
+  .accordion-toggle2:after { border-left: 1px solid {{ section.settings.border_color }}; }
 </style>
 
 {% schema %}
