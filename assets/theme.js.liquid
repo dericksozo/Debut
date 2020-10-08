@@ -3035,9 +3035,30 @@ theme.Helpers = (function() {
   function isTouch() {
     return touchDevice;
   }
+
+  function debounce(func, wait, immediate) {
+    var timeout;
+
+    return function() {
+      var context = this,
+        args = arguments;
+
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
+
   return {
     setTouch: setTouch,
-    isTouch: isTouch
+    isTouch: isTouch,
+    debounce: debounce
   };
 })();
 
@@ -3678,9 +3699,9 @@ theme.ProductForm = function (context, sectionId, events, Product) {
     new Shopify.OptionSelectors(prodSelector, {
       product: Product,
       onVariantSelected: function(variant, selector) {
-
         if ( !variant ) {
           events.trigger("variantunavailable");
+          Events.trigger("storeavailability:unavailable");
           return;
         }
 
@@ -3692,6 +3713,11 @@ theme.ProductForm = function (context, sectionId, events, Product) {
         events.trigger("variantchange:option1:" + variant.option1);
         events.trigger("variantchange:option2:" + variant.option2);
         events.trigger("variantchange:option3:" + variant.option3);
+
+
+        if ( context.querySelector('[data-store-availability-container]') ) {
+          Events.trigger("storeavailability:variant", variant.id, Product.title);
+        }
 
         if ( variant.featured_media ) {
           Events.trigger("variantchange:image", variant.featured_media.id, context);
@@ -4926,6 +4952,84 @@ theme.Product = (function () {
   return Product;
 })();
 
+theme.StoreAvailability = (function() {
+  Events.on("storeavailability:variant", function(id, title) {
+    updateContent(id, title)
+  });
+
+  function updateContent(id, title) {
+    var container = document.querySelector('[data-store-availability-container]');
+    var variantSectionUrl =
+      '/variants/' + id + '/?section_id=store-availability';
+    container.innerHTML = '';
+
+    fetch(variantSectionUrl)
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(storeAvailabilityHTML) {
+        if (storeAvailabilityHTML.trim() === '') {
+          return;
+        }
+
+        container.innerHTML = storeAvailabilityHTML;
+
+        // Show or hide container if variant unavailable
+        container.querySelector('.store-availability-container').classList.remove('fadeOut');
+        container.querySelector('.store-availability-container').style.display = "block";
+
+        Events.on("storeavailability:unavailable", function() {
+          container.querySelector('.store-availability-container').classList.add('fadeOut')
+          container.querySelector('.store-availability-container').style.display = "none";
+        });
+
+        // Move modal code to slideout
+        var source = document.getElementById("StoreAvailabilityModal");
+        document.getElementById("right-slideout").innerHTML = "";
+        document.getElementById("right-slideout").appendChild(source);
+
+        initModal();
+        updateProductTitle(title);
+      });
+  }
+  function initModal() {
+    var modal = new Slideout({
+      'panel': document.getElementById('panel'),
+      'menu': document.getElementById('StoreAvailabilityModal'),
+      'padding': 375,
+      'tolerance': 70,
+      'touch': false,
+      'side': 'right'
+    });
+
+    // Toggle button
+    document.querySelector('.store-availabilities-modal__trigger').addEventListener("click",  function() {
+      modal.open();
+    });
+
+    modal
+    .on('beforeopen', function() {
+      this.panel.classList.add('panel-open');
+    })
+    .on('open', function() {
+      this.panel.addEventListener('click', function() {
+        modal.close();
+      });
+    })
+    .on('beforeclose', function() {
+      this.panel.classList.remove('panel-open');
+      this.panel.removeEventListener('click', function() {
+        modal.close();
+      });
+    });
+
+  }
+  function updateProductTitle(productTitle) {
+    var storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
+    storeAvailabilityModalProductTitle.textContent = productTitle;
+  }
+})();
+
 theme.ProductRecommendations = (function (context) {
   function ProductRecommendations(container) {
 
@@ -5553,6 +5657,7 @@ $(document).ready(function() {
   sections.register('slideshow-section', theme.Slideshow);
   sections.register('product-section', theme.Product);
   sections.register('product-recommendations', theme.ProductRecommendations);
+  sections.register('store-availability', theme.StoreAvailability);
   sections.register('header-section', theme.Header);
   sections.register('collection-section', theme.Collection);
   sections.register('mobile-navigation', theme.mobileNav);
