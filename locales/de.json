@@ -79,6 +79,16 @@
       "facebook_title": "Liken Sie uns auf Facebook"
     }
   },
+  "store_availability": {
+    "general": {
+      "view_store_info": "Ladeninformationen anzeigen",
+      "check_other_stores": "Überprüfen Sie die Verfügbarkeit in anderen Geschäften",
+      "pick_up_available": "Abholung möglich",
+      "pick_up_currently_unavailable": "Abholung derzeit nicht verfügbar",
+      "pick_up_available_at_html": "Abholung möglich bei <strong>{{ location_name }}<\/strong>",
+      "pick_up_unavailable_at_html": "Abholung derzeit nicht verfügbar bei <strong>{{ location_name }}<\/strong>"
+    }
+  },
   "cart": {
     "general": {
       "title": "Mein Einkaufswagen",
