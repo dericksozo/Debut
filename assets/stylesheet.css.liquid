@@ -11445,3 +11445,124 @@ section.user-login .secondary-button.create-customer {
     margin-top: 48px;
   }
 }
+/* Store Availability */
+.store-availability-small-text {
+  font-size: 13px;
+}
+
+.store-availability-information {
+  display: flex;
+  margin-left: 5px;
+}
+
+.store-availability-information-container {
+  margin-left: 5px;
+}
+
+.store-availability-information i {
+  line-height: 22px;
+}
+
+.store-availability-information i.fa-check,
+.store-availabilities-list i.fa-check {
+   color: #00730B;
+ }
+
+ .store-availability-information i.fa-times,
+ .store-availabilities-list i.fa-times {
+   color: #DD2200;
+ }
+
+.store-availability-information__title {
+  margin-bottom: 0;
+}
+
+.store-availability-information__stock {
+  margin-bottom: 0;
+}
+
+.store-availability-information__stores {
+  margin-top: 8px;
+}
+
+.store-availability-information__link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.store-availability-information__link:hover, .store-availability-information__link:focus {
+  opacity: 0.6;
+}
+
+.store-availabilities-modal {
+  max-height: 100vh;
+  width: 375px;
+  left: auto;
+  border: 1px solid {{ settings.dotted_color }};
+  box-sizing: border-box;
+  box-shadow: -4px 4px 6px rgba(58, 58, 58, 0.04);
+  background-color: {{ settings.content_wrapper_background }};
+}
+
+@media only screen and (max-width: 749px) {
+  .store-availabilities-modal {
+    width: 100%;
+    z-index: 9999;
+  }
+}
+
+.store-availabilities-modal__header {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 16px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.store-availabilities-modal__product-title {
+  font-size: 17px;
+  text-transform: none;
+  margin-bottom: 0;
+}
+
+.store-availabilities-list {
+  overflow: auto;
+  padding: 0 10px;
+}
+
+.store-availabilities-modal__close {
+  margin-bottom: 13px;
+  cursor: pointer;
+}
+
+.store-availability-list__item {
+  padding: 0 10px 16px 10px;
+}
+
+.store-availability-list__item::before {
+  content: "";
+  display: block;
+  margin: 0 0 16px 0;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.store-availability-list__item > p {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+.store-availability-list__location {
+  display: flex;
+  justify-content: space-between;
+}
+
+.store-availability-list__stock {
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+.store-availability-container {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e1e1e1;
+  margin-bottom: 20px;
+  padding-top: 10px;
+}
