@@ -956,7 +956,7 @@ body {
 
 body {
   color: {{ settings.text_color }};
-  background: {{ settings.content_wrapper_background }};
+  background: {{ settings.background }};
   font-size: {{ settings.font_size }}px;
   font-family: {{ main_font.family }};
   line-height: 1.6em;
@@ -964,7 +964,7 @@ body {
   -ms-text-size-adjust: 100%;
 }
 body .slideout-panel {
-  background: {{ settings.content_wrapper_background }};
+  background: {{ settings.background }};
 }
 img {
   max-width: 100%;
@@ -1239,7 +1239,7 @@ hr {
   transform: translateX(-50%);
   width: 2.5rem;
   font-weight: 500;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   letter-spacing: .2px;
@@ -1382,7 +1382,7 @@ select {
   max-width: 100%;
   display: block;
   margin-bottom: 20px;
-  background: {{ settings.content_wrapper_background }};
+  background: {{ settings.background }};
 }
 
 select {
@@ -1669,7 +1669,7 @@ li.seeks {
 }
 
 .content-wrapper {
-  background: {{ settings.content_wrapper_background }};
+  background: {{ settings.background }};
 }
 
 .smallcash {
@@ -1692,7 +1692,7 @@ li.seeks {
   display: inline-block;
   padding: 8px 23px;
   margin: 0;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
   position: relative;
   z-index: 1;
 }
@@ -1701,7 +1701,7 @@ li.seeks {
   display: inline-block;
   padding: 8px 23px;
   margin: 0;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
   position: relative;
   z-index: 1;
 }
@@ -2014,7 +2014,7 @@ body.collection h1 {
     -moz-transition: opacity 0.3s ease-in-out;
     -o-transition: opacity 0.3s ease-in-out;
     transition: opacity 0.3s ease-in-out;
-   background:  {{ settings.content_wrapper_background }};
+   background:  {{ settings.background }};
   }
   .reveal:hover .hidden {
     z-index: 1;
@@ -8945,7 +8945,7 @@ body.compensate-for-scrollbar {
 }
 
 .fancybox-skin {
-  background: {{ settings.content_wrapper_background }};
+  background: {{ settings.background }};
   color: {{ settings.text_color }};
 }
 
@@ -10275,7 +10275,7 @@ button.ajaxifyCart--close:after {
 .thumbnail-icon svg, .product-main-image svg {
   height: 100%;
   width: 100%;
-  background: {{ settings.content_wrapper_background }} !important;
+  background: {{ settings.background }} !important;
   color: {{ settings.text_color }} !important;
   border: 1px solid {{ icon_border_color | color_lighten: 90 }};
 }
@@ -10302,7 +10302,7 @@ button.ajaxifyCart--close:after {
 .plyr video,
 .plyr__video-wrapper,
 .plyr__poster {
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
 }
 .product-video > video {
   width: 100%;
@@ -10457,7 +10457,7 @@ body .focus-visible,
 
 .vertical-carousel .thumb-slider-wrapper {
   overflow: hidden;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
 }
 
 #thumb-slider-wrapper .product-single__thumbnails-item {
@@ -10467,7 +10467,7 @@ body .focus-visible,
   width: 100%;
   max-width: 104px;
   overflow: hidden;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
 }
 
 #thumb-slider-wrapper .product-single__thumbnails-item img {
@@ -10482,7 +10482,7 @@ body .focus-visible,
   top: 0;
   left: 0;
   list-style: none;
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
 }
 
 .thumb-slider-slides li {
@@ -11496,7 +11496,7 @@ section.user-login .secondary-button.create-customer {
   border: 1px solid {{ settings.dotted_color }};
   box-sizing: border-box;
   box-shadow: -4px 4px 6px rgba(58, 58, 58, 0.04);
-  background-color: {{ settings.content_wrapper_background }};
+  background-color: {{ settings.background }};
 }
 
 @media only screen and (max-width: 749px) {
@@ -11555,6 +11555,7 @@ section.user-login .secondary-button.create-customer {
   margin-top: 8px;
   margin-bottom: 16px;
 }
+
 .store-availability-container {
   padding-bottom: 20px;
   border-bottom: 1px solid #e1e1e1;

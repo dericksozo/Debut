@@ -27,7 +27,7 @@
       "default": "#ffffff"
     }, {
       "type": "color",
-      "id": "content_wrapper_background",
+      "id": "background",
       "label": "Content area background",
       "default": "#ffffff"
     }, {
