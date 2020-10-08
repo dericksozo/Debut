@@ -21,30 +21,28 @@
       {% else %}
         {%- assign preview_image = product.featured_media.preview_image -%}
         {%- assign second_image = product.media[1] -%}
-        {% assign image_box_ratio = preview_image.height | append: ".0" | times: 1 | divided_by: preview_image.width | times: 100 | append: "%" %}
-        {% assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        {%- if settings.secondary_images_hover == 'image_flip' and product.media.size > 1 -%}
+          {% assign is_first = 'first-image' %}
+        {%- endif -%}
 
-        <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
-          <img class="lazyload lazyload-fade {% if settings.image_flip and product.images.size > 1 %}first-image{% endif %}"
-            data-src="{{ img_url }}"
-            data-sizes="auto"
-            data-original="{{ preview_image | img_url: '500x' }}"
-            alt="{{ preview_image.alt | escape }}">
-        </div>
+        {% render 'basic-responsive-image',
+          type: product.featured_media.preview_image,
+          data_widths: '[180,360,540]',
+          is_first: is_first %}
 
         <noscript>
           <img src="{{ preview_image | img_url: '500x' }}" alt="{{ preview_image.alt | escape }}">
         </noscript>
         {% if settings.secondary_images_hover == 'image_flip' and product.media.size > 1 and second_image.media_type == 'image' %}
           <div class="hidden">
-            {% render 'basic-responsive-image', type: product.media[1] %}
+            {% render 'basic-responsive-image', type: product.media[1], data_widths: '[180, 360, 540]' %}
             <noscript>
               <img src="{{ product.media[1] | img_url: '500x' }}" alt="{{ product.media[1].alt | escape }}">
             </noscript>
           </div>
         {% elsif settings.secondary_images_hover == 'image_flip' and product.media.size > 1 and second_image.media_type != 'image' %}
           <div class="hidden">
-            {% render 'basic-responsive-image', type: product.media[1].preview_image %}
+            {% render 'basic-responsive-image', type: product.media[1].preview_image, data_widths: '[180, 360, 540]' %}
             <noscript>
               <img src="{{ product.media[1].preview_image | img_url: '500x' }}" alt="{{ product.media[1].preview_image.alt | escape }}">
             </noscript>

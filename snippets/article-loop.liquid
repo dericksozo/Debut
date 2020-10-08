@@ -14,7 +14,7 @@
       <div class="article-content">
         {% if article.image %}
           <a href="{{ article.url }}">
-            {% render 'basic-responsive-image' | type: article.image %}
+            {% render 'basic-responsive-image', type: article.image, data_widths: '[180, 360, 540, 720, 900, 1080]' %}
             <noscript>
               <img src="{{ article.image | img_url: '800x' }}" alt="{{ article.image.alt }}">
             </noscript>

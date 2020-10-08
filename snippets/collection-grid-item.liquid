@@ -8,12 +8,12 @@
 <div class="collection-image">
   <a href="{{ collection.url }}" title="{{ collection_title }}">
     {% if collection.image %}
-      {% render 'basic-responsive-image', type: collection.image %}
+      {% render 'basic-responsive-image', type: collection.image, data_widths: '[180, 360, 540, 720]' %}
       <noscript>
         <img src="{{ collection.image | img_url: '800x' }}"  class="collection-grid-image">
       </noscript>
     {% elsif collection.products.first and collection.products.first.media != empty %}
-      {% render 'basic-responsive-image', type: collection.products.first.featured_media.preview_image %}
+      {% render 'basic-responsive-image', type: collection.products.first.featured_media.preview_image, data_widths: '[180, 360, 540, 720]' %}
       <noscript>
         <img src="{{ collection.products.first.featured_media.preview_image | img_url: '800x' }}" class="collection-grid-image">
       </noscript>
