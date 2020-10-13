@@ -36,7 +36,7 @@
             {% if block.settings.image != blank %}
               {% render 'basic-responsive-image',
                 type: block.settings.image,
-                data_widths: '[180, 360, 540, 720, 900, 1080, 1296]' %}
+                data_widths: '[180, 360, 540, 720, 900, 1080, 1296, 1512]' %}
               <noscript>
                 <img src="{{ block.settings.image | img_url: '1024x' }}" alt="{{ block.settings.image.alt }}">
               </noscript>
