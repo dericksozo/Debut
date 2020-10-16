@@ -4095,7 +4095,6 @@ theme.CustomPageSlideshow = function (context, events) {
        var Slideshow = document.querySelector('.slideshow')
        var flkty = Flickity.data( Slideshow )
        var Slide = event.target.getAttribute("data-slider-index");
-       console.log(Slide);
        flkty.select( Slide )
        flkty.pausePlayer()
       });
