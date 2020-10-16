@@ -1175,6 +1175,7 @@
     {
       "type": "featured_collection",
       "name": "Featured Collection",
+      "limit": 1,      
       "settings": [
         {
           "type": "text",
@@ -1186,6 +1187,20 @@
           "id": "collection",
           "type": "collection",
           "label": "Collection"
+        },
+        {
+          "id": "carousel",
+          "type": "checkbox",
+          "label": "Display in carousel"
+        },
+        {
+          "type":      "range",
+          "id":        "grid",
+          "min":       2,
+          "max":       5,
+          "step":      1,
+          "label":     "Product grid",
+          "default":   4
         },
         {
           "type": "range",

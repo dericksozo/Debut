@@ -1,25 +1,113 @@
 <section class="index-section homepage-section animate wow fadeIn no-fouc" data-section-id="{{ section.id }}" data-section-type="homepage-products" >
   <div class="row">
+
     {% if section.settings.title != blank %}
       <div class="section-title lines desktop-12 tablet-6 mobile-3"><h2>{{ section.settings.title | escape }}</h2></div>
+      <div class="clear"></div>
     {% endif %}
 
     {%- assign collection = collections[section.settings.collection] -%}
+    {% if section.settings.carousel %}{%- assign is_carousel = true -%}{%- endif -%}
     {%- assign prod_limit = section.settings.limit -%}
+    {%- assign grid = section.settings.grid -%}
+    {% capture slideshow_config %}{
+      "wrapAround":true,
+      "cellAlign": "left",
+      "dragThreshold":"15",
+      "pauseAutoPlayOnHover":false,
+      "prevNextButtons":true,
+      "pageDots": false
+   }{% endcapture %}
 
-    <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ section.id }}" data-slideout-ignore>
+    <div class="featured__collection{% if is_carousel %}-carousel{% endif %} product-loop"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
+      {% if section.settings.collection == blank %}
+      {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
+      {% else %}
       {% for product in collection.products limit: prod_limit %}
-        <div class="lazyOwl" id="product-listing-{{ product.id }}" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-          {% render 'product-listing', product: product, collection: collection %}
-        </div>
+      <div class="featured__collection-product product-index" id="product-listing-{{ product.id }}" data-product-id="{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+        {% render 'product-listing', product: product, collection: collection %}
+      </div>
       {% endfor %}
+      {% endif %}
     </div>
-
-    {% if section.settings.collection == blank %}
-      {% render 'onboard-product', prod_limit: prod_limit %}
-    {% endif %}
-
   </div>
+
+  {% case section.settings.grid %}
+  {% when 2 %}
+  {%- assign prod_grid = 50 -%}
+  {% when 3 %}
+  {%- assign prod_grid = 33.333 -%}
+  {% when 4 %}
+  {%- assign prod_grid = 25 -%}
+  {% when 5 %}
+  {%- assign prod_grid = 20 -%}
+  {% endcase %}
+
+  <style>
+  {% if is_carousel %}
+    .featured__collection-carousel {
+      width: 100%;
+    }
+    .featured__collection-carousel .featured__collection-product {
+      width: {{ prod_grid }}%;
+      padding: 0 15px 0;
+    }
+    @media screen and (min-width: 741px) and (max-width: 980px ) {
+      .featured__collection-carousel .featured__collection-product {
+        width: 33.333%;
+      }
+    }
+    @media screen and (max-width: 740px) {
+      .featured__collection-carousel .featured__collection-product {
+        width: 50%;
+      }
+    }
+    .featured__collection-carousel .flickity-button {
+      color: {{ settings.direction_color }};
+      background-color: {{ settings.direction_background }};
+      width: 45px;
+      height: 45px;
+      margin: 0;
+    }
+    .featured__collection-carousel .flickity-button:hover {
+      background-color: {{ settings.direction_hover }};
+    }
+    .featured__collection-carousel .flickity-button .flickity-button-icon {
+      width: 40%;
+      left: 30%;
+      height: 40%;
+      top: 30%;
+    }
+    .featured__collection-carousel .flickity-prev-next-button.next {
+      right: -10px;
+    }
+    .featured__collection-carousel .flickity-prev-next-button.previous {
+      left: -10px;
+    }
+  {% else %}
+    .featured__collection {
+      display: grid;
+      grid-template-columns: repeat({{ grid }}, {{ prod_grid }}%);
+    }
+    .featured__collection-product {
+      padding: 0 15px 0;
+    }
+    @media screen and (min-width: 741px) and (max-width: 980px ) {
+      .featured__collection {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column-gap: 20px;
+      }
+    }
+    @media screen and (max-width: 740px) {
+      .featured__collection {
+        grid-template-columns: 1fr 1fr
+        grid-column-gap: 20px;
+      }
+    }
+  {% endif %}
+  </style>
+
+
 </section>
 <div class="clear"></div>
 
@@ -39,15 +127,29 @@
       "type": "collection",
       "label": "Collection"
     },
-      {
-        "type":      "range",
-        "id":        "limit",
-        "min":       5,
-        "max":       30,
-        "step":      1,
-        "label":     "Products shown",
-        "default":   5
-      }
+    {
+      "id": "carousel",
+      "type": "checkbox",
+      "label": "Display in carousel"
+    },
+    {
+      "type":      "range",
+      "id":        "grid",
+      "min":       2,
+      "max":       5,
+      "step":      1,
+      "label":     "Product grid",
+      "default":   4
+    },
+    {
+      "type":      "range",
+      "id":        "limit",
+      "min":       5,
+      "max":       30,
+      "step":      1,
+      "label":     "Products shown",
+      "default":   5
+    }
   ],
   "presets": [
     {

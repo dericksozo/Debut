@@ -552,29 +552,115 @@
 
               {% if block.settings.heading != blank %}
               <div class="section-title desktop-12 tablet-6 mobile-3">
-                <h3>{{ block.settings.heading }}</h3>
+                <h3>{{ block.settings.heading | escape }}</h3>
               </div>
+              <div class="clear"></div>
               {% endif %}
 
               {%- assign collection = collections[block.settings.collection] -%}
               {%- assign prod_limit = block.settings.limit -%}
+              {% if block.settings.carousel %}{%- assign is_carousel = true -%}{%- endif -%}
+              {%- assign grid = block.settings.grid -%}
+              {% capture slideshow_config %}{
+                "wrapAround":true,
+                "cellAlign": "left",
+                "dragThreshold":"15",
+                "pauseAutoPlayOnHover":false,
+                "prevNextButtons":true,
+                "pageDots": false
+             }{% endcapture %}
 
-              <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}" data-slideout-ignore>
+              <div class="featured__collection{% if is_carousel %}-carousel{% endif %} product-loop" id="carousel-{{ block.id }}"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
+                {% if block.settings.collection == blank %}
+                  {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
+                {% else %}
                 {% for product in collection.products limit: prod_limit %}
-                  <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+                  <div class="featured__collection-product product-index" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
                     {% render 'product-listing', product: product, collection: collection %}
                   </div>
                 {% endfor %}
+                {% endif %}
               </div>
 
-              {% if block.settings.collection == blank %}
-                {% render 'onboard-product', prod_limit: prod_limit %}
-              {% endif %}
+              {% case block.settings.grid %}
+              {% when 2 %}
+              {%- assign prod_grid = 50 -%}
+              {% when 3 %}
+              {%- assign prod_grid = 33.333 -%}
+              {% when 4 %}
+              {%- assign prod_grid = 25 -%}
+              {% when 5 %}
+              {%- assign prod_grid = 20 -%}
+              {% endcase %}
 
               <style>
               .container-{{ block.id }} {
                 text-align: center;
               }
+              .product-loop {
+                margin-top: 20px;
+              }
+              {% if is_carousel %}
+                .featured__collection-carousel {
+                  width: 100%;
+                }
+                .featured__collection-carousel .featured__collection-product {
+                  width: {{ prod_grid }}%;
+                  padding: 0 15px 0;
+                }
+                @media screen and (min-width: 741px) and (max-width: 980px ) {
+                  .featured__collection-carousel .featured__collection-product {
+                    width: 33.333%;
+                  }
+                }
+                @media screen and (max-width: 740px) {
+                  .featured__collection-carousel .featured__collection-product {
+                    width: 50%;
+                  }
+                }
+                .featured__collection-carousel .flickity-button {
+                  color: {{ settings.direction_color }};
+                  background-color: {{ settings.direction_background }};
+                  width: 45px;
+                  height: 45px;
+                  margin: 0;
+                }
+                .featured__collection-carousel .flickity-button:hover {
+                  background-color: {{ settings.direction_hover }};
+                }
+                .featured__collection-carousel .flickity-button .flickity-button-icon {
+                  width: 40%;
+                  left: 30%;
+                  height: 40%;
+                  top: 30%;
+                }
+                .featured__collection-carousel .flickity-prev-next-button.next {
+                  right: -10px;
+                }
+                .featured__collection-carousel .flickity-prev-next-button.previous {
+                  left: -10px;
+                }
+              {% else %}
+                .featured__collection {
+                  display: grid;
+                  grid-template-columns: repeat({{ grid }}, {{ prod_grid }}%);
+                }
+                .featured__collection-product {
+                  padding: 0 15px 0;
+                }
+                @media screen and (min-width: 741px) and (max-width: 980px ) {
+                  .featured__collection {
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-column-gap: 20px;
+                  }
+                }
+                @media screen and (max-width: 740px) {
+                  .featured__collection {
+                    grid-template-columns: 1fr 1fr
+                    grid-column-gap: 20px;
+                  }
+                }
+              {% endif %}
               </style>
 
             </div>
