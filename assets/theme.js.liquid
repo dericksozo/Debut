@@ -4073,6 +4073,9 @@ theme.CustomPageSlideshow = function (context, events) {
 
       document.addEventListener('shopify:section:unload', function(event){
         var Slideshow = document.querySelector('.slideshow')
+        if ( !Slideshow ) {
+          return false;
+        }
         var flkty = Flickity.data( Slideshow )
         flkty.destroy()
       });
@@ -4086,6 +4089,9 @@ theme.CustomPageSlideshow = function (context, events) {
 
       document.addEventListener('shopify:block:select', function(event){
        var Slideshow = document.querySelector('.slideshow')
+       if ( !Slideshow ) {
+         return false;
+       }
        var flkty = Flickity.data( Slideshow )
        var Slide = event.target.getAttribute("data-slider-index");
        flkty.select( Slide )
@@ -4094,6 +4100,9 @@ theme.CustomPageSlideshow = function (context, events) {
 
       document.addEventListener('shopify:block:deselect', function(event){
         var Slideshow = document.querySelector('.slideshow')
+        if ( !Slideshow ) {
+          return false;
+        }
         var flkty = Flickity.data( Slideshow )
         flkty.unpausePlayer()
       });
