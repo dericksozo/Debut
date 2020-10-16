@@ -34,18 +34,6 @@ window.themeInfo = {name: "Testament"};
   */
   ;(function(e,t,n,r){e.fn.doubleTapToGo=function(r){if(!("ontouchstart"in t)&&!navigator.msMaxTouchPoints&&!navigator.userAgent.toLowerCase().match(/windows phone os 7/i))return false;this.each(function(){var t=false;e(this).on("click",function(n){var r=e(this);if(r[0]!=t[0]){n.preventDefault();t=r}});e(n).on("click touchstart MSPointerDown",function(n){var r=true,i=e(n.target).parents();for(var s=0;s<i.length;s++)if(i[s]==t[0])r=false;if(r)t=false})});return this}})(jQuery,window,document);
 })();
-(function vendorStickyHeader() {
-  /* Sticky header */
-  jQuery(function($){$(document).ready(function(){var contentButton=[];var contentTop=[];var content=[];var lastScrollTop=0;var scrollDir='';var itemClass='';var itemHover='';var menuSize=null;var stickyHeight=0;var stickyMarginB=0;var currentMarginT=0;var topMargin=0;var vartop;$(window).scroll(function(event){var st=$(this).scrollTop();if(st>lastScrollTop){scrollDir='down'}else{scrollDir='up'}
-  lastScrollTop=st});$.fn.stickUp=function(options){$(this).addClass('stuckMenu');var objn=0;if(options!=null){for(var o in options.parts){if(options.parts.hasOwnProperty(o)){content[objn]=options.parts[objn];objn++}}
-  if(objn==0){console.log('error:needs arguments')}
-  itemClass=options.itemClass;itemHover=options.itemHover;if(options.topMargin!=null){if(options.topMargin=='auto'){topMargin=parseInt($('.stuckMenu').css('margin-top'))}else{if(isNaN(options.topMargin)&&options.topMargin.search("px")>0){topMargin=parseInt(options.topMargin.replace("px",""))}else if(!isNaN(parseInt(options.topMargin))){topMargin=parseInt(options.topMargin)}else{console.log("incorrect argument, ignored.");topMargin=0}}}else{topMargin=0}
-  menuSize=$('.'+itemClass).size()}
-  stickyHeight=parseInt($(this).height());stickyMarginB=parseInt($(this).css('margin-bottom'));currentMarginT=parseInt($(this).next().closest('div').css('margin-top'));vartop=parseInt($(this).offset().top)};$(document).on('scroll',function(){varscroll=parseInt($(document).scrollTop());if(menuSize!=null){for(var i=0;i<menuSize;i++){contentTop[i]=$('#'+content[i]+'').offset().top;function bottomView(i){contentView=$('#'+content[i]+'').height()*.4;testView=contentTop[i]-contentView;if(varscroll>testView){$('.'+itemClass).removeClass(itemHover);$('.'+itemClass+':eq('+i+')').addClass(itemHover)}else if(varscroll<50){$('.'+itemClass).removeClass(itemHover);$('.'+itemClass+':eq(0)').addClass(itemHover)}}
-  if(scrollDir=='down'&&varscroll>contentTop[i]-50&&varscroll<contentTop[i]+50){$('.'+itemClass).removeClass(itemHover);$('.'+itemClass+':eq('+i+')').addClass(itemHover)}
-  if(scrollDir=='up'){bottomView(i)}}}
-  if(vartop<varscroll+topMargin){$('.stuckMenu').addClass('isStuck');$('.stuckMenu').next().closest('div').css({'margin-top':stickyHeight+stickyMarginB+currentMarginT+'px'},10);$('.stuckMenu').css("position","fixed");$('.isStuck').css({top:'0px'},10,function(){})};if(varscroll+topMargin<vartop){$('.stuckMenu').removeClass('isStuck');$('.stuckMenu').next().closest('div').css({'margin-top':currentMarginT+'px'},10);$('.stuckMenu').css("position","relative")}})})})
-})();
 (function vendorOwlCarousel() {
   /*	jQuery OwlCarousel v1.31
    *	Copyright (c) 2013 Bartosz Wojciechowski
@@ -3024,6 +3012,62 @@ window.themeInfo = {name: "Testament"};
 // sections.js
 window.theme = window.theme || {};
 
+theme.DOMHelpers = (function () {
+	
+	return {
+		
+	};
+	
+});
+ 
+/* Helper functions focused on accessibility. */
+ 
+theme.a11yHelpers = (function () {
+	
+	/* Global accesibility focused javascript. */
+	function setUpAriaExpansion() {
+		const $ariaExpandEls = document.querySelectorAll('.js-aria-expand');
+
+		Array.from($ariaExpandEls).forEach(function ($ariaExpandEl) {
+			$ariaExpandEl.addEventListener('mouseover', function (event) {
+				$ariaExpandEl.setAttribute('aria-expand', 'true');
+			});
+
+			$ariaExpandEl.addEventListener('mouseout', function (event) {
+				$ariaExpandEl.setAttribute('aria-expand', 'false');
+			});			
+		});
+	}
+	
+	return {
+		setUpAriaExpansion: setUpAriaExpansion
+	}
+	
+}());
+ 
+theme.DOMHelpers = (function () {
+	
+	/*
+	 * @description - Determines if an element is off screen or not.
+	 * @param element:<Node> - A DOMNode
+	 * @return Boolean
+	 */
+	function isElementPastEdge(element) {
+		const bounding = element.getBoundingClientRect(),
+					l = bounding.left,
+					w = bounding.width,
+					docH = document.documentElement.clientHeight,
+					docW = document.documentElement.clientWidth;
+
+		return (l + w >= docW);
+	}
+	
+	return {
+		isElementPastEdge: isElementPastEdge
+	};
+	
+}());
+ 
 /* Shopify Library Loader */
 theme.Helpers = (function() {
   var touchDevice = false;
@@ -3404,13 +3448,7 @@ $(document).ready(function() {
       });
 
     });
-
-    $(".has_sub_menu").hover(function(){
-      $(this).attr('aria-expanded', function(index, attr){
-        return attr == 'false' ? true : 'false';
-      });
-    });
-
+		
   }());
 });
 
@@ -5193,41 +5231,62 @@ var selectors = {
 
 theme.Header = (function() {
   function Header(container) {
-    var $container = this.$container = $(container);
+		
+		function makeNavigationSticky() {
 
-    $(document).ready( function() {
-      if ($(window).width() >= 741) {
-        $('nav').stickUp();
-      }
+			const navigation = document.querySelector(".js-navigation"),
+						header     = document.querySelector(".js-header");
+
+			const amountToScroll = header.clientHeight - navigation.clientHeight;
+			const stickyClass = "navigation--sticky" /* It might be good to put this in the HTML as a data- attribute. */
+
+			if (window.pageYOffset > amountToScroll) {
+				navigation.classList.add(stickyClass);
+			} else {
+				navigation.classList.remove(stickyClass);
+			}
+			
+		}
+		
+		var $container = this.$container = $(container);
+		
+		/* This can be made more performant with debounce, etc. */
+    document.addEventListener('scroll', function (event) {
+      makeNavigationSticky();
     });
-    $(document).ready( function() {
-      $('.shopify-currency-form select').on('change', function() {
-        $(this)
-          .parents('form')
-          .submit();
-      });
-    });
-    $(document).ready( function() {
-      $("ul.submenu li").on('mouseenter mouseleave', function (e) {
-          if ($('ul', this).length) {
-              var elm = $('ul:first', this);
-              var off = elm.offset();
-              var l = off.left;
-              var w = elm.width();
-              var docH = $(".page-wrap").height();
-              var docW = $(".page-wrap").width();
-
-              var isEntirelyVisible = (l + w <= docW);
-
-              if (!isEntirelyVisible) {
-                  $(this).addClass('edge');
-              } else {
-                  $(this).removeClass('edge');
-              }
-          }
-      });
-    });
-
+		
+		makeNavigationSticky();
+		theme.a11yHelpers.setUpAriaExpansion();
+		
+		$('.shopify-currency-form select').on('change', function() {
+			$(this)
+				.parents('form')
+				.submit();
+		});
+		
+		/* This bit is code is concerned with making sure that nested dropdowns are
+		 * properly placed in the correct place if they're offscreen.
+		 */
+		const menuItemsWithNestedDropdowns = document.querySelectorAll(".js-menuitem-with-nested-dropdown");
+		
+		Array.from(menuItemsWithNestedDropdowns).forEach(function (menuItem) {
+			menuItem.addEventListener('mouseenter', function (event) {
+				
+				const nestedDropdown = menuItem.querySelector(".js-dropdown-nested");
+				
+				if (nestedDropdown) {
+					if (theme.DOMHelpers.isElementPastEdge(nestedDropdown)) {
+						nestedDropdown.classList.add("dropdown--edge");
+					} else {
+						nestedDropdown.classList.add("dropdown--edge");
+					}
+					
+				}
+			});
+			
+		});
+		
+		/* For Desktop-sized touch devices */
     if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/android/i))) {
       $("nav #main-nav li.dropdown:has(ul)").doubleTapToGo();
       $("nav #main-nav .submenu li.has_sub_menu").doubleTapToGo();
