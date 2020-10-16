@@ -4074,6 +4074,11 @@ theme.CustomPageSlideshow = function (context, events) {
   (function page_slideshow() {
 
       var Slideshow = document.querySelector('.slideshow')
+
+      if ( !Slideshow ) {
+        return false;
+      }
+
       var flktyData = Slideshow.getAttribute('data-flickity');
       var flktyOptions = JSON.parse(flktyData);
           new Flickity('.slideshow', flktyOptions);
