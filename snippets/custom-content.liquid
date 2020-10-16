@@ -8,9 +8,7 @@
     <section class="cp-{{ block.type }}-{{ block.id }}">
       {% if block.settings.full_width %}<div class="gridlock-fluid"><div class="row">{% endif %}
         <div class="{{ block.type }}-{{ block.id }} row" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
-
           {% case block.type %}
-
           {% when 'page_title' %}
             <div class="container-{{ block.id }}">
               <div class="section-title desktop-12 tablet-6 mobile-3">
@@ -27,7 +25,6 @@
                 padding-bottom: 0 !important;
               }
             </style>
-
           {% when 'page_content' %}
             <div class="container-{{ block.id }}">
               <div class="rte desktop-12 tablet-6 mobile-3">
@@ -40,7 +37,6 @@
                 text-align: {{ block.settings.text_align }};
               }
             </style>
-
           {% when 'page_contact_form' %}
             <div class="container-{{ block.id }}">
               {% if block.settings.heading != blank %}
@@ -50,7 +46,6 @@
               {% endif %}
               {% render 'custom-contact' type: block %}
             </div>
-
           {% when 'accordion' %}
             <div class="container-{{ block.id }}">
               {% if block.settings.heading != blank %}
@@ -98,18 +93,106 @@
               </style>
 
           {% when 'slideshow' %}
+          {%- assign slider_speed = block.settings.slider_speed | times: 1000 -%}
+          {% capture slideshow_config %}{
+            "wrapAround":true,
+            "dragThreshold":"15",
+            "pauseAutoPlayOnHover":false,
+            "autoPlay": {{ slider_speed }},
+            "fade": true,
+            "pageDots":{% if block.settings.pager == 'arrows' %}false{% else %}true{% endif %},
+            "prevNextButtons":{% if block.settings.pager == 'arrows' %}true{% else %}false{% endif %}
+         }{% endcapture %}
             <div class="container-{{ block.id }}">
-              <div class="flexslider index_Slider" id="Slideshow-{{ section.id }}" data-speed="{{ block.settings.slider_speed | times: 1000 }}">
-                <ul class="slides">
+              <div class="slideshow index_Slider" id="Slideshow-{{ section.id }}" data-flickity='{{ slideshow_config }}'>
                   {%- assign image_size = '2000x' -%}
                   {% assign slide_images = section.blocks | where: "type", "slideshow_image" %}
                   {% for slide in slide_images %}
-                    {% render 'slide', slide: slide, image_size: image_size %}
+                    {% render 'slide', slide: slide, image_size: image_size, forloop: forloop %}
                   {% endfor %}
-                </ul>
               </div>
-            </div>
+              <style>
+              .slideshow {
+                border: 0 !important;
+                width: 100%;
+              }
+              .slideshow__slide,
+              .slideshow__slide-desktop {
+                width: 100%;
+              }
+              .slideshow__slide {
+                opacity: 0 !important;
+                transition: opacity 1s ease !important;
+              }
+              .slideshow__slide.is-selected {
+                opacity: 1 !important;
+              }
+              .slideshow .flickity-button {
+                color: {{ settings.direction_color }};
+                background-color: {{ settings.direction_background }};
+                width: 45px;
+                height: 45px;
+                margin: 0;
+              }
+              .slideshow .flickity-button .flickity-button-icon {
+                width: 40%;
+                left: 30%;
+                height: 40%;
+                top: 30%;
+              }
+              @media screen and (min-width: 741px) {
+                .slideshow .flickity-page-dots {
+                  text-align: right;
+                  bottom: 15px;
+                  right: 15px;
+                }
+              }
+              .slideshow .flickity-page-dots .dot {
+                border: 1px solid #fff;
+                margin: 0 5px;
+              }
 
+              .slideshow__caption {
+                position: absolute;
+                width: fit-content;
+                text-align: center;
+              }
+
+              .slideshow__caption .slideshow__caption-wrapper {
+                display: inline-block;
+                padding: 20px;
+              }
+
+              .slideshow__caption h2.slideshow__title {
+                font-size: {{ block.settings.slide_heading_size }}px;
+              }
+              .slideshow__caption p {
+                font-size: {{ block.settings.subheading_size }}px;
+                line-height: initial;
+              }
+              .slideshow__btn-wrapper {
+                display: inline-block;
+                margin-top: 10px;
+                margin-right: 10px;
+              }
+              .slideshow__btn-wrapper a {
+                font-size: {{ block.settings.cta_size }}px;
+                padding: 10px 20px;
+                letter-spacing: 1px;
+                border-radius: 3px;
+                display: inline-block;
+                -webkit-transition: background .5s ease,color .5s ease;
+                -moz-transition: background .5s ease,color .5s ease;
+                -o-transition: background .5s ease,color .5s ease;
+                transition: background .5s ease,color .5s ease;
+              }
+              @media screen and (max-width: 740px) {
+                .slideshow__caption .slideshow__caption-wrapper {
+                  width: 100%;
+                }
+              }
+              </style>
+            </div>
           {% when 'image_blocks' %}
             <div class="container-{{ block.id }}">
 
@@ -225,7 +308,6 @@
             {% render 'no-blocks' %}
             {% endif %}
             </div>
-
           {% when 'image_text_overlay' %}
             <div class="container-{{ block.id }}">
 
@@ -304,7 +386,6 @@
                 }
             </style>
             </div>
-
           {% when 'collection_list' %}
             <div class="container-{{ block.id }}">
               {% if block.settings.heading != blank %}
@@ -348,7 +429,6 @@
                 }
               </style>
             </div>
-
           {% when 'newsletter_subscribe' %}
             <div class="container-{{ block.id }}">
 
@@ -421,7 +501,6 @@
               </style>
 
             </div>
-
           {% when 'featured_video' %}
             <div class="container-{{ block.id }}">
 
@@ -444,73 +523,69 @@
               </div>
 
             </div>
-
           {% when 'featured_collection' %}
 
-          <div class="container-{{ block.id }}">
+            <div class="container-{{ block.id }}">
 
-            {% if block.settings.heading != blank %}
-            <div class="section-title desktop-12 tablet-6 mobile-3">
-              <h3>{{ block.settings.heading }}</h3>
+              {% if block.settings.heading != blank %}
+              <div class="section-title desktop-12 tablet-6 mobile-3">
+                <h3>{{ block.settings.heading }}</h3>
+              </div>
+              {% endif %}
+
+              {%- assign collection = collections[block.settings.collection] -%}
+              {%- assign prod_limit = block.settings.limit -%}
+
+              <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}" data-slideout-ignore>
+                {% for product in collection.products limit: prod_limit %}
+                  <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+                    {% render 'product-listing', product: product, collection: collection %}
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% if block.settings.collection == blank %}
+                {% render 'onboard-product', prod_limit: prod_limit %}
+              {% endif %}
+
+              <style>
+              .container-{{ block.id }} {
+                text-align: center;
+              }
+              </style>
+
             </div>
-            {% endif %}
-
-            {%- assign collection = collections[block.settings.collection] -%}
-            {%- assign prod_limit = block.settings.limit -%}
-
-            <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}" data-slideout-ignore>
-              {% for product in collection.products limit: prod_limit %}
-                <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
-                  {% render 'product-listing', product: product, collection: collection %}
-                </div>
-              {% endfor %}
-            </div>
-
-            {% if block.settings.collection == blank %}
-              {% render 'onboard-product', prod_limit: prod_limit %}
-            {% endif %}
-
-            <style>
-            .container-{{ block.id }} {
-              text-align: center;
-            }
-            </style>
-
-          </div>
-
           {% endcase %}
+          <style>
+            /* Global CSS from each block type */
+            {% assign padding = block.settings.block_padding | divided_by: 2 %}
+            @media screen and (min-width: 981px) {
+              .container-{{ block.id }} {
+                {% if block.settings.max_width %}
+                max-width: {{ block.settings.max_width }}%;
+                {% endif %}
 
+                {% if block.settings.max_width < 100 %}
+                margin-left: auto;
+                margin-right: auto;
+                {% endif %}
 
-        <style>
-        /* Global CSS from each block type */
-        {% assign padding = block.settings.block_padding | divided_by: 2 %}
-        @media screen and (min-width: 981px) {
-            .container-{{ block.id }} {
-              {% if block.settings.max_width %}
-              max-width: {{ block.settings.max_width }}%;
-              {% endif %}
+                {% if block.settings.block_padding %}
+                padding-top: {{ padding }}px;
+                padding-bottom: {{ padding }}px;
+                {% endif %}
 
-              {% if block.settings.max_width < 100 %}
-              margin-left: auto;
-              margin-right: auto;
-              {% endif %}
-
-              {% if block.settings.block_padding %}
-              padding-top: {{ padding }}px;
-              padding-bottom: {{ padding }}px;
-              {% endif %}
+              }
+              .container-{{ block.id }}.no-padding {
+                padding-top: 0;
+                padding-bottom: 0;
+              }
 
             }
-            .container-{{ block.id }}.no-padding {
-              padding-top: 0;
-              padding-bottom: 0;
+            .container-{{ block.id }} h3 {
+              text-align: {{ block.settings.text_align }};
             }
-
-          }
-          .container-{{ block.id }} h3 {
-            text-align: {{ block.settings.text_align }};
-          }
-        </style>
+          </style>
 
         </div>
       {% if block.settings.full_width %}</div></div>{% endif %}

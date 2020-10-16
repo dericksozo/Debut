@@ -4072,32 +4072,39 @@ theme.mobileNav = (function() {
 theme.CustomPageSlideshow = function (context, events) {
 
   (function page_slideshow() {
-    var speed = $('.flexslider').data('speed');
-    var initSlider = function(custom_page_slideshow) {
-	    $('.flexslider').flexslider({
-	      animation: 'fade',
-	      slideshowSpeed: speed,
-	      animationSpeed: 600,
-	      directionNav: true,
-	      controlNav: false,
-	      pauseOnHover: true,
-	      pauseOnAction: true,
-	      nextText: '',
-	      prevText: ''
-	    });
-    };
 
-    initSlider($('.thumbnail-slider'));
+      var Slideshow = document.querySelector('.slideshow')
+      var flktyData = Slideshow.getAttribute('data-flickity');
+      var flktyOptions = JSON.parse(flktyData);
+          new Flickity('.slideshow', flktyOptions);
 
-    $(document).on('shopify:section:unload', function(event) {
-      var target = $(event.target);
-      target.find('.flexslider').flexslider('destroy');
-      $(document).off('.flexslider');
-    });
+      document.addEventListener('shopify:section:unload', function(event){
+        var Slideshow = document.querySelector('.slideshow')
+        var flkty = Flickity.data( Slideshow )
+        flkty.destroy()
+      });
 
-    $(document).on('shopify:section:load', function(event) {
-      initSlider($(event.target).find('.flexslider'));
-    });
+      document.addEventListener('shopify:section:load', function(event){
+        var Slideshow = document.querySelector('.slideshow')
+        var flktyData = Slideshow.getAttribute('data-flickity');
+        var flktyOptions = JSON.parse(flktyData);
+            new Flickity('.slideshow', flktyOptions);
+      });
+
+      document.addEventListener('shopify:block:select', function(event){
+       var Slideshow = document.querySelector('.slideshow')
+       var flkty = Flickity.data( Slideshow )
+       var Slide = event.target.getAttribute("data-slider-index");
+       console.log(Slide);
+       flkty.select( Slide )
+       flkty.pausePlayer()
+      });
+
+      document.addEventListener('shopify:block:deselect', function(event){
+        var Slideshow = document.querySelector('.slideshow')
+        var flkty = Flickity.data( Slideshow )
+        flkty.unpausePlayer()
+      });
 
   })();
 }
