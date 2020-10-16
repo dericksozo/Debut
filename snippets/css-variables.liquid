@@ -1,0 +1,39 @@
+<style>
+{{ settings.main_font | font_face }}
+{{ settings.nav_font | font_face }}
+  
+  :root {
+    
+    --main-family: {{ settings.main_font.family }};
+    --main-weight: {{ settings.main_font.weight }};
+    --main-type: {{ settings.main_font.type }};
+    --main-transform: {{ settings.main_font_transform }};
+    --main-spacing: calc({{ settings.main_letter_spacing }} * 1px);
+    
+    --font-size: calc({{ settings.font_size }} * 1px);
+    
+    --nav-family: {{ settings.nav_font.family }};
+    --nav-weight: {{ settings.nav_font.weight }};
+    --nav-type:   {{ settings.nav_font.type }};
+    --nav-transform: {{ settings.nav_font_transform }};
+    --nav-spacing: calc({{ settings.nav_letter_spacing | default: 0 }} * 1px);
+    --nav-color: {{ settings.nav_color }};
+    --nav-hover-color: {{ settings.nav_hover_color }};
+    --nav-transform: {{ settings.navigation_transform }};
+    --nav-background-color: {{ settings.navigation }};
+    --nav-size: calc({{ settings.nav_size | default: 0 }} * 1px);
+    /* --nav-height: calc({{ settings.nav_height | default: 0 }} * 1px); */
+    --nav-height: 50px;
+    --nav-hover-link-color: {{ settings.nav_hover_link_color }};
+    --nav-top-border-height: calc({{ settings.nav_top_border_height | default: 0 }} * 1px);
+    --nav-bottom-border-height: calc({{ settings.nav_bottom_border_height | default: 0 }} * 1px);
+    --nav-border-color: {{ settings.nav_border_color }};
+    
+    --dropdown-background-color: {{ settings.dropdown_background }};
+    --dropdown-link-color: {{ settings.dropdown_link_color }};
+    --dropdown-link-hover-color: {{ settings.dropdown_link_hover_color }};
+    --dropdown-hover-background: {{ settings.dropdown_hover_background }};
+    
+    --dropdown-min-width: 220px;
+  }
+ </style>
