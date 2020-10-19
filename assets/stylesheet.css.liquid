@@ -11280,6 +11280,7 @@ section.user-login .secondary-button.create-customer {
 }
 
 .navigation__menu {
+	position: relative;
 	margin-bottom: 0;
 }
 
@@ -11372,6 +11373,11 @@ section.user-login .secondary-button.create-customer {
 	font-size: var(--font-size);
 	font-family: var(--main-family) !important;
 	display: block;
+	
+	/* To stop text from going over the arrow. */
+	max-width: 90%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 /* ul#main-nav li ul.submenu li a:hover { */
@@ -11435,27 +11441,32 @@ section.user-login .secondary-button.create-customer {
   letter-spacing: initial;
 }
 
-ul.megamenu li > ul {
-  width: 100%;
+.megamenu__headerlink {
+	padding-left: 0;
 }
 
-ul.megamenu li:hover {
+.megamenu__list {
+  width: 100%;
+	background: {{ settings.dropdown_background }};
+}
+
+.megamenu__listcontainer {
+	list-style-type: none;
+}
+
+.megamenu__listcontainer:hover {
   background: transparent !important;
 }
 
-ul.megamenu li > ul.mega-stack {
-  background: {{ settings.dropdown_background }};
-}
-
-ul.megamenu li > ul.mega-stack li {
-  line-height: 20px !important;
+.megamenu__listitem {
+	line-height: 20px !important;
   text-align: left !important;
   display: block !important;
   clear: left;
 }
 
-ul.megamenu li > ul.mega-stack li a {
-  padding: 0 !important;
+.megamenu__listlink {
+	padding: 0 !important;
   font-weight: normal !important;
   color: {{ settings.dropdown_link_color }} !important;
   font-size: {{ settings.font_size }}px !important;
@@ -11464,18 +11475,14 @@ ul.megamenu li > ul.mega-stack li a {
   text-transform: none !important;
 }
 
-ul.megamenu li > ul.mega-stack li a:hover {
-  color: {{ settings.dropdown_link_hover_color }} !important;
+.megamenu__listlink:hover {
+	color: {{ settings.dropdown_link_hover_color }} !important;
 }
 
-.megamenu .box-ratio {
-  margin-top: 20px;
+.megamenu__image {
+	margin-top: 20px;
 }
 
-ul#main-nav li.dropdown ul.megamenu li.desktop-3:nth-child(5n) {
+ul.megamenu li.desktop-3:nth-child(5n) {
   clear: left;
-}
-
-ul#main-nav li.dropdown ul.megamenu li h4 a {
-  padding-left: 0;
 }
