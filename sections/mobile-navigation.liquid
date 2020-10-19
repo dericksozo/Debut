@@ -1,68 +1,97 @@
-<div id="menu" data-section-id="{{ section.id }}" data-section-type="mobile-navigation">
-  <div class="mobile-search-form">
-  <form action="/search" method="get">
-    <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
-    {% if settings.search_products %}
-    <input type="hidden" name="type" value="product">
-    {% endif %}
-  </form>
-</div>
-  <ul id="accordion">
+<nav class="mobile-menu" role="navigation" data-section-id="{{ section.id }}" data-section-type="mobile-navigation">
+  <div class="slideout__trigger--close">
+    <button class="slideout__trigger-mobile-menu" data-slideout-direction="left" aria-label="Close navigation" tabindex="0" type="button" name="button">
+      <div class="icn-close"></div>
+    </button>
+  </div>
+  <ul id="accordion" class="mobile-menu__accordion accordion">
     {% assign menu = linklists[section.settings.main_nav] %}
     {% for link in menu.links %}
-    {% if link.links != blank %}
-    <li class="accordion-toggle" aria-haspopup="true" aria-expanded="false"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-    <div class="accordion-content">
-      <ul class="sub">
-        {% for sub_link in link.links %}
-        {% if sub_link.links != blank %}
-        <div class="accordion-toggle2" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></div>
-        <div class="accordion-content2">
-          <ul class="sub">
-            {% for sub_sub_link in sub_link.links %}
-            <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+      {% if link.links != blank %}
+        <li class="mobile-menu__item accordion__toggle" aria-haspopup="true" aria-expanded="false">
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        </li>
+        <li class="accordion__content">
+          <ul class="accordion__submenu-1">
+            {% for sub_link in link.links %}
+            {% if sub_link.links != blank %}
+            <li class="accordion__toggle-2" aria-haspopup="true" aria-expanded="false">
+              <a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a>
+            </li>
+            <li class="accordion__content-2">
+              <ul class="accordion__submenu-2">
+                {% for sub_sub_link in sub_link.links %}
+                <li class="mobile-menu__item"><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% else %}
+            <li class="mobile-menu__item">
+              <a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a>
+            </li>
+            {% endif %}
             {% endfor %}
           </ul>
-        </div>
-        {% else %}
-        <li><a href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </div>
-    {% else %}
-    <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
-    {% endif %}
+        </li>
+      {% else %}
+        <li class="mobile-menu__item"><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+      {% endif %}
     {% endfor %}
     {% if shop.customer_accounts_enabled %}
-    {% if customer  %}
-      <li class="top-level-link">
-        <a href="{{ routes.account_url }}">
-          <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.account' | t }}
-        </a>&nbsp;&nbsp;<i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.logout' | t }}
-      </li>
+      {% if customer  %}
+        <li class="mobile-menu__item">
+          <a href="{{ routes.account_url }}">
+            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.account' | t }}
+          </a>&nbsp;&nbsp;<i class="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;{{ 'layout.mobile_nav.logout' | t }}
+        </li>
       {% else %}
-      <li class="top-level-link"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;<a href="{{ routes.account_login_url }}">{{ 'layout.mobile_nav.login' | t }}</a></li>
+        <li class="mobile-menu__item"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;<a href="{{ routes.account_login_url }}">{{ 'layout.mobile_nav.login' | t }}</a></li>
       {% endif %}
     {% endif %}
   </ul>
-</div>
-
-<style>
-  #menu.slideout-menu { background: {{ section.settings.background_color }}; }
-  #menu.slideout-menu ul#accordion li,
-  #menu.slideout-menu .accordion-toggle,
-  #menu.slideout-menu .accordion-toggle2 {
-    color: {{ section.settings.link_color }};
-    border-bottom: 1px solid {{ section.settings.border_color }};
-  }
-  #menu.slideout-menu ul#accordion li a,
-  #menu.slideout-menu ul#accordion a {
-    color: {{ section.settings.link_color }} !important;
-  }
-  .accordion-toggle:after,
-  .accordion-toggle2:after { border-left: 1px solid {{ section.settings.border_color }}; }
-</style>
+  <div class="mobile-menu__search">
+    <form action="/search" method="get">
+      <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+      {% if settings.search_products %}
+        <input type="hidden" name="type" value="product">
+      {% endif %}
+    </form>
+  </div>
+  <style>
+    .mobile-menu {
+      background: {{ section.settings.background_color }};
+      padding: 10px;
+      height: 100vh;
+    }
+    .mobile-menu .mobile-menu__item,
+    .mobile-menu .accordion__toggle,
+    .mobile-menu .accordion__toggle-2 {
+      border-bottom: 1px solid {{ section.settings.border_color }};
+    }
+    .mobile-menu .mobile-menu__item a,
+    .mobile-menu .accordion__toggle a,
+    .mobile-menu .accordion__toggle-2 a,
+    .mobile-menu .accordion__submenu-2 a,
+    .mobile-menu .accordion__submenu-1 a,
+    .accordion__toggle-2:after,
+    .accordion__toggle:after,
+    .mobile-menu .mobile-menu__item i {
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu .accordion__toggle-2 a,
+    .mobile-menu .accordion__submenu-2 a,
+    .mobile-menu .accordion__submenu-1 a,
+    .accordion__toggle-2:after {
+     opacity: 0.9;
+    }
+    .mobile-menu .slideout__trigger-mobile-menu .icn-close:after,
+    .mobile-menu .slideout__trigger-mobile-menu .icn-close:before {
+      border-color: {{ section.settings.link_color }} !important;
+    }
+    .accordion__toggle:after,
+    .accordion__toggle-2:after { border-left: 1px solid {{ section.settings.border_color }}; }
+  </style>
+</nav>
 
 {% schema %}
 {
