@@ -2,23 +2,37 @@
   if($(window).width() > 500){
     // Fancybox Join our mailing list popup
     $(document).ready(function(){
-
-      {% if settings.test_mode == false %}
-      var check_cookie = $.cookie('mailing_list_delay_popup');
-      if(check_cookie == null){
-        $.cookie('mailing_list_delay_popup', 'expires_seven_days', { expires: 7 });
-        {% endif %}
-        //fire your fancybox here
-        setTimeout(function(){
-          $.fancybox.open({
-            src  : '#mailing-popup',
-            type : 'inline',
-            baseClass: "subscribe-popup",
-          });
-        }, 5000);
-        {% if settings.test_mode == false %}
+      var lastFocus;
+      function onPopupOpen(){
+        // focus on email field
       }
-      {% endif %}
+
+      function onPopupClose(){
+        lastFocus.focus();
+      }
+
+      function displayPopup(){
+        $.fancybox.open({
+          src  : '#mailing-popup',
+          type : 'inline',
+          baseClass: "subscribe-popup",
+        });
+        Cookies.set('popupShown', 'yes', { expires: 5 });
+      }
+
+      setTimeout(function(){
+        {% if settings.test_mode == false %}
+        var popupShown = Cookies.get('popupShown');
+        if(popupShown){
+        } else {
+        {% endif %}
+          lastFocus = document.activeElement;
+          displayPopup();
+        {% if settings.test_mode == false %}
+        }
+        {% endif %}
+      }, 5000);
+
     });
   };
 </script>
