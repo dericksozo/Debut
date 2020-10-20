@@ -19,7 +19,7 @@
       "pageDots": false
    }{% endcapture %}
 
-    <div class="featured__collection{% if is_carousel %}-carousel{% endif %} product-loop"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
+    <div id="featured_collection--{{ section.id }}" class="featured__collection{% if is_carousel %}-carousel{% endif %} product-loop"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
       {% if section.settings.collection == blank %}
       {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
       {% else %}
@@ -48,7 +48,7 @@
     .featured__collection-carousel {
       width: 100%;
     }
-    .featured__collection-carousel .featured__collection-product {
+    #featured_collection--{{ section.id }}.featured__collection-carousel .featured__collection-product {
       width: {{ prod_grid }}%;
       padding: 0 15px 0;
     }
@@ -58,8 +58,8 @@
       }
     }
     @media screen and (max-width: 740px) {
-      .featured__collection-carousel .featured__collection-product {
-        width: 50%;
+      #featured_collection--{{ section.id }}.featured__collection-carousel .featured__collection-product {
+        width: 50% !important;
       }
     }
     .featured__collection-carousel .flickity-button {
@@ -79,13 +79,13 @@
       top: 30%;
     }
     .featured__collection-carousel .flickity-prev-next-button.next {
-      right: -10px;
+      right: -20px;
     }
     .featured__collection-carousel .flickity-prev-next-button.previous {
-      left: -10px;
+      left: -20px;
     }
   {% else %}
-    .featured__collection {
+    #featured_collection--{{ section.id }}.featured__collection {
       display: grid;
       grid-template-columns: repeat({{ grid }}, {{ prod_grid }}%);
     }
@@ -93,14 +93,14 @@
       padding: 0 15px 0;
     }
     @media screen and (min-width: 741px) and (max-width: 980px ) {
-      .featured__collection {
-        grid-template-columns: 1fr 1fr 1fr;
+      #featured_collection--{{ section.id }}.featured__collection {
+        grid-template-columns: 1fr 1fr 1fr !important;
         grid-column-gap: 20px;
       }
     }
     @media screen and (max-width: 740px) {
-      .featured__collection {
-        grid-template-columns: 1fr 1fr
+      #featured_collection--{{ section.id }}.featured__collection {
+        grid-template-columns: 1fr 1fr !important;
         grid-column-gap: 20px;
       }
     }

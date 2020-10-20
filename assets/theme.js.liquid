@@ -2246,14 +2246,15 @@ theme.FeaturedProducts = (function() {
   function FeaturedProducts(container) {
 	var $container = this.$container = $(container);
 
-  var Carousel = document.querySelector('.featured__collection-carousel')
-  if ( !Carousel ) {
+  var Carousels = document.querySelectorAll('.featured__collection-carousel')
+  if ( !Carousels ) {
     return false;
   }
-  var flktyData = Carousel.getAttribute('data-flickity');
-  var flktyOptions = JSON.parse(flktyData);
-      new Flickity('.featured__collection-carousel', flktyOptions);
-
+  Carousels.forEach(Carousel => {
+    var flktyData = Carousel.getAttribute('data-flickity');
+    var flktyOptions = JSON.parse(flktyData);
+        new Flickity(Carousel, flktyOptions);
+  });
 
     (function productQuickView() {
       var products = $('.product-loop .product-index', $container);
@@ -2291,7 +2292,8 @@ theme.FeaturedProducts = (function() {
 
 
      document.addEventListener('shopify:section:unload', function(event){
-       var Carousel = document.querySelector('.featured__collection-carousel')
+
+       var Carousel = event.target.closest('.featured__collection-carousel')
        if ( !Carousel ) {
          return false;
        }
@@ -2300,7 +2302,7 @@ theme.FeaturedProducts = (function() {
      });
 
      document.addEventListener('shopify:section:load', function(event){
-       var Carousel = document.querySelector('.featured__collection-carousel')
+       var Carousel = event.target.closest('.featured__collection-carousel')
        if ( !Carousel ) {
          return false;
        }
