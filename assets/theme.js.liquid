@@ -2202,10 +2202,14 @@ $(document).ready(function() {
 theme.Slideshow = (function() {
   function Slideshow(container) {
 
-    var Slideshow = document.querySelector('.slideshow')
-    var flktyData = Slideshow.getAttribute('data-flickity');
-    var flktyOptions = JSON.parse(flktyData);
-        new Flickity('.slideshow', flktyOptions);
+    var slideshows = document.querySelectorAll('.slideshow');
+
+    slideshows.forEach(Slideshow => {
+      var flktyData = Slideshow.getAttribute('data-flickity');
+      var flktyOptions = JSON.parse(flktyData);
+        new Flickity(Slideshow, flktyOptions);
+    });
+
   }
 
   return Slideshow;
@@ -2213,21 +2217,15 @@ theme.Slideshow = (function() {
 
 theme.Slideshow.prototype = _.assignIn({}, theme.Slideshow.prototype, {
 
-  onUnload: function(event) {
-    var Slideshow = document.querySelector('.slideshow')
-    var flkty = Flickity.data( Slideshow )
-    flkty.destroy()
-  },
-
   onLoad: function(event) {
-    var Slideshow = document.querySelector('.slideshow')
+    var Slideshow = event.target.closest('.slideshow')
     var flktyData = Slideshow.getAttribute('data-flickity');
     var flktyOptions = JSON.parse(flktyData);
         new Flickity('.slideshow', flktyOptions);
   },
 
   onBlockSelect: function(event) {
-   var Slideshow = document.querySelector('.slideshow')
+   var Slideshow = event.target.closest('.slideshow')
    var flkty = Flickity.data( Slideshow )
    var Slide = event.target.getAttribute("data-slider-index");
    flkty.select( Slide )
@@ -2235,7 +2233,7 @@ theme.Slideshow.prototype = _.assignIn({}, theme.Slideshow.prototype, {
   },
 
   onBlockDeselect: function() {
-    var Slideshow = document.querySelector('.slideshow')
+    var Slideshow = event.target.closest('.slideshow')
     var flkty = Flickity.data( Slideshow )
     flkty.unpausePlayer()
   }
