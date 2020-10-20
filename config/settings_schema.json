@@ -56,6 +56,11 @@
       "label": "Header icons hover",
       "default": "#000000"
     }, {
+      "type": "color",
+      "id": "mobile_header_icons",
+      "label": "Header icons (mobile)",
+      "default": "#000000"
+    }, {
       "type": "header",
       "content": "General"
     }, {
