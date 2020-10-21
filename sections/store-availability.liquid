@@ -16,13 +16,15 @@
               {{ closest_location.pick_up_time }}
             </p>
             <p class="store-availability-information__stores">
-              <a href="#StoreAvailabilityModal" class="store-availability-information__link store-availabilities-modal__trigger js-modal-open-store-availability-modal store-availability-small-text" data-store-availability-modal-open aria-haspopup="dialog">
-                {%- if pick_up_availabilities.size == 1 -%}
-                  {{ 'store_availability.general.view_store_info' | t }}
-                {%- else -%}
-                  {{ 'store_availability.general.check_other_stores' | t }}
-                {%- endif -%}
-              </a>
+              <div class="slideout__trigger--open text-left">
+                <button class="slideout__trigger-store-availability js-slideout-toggle" data-slideout-direction="right" aria-label="Toggle slideout" tabindex="0" type="button" name="button">
+                  {%- if pick_up_availabilities.size == 1 -%}
+                    {{ 'store_availability.general.view_store_info' | t }}
+                  {%- else -%}
+                    {{ 'store_availability.general.check_other_stores' | t }}
+                  {%- endif -%}
+                </button>
+              </div>
             </p>
           {%- else -%}
             <p class="store-availability-information__title">
@@ -30,15 +32,22 @@
             </p>
             {%- if pick_up_availabilities.size > 1 -%}
               <p class="store-availability-information__stores">
-                <a href="#StoreAvailabilityModal" class="store-availability-information__link store-availabilities-modal__trigger js-modal-open-store-availability-modal store-availability-small-text" data-store-availability-modal-open aria-haspopup="dialog">
-                  {{ 'store_availability.general.check_other_stores' | t }}
-                </a>
+                <div class="slideout__trigger--open text-left">
+                  <button class="slideout__trigger-store-availability js-slideout-toggle" data-slideout-direction="right" aria-label="Toggle slideout" tabindex="0" type="button" name="button">
+                    {{ 'store_availability.general.check_other_stores' | t }}
+                  </button>
+                </div>
               </p>
             {%- endif -%}
         {%- endif -%}
         </div>
     </div>
     <div class="store-availabilities-modal modal" id="StoreAvailabilityModal">
+      <div class="slideout__trigger--close">
+        <button class="slideout__trigger-store-availability js-slideout-toggle" data-slideout-direction="right" aria-label="Close navigation" tabindex="0" type="button" name="button">
+          <div class="icn-close"></div>
+        </button>
+      </div>
       <div class="store-availabilities-modal__header">
         <span class="store-availabilities-modal__product-information">
           <h2 class="store-availabilities-modal__product-title" data-store-availability-modal-product-title>

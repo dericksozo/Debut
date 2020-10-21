@@ -57,12 +57,8 @@
           {%- endunless -%}
           <ul id="cart" class="{% if section.settings.show_announcement_text %}desktop-4 {% else %}desktop-6{% endif %} tablet-6 mobile-3">
             <li class="mobile-menu__trigger">
-              <!-- <input type="checkbox" id="slideout-trigger" class="slideout__trigger-mobile-menu" data-slideout-direction="left" aria-expanded="false" />
-              <label for="slideout-trigger">
-                <i class="fa fa-bars" aria-hidden="true"></i>
-              </label> -->
-              <div class="slideout__trigger--open">
-                <button class="slideout__trigger-mobile-menu" data-slideout-direction="left" aria-label="Close navigation" tabindex="0" type="button" name="button">
+              <div class="slideout__trigger--open text-left">
+                <button class="slideout__trigger-mobile-menu js-slideout-toggle" data-slideout-direction="left" aria-label="Open navigation" tabindex="0" type="button" name="button">
                   <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
               </div>
