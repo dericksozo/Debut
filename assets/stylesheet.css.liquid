@@ -11358,29 +11358,40 @@ section.user-login .secondary-button.create-customer {
   0%{opacity:0;visibility:visible;}
   100%{opacity:1;}
 }
-.icn-close {
-  width: 20px;
-  height: 20px;
-  position: relative;
+
+/* Mobile Menu */
+.mobile-menu__block {
+  padding: 10px 10px 0 10px;
+  margin-bottom: 10px;
 }
-.icn-close:after {
-  content: '';
-  height: 20px;
-  border-left: 1px solid #fff;
-  position: absolute;
-  transform: rotate(45deg);
-  left: 8px;
+.mobile-menu__featured-image--full-width {
+  margin: 0 0 0 -12px !important;
+  padding: 0;
+  width: 110%;
 }
-.icn-close:before {
-  content: '';
-  height: 20px;
-  border-left: 1px solid #fff;
+.mobile-menu__search form input {
+  border: none;
+  border-bottom: 1px solid;
+  height: 41px;
+}
+.mobile-menu__accordion > .mobile-menu__item:first-child {
+  border-top: 1px solid;
+}
+.mobile-menu__cart-icon {
   font-family: var(--main-family);
   font-weight: var(--main-weight);
   font-size: var(--font-size)px;
+  position: relative;
+  display: block;
+  border: 1px solid;
+  padding: 10px;
+  text-transform: uppercase;
+}
+.mobile-menu__cart-icon i {
   position: absolute;
-  transform: rotate(-45deg);
-  left: 8px;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-37%);
 }
 
 /* Accordions */
