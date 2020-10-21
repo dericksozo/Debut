@@ -5012,8 +5012,8 @@ theme.StoreAvailability = (function() {
   });
 
   function updateContent(id, title) {
-    var container = document.querySelector('[data-store-availability-container]');
-    var variantSectionUrl =
+    const container = document.querySelector('[data-store-availability-container]');
+    const variantSectionUrl =
       '/variants/' + id + '/?section_id=store-availability';
     container.innerHTML = '';
 
