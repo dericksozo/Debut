@@ -5449,7 +5449,20 @@ theme.mobileNav = (function() {
       slideoutTrigger.addEventListener('click', theme.DOMHelpers.slideout);
     });
   }
-  mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {});
+  mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
+    onSelect: function() {
+      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+      wrapper.classList.add("slideout-left--open");
+    },
+    onDeselect: function() {
+      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+      wrapper.classList.remove("slideout-left--open");
+    },
+    onBlockSelect: function() {
+      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+      wrapper.classList.add("slideout-left--open");
+    }
+  });
   return mobileNav;
 })();
 
@@ -5630,6 +5643,7 @@ $(document).ready(function(){
       Events.trigger("mediaquery:desktop");
     }
   });
+
   document.addEventListener('shopify:section:select', function(event){
     Events.trigger("editor:section:select", event);
   });
