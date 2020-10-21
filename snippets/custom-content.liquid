@@ -458,7 +458,7 @@
             {%- assign collection = collections[block.settings.collection] -%}
             {%- assign prod_limit = block.settings.limit -%}
 
-            <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}" data-slideout-ignore>
+            <div class="collection-carousel desktop-12 tablet-6 mobile-3" id="carousel-{{ block.id }}">
               {% for product in collection.products limit: prod_limit %}
                 <div class="lazyOwl" id="product-listing-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
                   {% render 'product-listing', product: product, collection: collection %}
