@@ -5443,33 +5443,11 @@ theme.mobileNav = (function() {
       $(".accordion__toggle-2").not($(this)).removeClass('open');
     });
 
-    const trigger = document.querySelector(".slideout__trigger-mobile-menu");
-    const direction = trigger.dataset.slideoutDirection;
-    const wrapper = document.querySelector('body');
+    const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
 
-      function slideoutToggle() {
-        console.log("clicked two")
-        wrapper.classList.toggle("slideout-" + direction + "--open");
-        wrapper.classList.toggle("slideout-" + direction + "--closed");
-        // if ( wrapper.classList.contains("slideout-" + direction + "--closed") ) {
-        //   wrapper.classList.add("slideout-" + direction + "--open");
-        //   wrapper.classList.remove("slideout-" + direction + "--closed");
-        // } else {
-        //   wrapper.classList.remove("slideout-" + direction + "--open");
-        //   wrapper.classList.add("slideout-" + direction + "--closed");
-        // }
-      }
-
-      trigger.addEventListener('click', (e) => {
-                console.log("clicked one")
-        e.preventDefault();
-        wrapper.classList.toggle("slideout-" + direction + "--open");
-        wrapper.classList.toggle("slideout-" + direction + "--closed");
-      });
-
-
-      // theme.Helpers.slideout(".slideout__trigger-mobile-menu");
-
+    slideoutTriggers.forEach(function (slideoutTrigger) {
+      slideoutTrigger.addEventListener('click', theme.DOMHelpers.slideout);
+    });
   }
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {});
   return mobileNav;
