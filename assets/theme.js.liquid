@@ -3050,32 +3050,10 @@ theme.Helpers = (function() {
     };
   }
 
-  function slideout(trigger) {
-    var trigger = document.querySelector(trigger);
-    var wrapper = document.querySelector('body');
-
-    console.log(trigger)
-    trigger.addEventListener('click', slideoutToggle);
-
-    function slideoutToggle() {
-      if ( trigger.checked ) {
-        var direction = trigger.dataset.slideoutDirection;
-        wrapper.classList.add("slideout-" + direction + "--open");
-        wrapper.classList.remove("slideout-" + direction + "--closed");
-      } else {
-        var direction = trigger.dataset.slideoutDirection;
-        wrapper.classList.remove("slideout-" + direction + "--open");
-        wrapper.classList.add("slideout-" + direction + "--closed");
-      }
-    }
-  }
-
-
   return {
     setTouch: setTouch,
     isTouch: isTouch,
-    debounce: debounce,
-    slideout: slideout
+    debounce: debounce
   };
 })();
 
@@ -3119,8 +3097,21 @@ theme.DOMHelpers = (function () {
 		return (l + w >= docW);
 	}
 
-	return {
-		isElementPastEdge: isElementPastEdge
+  /*
+   * @description - Toggles class on body to open slideout drawers.
+   * @param element:
+   */
+  function slideout() {
+    const direction = this.dataset.slideoutDirection;
+    const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+
+    wrapper.classList.toggle("slideout-" + direction + "--open");
+    wrapper.classList.toggle("slideout-" + direction + "--closed");
+  }
+
+  return {
+    isElementPastEdge: isElementPastEdge,
+		slideout: slideout
 	};
 
 }());
