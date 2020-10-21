@@ -2,7 +2,7 @@
   "password": {
     "general": {
       "thanks": "Thank you for joining our list",
-      "enter_store": "Enter Store using Password:",
+      "enter_store": "Login with Password",
       "password": "Password",
       "enter": "Enter",
       "email_address": "Email Address",
