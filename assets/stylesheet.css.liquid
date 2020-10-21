@@ -11455,6 +11455,7 @@ ul.accordion a,
 
 .store-availability-information-container {
   margin-left: 5px;
+  text-align: left;
 }
 
 .store-availability-information i {
@@ -11466,10 +11467,7 @@ ul.accordion a,
    color: #00730B;
  }
 
-.store-availability-information__title {
-  margin-bottom: 0;
-}
-
+.store-availability-information__title,
 .store-availability-information__stock {
   margin-bottom: 0;
 }
@@ -11483,21 +11481,19 @@ ul.accordion a,
   cursor: pointer;
 }
 
-.store-availability-information__link:hover, .store-availability-information__link:focus {
+.store-availability-information__link:hover,
+.store-availability-information__link:focus {
   opacity: 0.6;
 }
 
 .store-availabilities-modal {
-  max-height: 100vh;
-  width: 375px;
-  left: auto;
-  border: 1px solid {{ settings.dotted_color }};
+  left: unset;
   box-sizing: border-box;
   box-shadow: -4px 4px 6px rgba(58, 58, 58, 0.04);
   background-color: var(--background);
 }
 
-@media only screen and (max-width: 749px) {
+@media only screen and (max-width: 740px) {
   .store-availabilities-modal {
     width: 100%;
     z-index: 9999;
