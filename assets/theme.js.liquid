@@ -5038,34 +5038,19 @@ theme.StoreAvailability = (function() {
       });
 
       // Move modal code to slideout
-      var source = document.getElementById("StoreAvailabilityModal");
+      const source = document.getElementById("StoreAvailabilityModal");
       document.querySelector(".slideout__drawer-right").innerHTML = "";
       document.querySelector(".slideout__drawer-right").appendChild(source);
 
       // Build slideout
-      (function slideout() {
-        var trigger = document.querySelector(".slideout__trigger-store-availability");
-        var direction = trigger.dataset.slideoutDirection;
-        var wrapper = document.querySelector('body');
+      const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
 
-        console.log(trigger, direction)
-
-        trigger.addEventListener('click', slideoutToggle);
-
-        function slideoutToggle() {
-          console.log("Clicked", trigger.checked)
-          if ( trigger.checked ) {
-            wrapper.classList.add("slideout-" + direction + "--open");
-            wrapper.classList.remove("slideout-" + direction + "--closed");
-          } else {
-            wrapper.classList.remove("slideout-" + direction + "--open");
-            wrapper.classList.add("slideout-" + direction + "--closed");
-          }
-        }
-      })();
+      slideoutTriggers.forEach(function (slideoutTrigger) {
+        slideoutTrigger.addEventListener('click', theme.DOMHelpers.slideout);
+      });
 
       // Update product title
-      var storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
+      const storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
       storeAvailabilityModalProductTitle.textContent = title;
     });
   }
