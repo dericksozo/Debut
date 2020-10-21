@@ -11230,8 +11230,8 @@ section.user-login .secondary-button.create-customer {
 /* CSS Slideouts */
 .slideout {
   list-style: none;
-  background: {{ settings.background }};
   width: calc(100vw - 65px);
+  background: var(--background);
   height: auto;
   position: fixed;
   top: 0;
@@ -11332,6 +11332,8 @@ body.slideout-right--open .site-wrap {
 } */
 body.slideout-left--closed .slideout__drawer-left,
 body.slideout-right--closed .slideout__drawer-right {
+  color: var(--text-color);
+  border-color: var(--text-color);
   visibility: hidden;
   opacity: 0;
   -webkit-animation:slideoutFadeout 1s linear;
@@ -11372,6 +11374,9 @@ body.slideout-right--open .slideout__drawer-right {
   content: '';
   height: 20px;
   border-left: 1px solid #fff;
+  font-family: var(--main-family);
+  font-weight: var(--main-weight);
+  font-size: var(--font-size)px;
   position: absolute;
   transform: rotate(-45deg);
   left: 8px;
@@ -11409,9 +11414,9 @@ ul.accordion li,
 ul.accordion a,
 .accordion__toggle,
 .accordion__toggle-2 {
-  font-family: {{ main_font.family }};
-  font-size: {{ settings.font_size }}px;
-  font-weight: {{ main_font.weight }};
+  font-family: var(--main-family);
+  font-size: var(--font-size)px;
+  font-weight: var(--main-weight);
   text-transform: uppercase;
 }
 
@@ -11488,7 +11493,7 @@ ul.accordion a,
   border: 1px solid {{ settings.dotted_color }};
   box-sizing: border-box;
   box-shadow: -4px 4px 6px rgba(58, 58, 58, 0.04);
-  background-color: {{ settings.background }};
+  background-color: var(--background);
 }
 
 @media only screen and (max-width: 749px) {
@@ -11530,7 +11535,7 @@ ul.accordion a,
   content: "";
   display: block;
   margin: 0 0 16px 0;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid var(--dotted-color);
 }
 
 .store-availability-list__item > p {
@@ -11550,7 +11555,7 @@ ul.accordion a,
 
 .store-availability-container {
   padding-bottom: 20px;
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid var(--dotted-color);
   margin-bottom: 20px;
   padding-top: 10px;
 }
