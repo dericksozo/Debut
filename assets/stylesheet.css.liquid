@@ -9039,45 +9039,6 @@ body.compensate-for-scrollbar {
   overflow-y: scroll;
 }
 
-/* Password Page */
-.password-page #logo {
-  padding-top: 100px;
-  text-align: center;
-}
-
-.password-page {
-  min-height: 110vh;
-}
-
-.password-page img {
-  margin: 10px;
-}
-
-.password-page #newsletter-details {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-#signup-wrap {
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#signup-holder {
-  width: 100%;
-  margin-top: 100px;
-}
-
-#password-email {
-  float: left;
-  text-indent: 10px;
-  width: 66%;
-  text-transform: uppercase;
-  color: #000;
-  height: 48px;
-}
-
 .searchbox #q:focus::-webkit-input-placeholder {
   color:transparent;
 }
@@ -9090,72 +9051,6 @@ body.compensate-for-scrollbar {
 .searchbox #q:focus::-moz-placeholder {
   color:transparent;
 }
-
-input#password-email:focus::-webkit-input-placeholder {
-  color:transparent;
-}
-input#password-email:focus:-moz-placeholder {
-  color:transparent;
-} /* FF 4-18 */
-input#password-email:focus::-moz-placeholder {
-  color:transparent;
-} /* FF 19+ */
-input#password-email:focus:-ms-input-placeholder {
-  color:transparent;
-} /* IE 10+ */
-
-.slideout input[type="submit"] {
-  margin-bottom: 0 !important;
-}
-
-#password-subscribe {
-  width: 28%;
-  margin-left: 2%;
-  margin-top: 0;
-  text-transform: uppercase;
-  height: 48px;
-}
-
-.password p.success {
-  text-align: center;
-}
-
-.password-page-icons {
-  margin-bottom: 20px;
-}
-
-.password-page-icons li {
-  display: inline-block;
-  margin: 0 5px;
-}
-
-.password-page-icons a:hover {
-  opacity: 0.5;
-}
-
-.password-page-icons i {
-  line-height: 30px;
-}
-
-body.password form#login_form {
-  padding: 15px 20px;
-}
-
-.password-page-footer {
-  width: 100%;
-  display: block;
-  text-align: center;
-  position: relative;
-  margin-top: 220px;
-}
-
-.password-page-footer a {
-  font-family: "Myriad Pro", "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-  font-style: italic;
-  font-size: 16px;
-  font-weight: 600;
-}
-
 .closeslide {
   float: right;
   cursor: pointer;
@@ -9164,16 +9059,6 @@ body.password form#login_form {
 
 .closeslide i.icon-angle-right {
   margin-right: -3px;
-}
-
-@media screen and ( max-width: 740px ) {
-  ul#password-icons {
-    display: none;
-  }
-
-  #signup-holder {
-    margin-top: 50px;
-  }
 }
 
 ol.flex-control-nav {
@@ -11646,4 +11531,100 @@ ul.accordion a,
   border-bottom: 1px solid #e1e1e1;
   margin-bottom: 20px;
   padding-top: 10px;
+}
+/* Password Page */
+.password a {
+  opacity: 0.8;
+}
+
+.password a:hover {
+  opacity: 1.0;
+}
+
+.password-page__wrapper {
+  min-height: 110vh;
+  padding: 15px;
+}
+
+.password-page__logo {
+  padding-top: 100px;
+  text-align: center;
+}
+
+.password-page__newsletter {
+  width: 100%;
+  margin-top: 100px;
+}
+
+.password-page__newsletter-wrapper {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.password-page__newsletter-details {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.password-page__newsletter-signup--email {
+  float: left;
+  text-indent: 10px;
+  width: 66%;
+  text-transform: uppercase;
+  color: #000;
+  height: 48px;
+}
+
+.password-page__newsletter-signup--submit {
+  width: 28%;
+  margin-left: 0;
+  margin-top: 0;
+  text-transform: uppercase;
+  height: 48px;
+}
+
+.password-page__newsletter-signup--submit:hover {
+  opacity: 0.75;
+}
+
+.password-page__icons {
+  margin-bottom: 20px;
+}
+
+.password-page__icons li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.password-page__icons a:hover {
+  opacity: 0.5;
+}
+
+.password-page__icons i {
+  line-height: 30px;
+}
+
+.password-page__footer {
+  width: 100%;
+  display: block;
+  text-align: center;
+  position: relative;
+  margin-top: 220px;
+}
+
+.password-page__footer a {
+  font-family: var(--main-family);
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.password-page__login {
+  padding: 10px 15px;
+}
+@media screen and ( max-width: 740px ) {
+  .password-page__newsletter {
+    margin-top: 50px;
+  }
 }
