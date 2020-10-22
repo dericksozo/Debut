@@ -445,7 +445,7 @@
           "type": "select",
           "id": "text_align",
           "label": "Text alignment",
-          "default": "left",
+          "default": "center",
           "options": [
             {
               "value": "center",
@@ -465,7 +465,7 @@
           "step": 5,
           "unit": "%",
           "label": "Content width less than 100% width will center on the page",
-          "default": 100
+          "default": 60
         }
       ]
     },
@@ -671,7 +671,8 @@
         {
           "type": "checkbox",
           "id": "full_width",
-          "label": "Enable full width"
+          "label": "Enable full width",
+          "default":true
         },
         {
           "type": "image_picker",
@@ -718,12 +719,13 @@
           "step": 1,
           "unit": "%",
           "label": "Vertical position",
-          "default": 20
+          "default": 50
         },
         {
           "type": "select",
           "id": "text_align",
           "label": "Text align",
+          "default":"center",          
           "options": [
             {
               "value": "left",
@@ -1375,12 +1377,24 @@
   ],
   "default": {
     "blocks": [
-      {
-        "type": "page_title"
-      },
-      {
-        "type": "page_content"
-      }
+    {
+      "type": "image_text_overlay"
+    },
+    {
+      "type": "page_title"
+    },
+    {
+      "type": "page_content"
+    },
+    {
+      "type": "featured_collection"
+    },
+    {
+      "type": "rich_text"
+    },
+    {
+      "type": "image_blocks"
+    }
     ]
   }
 }
