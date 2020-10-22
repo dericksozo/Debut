@@ -560,6 +560,9 @@
   section div[class*="container-"] h3, section div[class*="container-"] h1 {
     font-size: {{ section.settings.section_heading_size }}px !important;
   }
+  section div[class*="container-"] h3 {
+    margin-bottom: 20px;
+  }
   {% assign margin = section.settings.section_spacing | divided_by: 2 %}
   section[class*="cp-"] {
     margin-top: {{ margin }}px;
