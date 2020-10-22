@@ -477,7 +477,7 @@
                 "pageDots": false
              }{% endcapture %}
 
-              <div class="featured__collection{% if is_carousel %}-carousel flickity__section{% endif %} product-loop" id="carousel-{{ block.id }}"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
+              <div class="featured__collection{% if is_carousel %}-carousel flickity__section js-carousel{% endif %} product-loop" id="carousel-{{ block.id }}"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
                 {% if block.settings.collection == blank %}
                   {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
                 {% else %}

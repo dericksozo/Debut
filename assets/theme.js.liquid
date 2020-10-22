@@ -2251,8 +2251,8 @@ theme.FeaturedProducts = (function() {
     return false;
   }
   Carousels.forEach(Carousel => {
-    var flktyData = Carousel.getAttribute('data-flickity');
-    var flktyOptions = JSON.parse(flktyData);
+    const flktyData = Carousel.getAttribute('data-flickity');
+    const flktyOptions = JSON.parse(flktyData);
         new Flickity(Carousel, flktyOptions);
   });
 
@@ -2297,18 +2297,18 @@ theme.FeaturedProducts = (function() {
        if ( !Carousel ) {
          return false;
        }
-       var flkty = Flickity.data( Carousel )
+       const flkty = Flickity.data(Carousel);
        flkty.destroy()
      });
 
      document.addEventListener('shopify:section:load', function(event){
-       var Carousel = event.target.closest('.featured__collection-carousel')
+       var Carousel = event.target.closest('.js-carousel')
        if ( !Carousel ) {
          return false;
        }
-       var flktyData = Carousel.getAttribute('data-flickity');
-       var flktyOptions = JSON.parse(flktyData);
-           new Flickity('.featured__collection-carousel', flktyOptions);
+       const flktyData = Carousel.getAttribute('data-flickity');
+       const flktyOptions = JSON.parse(flktyData);
+           new Flickity('.js-carousel', flktyOptions);
 
         $('.prod-image').matchHeight({ remove: true });
         setTimeout(heightFix, 500);
@@ -4113,31 +4113,31 @@ theme.CustomPageSlideshow = function (context, events) {
 theme.CustomPageCollection = function (context, events) {
   (function Carousel() {
 
-    var Carousel = document.querySelector('.featured__collection-carousel')
+    const Carousel = document.querySelector('.js-carousel');
     if ( !Carousel ) {
       return false;
     }
-    var flktyData = Carousel.getAttribute('data-flickity');
-    var flktyOptions = JSON.parse(flktyData);
-        new Flickity('.featured__collection-carousel', flktyOptions);
+    const flktyData = Carousel.getAttribute('data-flickity');
+    const flktyOptions = JSON.parse(flktyData);
+        new Flickity('.js-carousel', flktyOptions);
 
     document.addEventListener('shopify:section:unload', function(event){
-      var Carousel = document.querySelector('.featured__collection-carousel')
+      const Carousel = document.querySelector('.js-carousel');
       if ( !Carousel ) {
         return false;
       }
-      var flkty = Flickity.data( Carousel )
+      const flkty = Flickity.data(Carousel);
       flkty.destroy()
     });
 
     document.addEventListener('shopify:section:load', function(event){
-      var Carousel = document.querySelector('.featured__collection-carousel')
+      const Carousel = document.querySelector('.js-carousel');
       if ( !Carousel ) {
         return false;
       }
-      var flktyData = Carousel.getAttribute('data-flickity');
-      var flktyOptions = JSON.parse(flktyData);
-          new Flickity('.featured__collection-carousel', flktyOptions);
+      const flktyData = Carousel.getAttribute('data-flickity');
+      const flktyOptions = JSON.parse(flktyData);
+          new Flickity('.js-carousel', flktyOptions);
 
        $('.prod-image').matchHeight({ remove: true });
        setTimeout(heightFix, 500);

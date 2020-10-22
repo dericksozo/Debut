@@ -19,7 +19,7 @@
       "pageDots": true
    }{% endcapture %}
 
-    <div id="featured_collection--{{ section.id }}" class="featured__collection{% if is_carousel %}-carousel flickity__section{% endif %} product-loop"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
+    <div id="featured_collection--{{ section.id }}" class="featured__collection{% if is_carousel %}-carousel flickity__section js-carousel{% endif %} product-loop"{% if is_carousel %} data-flickity='{{ slideshow_config }}'{% endif %} data-slideout-ignore>
       {% if section.settings.collection == blank %}
       {% render 'onboard-product', prod_limit: prod_limit, grid: grid %}
       {% else %}
