@@ -5211,25 +5211,23 @@ var selectors = {
 
 theme.Header = (function() {
   function Header(container) {
+		const header = document.querySelector(".js-header"),
+					navigation = document.querySelector(".js-navigation"),
+					menuItemsWithNestedDropdowns = document.querySelectorAll(".js-menuitem-with-nested-dropdown");
+		
+		const amountToScroll = header.clientHeight - navigation.clientHeight; // Only calculate this number once on load...
+		const stickyClass = navigation.getAttribute('data-sticky-class');
+		
+		var $container = this.$container = $(container);
+		
 		function makeNavigationSticky() {
-
-			const navigation = document.querySelector(".js-navigation"),
-						header     = document.querySelector(".js-header");
-
-			const amountToScroll = header.clientHeight - navigation.clientHeight;
-			const stickyClass = "navigation--sticky" /* It might be good to put this in the HTML as a data- attribute. */
-
 			if (window.pageYOffset > amountToScroll) {
 				navigation.classList.add(stickyClass);
 			} else {
 				navigation.classList.remove(stickyClass);
 			}
-			
 		}
 		
-		var $container = this.$container = $(container);
-		
-		/* This can be made more performant with debounce, etc. */
     document.addEventListener('scroll', function (event) {
       makeNavigationSticky();
     });
@@ -5243,11 +5241,9 @@ theme.Header = (function() {
 				.submit();
 		});
 		
-		/* This bit is code is concerned with making sure that nested dropdowns are
-		 * properly placed in the correct place if they're offscreen.
+		/* 
+		 * Making sure that nested dropdowns are properly placed in the correct place if they're offscreen.
 		 */
-		const menuItemsWithNestedDropdowns = document.querySelectorAll(".js-menuitem-with-nested-dropdown");
-		
 		menuItemsWithNestedDropdowns.forEach(function (menuItem) {
 			menuItem.addEventListener('mouseenter', function (event) {
 				
