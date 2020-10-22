@@ -2202,11 +2202,11 @@ $(document).ready(function() {
 theme.Slideshow = (function() {
   function Slideshow(container) {
 
-    var slideshows = document.querySelectorAll('.slideshow');
+    const slideshows = document.querySelectorAll('.js-slideshow');
 
     slideshows.forEach(Slideshow => {
-      var flktyData = Slideshow.getAttribute('data-flickity');
-      var flktyOptions = JSON.parse(flktyData);
+      const flktyData = Slideshow.getAttribute('data-flickity');
+      const flktyOptions = JSON.parse(flktyData);
         new Flickity(Slideshow, flktyOptions);
     });
 
@@ -2218,23 +2218,23 @@ theme.Slideshow = (function() {
 theme.Slideshow.prototype = _.assignIn({}, theme.Slideshow.prototype, {
 
   onLoad: function(event) {
-    var Slideshow = event.target.closest('.slideshow')
-    var flktyData = Slideshow.getAttribute('data-flickity');
-    var flktyOptions = JSON.parse(flktyData);
-        new Flickity('.slideshow', flktyOptions);
+    const Slideshow = event.target.closest('.js-slideshow')
+    const flktyData = Slideshow.getAttribute('data-flickity');
+    const flktyOptions = JSON.parse(flktyData);
+        new Flickity('.js-slideshow', flktyOptions);
   },
 
   onBlockSelect: function(event) {
-   var Slideshow = event.target.closest('.slideshow')
-   var flkty = Flickity.data( Slideshow )
-   var Slide = event.target.getAttribute("data-slider-index");
+   const Slideshow = event.target.closest('.js-slideshow')
+   const flkty = Flickity.data( Slideshow )
+   const Slide = event.target.getAttribute("data-slider-index");
    flkty.select( Slide )
    flkty.pausePlayer()
   },
 
   onBlockDeselect: function() {
-    var Slideshow = event.target.closest('.slideshow')
-    var flkty = Flickity.data( Slideshow )
+    const Slideshow = event.target.closest('.js-slideshow')
+    const flkty = Flickity.data( Slideshow )
     flkty.unpausePlayer()
   }
 });
@@ -4061,49 +4061,49 @@ theme.CustomPageSlideshow = function (context, events) {
 
   (function page_slideshow() {
 
-      var Slideshow = document.querySelector('.slideshow')
+      const Slideshow = document.querySelector('.js-slideshow')
 
       if ( !Slideshow ) {
         return false;
       }
 
-      var flktyData = Slideshow.getAttribute('data-flickity');
-      var flktyOptions = JSON.parse(flktyData);
-          new Flickity('.slideshow', flktyOptions);
+      const flktyData = Slideshow.getAttribute('data-flickity');
+      const flktyOptions = JSON.parse(flktyData);
+          new Flickity('.js-slideshow', flktyOptions);
 
       document.addEventListener('shopify:section:unload', function(event){
-        var Slideshow = document.querySelector('.slideshow')
+        const Slideshow = document.querySelector('.js-slideshow')
         if ( !Slideshow ) {
           return false;
         }
-        var flkty = Flickity.data( Slideshow )
+        const flkty = Flickity.data( Slideshow )
         flkty.destroy()
       });
 
       document.addEventListener('shopify:section:load', function(event){
-        var Slideshow = document.querySelector('.slideshow')
-        var flktyData = Slideshow.getAttribute('data-flickity');
-        var flktyOptions = JSON.parse(flktyData);
-            new Flickity('.slideshow', flktyOptions);
+        const Slideshow = document.querySelector('.js-slideshow')
+        const flktyData = Slideshow.getAttribute('data-flickity');
+        const flktyOptions = JSON.parse(flktyData);
+            new Flickity('.js-slideshow', flktyOptions);
       });
 
       document.addEventListener('shopify:block:select', function(event){
-       var Slideshow = document.querySelector('.slideshow')
+       const Slideshow = document.querySelector('.js-slideshow')
        if ( !Slideshow ) {
          return false;
        }
-       var flkty = Flickity.data( Slideshow )
-       var Slide = event.target.getAttribute("data-slider-index");
+       const flkty = Flickity.data( Slideshow )
+       const Slide = event.target.getAttribute("data-slider-index");
        flkty.select( Slide )
        flkty.pausePlayer()
       });
 
       document.addEventListener('shopify:block:deselect', function(event){
-        var Slideshow = document.querySelector('.slideshow')
+        const Slideshow = document.querySelector('.js-slideshow')
         if ( !Slideshow ) {
           return false;
         }
-        var flkty = Flickity.data( Slideshow )
+        const flkty = Flickity.data( Slideshow )
         flkty.unpausePlayer()
       });
 

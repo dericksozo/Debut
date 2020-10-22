@@ -104,7 +104,7 @@
             "prevNextButtons":{% if block.settings.pager == 'arrows' %}true{% else %}false{% endif %}
           }{% endcapture %}
             <div class="container-{{ block.id }}">
-              <div class="slideshow flickity__section" id="Slideshow-{{ section.id }}" data-flickity='{{ slideshow_config }}'>
+              <div class="slideshow flickity__section js-slideshow" id="Slideshow-{{ section.id }}" data-flickity='{{ slideshow_config }}'>
                   {%- assign image_size = '2000x' -%}
                   {% assign slide_images = section.blocks | where: "type", "slideshow_image" %}
                   {% for slide in slide_images %}
