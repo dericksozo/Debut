@@ -8389,12 +8389,6 @@ ol.flex-control-nav {
   max-height: 100%;
 }
 
-.slideshow__slide-onboard,
-  .onboard, .onboard-slide {
-  background: #ddd! important;
-  border: 1px solid #ccc;
-}
-
 .row.no-blocks .desktop-12 {
   font-size: 15px;
   text-align: center;
@@ -10605,5 +10599,118 @@ section.user-login .secondary-button.create-customer {
   }
   section.user-login {
     margin-top: 48px;
+  }
+}
+
+
+/* ---- Flickity sections ---- */
+
+.flickity__section .flickity-button {
+  color: {{ settings.direction_color }};
+  background-color: {{ settings.direction_background }};
+  width: 45px;
+  height: 45px;
+  margin: 0;
+}
+
+.flickity__section .flickity-button .flickity-button-icon {
+  width: 40%;
+  left: 30%;
+  height: 40%;
+  top: 30%;
+}
+
+.flickity__section .flickity-page-dots .dot {
+  border: 1px solid #fff;
+  margin: 0 5px;
+}
+
+/* ---- Slideshow section ---- */
+
+.slideshow__slide-onboard,
+  .onboard, .onboard-slide {
+  background: #ddd! important;
+  border: 1px solid #ccc;
+}
+
+.slideshow {
+  border: 0 !important;
+  width: 100%;
+}
+
+.slideshow__slide,
+.slideshow__slide-desktop {
+  width: 100%;
+}
+
+.slideshow__slide-desktop.overlay:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.25);
+  content:"";
+}
+
+.slideshow__slide {
+  opacity: 0 !important;
+  transition: opacity 1s ease !important;
+}
+
+.slideshow__slide.is-selected {
+  opacity: 1 !important;
+}
+
+@media screen and (min-width: 741px) {
+  .slideshow.flickity__section .flickity-page-dots {
+    text-align: right;
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+.slideshow__caption {
+  position: absolute;
+  width: fit-content;
+  text-align: center;
+}
+
+.slideshow__caption .slideshow__caption-wrapper {
+  display: inline-block;
+  padding: 20px;
+}
+
+.slideshow__caption p {
+  line-height: initial;
+}
+
+.slideshow__btn-wrapper {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.slideshow__btn-wrapper a {
+  padding: 10px 20px;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  display: inline-block;
+  -webkit-transition: background .3s ease,color .3s ease;
+  -moz-transition: background .3s ease,color .3s ease;
+  -o-transition: background .3s ease,color .3s ease;
+  transition: background .3s ease,color .3s ease;
+}
+
+.slideshow__btn-wrapper a:hover {
+  background: none !important;
+}
+
+@media screen and (max-width: 740px) {
+  .slideshow__caption .slideshow__caption-wrapper {
+    width: 100%;
+  }
+  .slideshow__slide-desktop.overlay:after {
+    height: 500px;
   }
 }

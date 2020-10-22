@@ -104,7 +104,7 @@
             "prevNextButtons":{% if block.settings.pager == 'arrows' %}true{% else %}false{% endif %}
          }{% endcapture %}
             <div class="container-{{ block.id }}">
-              <div class="slideshow index_Slider" id="Slideshow-{{ section.id }}" data-flickity='{{ slideshow_config }}'>
+              <div class="slideshow flickity__section" id="Slideshow-{{ section.id }}" data-flickity='{{ slideshow_config }}'>
                   {%- assign image_size = '2000x' -%}
                   {% assign slide_images = section.blocks | where: "type", "slideshow_image" %}
                   {% for slide in slide_images %}
@@ -112,107 +112,14 @@
                   {% endfor %}
               </div>
               <style>
-              .slideshow {
-                border: 0 !important;
-                width: 100%;
-              }
-              .slideshow__slide,
-              .slideshow__slide-desktop {
-                width: 100%;
-              }
-              .slideshow__slide {
-                opacity: 0 !important;
-                transition: opacity 1s ease !important;
-              }
-              .slideshow__slide.is-selected {
-                opacity: 1 !important;
-              }
-              .slideshow .flickity-button {
-                color: {{ settings.direction_color }};
-                background-color: {{ settings.direction_background }};
-                width: 45px;
-                height: 45px;
-                margin: 0;
-              }
-              .slideshow .flickity-button .flickity-button-icon {
-                width: 40%;
-                left: 30%;
-                height: 40%;
-                top: 30%;
-              }
-              @media screen and (min-width: 741px) {
-                .slideshow .flickity-page-dots {
-                  text-align: right;
-                  bottom: 15px;
-                  right: 15px;
-                }
-              }
-              .slideshow .flickity-page-dots .dot {
-                border: 1px solid #fff;
-                margin: 0 5px;
-              }
-
-              .slideshow__caption {
-                position: absolute;
-                width: fit-content;
-                text-align: center;
-              }
-
-              .slideshow__caption .slideshow__caption-wrapper {
-                display: inline-block;
-                padding: 20px;
-              }
-
               .slideshow__caption h2.slideshow__title {
                 font-size: {{ block.settings.slide_heading_size }}px;
               }
               .slideshow__caption p {
                 font-size: {{ block.settings.subheading_size }}px;
-                line-height: initial;
-              }
-              .slideshow__btn-wrapper {
-                display: inline-block;
-                margin-top: 10px;
-                margin-right: 10px;
               }
               .slideshow__btn-wrapper a {
                 font-size: {{ block.settings.cta_size }}px;
-                padding: 10px 20px;
-                letter-spacing: 1px;
-                border-radius: 3px;
-                display: inline-block;
-                -webkit-transition: background .5s ease,color .5s ease;
-                -moz-transition: background .5s ease,color .5s ease;
-                -o-transition: background .5s ease,color .5s ease;
-                transition: background .5s ease,color .5s ease;
-              }
-              @media screen and (max-width: 740px) {
-                .slideshow__caption .slideshow__caption-wrapper {
-                  width: 100%;
-                }
-                .slideshow__slide .box-ratio {
-                  padding-bottom: 360px !important;
-                }
-                .slideshow__slide img {
-                  object-fit: cover;
-                  object-position: center;
-                  height: 360px !important;
-                }
-                .slideshow__slide {
-                  display: block;
-                }
-                .slideshow__caption {
-                  position: relative !important;
-                  padding: 0 0 0 0 !important;
-                  left: 0 !important;
-                  top: 0 !important;
-                  width: unset !important;
-                  webkit-transform: translate(0,0) !important;
-                  -ms-transform: translate(0,0) !important;
-                  -moz-transform: translate(0,0) !important;
-                  -o-transform: translate(0,0) !important;
-                  transform: translate(0,0) !important;
-                }
               }
               </style>
             </div>

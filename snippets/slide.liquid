@@ -58,12 +58,16 @@
             text-align: {{ slide.settings.text_align }};
           }
           .slideshow__caption.slide-{{ slide.id }} h2.slideshow__title,
-          .slideshow__caption.slide-{{ slide.id }} .slideshow__caption p {
+          .slideshow__caption.slide-{{ slide.id }} p {
             color: {{ slide.settings.slide_text_color }};
           }
           .slideshow__caption.slide-{{ slide.id }} .slideshow__btn-wrapper a {
             color: {{ slide.settings.cta_color }};
             background: {{ slide.settings.cta_background }};
+            border: 1px solid {{ slide.settings.cta_background }};
+          }
+          .slideshow__caption.slide-{{ slide.id }} .slideshow__btn-wrapper a:hover {
+            color: {{ slide.settings.cta_background }};
           }
         </style>
         {% endunless %}

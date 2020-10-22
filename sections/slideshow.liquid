@@ -17,12 +17,12 @@ data-slideout-ignore>
    }{% endcapture %}
 
     {% if section.blocks.size > 0 %}
-    <div class="slideshow" id="slideshow--{{ section.id }}" data-flickity='{{ slideshow_config }}'>
+    <div class="slideshow flickity__section" id="slideshow--{{ section.id }}" data-flickity='{{ slideshow_config }}'>
       {% for block in section.blocks %}
         <div id="slide--{{ block.id }}" data-block-id="{{ block.id }}" class="slide--{{ block.id }} slideshow__slide{% if block.settings.image == blank %} slideshow__slide-onboard{% endif %}" data-slider-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
           {% if block.settings.link != blank and block.settings.button_text == blank %}<a href="{{ block.settings.link }}">{% endif %}
           {% if block.settings.image != blank %}
-            <div class="slideshow__slide-desktop">
+            <div class="slideshow__slide-desktop{% if block.settings.overlay %} overlay{% endif %}">
               {% assign image_box_ratio = block.settings.image.height | append: ".0" | times: 1 | divided_by: block.settings.image.width | times: 100 | append: "%" %}
               {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
               <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
@@ -74,21 +74,23 @@ data-slideout-ignore>
               {% assign number = block.settings.caption_background_opacity %}
               {% assign caption_background_opacity = number | divided_by: 100.0 %}
               {% if block.settings.caption_background == 'rgba(0,0,0,0)' %}
-              background: transparent;
+                background: transparent;
               {% else %}
-              background: {{ bg_color | color_modify: 'alpha', caption_background_opacity }};
+                background: {{ bg_color | color_modify: 'alpha', caption_background_opacity }};
               {% endif %}
               text-align: {{ block.settings.text_align }};
             }
-            .slideshow__caption.slide-{{ block.id }} h2.slideshow__title {
-              color: {{ block.settings.slide_text_color }};
-            }
+            .slideshow__caption.slide-{{ block.id }} h2.slideshow__title,
             .slideshow__caption.slide-{{ block.id }} p {
               color: {{ block.settings.slide_text_color }};
             }
             .slideshow__caption.slide-{{ block.id }} .slideshow__btn-wrapper a {
               color: {{ block.settings.cta_color }};
               background: {{ block.settings.cta_background }};
+              border: 1px solid {{ block.settings.cta_background }};
+            }
+            .slideshow__caption.slide-{{ block.id }} .slideshow__btn-wrapper a:hover {
+              color: {{ block.settings.cta_background }};
             }
             .slideshow__caption.slide-{{ block.id }} {
               top: {{ block.settings.caption_vertical }}%;
@@ -99,60 +101,47 @@ data-slideout-ignore>
               -o-transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
               transform: translate(-{{ block.settings.caption_horizontal }}%, -{{ block.settings.caption_vertical }}%);
             }
-
             @media screen and (max-width: 740px) {
               {%- assign mobile_image = block.settings.mobile_image -%}
               {% assign image_box_ratio = mobile_image.height | append: ".0" | times: 1 | divided_by: mobile_image.width | times: 100 | append: "%" %}
 
               {% if mobile_image != blank %}
-              .slide--{{ block.id }} {
-                background-image: url('{{ mobile_image | img_url: '600x' }}') !important;
-                opacity: 1;
-                padding-bottom: {{ image_box_ratio }} !important;
-                background-size: contain;
-                bacground-position: top center;
-                background-repeat: no-repeat;
-              }
-              .slide--{{ block.id }} > a {
-                 display: block;
-                 width: 100%;
-                 padding-bottom: 100%;
-                 position: absolute;
-                 top: 0;
-                 height: 100%;
-               }
-              .slide--{{ block.id }} .slideshow__slide-desktop {
-                display: none;
-              }
+                .slide--{{ block.id }} {
+                  background-image: url('{{ mobile_image | img_url: '600x' }}') !important;
+                  opacity: 1;
+                  padding-bottom: {{ image_box_ratio }} !important;
+                  background-size: contain;
+                  bacground-position: top center;
+                  background-repeat: no-repeat;
+                }
+                .slide--{{ block.id }} > a {
+                   display: block;
+                   width: 100%;
+                   padding-bottom: 100%;
+                   position: absolute;
+                   top: 0;
+                   height: 100%;
+                 }
+                .slide--{{ block.id }} .slideshow__slide-desktop {
+                  display: none;
+                }
               {% else %}
-              .slide--{{ block.id }} .slideshow__slide-desktop .box-ratio {
-                padding-bottom: 360px !important;
-              }
-              .slide--{{ block.id }} .slideshow__slide-desktop img {
-                object-fit: cover;
-                object-position: center;
-                height: 360px !important;
-              }
-              .slide--{{ block.id }} .slideshow__slide-desktop {
-                display: block;
-              }
-              .slideshow__caption.slide-{{ block.id }} {
-                position: relative !important;
-                padding: 0 0 0 0 !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: unset !important;
-                webkit-transform: translate(0,0);
-                -ms-transform: translate(0,0);
-                -moz-transform: translate(0,0);
-                -o-transform: translate(0,0);
-                transform: translate(0,0);
-              }
+                .slide--{{ block.id }} .slideshow__slide-desktop .box-ratio {
+                  padding-bottom: 550px !important;
+                }
+                .slide--{{ block.id }} .slideshow__slide-desktop img {
+                  object-fit: cover;
+                  object-position: center;
+                  height: 550px !important;
+                }
+                .slide--{{ block.id }} .slideshow__slide-desktop {
+                  display: block;
+                }
               {% endif %}
               {% if block.settings.hide_caption_background %}
-              .slideshow__caption.slide-{{ block.id }} .slideshow__caption-wrapper {
-                background: none;
-              }
+                .slideshow__caption.slide-{{ block.id }} .slideshow__caption-wrapper {
+                  background: none;
+                }
               {% endif %}
             }
           </style>
@@ -166,84 +155,14 @@ data-slideout-ignore>
   {% unless section.settings.display_wide %}</div></div>{% endunless %}
 
   <style>
-    .slideshow {
-      border: 0 !important;
-      width: 100%;
-    }
-    .slideshow__slide,
-    .slideshow__slide-desktop {
-      width: 100%;
-    }
-    .slideshow__slide {
-      opacity: 0 !important;
-      transition: opacity 1s ease !important;
-    }
-    .slideshow__slide.is-selected {
-      opacity: 1 !important;
-    }
-    .slideshow .flickity-button {
-      color: {{ settings.direction_color }};
-      background-color: {{ settings.direction_background }};
-      width: 45px;
-      height: 45px;
-      margin: 0;
-    }
-    .slideshow .flickity-button .flickity-button-icon {
-      width: 40%;
-      left: 30%;
-      height: 40%;
-      top: 30%;
-    }
-    @media screen and (min-width: 741px) {
-      .slideshow .flickity-page-dots {
-        text-align: right;
-        bottom: 15px;
-        right: 15px;
-      }
-    }
-    .slideshow .flickity-page-dots .dot {
-      border: 1px solid #fff;
-      margin: 0 5px;
-    }
-
-    .slideshow__caption {
-      position: absolute;
-      width: fit-content;
-      text-align: center;
-    }
-
-    .slideshow__caption .slideshow__caption-wrapper {
-      display: inline-block;
-      padding: 20px;
-    }
-
     #slideshow--{{ section.id }} .slideshow__caption h2.slideshow__title {
       font-size: {{ section.settings.slide_heading_size }}px;
     }
     #slideshow--{{ section.id }} .slideshow__caption p {
       font-size: {{ section.settings.subheading_size }}px;
-      line-height: initial;
-    }
-    .slideshow__btn-wrapper {
-      display: inline-block;
-      margin-top: 10px;
-      margin-right: 10px;
     }
     #slideshow--{{ section.id }} .slideshow__btn-wrapper a {
       font-size: {{ section.settings.cta_size }}px;
-      padding: 10px 20px;
-      letter-spacing: 1px;
-      border-radius: 3px;
-      display: inline-block;
-      -webkit-transition: background .5s ease,color .5s ease;
-      -moz-transition: background .5s ease,color .5s ease;
-      -o-transition: background .5s ease,color .5s ease;
-      transition: background .5s ease,color .5s ease;
-    }
-    @media screen and (max-width: 740px) {
-      .slideshow__caption .slideshow__caption-wrapper {
-        width: 100%;
-      }
     }
   </style>
 
@@ -268,6 +187,12 @@ data-slideout-ignore>
           "id": "image",
           "label": "Desktop Image",
           "info": "1800px x 800px recommended"
+        },
+        {
+          "type": "checkbox",
+          "id": "overlay",
+           "label": "Add image overlay",
+           "info":"This can help with text contrast"
         },
         {
           "type": "select",
