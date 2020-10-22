@@ -5444,6 +5444,40 @@ theme.mobileNav = (function() {
   return mobileNav;
 })();
 
+/*======================================================
+  Password Page Section
+========================================================*/
+theme.Password = (function() {
+  function Password(container) {
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      function slideout() {
+        const direction = this.dataset.slideoutDirection;
+        const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+
+        wrapper.classList.toggle("slideout-" + direction + "--open");
+        wrapper.classList.toggle("slideout-" + direction + "--closed");
+      }
+
+      const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
+
+      slideoutTriggers.forEach(function (slideoutTrigger) {
+        slideoutTrigger.addEventListener('click', slideout);
+      });
+
+      const passwordError = document.querySelector('.errors');
+      if ( !passwordError ) return false;
+      if ( passwordError ) {
+        const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+        wrapper.classList.add("slideout-right--open");
+      }
+    });
+
+  }
+  Password.prototype = _.assignIn({}, Password.prototype, {});
+  return Password;
+})();
+
 /*============================================================================
   Custom Page Modules
 ==============================================================================*/
@@ -5660,6 +5694,7 @@ $(document).ready(function() {
   sections.register('mobile-navigation', theme.mobileNav);
   sections.register('map', theme.Maps);
   sections.register('custom-page-section', theme.CustomPage);
+  sections.register('password-page', theme.Password);
   sections.register('footer-section', theme.Footer);
 });
 
