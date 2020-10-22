@@ -3012,9 +3012,85 @@ window.themeInfo = {name: "Testament"};
 
 {% endif %}
 
+// custom We Are Underground plugins
+window.WAU = window.WAU || {};
+
+WAU.Slideout = (function () {
+	
+	/*
+	 * Elements that will be set on init.
+	 */
+	var wrapper = undefined,
+			slideoutTriggers = undefined;
+	
+	/*
+	 * Properties that will be set on init.
+	 */
+	var direction = undefined;
+	
+	function isOpen() {
+		return wrapper.classList.contains("slideout-" + direction + "--open");
+	}
+	
+	function open() {
+		wrapper.classList.add("slideout-" + direction + "--open");
+		wrapper.classList.remove("slideout-" + direction + "--closed");
+	}
+	
+	function close() {
+		wrapper.classList.remove("slideout-" + direction + "--open");
+		wrapper.classList.add("slideout-" + direction + "--closed");
+	}
+	
+	function toggle() {
+		if (!isOpen()) {
+			open();
+		} else {
+			close();
+		}
+	}
+	
+	/*
+	 * @description - Initializes the plugin by adding all of the appropriate event listeners.
+	 */
+	function init() {
+		
+		wrapper = document.querySelector('.js-slideout-toggle-wrapper'),
+		slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
+		
+		slideoutTriggers.forEach(function (slideoutTrigger) {
+			slideoutTrigger.addEventListener('click', function () {
+				direction = slideoutTrigger.getAttribute('data-slideout-direction');
+				toggle(direction);
+			});
+    });
+	}
+	
+	const privateFunctions = {
+		isOpen,
+		open,
+		close,
+		toggle
+	};
+	
+	let returnObj = {};
+	
+	returnObj.init = init;
+	
+	/*
+	 * @description - Gives WAU.Slideout external access to the internal functions for use in Shopify Events.
+	 */
+	Object.keys(privateFunctions).forEach(function (pf) {
+		returnObj['_' + pf] = privateFunctions[pf];
+	});
+	
+	return returnObj;
+	
+}());
+ 
 // sections.js
 window.theme = window.theme || {};
-
+ 
 /* Shopify Library Loader */
 theme.Helpers = (function() {
   var touchDevice = false;
@@ -3092,22 +3168,9 @@ theme.DOMHelpers = (function () {
 
 		return (l + w >= docW);
 	}
-
-  /*
-   * @description - Toggles class on body to open slideout drawers.
-   * @param element:
-   */
-  function slideout() {
-    const direction = this.dataset.slideoutDirection;
-    const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-
-    wrapper.classList.toggle("slideout-" + direction + "--open");
-    wrapper.classList.toggle("slideout-" + direction + "--closed");
-  }
-
+	
   return {
-    isElementPastEdge: isElementPastEdge,
-		slideout: slideout
+    isElementPastEdge: isElementPastEdge
 	};
 
 }());
@@ -5034,14 +5097,9 @@ theme.StoreAvailability = (function() {
       const source = document.getElementById("StoreAvailabilityModal");
       document.querySelector(".slideout__drawer-right").innerHTML = "";
       document.querySelector(".slideout__drawer-right").appendChild(source);
-
-      // Build slideout
-      const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
-
-      slideoutTriggers.forEach(function (slideoutTrigger) {
-        slideoutTrigger.addEventListener('click', theme.DOMHelpers.slideout);
-      });
-
+			
+			WAU.Slideout.init();
+			
       // Update product title
       const storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
       storeAvailabilityModalProductTitle.textContent = title;
@@ -5398,6 +5456,7 @@ theme.Header = (function() {
   MobileNav Section
 ========================================================*/
 theme.mobileNav = (function() {
+	
   function mobileNav(container) {
 
     var $container = this.$container = $(container);
@@ -5421,27 +5480,25 @@ theme.mobileNav = (function() {
       $(".accordion__toggle-2").not($(this)).removeClass('open');
     });
 
-    const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
-
-    slideoutTriggers.forEach(function (slideoutTrigger) {
-      slideoutTrigger.addEventListener('click', theme.DOMHelpers.slideout);
-    });
+		
+		WAU.Slideout.init();
+		
   }
+	
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
     onSelect: function() {
-      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-      wrapper.classList.add("slideout-left--open");
+			WAU.Slideout._open();
     },
     onDeselect: function() {
-      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-      wrapper.classList.remove("slideout-left--open");
+			WAU.Slideout._close();
     },
     onBlockSelect: function() {
-      const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-      wrapper.classList.add("slideout-left--open");
+			WAU.Slideout._open();
     }
   });
+	
   return mobileNav;
+	
 })();
 
 /*======================================================
@@ -5451,20 +5508,9 @@ theme.Password = (function() {
   function Password(container) {
 
     window.addEventListener('DOMContentLoaded', (event) => {
-      function slideout() {
-        const direction = this.dataset.slideoutDirection;
-        const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-
-        wrapper.classList.toggle("slideout-" + direction + "--open");
-        wrapper.classList.toggle("slideout-" + direction + "--closed");
-      }
-
-      const slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
-
-      slideoutTriggers.forEach(function (slideoutTrigger) {
-        slideoutTrigger.addEventListener('click', slideout);
-      });
-
+			
+			WAU.Slideout.init();
+			
       const passwordError = document.querySelector('.errors');
       if ( !passwordError ) return false;
       if ( passwordError ) {
