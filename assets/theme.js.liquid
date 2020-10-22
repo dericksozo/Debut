@@ -3013,11 +3013,11 @@ theme.a11yHelpers = (function () {
 
 		$ariaExpandEls.forEach(function ($ariaExpandEl) {
 			$ariaExpandEl.addEventListener('mouseover', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'true');
+				$ariaExpandEl.setAttribute('aria-expanded', 'true');
 			});
 
 			$ariaExpandEl.addEventListener('mouseout', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'false');
+				$ariaExpandEl.setAttribute('aria-expanded', 'false');
 			});			
 		});
 	}
