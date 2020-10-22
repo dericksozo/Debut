@@ -3007,18 +3007,19 @@ window.theme = window.theme || {};
  
 theme.a11yHelpers = (function () {
 	
-	/* Global accesibility focused javascript. */
+	/*
+	 * 
 	function setUpAriaExpansion() {
-		const $ariaExpandEls = document.querySelectorAll('.js-aria-expand');
+		const ariaExpandEls = document.querySelectorAll('.js-aria-expand');
 
-		$ariaExpandEls.forEach(function ($ariaExpandEl) {
-			$ariaExpandEl.addEventListener('mouseover', function (event) {
-				$ariaExpandEl.setAttribute('aria-expanded', 'true');
+		ariaExpandEls.forEach(function (ariaExpandEl) {
+			ariaExpandEl.addEventListener('mouseover', function (event) {
+				ariaExpandEl.setAttribute('aria-expanded', 'true');
+		});
+
+			ariaExpandEl.addEventListener('mouseout', function (event) {
+				ariaExpandEl.setAttribute('aria-expanded', 'false');
 			});
-
-			$ariaExpandEl.addEventListener('mouseout', function (event) {
-				$ariaExpandEl.setAttribute('aria-expanded', 'false');
-			});			
 		});
 	}
 	
