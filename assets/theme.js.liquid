@@ -3020,7 +3020,7 @@ WAU.Slideout = (function () {
 	/*
 	 * Elements
 	 */
-	var wrapper = undefined;
+	var wrapper = document.querySelector('.js-slideout-toggle-wrapper');
 	
 	/*
 	 * @description - Open a specific slideout in a specific direction.
@@ -3043,6 +3043,25 @@ WAU.Slideout = (function () {
 		activeOpenSlideouts.forEach(function (activeSlideoutDrawer) {
 			activeSlideoutDrawer.classList.remove('slideout--active');
 		});
+	}
+	
+	/*
+	 * @description - Closes a specific slideout given the name in data-wau-slideout attribute
+	 * @return void
+	 */
+	function closeByName(name) {
+		const direction = document.querySeletor('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		close(direction);
+	}
+	
+	/*
+	 * @description - Opens a specific slideout given the name in data-wau-slideout attribute
+	 * @return void
+	 */
+	function openByName(name) {
+		const direction = document.querySeletor('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		const targetSlideoutEl = document.querySeletor('[data-wau-slideout="' + name + '"]');
+		open(direction, targetSlideoutEl);
 	}
 	
 	/*
@@ -3075,8 +3094,6 @@ WAU.Slideout = (function () {
 			return;
 		}
 		
-		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-		
 		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
 					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
 					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
@@ -3106,8 +3123,8 @@ WAU.Slideout = (function () {
 	}
 	
 	const privateFunctions = {
-		open,
-		close,
+		openByName,
+		closeByName,
 		createSlideoutEl
 	};
 	
@@ -5138,9 +5155,6 @@ theme.StoreAvailability = (function() {
       const source = document.getElementById("StoreAvailabilityModal");
 			
 			// create the slideout el, assign it a name, and then add 
-			
-			console.log("About to create the container for the slideout.");
-			
 			const slideoutContainer = document.querySelector(".js-slideout-toggle-wrapper");
 			const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
 			newSlideout.appendChild(source);
@@ -5534,13 +5548,13 @@ theme.mobileNav = (function() {
 	
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
     onSelect: function() {
-			WAU.Slideout._open("mobile-navigation");
+			WAU.Slideout._openByName("mobile-navigation");
     },
     onDeselect: function() {
-			WAU.Slideout._close("mobile-navigation");
+			WAU.Slideout._closeByName("mobile-navigation");
     },
     onBlockSelect: function() {
-			WAU.Slideout._open("mobile-navigation");
+			WAU.Slideout._openByName("mobile-navigation");
     }
   });
 	
@@ -5555,13 +5569,14 @@ theme.Password = (function() {
   function Password(container) {
 
     window.addEventListener('DOMContentLoaded', (event) => {
+			const passwordError = document.querySelector('.errors');
 			
-      const passwordError = document.querySelector('.errors');
-      if ( !passwordError ) return false;
-      if ( passwordError ) {
-        const wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-        wrapper.classList.add("slideout-right--open");
-      }
+      if (passwordError) {
+				WAU.Slideout._openByName("password");
+      } else {
+				return false;
+			}
+			
     });
 
   }
