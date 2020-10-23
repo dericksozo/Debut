@@ -19,6 +19,10 @@
   {% assign nav_inline = true %}
 {% endcase %}
 
+<script>
+console.log({{ section.settings | json }});
+</script>
+
 {% capture logo %}
 <div id="logo"{% if nav_inline == false %} class="desktop-12 tablet-6 mobile-3"{% endif %}>
   {% if section.settings.logo != blank %}
