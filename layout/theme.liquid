@@ -58,7 +58,7 @@
 <body class="gridlock {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template | handleize }}{% endif %} js-slideout-toggle-wrapper">
   <div class="site-overlay"></div>
 
-  <aside class="slideout slideout__drawer-left">
+  <aside class="slideout slideout__drawer-left" data-wau-slideout="mobile-navigation">
     {% section 'mobile-navigation' %}
   </aside>
 
@@ -101,10 +101,7 @@
       {% render 'popup' %}
     {% endif %}
   </main>
-
-  <aside class="slideout slideout__drawer-right">
-  </aside>
-
+  
   <a href="#" class="scrollup"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
 
   <div class="fancybox-wrapper"></div>

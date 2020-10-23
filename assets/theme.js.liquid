@@ -3018,59 +3018,97 @@ window.WAU = window.WAU || {};
 WAU.Slideout = (function () {
 	
 	/*
-	 * Elements that will be set on init.
+	 * Elements
 	 */
-	var wrapper = undefined,
-			slideoutTriggers = undefined;
+	var wrapper = undefined;
 	
 	/*
-	 * Properties that will be set on init.
+	 * @description - Open a specific slideout in a specific direction.
+	 * @param direction:String - the drction to open the slideout in.
+	 * @param targetSlideoutEl:Node - The slideout element that will be opened.
 	 */
-	var direction = undefined;
-	
-	function isOpen() {
-		return wrapper.classList.contains("slideout-" + direction + "--open");
-	}
-	
-	function open() {
+	function open(direction, targetSlideoutEl) {
 		wrapper.classList.add("slideout-" + direction + "--open");
 		wrapper.classList.remove("slideout-" + direction + "--closed");
+		targetSlideoutEl.classList.add('slideout--active');
 	}
 	
-	function close() {
+	function close(direction) {
+		const activeOpenSlideouts = document.querySelectorAll('.slideout--active');
+		
 		wrapper.classList.remove("slideout-" + direction + "--open");
 		wrapper.classList.add("slideout-" + direction + "--closed");
+		
+		// Close all active drawers. This is incase there is more than 1 slide on a direction.
+		activeOpenSlideouts.forEach(function (activeSlideoutDrawer) {
+			activeSlideoutDrawer.classList.remove('slideout--active');
+		});
 	}
 	
-	function toggle() {
-		if (!isOpen()) {
-			open();
-		} else {
-			close();
-		}
+	/*
+	 * @description - Creates a new aside element to be used as a slideout.
+	 * @param direction:String - the direction that the slideout will open in. "left" or "right"
+	 * @param name:String - An explicit name to refer to the slideout by on a trigger.
+	 * @param wrapperEl:Node - An element that can be explicitly passed in as the wrapper element.
+	 */
+	function createSlideoutEl(direction, name, wrapperEl) {
+		const aside = document.createElement('aside');
+		
+		wrapperEl = wrapperEl || wrapper;
+		
+		aside.classList.add('slideout');
+		aside.classList.add('slideout__drawer-' + direction);
+		aside.setAttribute('data-wau-slideout', name);
+		
+		wrapperEl.appendChild(aside);
+		
+		return aside;
 	}
 	
 	/*
 	 * @description - Initializes the plugin by adding all of the appropriate event listeners.
 	 */
-	function init() {
+	function init(name) {
 		
-		wrapper = document.querySelector('.js-slideout-toggle-wrapper'),
-		slideoutTriggers = document.querySelectorAll(".js-slideout-toggle");
+		if (typeof name === "undefined") {
+			console.log("The Slideout must have an associated name.");
+			return;
+		}
 		
-		slideoutTriggers.forEach(function (slideoutTrigger) {
-			slideoutTrigger.addEventListener('click', function () {
-				direction = slideoutTrigger.getAttribute('data-slideout-direction');
-				toggle(direction);
+		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+		
+		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
+					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
+					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
+		
+		let slideoutTargetEl = undefined;
+		
+		if (slideoutOpener) {
+			slideoutTargetEl = document.querySelector(`aside[data-wau-slideout=${name}]`);
+		}
+
+		if (!slideoutTargetEl) {
+			slideoutTargetEl = createSlideoutEl(direction);
+		}
+
+		slideoutOpener.addEventListener('click', function () {
+			open(slideoutDirection, slideoutTargetEl);
+		});
+		
+		slideoutClosers.forEach(function (slideoutCloser) {
+			const slideoutCloseDirection = slideoutCloser.getAttribute('data-slideout-direction');
+			
+			slideoutCloser.addEventListener('click', function () {
+				close(slideoutCloseDirection);
 			});
-    });
+		});
+		
 	}
 	
 	const privateFunctions = {
-		isOpen,
 		open,
 		close,
-		toggle
+		createSlideoutEl
 	};
 	
 	let returnObj = {};
@@ -5063,6 +5101,9 @@ theme.Product = (function () {
 })();
 
 theme.StoreAvailability = (function() {
+	
+	console.log("Theme.StoreAvailability");
+	
   Events.on("storeavailability:variant", function(id, title) {
     updateContent(id, title)
   });
@@ -5095,14 +5136,21 @@ theme.StoreAvailability = (function() {
 
       // Move modal code to slideout
       const source = document.getElementById("StoreAvailabilityModal");
-      document.querySelector(".slideout__drawer-right").innerHTML = "";
-      document.querySelector(".slideout__drawer-right").appendChild(source);
 			
-			WAU.Slideout.init();
+			// create the slideout el, assign it a name, and then add 
+			
+			console.log("About to create the container for the slideout.");
+			
+			const slideoutContainer = document.querySelector(".js-slideout-toggle-wrapper");
+			const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
+			newSlideout.appendChild(source);
+			
+			WAU.Slideout.init("store-availability");
 			
       // Update product title
       const storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
       storeAvailabilityModalProductTitle.textContent = title;
+			
     });
   }
 })();
@@ -5479,21 +5527,20 @@ theme.mobileNav = (function() {
       $(".accordion__content-2").not($(this).next()).slideUp('fast');
       $(".accordion__toggle-2").not($(this)).removeClass('open');
     });
-
 		
-		WAU.Slideout.init();
+		WAU.Slideout.init("mobile-navigation");
 		
   }
 	
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
     onSelect: function() {
-			WAU.Slideout._open();
+			WAU.Slideout._open("mobile-navigation");
     },
     onDeselect: function() {
-			WAU.Slideout._close();
+			WAU.Slideout._close("mobile-navigation");
     },
     onBlockSelect: function() {
-			WAU.Slideout._open();
+			WAU.Slideout._open("mobile-navigation");
     }
   });
 	
@@ -5508,8 +5555,6 @@ theme.Password = (function() {
   function Password(container) {
 
     window.addEventListener('DOMContentLoaded', (event) => {
-			
-			WAU.Slideout.init();
 			
       const passwordError = document.querySelector('.errors');
       if ( !passwordError ) return false;
@@ -5743,8 +5788,7 @@ $(document).ready(function() {
   sections.register('password-page', theme.Password);
   sections.register('footer-section', theme.Footer);
 });
-
-
+ 
 /* Log Theme Version */
 log = function() {
     var args = Array.prototype.slice.call(arguments);
