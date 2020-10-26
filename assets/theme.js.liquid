@@ -3050,7 +3050,7 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function closeByName(name) {
-		const direction = document.querySeletor('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
 		close(direction);
 	}
 	
@@ -3059,8 +3059,8 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function openByName(name) {
-		const direction = document.querySeletor('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
-		const targetSlideoutEl = document.querySeletor('[data-wau-slideout="' + name + '"]');
+		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		const targetSlideoutEl = document.querySelector('[data-wau-slideout="' + name + '"]');
 		open(direction, targetSlideoutEl);
 	}
 	
