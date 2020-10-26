@@ -3020,7 +3020,7 @@ WAU.Slideout = (function () {
 	/*
 	 * Elements
 	 */
-	var wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+	var wrapper = undefined;
 	
 	/*
 	 * @description - Open a specific slideout in a specific direction.
@@ -3093,6 +3093,8 @@ WAU.Slideout = (function () {
 			console.log("The Slideout must have an associated name.");
 			return;
 		}
+		
+		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
 		
 		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
 					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
