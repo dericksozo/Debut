@@ -58,7 +58,7 @@
 <body class="gridlock {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template | handleize }}{% endif %} js-slideout-toggle-wrapper">
   <div class="site-overlay"></div>
 
-  <aside class="slideout slideout__drawer-left" data-wau-slideout="mobile-navigation">
+  <aside class="slideout slideout__drawer-left" data-wau-slideout="mobile-navigation" id="slideout-mobile-navigation">
     {% section 'mobile-navigation' %}
   </aside>
 

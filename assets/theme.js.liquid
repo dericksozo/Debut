@@ -3027,15 +3027,29 @@ WAU.Slideout = (function () {
 	 * @param direction:String - the drction to open the slideout in.
 	 * @param targetSlideoutEl:Node - The slideout element that will be opened.
 	 */
-	function open(direction, targetSlideoutEl) {
+	function open(direction, targetSlideoutEl, opener) {
 		wrapper.classList.add("slideout-" + direction + "--open");
 		wrapper.classList.remove("slideout-" + direction + "--closed");
 		targetSlideoutEl.classList.add('slideout--active');
+		
+		opener.setAttribute("aria-expanded", "true");
+		
+		if (document.activeElement === opener) {
+			theme.a11yHelpers.focusOnElement(targetSlideoutEl);
+		}
+		
 	}
 	
-	function close(direction) {
+	/*
+	 * @description - Closes all slideouts. Puts a11y focus back on the original opener.
+	 * @param opener:Node - the opener element.
+	 */
+	function close(direction, openerEl) {
 		const activeOpenSlideouts = document.querySelectorAll('.slideout--active');
+		const openers = document.querySelectorAll(".js-slideout-open");
+		const closers = document.querySelectorAll(".js-slideout-close");
 		
+		// Close the slideout.
 		wrapper.classList.remove("slideout-" + direction + "--open");
 		wrapper.classList.add("slideout-" + direction + "--closed");
 		
@@ -3043,6 +3057,18 @@ WAU.Slideout = (function () {
 		activeOpenSlideouts.forEach(function (activeSlideoutDrawer) {
 			activeSlideoutDrawer.classList.remove('slideout--active');
 		});
+		
+		// Makes sure aria-expanded false is added to all the open and close buttons.
+		openers.forEach(function (opener) {
+			opener.setAttribute('aria-expanded', 'false');
+		});
+		
+		closers.forEach(function (closer) {
+			closer.setAttribute('aria-expanded', 'false');
+		});
+		
+		openerEl.focus();
+		
 	}
 	
 	/*
@@ -3050,8 +3076,10 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function closeByName(name) {
-		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
-		close(direction);
+		const closer = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+		const direction = closer.getAttribute('data-slideout-direction');
+		const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]');
+		close(direction, opener);
 	}
 	
 	/*
@@ -3059,9 +3087,10 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function openByName(name) {
-		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]')
+		const direction = opener.getAttribute('data-slideout-direction');
 		const targetSlideoutEl = document.querySelector('[data-wau-slideout="' + name + '"]');
-		open(direction, targetSlideoutEl);
+		open(direction, targetSlideoutEl, opener);
 	}
 	
 	/*
@@ -3072,13 +3101,18 @@ WAU.Slideout = (function () {
 	 */
 	function createSlideoutEl(direction, name, wrapperEl) {
 		const aside = document.createElement('aside');
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+		
+		const generatedId = "slideout-" + name;
 		
 		wrapperEl = wrapperEl || wrapper;
 		
 		aside.classList.add('slideout');
 		aside.classList.add('slideout__drawer-' + direction);
 		aside.setAttribute('data-wau-slideout', name);
+		aside.setAttribute('id', generatedId); // setting an id here so that we can set the aria-controls attribute on the opener.
 		
+		opener.setAttribute('aria-controls', generatedId);
 		wrapperEl.appendChild(aside);
 		
 		return aside;
@@ -3111,14 +3145,14 @@ WAU.Slideout = (function () {
 		}
 
 		slideoutOpener.addEventListener('click', function () {
-			open(slideoutDirection, slideoutTargetEl);
+			open(slideoutDirection, slideoutTargetEl, slideoutOpener);
 		});
 		
 		slideoutClosers.forEach(function (slideoutCloser) {
 			const slideoutCloseDirection = slideoutCloser.getAttribute('data-slideout-direction');
 			
 			slideoutCloser.addEventListener('click', function () {
-				close(slideoutCloseDirection);
+				close(slideoutCloseDirection, slideoutOpener);
 			});
 		});
 		
@@ -3194,17 +3228,32 @@ theme.a11yHelpers = (function () {
 
 		Array.from($ariaExpandEls).forEach(function ($ariaExpandEl) {
 			$ariaExpandEl.addEventListener('mouseover', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'true');
+				$ariaExpandEl.setAttribute('aria-expanded', 'true');
 			});
 
 			$ariaExpandEl.addEventListener('mouseout', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'false');
+				$ariaExpandEl.setAttribute('aria-expanded', 'false');
 			});
 		});
 	}
-
+	
+	/*
+	 * @description - Takes a parent element and focuses on the next focusable element inside of there.
+	 */
+	function focusOnElement(parent) {
+		var focussableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+		
+		const elementToFocusOn = parent.querySelector(focussableElements);
+		
+		if (elementToFocusOn) {
+			elementToFocusOn.focus();
+		}
+		
+	}
+	
 	return {
-		setUpAriaExpansion: setUpAriaExpansion
+		setUpAriaExpansion: setUpAriaExpansion,
+		focusOnElement: focusOnElement
 	}
 
 }());
