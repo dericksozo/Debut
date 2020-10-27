@@ -3023,7 +3023,21 @@ theme.a11yHelpers = (function () {
 			});
 		});
 	}
+	
+	/*
+	 * @description - Takes a parent element and focuses on the next focusable element inside of there.
+	 */
+	function focusOnElement(parent) {
+		var focussableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
 		
+		const elementToFocusOn = parent.querySelector(focussableElements);
+		
+		if (elementToFocusOn) {
+			elementToFocusOn.focus();
+		}
+		
+	}
+	
 	/*
 	 * @description - Enables accessible keyboard navigation throughout the navigation menus.
 	 */
@@ -3031,18 +3045,72 @@ theme.a11yHelpers = (function () {
 		const navigationItemsWithDropdowns = document.querySelectorAll('.js-open-dropdown-on-key');
 		const navigationItemsWithNestedDropdowns = document.querySelectorAll('.js-open-nested-on-key');
 		
+		let previousActiveElement = document.activeElement,
+				currentActiveElement = document.activeElement;
+		
+		document.addEventListener('keyup', function (event) {
+			
+			let activeMenuItems = undefined;
+			
+			if (event.key === 'Tab') {
+				currentActiveElement = document.activeElement;
+				// console.log("What's the currentActiveElement?", currentActiveElement);
+				
+				if (currentActiveElement.classList.contains("js-menu-link") && !previousActiveElement.classList.contains("js-menu-link")) {
+					// console.log("The current active element and the previous one not equal");
+					
+					activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
+					activeMenuItems.forEach(function (activeMenuItem) {
+						// console.log("Removing the active class from the navigation menuitem");
+						activeMenuItem.classList.remove('navigation__menuitem--active');
+					});
+					
+				}
+				
+			}
+		});
+		
 		document.addEventListener('keydown', function (event) {
+			
+			var activeMenuItems = undefined;
+			
+			// console.log("What's event.key?", event.key);
+			
+			if (event.key === 'Tab') {
+				previousActiveElement = currentActiveElement;
+				// console.log("What's previousActiveElement?", previousActiveElement);
+			}
+			
 			if (event.key === 'ArrowDown') {
 				if (document.activeElement.classList.contains("js-open-dropdown-on-key")) {
 					event.preventDefault(); // Stop the page from moving down when you hit down.
-					document.activeElement.parentNode.classList.add("navigation__menuitem--active");
+					// document.activeElement.parentNode.classList.add("navigation__menuitem--active");
+					
+					// Move the focus to the next element in the dropdown.
+					let elementToFocusOn = document.activeElement.parentNode.querySelector('.megamenu') || document.activeElement.parentNode.querySelector('.js-dropdown');
+					
+					// console.log("What's elementToFocusOn?", elementToFocusOn);
+					// console.log("document.activeElement", document.activeElement);
+					
+					theme.a11yHelpers.focusOnElement(elementToFocusOn);
+					
 				}
-			}			
+			} else {
+				if (document.activeElement.classList.contains('js-menu-link')) {
+					activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
+					activeMenuItems.forEach(function (activeMenuItem) {
+						// console.log("Removing the active class from the navigation menuitem");
+						activeMenuItem.classList.remove('navigation__menuitem--active');
+					});
+				}
+			}
+			
 		});
 	}
 	
 	return {
 		setUpAriaExpansion: setUpAriaExpansion,
+		focusOnElement: focusOnElement,
 		setUpAccessibleNavigationMenus: setUpAccessibleNavigationMenus
 	}
 	

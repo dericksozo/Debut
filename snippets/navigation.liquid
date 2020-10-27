@@ -4,7 +4,7 @@
 {% capture megalink %}
 
 <li class="navigation__menuitem navigation__menuitem--dropdown js-aria-expand" aria-haspopup="true" aria-expanded="false" role="none">
-  <a class="navigation__menulink js-open-dropdown-on-key" href="{{ link.url }}">{{ link.title }}</a>
+  <a class="navigation__menulink js-menu-link js-open-dropdown-on-key" href="{{ link.url }}">{{ link.title }}</a>
   <ul class="megamenu row">
     {% if block.settings.nav_image != blank %}
       {%- assign image_size = '300x' -%}
@@ -58,7 +58,7 @@
 
 {% elsif link.links != blank %}
   <li class="navigation__menuitem navigation__menuitem--dropdown js-menuitem" role="none">
-    <a class="navigation__menulink js-aria-expand js-open-dropdown-on-key" role="menuitem" aria-haspop="true" aria-expanded="false" href="{{ link.url}}">{{ link.title }}</a>
+    <a class="navigation__menulink js-menu-link js-aria-expand js-open-dropdown-on-key" role="menuitem" aria-haspop="true" aria-expanded="false" href="{{ link.url}}">{{ link.title }}</a>
     <ul role="menu" aria-label="{{ link.title }}" class="dropdown js-dropdown">
       {% for sub_link in link.links %}
         {% if sub_link.links != blank %}
@@ -82,6 +82,6 @@
   </li>
 {% else %}
   <li class="navigation__menuitem" role="none">
-    <a class="navigation__menulink" role="menuitem" href="{{ link.url }}">{{ link.title }}</a>
+    <a class="navigation__menulink js-menu-link" role="menuitem" href="{{ link.url }}">{{ link.title }}</a>
   </li>
 {% endif %}
