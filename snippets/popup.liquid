@@ -17,12 +17,12 @@
           type : 'inline',
           baseClass: "subscribe-popup",
         });
-        // Cookies.set('popupShown', 'yes', { expires: 5 });
+        Cookies.set('popupShown', 'yes', { expires: 5 });
       }
 
       setTimeout(function(){
         {% if settings.test_mode == false %}
-        // var popupShown = Cookies.get('popupShown');
+        var popupShown = Cookies.get('popupShown');
         if(popupShown){
         } else {
         {% endif %}
