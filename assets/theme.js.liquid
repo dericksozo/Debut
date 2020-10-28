@@ -3031,13 +3031,13 @@ WAU.Slideout = (function () {
 			closeActiveSlideout();
 		}
 	});
-	
+
 	document.addEventListener('click', function (event) {
 		if (event.target === document.querySelector(".js-slideout-overlay")) {
 			closeActiveSlideout();
 		}
 	});
-	
+
 	/*
 	 * @description - Closes the currently active slide.
 	 */
@@ -3049,7 +3049,7 @@ WAU.Slideout = (function () {
 			const direction = opener.getAttribute('data-slideout-direction');
 			close(direction, opener);
 	}
-	
+
 	/*
 	 * @description - Checks if the slideout is currently open or not.
 	 * @return Boolean
@@ -3058,7 +3058,7 @@ WAU.Slideout = (function () {
 		wrapper = document.querySelector(".js-slideout-toggle-wrapper");
 		return wrapper.classList.contains("slideout-left--open") || wrapper.classList.contains("slideout-right--open");
 	}
-	
+
 	/*
 	 * @description - Open a specific slideout in a specific direction.
 	 * @param direction:String - the drction to open the slideout in.
@@ -3075,6 +3075,13 @@ WAU.Slideout = (function () {
 			theme.a11yHelpers.focusOnElement(targetSlideoutEl);
 		}
 
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    scrollPosition = window.pageYOffset;
+    wrapper.style.overflow = 'hidden';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = `-${scrollPosition}px`;
+    wrapper.style.width = '100%';
 	}
 
 	/*
@@ -3105,6 +3112,14 @@ WAU.Slideout = (function () {
 		});
 
 		openerEl.focus();
+
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    wrapper.style.removeProperty('overflow');
+    wrapper.style.removeProperty('position');
+    wrapper.style.removeProperty('top');
+    wrapper.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
 
 	}
 
@@ -3166,7 +3181,7 @@ WAU.Slideout = (function () {
 		}
 
 		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-		
+
 		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
 					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
 					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
