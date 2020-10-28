@@ -81,13 +81,6 @@
               <img src="{{ block.settings.featured_image | img_url: '300x' }}" alt="block.settings.featured_image.alt">
             </noscript>
           {% if block.settings.featured_image_link %}</a>{% endif %}
-          <style>
-          {% if block.settings.close_over_image %}
-            .mobile-menu .slideout__trigger--close {
-              position: absolute;
-            }
-          {% endif %}
-          </style>
         </div>
       {% when 'featured_text' %}
         <div class="mobile-menu__block mobile-menu__featured-text text-center" {{ block.shopify_attributes }}>
@@ -235,11 +228,6 @@
             "id": "full_featured_image",
             "label": "Enable full-width image",
             "default": false
-          },
-          {
-            "type": "checkbox",
-            "id": "close_over_image",
-            "label": "Position close X over top of image"
           }
         ]
       },
