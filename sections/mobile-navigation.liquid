@@ -17,7 +17,7 @@
         </div>
       {% when 'navigation' %}
         <ul class="mobile-menu__block mobile-menu__accordion accordion" id="accordion" {{ block.shopify_attributes }}>
-          {% assign menu = linklists[section.settings.main_nav] %}
+          {% assign menu = linklists[block.settings.main_nav] %}
           {% for link in menu.links %}
             {% if link.links != blank %}
               <li class="mobile-menu__item accordion__toggle" aria-haspopup="true" aria-expanded="false">
