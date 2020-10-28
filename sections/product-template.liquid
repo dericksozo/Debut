@@ -171,6 +171,35 @@
       outline: 0 !important;
     }
   {% endif %}
+  {%- if section.settings.form_left -%}
+    .store-availability-information {
+      justify-content: start !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: left !important;
+    }
+  {%- else -%}
+    .store-availability-information {
+      justify-content: center !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: center !important;
+    }
+  {%- endif -%}
+  @media screen and ( max-width: 740px ) {
+    .store-availability-information {
+      justify-content: center !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: center !important;
+    }
+  }
 </style>
 <script type="application/json" id="ModelJson-{{ section.id }}">
   {{ product.media | where: 'media_type', 'model' | json }}
