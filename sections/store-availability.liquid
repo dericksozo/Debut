@@ -1,9 +1,14 @@
+{%- assign pick_up_availabilities = product_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+{%- assign pick_up_available = false -%}
+{%- if pick_up_availabilities.size > 0 -%}
+  {%- assign pick_up_available = true -%}
+{%- endif -%}
 <div class="store-availability-container animated fadeIn"
+  data-pick-up-available="{{ pick_up_available }}"
   data-section-id="{{ section.id }}"
   data-section-type="store-availability"
 >
-  {%- assign pick_up_availabilities = product_variant.store_availabilities | where: 'pick_up_enabled', true -%}
-  {%- if pick_up_availabilities.size > 0 -%}
+  {%- if pick_up_available -%}
     <div class="store-availability-information">
       {%- assign closest_location = pick_up_availabilities.first -%}
         {%- if closest_location.available -%} <i class="fa fa-check"></i> {%- else -%} <i class="fa fa-times"></i> {%- endif -%}

@@ -5207,6 +5207,12 @@ theme.StoreAvailability = (function() {
 
       container.innerHTML = storeAvailabilityHTML;
 
+      // If no active pickup locations hide container and stop function
+      if ( document.querySelector('[data-pick-up-available="false"]') ) {
+        container.style.display = "none";
+        return false;
+      }
+
       // Show or hide container if variant unavailable
       container.querySelector('.store-availability-container').classList.remove('fadeOut');
       container.querySelector('.store-availability-container').style.display = "block";
