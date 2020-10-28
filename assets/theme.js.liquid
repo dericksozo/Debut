@@ -5206,7 +5206,8 @@ theme.StoreAvailability = (function() {
       }
 
       container.innerHTML = storeAvailabilityHTML;
-
+      container.innerHTML = container.firstElementChild.innerHTML;
+      container.style.opacity = 1;
 
       // Show or hide container if variant unavailable
       container.querySelector('.store-availability-container').classList.remove('fadeOut');
