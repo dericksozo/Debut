@@ -3028,16 +3028,37 @@ WAU.Slideout = (function () {
 	document.addEventListener('keyup', function (event) {
 		if (event.key === 'Escape') {
 			event.preventDefault();
-
+			closeActiveSlideout();
+		}
+	});
+	
+	document.addEventListener('click', function (event) {
+		if (event.target === document.querySelector(".js-slideout-overlay")) {
+			closeActiveSlideout();
+		}
+	});
+	
+	/*
+	 * @description - Closes the currently active slide.
+	 */
+	function closeActiveSlideout() {
 			// Find the open slideout.
 			const activeSlideout = document.querySelector('.slideout--active');
 			const activeSlideoutName = activeSlideout.getAttribute('data-wau-slideout');
 			const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + activeSlideoutName + '"]');
 			const direction = opener.getAttribute('data-slideout-direction');
 			close(direction, opener);
-		}
-	});
-
+	}
+	
+	/*
+	 * @description - Checks if the slideout is currently open or not.
+	 * @return Boolean
+	 */
+	function isOpen() {
+		wrapper = document.querySelector(".js-slideout-toggle-wrapper");
+		return wrapper.classList.contains("slideout-left--open") || wrapper.classList.contains("slideout-right--open");
+	}
+	
 	/*
 	 * @description - Open a specific slideout in a specific direction.
 	 * @param direction:String - the drction to open the slideout in.
@@ -3145,7 +3166,7 @@ WAU.Slideout = (function () {
 		}
 
 		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
-
+		
 		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
 					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
 					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
