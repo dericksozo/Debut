@@ -9,7 +9,7 @@
     {%- assign image_size = '300x' -%}
     <span class="desktop-3 tablet-hide mm-image">
       <a href="{{ block.settings.link }}">
-        {% render 'basic-responsive-image', type: block.settings.nav_image %}
+        {% render 'basic-responsive-image', type: block.settings.nav_image, data_widths: '[180, 360, 540]' %}
         <noscript>
           <img src="{{ block.settings.nav_image | img_url: '800x' }}" class="navigation-image">
         </noscript>

@@ -66,11 +66,6 @@ window.themeInfo = {name: "Testament"};
    */
   ;window.Modernizr=function(a,b,c){function z(a){j.cssText=a}function A(a,b){return z(m.join(a+";")+(b||""))}function B(a,b){return typeof a===b}function C(a,b){return!!~(""+a).indexOf(b)}function D(a,b){for(var d in a){var e=a[d];if(!C(e,"-")&&j[e]!==c)return b=="pfx"?e:!0}return!1}function E(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:B(f,"function")?f.bind(d||b):f}return!1}function F(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),e=(a+" "+o.join(d+" ")+d).split(" ");return B(b,"string")||B(b,"undefined")?D(e,b):(e=(a+" "+p.join(d+" ")+d).split(" "),E(e,b,c))}var d="2.8.2",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k,l={}.toString,m=" -webkit- -moz- -o- -ms- ".split(" "),n="Webkit Moz O ms",o=n.split(" "),p=n.toLowerCase().split(" "),q={},r={},s={},t=[],u=t.slice,v,w=function(a,c,d,e){var f,i,j,k,l=b.createElement("div"),m=b.body,n=m||b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:h+(d+1),l.appendChild(j);return f=["&#173;",'<style id="s',h,'">',a,"</style>"].join(""),l.id=h,(m?l:n).innerHTML+=f,n.appendChild(l),m||(n.style.background="",n.style.overflow="hidden",k=g.style.overflow,g.style.overflow="hidden",g.appendChild(n)),i=c(l,a),m?l.parentNode.removeChild(l):(n.parentNode.removeChild(n),g.style.overflow=k),!!i},x={}.hasOwnProperty,y;!B(x,"undefined")&&!B(x.call,"undefined")?y=function(a,b){return x.call(a,b)}:y=function(a,b){return b in a&&B(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=u.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(u.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(u.call(arguments)))};return e}),q.touch=function(){var c;return"ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch?c=!0:w(["@media (",m.join("touch-enabled),("),h,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(a){c=a.offsetTop===9}),c},q.csstransforms=function(){return!!F("transform")},q.csstransforms3d=function(){var a=!!F("perspective");return a&&"webkitPerspective"in g.style&&w("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}",function(b,c){a=b.offsetLeft===9&&b.offsetHeight===3}),a},q.fontface=function(){var a;return w('@font-face {font-family:"font";src:url("https://")}',function(c,d){var e=b.getElementById("smodernizr"),f=e.sheet||e.styleSheet,g=f?f.cssRules&&f.cssRules[0]?f.cssRules[0].cssText:f.cssText||"":"";a=/src/i.test(g)&&g.indexOf(d.split(" ")[0])===0}),a};for(var G in q)y(q,G)&&(v=G.toLowerCase(),e[v]=q[G](),t.push((e[v]?"":"no-")+v));return e.addTest=function(a,b){if(typeof a=="object")for(var d in a)y(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" supports-"+(b?"":"no-")+a),e[a]=b}return e},z(""),i=k=null,e._version=d,e._prefixes=m,e._domPrefixes=p,e._cssomPrefixes=o,e.testProp=function(a){return D([a])},e.testAllProps=F,e.testStyles=w,g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" supports-js supports-"+t.join(" supports-"):""),e}(this,this.document);
 })();
-(function vendorSlideout() {
-  /* slideout */
-  !function(t){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var e;"undefined"!=typeof window?e=window:"undefined"!=typeof global?e=global:"undefined"!=typeof self&&(e=self),e.Slideout=t()}}(function(){var t,e,n;return function i(t,e,n){function o(r,a){if(!e[r]){if(!t[r]){var u=typeof require=="function"&&require;if(!a&&u)return u(r,!0);if(s)return s(r,!0);var l=new Error("Cannot find module '"+r+"'");throw l.code="MODULE_NOT_FOUND",l}var h=e[r]={exports:{}};t[r][0].call(h.exports,function(e){var n=t[r][1][e];return o(n?n:e)},h,h.exports,i,t,e,n)}return e[r].exports}var s=typeof require=="function"&&require;for(var r=0;r<n.length;r++)o(n[r]);return o}({1:[function(t,e,n){"use strict";var i=t("decouple");var o=t("emitter");var s;var r=false;var a=window.document;var u=a.documentElement;var l=window.navigator.msPointerEnabled;var h={start:l?"MSPointerDown":"touchstart",move:l?"MSPointerMove":"touchmove",end:l?"MSPointerUp":"touchend"};var f=function v(){var t=/^(Webkit|Khtml|Moz|ms|O)(?=[A-Z])/;var e=a.getElementsByTagName("script")[0].style;for(var n in e){if(t.test(n)){return"-"+n.match(t)[0].toLowerCase()+"-"}}if("WebkitOpacity"in e){return"-webkit-"}if("KhtmlOpacity"in e){return"-khtml-"}return""}();function c(t,e){for(var n in e){if(e[n]){t[n]=e[n]}}return t}function p(t,e){t.prototype=c(t.prototype||{},e.prototype)}function d(t){while(t.parentNode){if(t.getAttribute("data-slideout-ignore")!==null){return t}t=t.parentNode}return null}function _(t){t=t||{};this._startOffsetX=0;this._currentOffsetX=0;this._opening=false;this._moved=false;this._opened=false;this._preventOpen=false;this.panel=t.panel;this.menu=t.menu;this._touch=t.touch===undefined?true:t.touch&&true;this._side=t.side||"left";this._easing=t.fx||t.easing||"ease";this._duration=parseInt(t.duration,10)||300;this._tolerance=parseInt(t.tolerance,10)||70;this._padding=this._translateTo=parseInt(t.padding,10)||256;this._orientation=this._side==="right"?-1:1;this._translateTo*=this._orientation;if(!this.panel.classList.contains("slideout-panel")){this.panel.classList.add("slideout-panel")}if(!this.panel.classList.contains("slideout-panel-"+this._side)){this.panel.classList.add("slideout-panel-"+this._side)}if(!this.menu.classList.contains("slideout-menu")){this.menu.classList.add("slideout-menu")}if(!this.menu.classList.contains("slideout-menu-"+this._side)){this.menu.classList.add("slideout-menu-"+this._side)}if(this._touch){this._initTouchEvents()}}p(_,o);_.prototype.open=function(){var t=this;this.emit("beforeopen");if(!u.classList.contains("slideout-open")){u.classList.add("slideout-open")}this._setTransition();this._translateXTo(this._translateTo);this._opened=true;setTimeout(function(){t.panel.style.transition=t.panel.style["-webkit-transition"]="";t.emit("open")},this._duration+50);return this};_.prototype.close=function(){var t=this;if(!this.isOpen()&&!this._opening){return this}this.emit("beforeclose");this._setTransition();this._translateXTo(0);this._opened=false;setTimeout(function(){u.classList.remove("slideout-open");t.panel.style.transition=t.panel.style["-webkit-transition"]=t.panel.style[f+"transform"]=t.panel.style.transform="";t.emit("close")},this._duration+50);return this};_.prototype.toggle=function(){return this.isOpen()?this.close():this.open()};_.prototype.isOpen=function(){return this._opened};_.prototype._translateXTo=function(t){this._currentOffsetX=t;this.panel.style[f+"transform"]=this.panel.style.transform="translateX("+t+"px)";return this};_.prototype._setTransition=function(){this.panel.style[f+"transition"]=this.panel.style.transition=f+"transform "+this._duration+"ms "+this._easing;return this};_.prototype._initTouchEvents=function(){var t=this;this._onScrollFn=i(a,"scroll",function(){if(!t._moved){clearTimeout(s);r=true;s=setTimeout(function(){r=false},250)}});this._preventMove=function(e){if(t._moved){e.preventDefault()}};a.addEventListener(h.move,this._preventMove);this._resetTouchFn=function(e){if(typeof e.touches==="undefined"){return}t._moved=false;t._opening=false;t._startOffsetX=e.touches[0].pageX;t._preventOpen=!t._touch||!t.isOpen()&&t.menu.clientWidth!==0};this.panel.addEventListener(h.start,this._resetTouchFn);this._onTouchCancelFn=function(){t._moved=false;t._opening=false};this.panel.addEventListener("touchcancel",this._onTouchCancelFn);this._onTouchEndFn=function(){if(t._moved){t.emit("translateend");t._opening&&Math.abs(t._currentOffsetX)>t._tolerance?t.open():t.close()}t._moved=false};this.panel.addEventListener(h.end,this._onTouchEndFn);this._onTouchMoveFn=function(e){if(r||t._preventOpen||typeof e.touches==="undefined"||d(e.target)){return}var n=e.touches[0].clientX-t._startOffsetX;var i=t._currentOffsetX=n;if(Math.abs(i)>t._padding){return}if(Math.abs(n)>20){t._opening=true;var o=n*t._orientation;if(t._opened&&o>0||!t._opened&&o<0){return}if(!t._moved){t.emit("translatestart")}if(o<=0){i=n+t._padding*t._orientation;t._opening=false}if(!(t._moved&&u.classList.contains("slideout-open"))){u.classList.add("slideout-open")}t.panel.style[f+"transform"]=t.panel.style.transform="translateX("+i+"px)";t.emit("translate",i);t._moved=true}};this.panel.addEventListener(h.move,this._onTouchMoveFn);return this};_.prototype.enableTouch=function(){this._touch=true;return this};_.prototype.disableTouch=function(){this._touch=false;return this};_.prototype.destroy=function(){this.close();a.removeEventListener(h.move,this._preventMove);this.panel.removeEventListener(h.start,this._resetTouchFn);this.panel.removeEventListener("touchcancel",this._onTouchCancelFn);this.panel.removeEventListener(h.end,this._onTouchEndFn);this.panel.removeEventListener(h.move,this._onTouchMoveFn);a.removeEventListener("scroll",this._onScrollFn);this.open=this.close=function(){};return this};e.exports=_},{decouple:2,emitter:3}],2:[function(t,e,n){"use strict";var i=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||function(t){window.setTimeout(t,1e3/60)}}();function o(t,e,n){var o,s=false;function r(t){o=t;a()}function a(){if(!s){i(u);s=true}}function u(){n.call(t,o);s=false}t.addEventListener(e,r,false);return r}e.exports=o},{}],3:[function(t,e,n){"use strict";var i=function(t,e){if(!(t instanceof e)){throw new TypeError("Cannot call a class as a function")}};n.__esModule=true;var o=function(){function t(){i(this,t)}t.prototype.on=function e(t,n){this._eventCollection=this._eventCollection||{};this._eventCollection[t]=this._eventCollection[t]||[];this._eventCollection[t].push(n);return this};t.prototype.once=function n(t,e){var n=this;function i(){n.off(t,i);e.apply(this,arguments)}i.listener=e;this.on(t,i);return this};t.prototype.off=function o(t,e){var n=undefined;if(!this._eventCollection||!(n=this._eventCollection[t])){return this}n.forEach(function(t,i){if(t===e||t.listener===e){n.splice(i,1)}});if(n.length===0){delete this._eventCollection[t]}return this};t.prototype.emit=function s(t){var e=this;for(var n=arguments.length,i=Array(n>1?n-1:0),o=1;o<n;o++){i[o-1]=arguments[o]}var s=undefined;if(!this._eventCollection||!(s=this._eventCollection[t])){return this}s=s.slice(0);s.forEach(function(t){return t.apply(e,i)});return this};return t}();n["default"]=o;e.exports=n["default"]},{}]},{},[1])(1)});
-
-})();
 (function vendorFlickity() {
     /*!
    * Flickity PACKAGED v2.2.1
@@ -3017,6 +3012,225 @@ window.themeInfo = {name: "Testament"};
 
 {% endif %}
 
+// custom We Are Underground plugins
+window.WAU = window.WAU || {};
+
+WAU.Slideout = (function () {
+
+	/*
+	 * Elements
+	 */
+	var wrapper = undefined;
+
+	/*
+	 * @description - Makes sure that the ESC Key works to close the menus.
+	 */
+	document.addEventListener('keyup', function (event) {
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			closeActiveSlideout();
+		}
+	});
+
+	document.addEventListener('click', function (event) {
+		if (event.target === document.querySelector(".js-slideout-overlay")) {
+			closeActiveSlideout();
+		}
+	});
+
+	/*
+	 * @description - Closes the currently active slide.
+	 */
+	function closeActiveSlideout() {
+			// Find the open slideout.
+			const activeSlideout = document.querySelector('.slideout--active');
+			const activeSlideoutName = activeSlideout.getAttribute('data-wau-slideout');
+			const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + activeSlideoutName + '"]');
+			const direction = opener.getAttribute('data-slideout-direction');
+			close(direction, opener);
+	}
+
+	/*
+	 * @description - Checks if the slideout is currently open or not.
+	 * @return Boolean
+	 */
+	function isOpen() {
+		wrapper = document.querySelector(".js-slideout-toggle-wrapper");
+		return wrapper.classList.contains("slideout-left--open") || wrapper.classList.contains("slideout-right--open");
+	}
+
+	/*
+	 * @description - Open a specific slideout in a specific direction.
+	 * @param direction:String - the drction to open the slideout in.
+	 * @param targetSlideoutEl:Node - The slideout element that will be opened.
+	 */
+	function open(direction, targetSlideoutEl, opener) {
+		wrapper.classList.add("slideout-" + direction + "--open");
+		wrapper.classList.remove("slideout-" + direction + "--closed");
+		targetSlideoutEl.classList.add('slideout--active');
+
+		opener.setAttribute("aria-expanded", "true");
+
+		if (document.activeElement === opener) {
+			theme.a11yHelpers.focusOnElement(targetSlideoutEl);
+		}
+
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    scrollPosition = window.pageYOffset;
+    wrapper.style.overflow = 'hidden';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = `-${scrollPosition}px`;
+    wrapper.style.width = '100%';
+	}
+
+	/*
+	 * @description - Closes all slideouts. Puts a11y focus back on the original opener.
+	 * @param opener:Node - the opener element.
+	 */
+	function close(direction, openerEl) {
+		const activeOpenSlideouts = document.querySelectorAll('.slideout--active');
+		const openers = document.querySelectorAll(".js-slideout-open");
+		const closers = document.querySelectorAll(".js-slideout-close");
+
+		// Close the slideout.
+		wrapper.classList.remove("slideout-" + direction + "--open");
+		wrapper.classList.add("slideout-" + direction + "--closed");
+
+		// Close all active drawers. This is incase there is more than 1 slide on a direction.
+		activeOpenSlideouts.forEach(function (activeSlideoutDrawer) {
+			activeSlideoutDrawer.classList.remove('slideout--active');
+		});
+
+		// Makes sure aria-expanded false is added to all the open and close buttons.
+		openers.forEach(function (opener) {
+			opener.setAttribute('aria-expanded', 'false');
+		});
+
+		closers.forEach(function (closer) {
+			closer.setAttribute('aria-expanded', 'false');
+		});
+
+		openerEl.focus();
+
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    wrapper.style.removeProperty('overflow');
+    wrapper.style.removeProperty('position');
+    wrapper.style.removeProperty('top');
+    wrapper.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
+
+	}
+
+	/*
+	 * @description - Closes a specific slideout given the name in data-wau-slideout attribute
+	 * @return void
+	 */
+	function closeByName(name) {
+		const closer = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+		const direction = closer.getAttribute('data-slideout-direction');
+		const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]');
+		close(direction, opener);
+	}
+
+	/*
+	 * @description - Opens a specific slideout given the name in data-wau-slideout attribute
+	 * @return void
+	 */
+	function openByName(name) {
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]')
+		const direction = opener.getAttribute('data-slideout-direction');
+		const targetSlideoutEl = document.querySelector('[data-wau-slideout="' + name + '"]');
+		open(direction, targetSlideoutEl, opener);
+	}
+
+	/*
+	 * @description - Creates a new aside element to be used as a slideout.
+	 * @param direction:String - the direction that the slideout will open in. "left" or "right"
+	 * @param name:String - An explicit name to refer to the slideout by on a trigger.
+	 * @param wrapperEl:Node - An element that can be explicitly passed in as the wrapper element.
+	 */
+	function createSlideoutEl(direction, name, wrapperEl) {
+		const aside = document.createElement('aside');
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+
+		const generatedId = "slideout-" + name;
+
+		wrapperEl = wrapperEl || wrapper;
+
+		aside.classList.add('slideout');
+		aside.classList.add('slideout__drawer-' + direction);
+		aside.setAttribute('data-wau-slideout', name);
+		aside.setAttribute('id', generatedId); // setting an id here so that we can set the aria-controls attribute on the opener.
+
+		opener.setAttribute('aria-controls', generatedId);
+		wrapperEl.appendChild(aside);
+
+		return aside;
+	}
+
+	/*
+	 * @description - Initializes the plugin by adding all of the appropriate event listeners.
+	 */
+	function init(name) {
+
+		if (typeof name === "undefined") {
+			console.log("The Slideout must have an associated name.");
+			return;
+		}
+
+		wrapper = document.querySelector('.js-slideout-toggle-wrapper');
+
+		const slideoutClosers = document.querySelectorAll('.js-slideout-close'),
+					slideoutOpener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]'),
+					slideoutDirection = slideoutOpener.getAttribute('data-slideout-direction');
+
+		let slideoutTargetEl = undefined;
+
+		if (slideoutOpener) {
+			slideoutTargetEl = document.querySelector(`aside[data-wau-slideout=${name}]`);
+		}
+
+		if (!slideoutTargetEl) {
+			slideoutTargetEl = createSlideoutEl(direction);
+		}
+
+		slideoutOpener.addEventListener('click', function () {
+			open(slideoutDirection, slideoutTargetEl, slideoutOpener);
+		});
+
+		slideoutClosers.forEach(function (slideoutCloser) {
+			const slideoutCloseDirection = slideoutCloser.getAttribute('data-slideout-direction');
+
+			slideoutCloser.addEventListener('click', function () {
+				close(slideoutCloseDirection, slideoutOpener);
+			});
+		});
+
+	}
+
+	const privateFunctions = {
+		openByName,
+		closeByName,
+		createSlideoutEl
+	};
+
+	let returnObj = {};
+
+	returnObj.init = init;
+
+	/*
+	 * @description - Gives WAU.Slideout external access to the internal functions for use in Shopify Events.
+	 */
+	Object.keys(privateFunctions).forEach(function (pf) {
+		returnObj['_' + pf] = privateFunctions[pf];
+	});
+
+	return returnObj;
+
+}());
+
 // sections.js
 window.theme = window.theme || {};
 
@@ -3031,11 +3245,93 @@ theme.Helpers = (function() {
   function isTouch() {
     return touchDevice;
   }
+
+  function debounce(func, wait, immediate) {
+    var timeout;
+
+    return function() {
+      var context = this,
+        args = arguments;
+
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
+
   return {
     setTouch: setTouch,
-    isTouch: isTouch
+    isTouch: isTouch,
+    debounce: debounce
   };
 })();
+
+theme.a11yHelpers = (function () {
+
+	/* Global accesibility focused javascript. */
+	function setUpAriaExpansion() {
+		const $ariaExpandEls = document.querySelectorAll('.js-aria-expand');
+
+		Array.from($ariaExpandEls).forEach(function ($ariaExpandEl) {
+			$ariaExpandEl.addEventListener('mouseover', function (event) {
+				$ariaExpandEl.setAttribute('aria-expanded', 'true');
+			});
+
+			$ariaExpandEl.addEventListener('mouseout', function (event) {
+				$ariaExpandEl.setAttribute('aria-expanded', 'false');
+			});
+		});
+	}
+
+	/*
+	 * @description - Takes a parent element and focuses on the next focusable element inside of there.
+	 */
+	function focusOnElement(parent) {
+		var focussableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+
+		const elementToFocusOn = parent.querySelector(focussableElements);
+
+		if (elementToFocusOn) {
+			elementToFocusOn.focus();
+		}
+
+	}
+
+	return {
+		setUpAriaExpansion: setUpAriaExpansion,
+		focusOnElement: focusOnElement
+	}
+
+}());
+
+theme.DOMHelpers = (function () {
+
+	/*
+	 * @description - Determines if an element is off screen or not.
+	 * @param element:<Node> - A DOMNode
+	 * @return Boolean
+	 */
+	function isElementPastEdge(element) {
+		const bounding = element.getBoundingClientRect(),
+					l = bounding.left,
+					w = bounding.width,
+					docH = document.documentElement.clientHeight,
+					docW = document.documentElement.clientWidth;
+
+		return (l + w >= docW);
+	}
+
+  return {
+    isElementPastEdge: isElementPastEdge
+	};
+
+}());
 
 theme.LibraryLoader = (function() {
   var types = {
@@ -3671,9 +3967,9 @@ theme.ProductForm = function (context, sectionId, events, Product) {
     new Shopify.OptionSelectors(prodSelector, {
       product: Product,
       onVariantSelected: function(variant, selector) {
-
         if ( !variant ) {
           events.trigger("variantunavailable");
+          Events.trigger("storeavailability:unavailable");
           return;
         }
 
@@ -3685,6 +3981,11 @@ theme.ProductForm = function (context, sectionId, events, Product) {
         events.trigger("variantchange:option1:" + variant.option1);
         events.trigger("variantchange:option2:" + variant.option2);
         events.trigger("variantchange:option3:" + variant.option3);
+
+
+        if ( context.querySelector('[data-store-availability-container]') ) {
+          Events.trigger("storeavailability:variant", variant.id, Product.title);
+        }
 
         if ( variant.featured_media ) {
           Events.trigger("variantchange:image", variant.featured_media.id, context);
@@ -4919,6 +5220,71 @@ theme.Product = (function () {
   return Product;
 })();
 
+theme.StoreAvailability = (function() {
+
+  Events.on("storeavailability:variant", function(id, title) {
+    updateContent(id, title)
+  });
+
+  function updateContent(id, title) {
+    const container = document.querySelector('[data-store-availability-container]');
+    const variantSectionUrl =
+      '/variants/' + id + '/?section_id=store-availability';
+    container.innerHTML = '';
+
+    fetch(variantSectionUrl)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(storeAvailabilityHTML) {
+      if (storeAvailabilityHTML.trim() === '') {
+        return;
+      }
+
+      container.innerHTML = storeAvailabilityHTML;
+      container.innerHTML = container.firstElementChild.innerHTML;
+      container.style.opacity = 1;
+
+      // Show or hide container if variant unavailable
+      container.querySelector('.store-availability-container').classList.remove('fadeOut');
+      container.querySelector('.store-availability-container').style.display = "block";
+
+      Events.on("storeavailability:unavailable", function() {
+        container.querySelector('.store-availability-container').classList.add('fadeOut')
+        container.querySelector('.store-availability-container').style.display = "none";
+      });
+
+      // If no active pickup locations hide container and stop function
+      if ( document.querySelector('[data-pick-up-available="false"]') ) {
+        container.style.display = "none";
+        return false;
+      }
+
+      // Move modal code to slideout
+      const source = document.getElementById("StoreAvailabilityModal");
+
+			// create the slideout el, assign it a name, and then add
+			const slideoutContainer = document.querySelector(".js-slideout-toggle-wrapper");
+      const slideoutAside = document.getElementById('slideout-store-availability');
+
+      if ( slideoutAside ) {
+        slideoutAside.innerHTML = "";
+        slideoutAside.appendChild(source);
+      } else {
+        const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
+        newSlideout.appendChild(source);
+      }
+
+			WAU.Slideout.init("store-availability");
+
+      // Update product title
+      const storeAvailabilityModalProductTitle = document.querySelector('[data-store-availability-modal-product-title]');
+      storeAvailabilityModalProductTitle.textContent = title;
+
+    });
+  }
+})();
+
 theme.ProductRecommendations = (function (context) {
   function ProductRecommendations(container) {
 
@@ -5268,73 +5634,76 @@ theme.Header = (function() {
   MobileNav Section
 ========================================================*/
 theme.mobileNav = (function() {
+
   function mobileNav(container) {
 
     var $container = this.$container = $(container);
     var sectionId = $container.attr('data-section-id');
 
-    $('#accordion').find('.accordion-toggle').click(function(){
+    $('.accordion').find('.accordion__toggle').click(function(){
       //Expand or collapse this panel
       $(this).toggleClass('open');
       $(this).next().slideToggle('fast');
       //Hide the other panels
-      $(".accordion-content").not($(this).next()).slideUp('fast');
-      $(".accordion-toggle").not($(this)).removeClass('open');
+      $(".accordion__content").not($(this).next()).slideUp('fast');
+      $(".accordion__toggle").not($(this)).removeClass('open');
     });
 
-    $('#accordion').find('.accordion-toggle2').click(function(){
+    $('.accordion').find('.accordion__toggle-2').click(function(){
       //Expand or collapse this panel
       $(this).toggleClass('open');
       $(this).next().slideToggle('fast');
       //Hide the other panels
-      $(".accordion-content2").not($(this).next()).slideUp('fast');
-      $(".accordion-toggle2").not($(this)).removeClass('open');
+      $(".accordion__content-2").not($(this).next()).slideUp('fast');
+      $(".accordion__toggle-2").not($(this)).removeClass('open');
     });
 
-    var initMobileslideout = function(slideout) {
-      var slideout = new Slideout({
-        'panel': document.getElementById('panel'),
-        'menu': document.getElementById('menu'),
-        'padding': 256,
-        'tolerance': 70,
-        'touch': false
-      });
-      // Toggle button
-      $('.mm-trigger').on('click', function() {
-        slideout.toggle();
-      });
-      function close(eve) {
-        eve.preventDefault();
-        slideout.close();
-      }
-      slideout
-      .on('beforeopen', function() {
-        this.panel.classList.add('panel-open');
-      })
-      .on('open', function() {
-        this.panel.addEventListener('click', close);
-      })
-      .on('beforeclose', function() {
-        this.panel.classList.remove('panel-open');
-        this.panel.removeEventListener('click', close);
-      });
-      $(document).on('shopify:section:select', '#shopify-section-mobile-navigation', function(event) {
-        slideout.open();
-      });
-      $(document).on('shopify:section:deselect', '#shopify-section-mobile-navigation', function(event) {
-        slideout.close();
-      });
-      $(document).on('shopify:section:load', '#shopify-section-header', function(event) {
-        $('.mm-trigger').on('click', function() {
-          slideout.toggle();
-        });
-      });
-    };
-    initMobileslideout($('Slideout'));
+		WAU.Slideout.init("mobile-navigation");
 
   }
-  mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {});
+
+  mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
+    onSelect: function() {
+			WAU.Slideout._openByName("mobile-navigation");
+    },
+    onDeselect: function() {
+			WAU.Slideout._closeByName("mobile-navigation");
+    },
+    onBlockSelect: function() {
+			WAU.Slideout._openByName("mobile-navigation");
+    }
+  });
+
   return mobileNav;
+
+})();
+
+/*======================================================
+  Password Page Section
+========================================================*/
+theme.Password = (function() {
+  function Password(container) {
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+			const passwordError = document.querySelector('.errors');
+
+      if (passwordError) {
+				WAU.Slideout._openByName("password");
+      } else {
+				return false;
+			}
+
+    });
+
+		WAU.Slideout.init("password");
+
+    window.addEventListener('shopify:section:select', (event) => {
+      WAU.Slideout.init("password");
+    });
+  }
+
+  Password.prototype = _.assignIn({}, Password.prototype, {});
+  return Password;
 })();
 
 /*============================================================================
@@ -5514,6 +5883,7 @@ $(document).ready(function(){
       Events.trigger("mediaquery:desktop");
     }
   });
+
   document.addEventListener('shopify:section:select', function(event){
     Events.trigger("editor:section:select", event);
   });
@@ -5546,14 +5916,15 @@ $(document).ready(function() {
   sections.register('slideshow-section', theme.Slideshow);
   sections.register('product-section', theme.Product);
   sections.register('product-recommendations', theme.ProductRecommendations);
+  sections.register('store-availability', theme.StoreAvailability);
   sections.register('header-section', theme.Header);
   sections.register('collection-section', theme.Collection);
   sections.register('mobile-navigation', theme.mobileNav);
   sections.register('map', theme.Maps);
   sections.register('custom-page-section', theme.CustomPage);
+  sections.register('password-page', theme.Password);
   sections.register('footer-section', theme.Footer);
 });
-
 
 /* Log Theme Version */
 log = function() {
@@ -5562,4 +5933,4 @@ log = function() {
     return Function.prototype.bind.apply(console.log, args);
 }
 
-log("Testament Version 7.3.2 by Underground", {bar: 1})();
+log("Testament Version 7.4.0 by Underground", {bar: 1})();

@@ -1,0 +1,91 @@
+{% style %}
+{{ settings.main_font | font_face }}
+{{ settings.nav_font | font_face }}
+
+  :root {
+
+    --main-family: {{ settings.main_font.family }};
+    --main-weight: {{ settings.main_font.weight }};
+    --main-transform: {{ settings.main_font_transform }};
+    --main-spacing: calc({{ settings.main_letter_spacing }} * 1px);
+
+    --font-size: {{ settings.font_size }};
+    --nav-size: {{ settings.nav_size }};
+    --nav-text-transform: {{ settings.navigation_transform }};
+    --link-decoration: {{ settings.link_decoration }};
+    --h1-size: {{ settings.h1_size }};
+    --h2-size: {{ settings.h2_size }};
+    --h3-size: {{ settings.h3_size }};
+    --h4-size: {{ settings.h4_size }};
+    --h5-size: {{ settings.h5_size }};
+
+    --header-wrapper-background: {{ settings.header_wrapper_background }};
+    --background: {{ settings.background }};
+    --logo-color: {{ settings.logo_color }};
+    --header: {{ settings.header }};
+    --hello-color: {{ settings.hello_color }};
+    --header-icons: {{ settings.header_icons }};
+    --header-icons-hover: {{ settings.header_icons_hover }};
+    --mobile-header-icons: {{ settings.mobile_header_icons }};
+    --header-color: {{ settings.header_color }};
+    --text-color: {{ settings.text_color }};
+    --link-color: {{ settings.link_color }};
+    --sale-color: {{ settings.sale_color }};
+    --dotted-color: {{ settings.dotted_color }};
+    --button-color: {{ settings.button_color }};
+    --button-hover: {{ settings.button_hover }};
+    --button-text: {{ settings.button_text }};
+    --secondary-button-color: {{ settings.secondary_button_color }};
+    --secondary-button-hover: {{ settings.secondary_button_hover }};
+    --secondary-button-text: {{ settings.secondary_button_text }};
+    --navigation: {{ settings.navigation }};
+    --nav-border-color: {{ settings.nav_border_color }};
+    --nav-color: {{ settings.nav_color }};
+    --nav-hover-color: {{ settings.nav_hover_color }};
+    --nav-hover-link-color: {{ settings.nav_hover_link_color }};
+    --dropdown-background: {{ settings.dropdown_background }};
+    --dropdown-hover-background: {{ settings.dropdown_hover_background }};
+    --dropdown-link-color: {{ settings.dropdown_link_color }};
+    --dropdown-link-hover-color: {{ settings.dropdown_link_hover_color }};
+    --direction-color: {{ settings.direction_color }};
+    --direction-background: {{ settings.direction_background }};
+    --direction-hover: {{ settings.direction_hover }};
+    --accordion-header-bg: {{ settings.accordion_header_bg }};
+    --accordion-header-text: {{ settings.accordion_header_text }};
+    --accordion-content-text: {{ settings.accordion_content_text }};
+    --icons: {{ settings.icons }};
+    --icons-hover: {{ settings.icons_hover }};
+    --footer-border: {{ settings.footer_border }};
+    --footer-background: {{ settings.footer_background }};
+    --footer-text: {{ settings.footer_text }};
+    --footer-icons-color: {{ settings.footer_icons_color }};
+    --footer-icons-hover-color: {{ settings.footer_icons_hover_color }};
+    --footer-input: {{ settings.footer_input }};
+    --footer-input-text: {{ settings.footer_input_text }};
+    --footer-button: {{ settings.footer_button }};
+    --footer-button-text: {{ settings.footer_button_text }};
+
+
+    --nav-family: {{ settings.nav_font.family }};
+    --nav-weight: {{ settings.nav_font.weight }};
+    --nav-transform: {{ settings.nav_font_transform }};
+    --nav-spacing: calc({{ settings.nav_letter_spacing | default: 0 }} * 1px);
+    --nav-color: {{ settings.nav_color }};
+    --nav-hover-color: {{ settings.nav_hover_color }};
+    --nav-transform: {{ settings.navigation_transform }};
+    --nav-background-color: {{ settings.navigation }};
+    --nav-size: calc({{ settings.nav_size | default: 0 }} * 1px);
+    --nav-height: 50px;
+    --nav-hover-link-color: {{ settings.nav_hover_link_color }};
+    --nav-top-border-height: calc({{ settings.nav_top_border_height | default: 0 }} * 1px);
+    --nav-bottom-border-height: calc({{ settings.nav_bottom_border_height | default: 0 }} * 1px);
+    --nav-border-color: {{ settings.nav_border_color }};
+
+    --dropdown-background-color: {{ settings.dropdown_background }};
+    --dropdown-link-color: {{ settings.dropdown_link_color }};
+    --dropdown-link-hover-color: {{ settings.dropdown_link_hover_color }};
+    --dropdown-hover-background: {{ settings.dropdown_hover_background }};
+
+    --dropdown-min-width: 220px;
+  }
+{% endstyle %}

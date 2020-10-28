@@ -2,7 +2,7 @@
   "password": {
     "general": {
       "thanks": "Thank you for joining our list",
-      "enter_store": "Enter Store using Password:",
+      "enter_store": "Login with Password",
       "password": "Password",
       "enter": "Enter",
       "email_address": "Email Address",
@@ -77,6 +77,16 @@
       "social_title": "Connect with us",
       "twitter_title": "On Twitter",
       "facebook_title": "Like us on Facebook"
+    }
+  },
+  "store_availability": {
+    "general": {
+      "view_store_info": "View store information",
+      "check_other_stores": "Check availability at other stores",
+      "pick_up_available": "Pickup available",
+      "pick_up_currently_unavailable": "Pickup currently unavailable",
+      "pick_up_available_at_html": "Pickup available at <strong>{{ location_name }}<\/strong>",
+      "pick_up_unavailable_at_html": "Pickup currently unavailable at <strong>{{ location_name }}<\/strong>"
     }
   },
   "cart": {
