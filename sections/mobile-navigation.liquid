@@ -136,7 +136,21 @@
     .accordion__toggle-2:after,
     .accordion__toggle:after,
     .mobile-menu .mobile-menu__item i,
-    .mobile-menu__featured-text p {
+    .mobile-menu__featured-text p,
+    .mobile-menu__search input,
+    .mobile-menu__search input:focus {
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search ::-webkit-input-placeholder { /* WebKit browsers */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search :-ms-input-placeholder { /* Internet Explorer 10+ */
       color: {{ section.settings.link_color }};
     }
     .mobile-menu .accordion__toggle-2 a,
@@ -161,17 +175,20 @@
       {
         "type": "color",
         "id": "background_color",
-        "label": "Background color"
+        "label": "Background color",
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "link_color",
-        "label": "Link color"
+        "label": "Link color",
+        "default": "#000000"
       },
       {
         "type": "color",
         "id": "border_color",
-        "label": "Border color"
+        "label": "Border color",
+        "default": "#000000"
       }
     ],
     "blocks": [
