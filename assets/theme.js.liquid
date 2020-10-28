@@ -5207,11 +5207,6 @@ theme.StoreAvailability = (function() {
 
       container.innerHTML = storeAvailabilityHTML;
 
-      // If no active pickup locations hide container and stop function
-      if ( document.querySelector('[data-pick-up-available="false"]') ) {
-        container.style.display = "none";
-        return false;
-      }
 
       // Show or hide container if variant unavailable
       container.querySelector('.store-availability-container').classList.remove('fadeOut');
@@ -5222,13 +5217,26 @@ theme.StoreAvailability = (function() {
         container.querySelector('.store-availability-container').style.display = "none";
       });
 
+      // If no active pickup locations hide container and stop function
+      if ( document.querySelector('[data-pick-up-available="false"]') ) {
+        container.style.display = "none";
+        return false;
+      }
+
       // Move modal code to slideout
       const source = document.getElementById("StoreAvailabilityModal");
 
 			// create the slideout el, assign it a name, and then add
 			const slideoutContainer = document.querySelector(".js-slideout-toggle-wrapper");
-			const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
-			newSlideout.appendChild(source);
+      const slideoutAside = document.getElementById('slideout-store-availability');
+
+      if ( slideoutAside ) {
+        slideoutAside.innerHTML = "";
+        slideoutAside.appendChild(source);
+      } else {
+        const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
+        newSlideout.appendChild(source);
+      }
 
 			WAU.Slideout.init("store-availability");
 
