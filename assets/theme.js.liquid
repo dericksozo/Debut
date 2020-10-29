@@ -1743,19 +1743,77 @@ WAU.Slideout = (function () {
 	var wrapper = undefined;
 
 	/*
+	 * @description - Makes sure that the ESC Key works to close the menus.
+	 */
+	document.addEventListener('keyup', function (event) {
+		if (event.key === 'Escape') {
+			event.preventDefault();
+			closeActiveSlideout();
+		}
+	});
+
+	document.addEventListener('click', function (event) {
+		if (event.target === document.querySelector(".js-slideout-overlay")) {
+			closeActiveSlideout();
+		}
+	});
+
+	/*
+	 * @description - Closes the currently active slide.
+	 */
+	function closeActiveSlideout() {
+			// Find the open slideout.
+			const activeSlideout = document.querySelector('.slideout--active');
+			const activeSlideoutName = activeSlideout.getAttribute('data-wau-slideout');
+			const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + activeSlideoutName + '"]');
+			const direction = opener.getAttribute('data-slideout-direction');
+			close(direction, opener);
+	}
+
+	/*
+	 * @description - Checks if the slideout is currently open or not.
+	 * @return Boolean
+	 */
+	function isOpen() {
+		wrapper = document.querySelector(".js-slideout-toggle-wrapper");
+		return wrapper.classList.contains("slideout-left--open") || wrapper.classList.contains("slideout-right--open");
+	}
+
+	/*
 	 * @description - Open a specific slideout in a specific direction.
 	 * @param direction:String - the drction to open the slideout in.
 	 * @param targetSlideoutEl:Node - The slideout element that will be opened.
 	 */
-	function open(direction, targetSlideoutEl) {
+	function open(direction, targetSlideoutEl, opener) {
 		wrapper.classList.add("slideout-" + direction + "--open");
 		wrapper.classList.remove("slideout-" + direction + "--closed");
 		targetSlideoutEl.classList.add('slideout--active');
+
+		opener.setAttribute("aria-expanded", "true");
+
+		if (document.activeElement === opener) {
+			theme.a11yHelpers.focusOnElement(targetSlideoutEl);
+		}
+
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    scrollPosition = window.pageYOffset;
+    wrapper.style.overflow = 'hidden';
+    wrapper.style.position = 'fixed';
+    wrapper.style.top = `-${scrollPosition}px`;
+    wrapper.style.width = '100%';
 	}
 
-	function close(direction) {
+	/*
+	 * @description - Closes all slideouts. Puts a11y focus back on the original opener.
+	 * @param opener:Node - the opener element.
+	 */
+	function close(direction, openerEl) {
 		const activeOpenSlideouts = document.querySelectorAll('.slideout--active');
+		const openers = document.querySelectorAll(".js-slideout-open");
+		const closers = document.querySelectorAll(".js-slideout-close");
 
+		// Close the slideout.
 		wrapper.classList.remove("slideout-" + direction + "--open");
 		wrapper.classList.add("slideout-" + direction + "--closed");
 
@@ -1763,6 +1821,26 @@ WAU.Slideout = (function () {
 		activeOpenSlideouts.forEach(function (activeSlideoutDrawer) {
 			activeSlideoutDrawer.classList.remove('slideout--active');
 		});
+
+		// Makes sure aria-expanded false is added to all the open and close buttons.
+		openers.forEach(function (opener) {
+			opener.setAttribute('aria-expanded', 'false');
+		});
+
+		closers.forEach(function (closer) {
+			closer.setAttribute('aria-expanded', 'false');
+		});
+
+		openerEl.focus();
+
+    // Fix body wrapper so no scrolling on mobile
+    let scrollPosition = 0;
+    wrapper.style.removeProperty('overflow');
+    wrapper.style.removeProperty('position');
+    wrapper.style.removeProperty('top');
+    wrapper.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
+
 	}
 
 	/*
@@ -1770,8 +1848,10 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function closeByName(name) {
-		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
-		close(direction);
+		const closer = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+		const direction = closer.getAttribute('data-slideout-direction');
+		const opener = document.querySelector('.js-slideout-open[data-wau-slideout-target="' + name + '"]');
+		close(direction, opener);
 	}
 
 	/*
@@ -1779,9 +1859,10 @@ WAU.Slideout = (function () {
 	 * @return void
 	 */
 	function openByName(name) {
-		const direction = document.querySelector('[data-wau-slideout-target="' + name + '"]').getAttribute('data-slideout-direction');
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]')
+		const direction = opener.getAttribute('data-slideout-direction');
 		const targetSlideoutEl = document.querySelector('[data-wau-slideout="' + name + '"]');
-		open(direction, targetSlideoutEl);
+		open(direction, targetSlideoutEl, opener);
 	}
 
 	/*
@@ -1792,13 +1873,18 @@ WAU.Slideout = (function () {
 	 */
 	function createSlideoutEl(direction, name, wrapperEl) {
 		const aside = document.createElement('aside');
+		const opener = document.querySelector('[data-wau-slideout-target="' + name + '"]');
+
+		const generatedId = "slideout-" + name;
 
 		wrapperEl = wrapperEl || wrapper;
 
 		aside.classList.add('slideout');
 		aside.classList.add('slideout__drawer-' + direction);
 		aside.setAttribute('data-wau-slideout', name);
+		aside.setAttribute('id', generatedId); // setting an id here so that we can set the aria-controls attribute on the opener.
 
+		opener.setAttribute('aria-controls', generatedId);
 		wrapperEl.appendChild(aside);
 
 		return aside;
@@ -1831,14 +1917,14 @@ WAU.Slideout = (function () {
 		}
 
 		slideoutOpener.addEventListener('click', function () {
-			open(slideoutDirection, slideoutTargetEl);
+			open(slideoutDirection, slideoutTargetEl, slideoutOpener);
 		});
 
 		slideoutClosers.forEach(function (slideoutCloser) {
 			const slideoutCloseDirection = slideoutCloser.getAttribute('data-slideout-direction');
 
 			slideoutCloser.addEventListener('click', function () {
-				close(slideoutCloseDirection);
+				close(slideoutCloseDirection, slideoutOpener);
 			});
 		});
 
@@ -1914,17 +2000,32 @@ theme.a11yHelpers = (function () {
 
 		Array.from($ariaExpandEls).forEach(function ($ariaExpandEl) {
 			$ariaExpandEl.addEventListener('mouseover', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'true');
+				$ariaExpandEl.setAttribute('aria-expanded', 'true');
 			});
 
 			$ariaExpandEl.addEventListener('mouseout', function (event) {
-				$ariaExpandEl.setAttribute('aria-expand', 'false');
+				$ariaExpandEl.setAttribute('aria-expanded', 'false');
 			});
 		});
 	}
 
+	/*
+	 * @description - Takes a parent element and focuses on the next focusable element inside of there.
+	 */
+	function focusOnElement(parent) {
+		var focussableElements = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+
+		const elementToFocusOn = parent.querySelector(focussableElements);
+
+		if (elementToFocusOn) {
+			elementToFocusOn.focus();
+		}
+
+	}
+
 	return {
-		setUpAriaExpansion: setUpAriaExpansion
+		setUpAriaExpansion: setUpAriaExpansion,
+		focusOnElement: focusOnElement
 	}
 
 }());
@@ -3834,8 +3935,6 @@ theme.Product = (function () {
 
 theme.StoreAvailability = (function() {
 
-	console.log("Theme.StoreAvailability");
-
   Events.on("storeavailability:variant", function(id, title) {
     updateContent(id, title)
   });
@@ -3856,6 +3955,8 @@ theme.StoreAvailability = (function() {
       }
 
       container.innerHTML = storeAvailabilityHTML;
+      container.innerHTML = container.firstElementChild.innerHTML;
+      container.style.opacity = 1;
 
       // Show or hide container if variant unavailable
       container.querySelector('.store-availability-container').classList.remove('fadeOut');
@@ -3866,13 +3967,26 @@ theme.StoreAvailability = (function() {
         container.querySelector('.store-availability-container').style.display = "none";
       });
 
+      // If no active pickup locations hide container and stop function
+      if ( document.querySelector('[data-pick-up-available="false"]') ) {
+        container.style.display = "none";
+        return false;
+      }
+
       // Move modal code to slideout
       const source = document.getElementById("StoreAvailabilityModal");
 
 			// create the slideout el, assign it a name, and then add
 			const slideoutContainer = document.querySelector(".js-slideout-toggle-wrapper");
-			const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
-			newSlideout.appendChild(source);
+      const slideoutAside = document.getElementById('slideout-store-availability');
+
+      if ( slideoutAside ) {
+        slideoutAside.innerHTML = "";
+        slideoutAside.appendChild(source);
+      } else {
+        const newSlideout = WAU.Slideout._createSlideoutEl("right", "store-availability", slideoutContainer);
+        newSlideout.appendChild(source);
+      }
 
 			WAU.Slideout.init("store-availability");
 
@@ -4296,6 +4410,9 @@ theme.Password = (function() {
 
 		WAU.Slideout.init("password");
 
+    window.addEventListener('shopify:section:select', (event) => {
+      WAU.Slideout.init("password");
+    });
   }
 
   Password.prototype = _.assignIn({}, Password.prototype, {});

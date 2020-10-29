@@ -283,11 +283,51 @@
         },
         "mobile-navigation": {
           "type": "mobile-navigation",
+          "blocks": {
+            "1603134279730": {
+              "type": "cart_status",
+              "settings": {
+                "cart_icon": "cart"
+              }
+            },
+            "1603134282065": {
+              "type": "navigation",
+              "settings": {
+                "main_nav": "main-menu",
+                "customer_account_links": true
+              }
+            },
+            "1603134286633": {
+              "type": "search_box",
+              "settings": {
+              }
+            },
+            "1603134294387": {
+              "type": "social_icons",
+              "settings": {
+                "icon_color": "#000000",
+                "icon_hover_color": "#313131"
+              }
+            },
+            "1603134297258": {
+              "type": "featured_text",
+              "settings": {
+                "featured_text": "<p><b>Featured Text<\/b><\/p><p><em>A great place to share about a sale!<\/em><\/p>"
+              }
+            }
+          },
+          "block_order": [
+            "1603134273662",
+            "1603134279730",
+            "1603134282065",
+            "1603134286633",
+            "1603134294387",
+            "1603134297258"
+          ],
           "settings": {
-            "main_nav": "main-menu",
-            "background_color": "#000000",
-            "link_color": "#ffffff",
-            "border_color": "#ffffff"
+            "background_color": "#ffffff",
+            "link_color": "#000000",
+            "border_color": "#000000"
           }
         },
         "1521604513411": {
@@ -709,11 +749,51 @@
         },
         "mobile-navigation": {
           "type": "mobile-navigation",
+          "blocks": {
+            "1603134279730": {
+              "type": "cart_status",
+              "settings": {
+                "cart_icon": "cart"
+              }
+            },
+            "1603134282065": {
+              "type": "navigation",
+              "settings": {
+                "main_nav": "main-menu",
+                "customer_account_links": true
+              }
+            },
+            "1603134286633": {
+              "type": "search_box",
+              "settings": {
+              }
+            },
+            "1603134294387": {
+              "type": "social_icons",
+              "settings": {
+                "icon_color": "#000000",
+                "icon_hover_color": "#313131"
+              }
+            },
+            "1603134297258": {
+              "type": "featured_text",
+              "settings": {
+                "featured_text": "<p><b>Featured Text<\/b><\/p><p><em>A great place to share about a sale!<\/em><\/p>"
+              }
+            }
+          },
+          "block_order": [
+            "1603134273662",
+            "1603134279730",
+            "1603134282065",
+            "1603134286633",
+            "1603134294387",
+            "1603134297258"
+          ],
           "settings": {
-            "main_nav": "main-menu",
-            "background_color": "#000000",
-            "link_color": "#ffffff",
-            "border_color": "#383838"
+            "background_color": "#ffffff",
+            "link_color": "#000000",
+            "border_color": "#000000"
           }
         },
         "1521604513411": {
@@ -1143,8 +1223,48 @@
         },
         "mobile-navigation": {
           "type": "mobile-navigation",
+          "blocks": {
+            "1603134279730": {
+              "type": "cart_status",
+              "settings": {
+                "cart_icon": "cart"
+              }
+            },
+            "1603134282065": {
+              "type": "navigation",
+              "settings": {
+                "main_nav": "main-menu",
+                "customer_account_links": true
+              }
+            },
+            "1603134286633": {
+              "type": "search_box",
+              "settings": {
+              }
+            },
+            "1603134294387": {
+              "type": "social_icons",
+              "settings": {
+                "icon_color": "#000000",
+                "icon_hover_color": "#313131"
+              }
+            },
+            "1603134297258": {
+              "type": "featured_text",
+              "settings": {
+                "featured_text": "<p><b>Featured Text<\/b><\/p><p><em>A great place to share about a sale!<\/em><\/p>"
+              }
+            }
+          },
+          "block_order": [
+            "1603134273662",
+            "1603134279730",
+            "1603134282065",
+            "1603134286633",
+            "1603134294387",
+            "1603134297258"
+          ],
           "settings": {
-            "main_nav": "main-menu",
             "background_color": "#ffffff",
             "link_color": "#000000",
             "border_color": "#000000"
@@ -1577,11 +1697,51 @@
         },
         "mobile-navigation": {
           "type": "mobile-navigation",
+          "blocks": {
+            "1603134279730": {
+              "type": "cart_status",
+              "settings": {
+                "cart_icon": "cart"
+              }
+            },
+            "1603134282065": {
+              "type": "navigation",
+              "settings": {
+                "main_nav": "main-menu",
+                "customer_account_links": true
+              }
+            },
+            "1603134286633": {
+              "type": "search_box",
+              "settings": {
+              }
+            },
+            "1603134294387": {
+              "type": "social_icons",
+              "settings": {
+                "icon_color": "#000000",
+                "icon_hover_color": "#313131"
+              }
+            },
+            "1603134297258": {
+              "type": "featured_text",
+              "settings": {
+                "featured_text": "<p><b>Featured Text<\/b><\/p><p><em>A great place to share about a sale!<\/em><\/p>"
+              }
+            }
+          },
+          "block_order": [
+            "1603134273662",
+            "1603134279730",
+            "1603134282065",
+            "1603134286633",
+            "1603134294387",
+            "1603134297258"
+          ],
           "settings": {
-            "main_nav": "main-menu",
-            "background_color": "#000000",
-            "link_color": "#ffffff",
-            "border_color": "#383838"
+            "background_color": "#ffffff",
+            "link_color": "#000000",
+            "border_color": "#000000"
           }
         },
         "1521604513411": {
@@ -2018,11 +2178,51 @@
       },
       "mobile-navigation": {
         "type": "mobile-navigation",
+        "blocks": {
+          "1603134279730": {
+            "type": "cart_status",
+            "settings": {
+              "cart_icon": "cart"
+            }
+          },
+          "1603134282065": {
+            "type": "navigation",
+            "settings": {
+              "main_nav": "main-menu",
+              "customer_account_links": true
+            }
+          },
+          "1603134286633": {
+            "type": "search_box",
+            "settings": {
+            }
+          },
+          "1603134294387": {
+            "type": "social_icons",
+            "settings": {
+              "icon_color": "#000000",
+              "icon_hover_color": "#313131"
+            }
+          },
+          "1603134297258": {
+            "type": "featured_text",
+            "settings": {
+              "featured_text": "<p><b>Featured Text<\/b><\/p><p><em>A great place to share about a sale!<\/em><\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1603134273662",
+          "1603134279730",
+          "1603134282065",
+          "1603134286633",
+          "1603134294387",
+          "1603134297258"
+        ],
         "settings": {
-          "main_nav": "main-menu",
-          "background_color": "#000000",
-          "link_color": "#ffffff",
-          "border_color": "#ffffff"
+          "background_color": "#ffffff",
+          "link_color": "#000000",
+          "border_color": "#000000"
         }
       },
       "1521604513411": {

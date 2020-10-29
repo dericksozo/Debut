@@ -17,7 +17,7 @@
         </div>
       {% when 'navigation' %}
         <ul class="mobile-menu__block mobile-menu__accordion accordion" id="accordion" {{ block.shopify_attributes }}>
-          {% assign menu = linklists[section.settings.main_nav] %}
+          {% assign menu = linklists[block.settings.main_nav] %}
           {% for link in menu.links %}
             {% if link.links != blank %}
               <li class="mobile-menu__item accordion__toggle" aria-haspopup="true" aria-expanded="false">
@@ -81,13 +81,6 @@
               <img src="{{ block.settings.featured_image | img_url: '300x' }}" alt="block.settings.featured_image.alt">
             </noscript>
           {% if block.settings.featured_image_link %}</a>{% endif %}
-          <style>
-          {% if block.settings.close_over_image %}
-            .mobile-menu .slideout__trigger--close {
-              position: absolute;
-            }
-          {% endif %}
-          </style>
         </div>
       {% when 'featured_text' %}
         <div class="mobile-menu__block mobile-menu__featured-text text-center" {{ block.shopify_attributes }}>
@@ -136,7 +129,21 @@
     .accordion__toggle-2:after,
     .accordion__toggle:after,
     .mobile-menu .mobile-menu__item i,
-    .mobile-menu__featured-text p {
+    .mobile-menu__featured-text p,
+    .mobile-menu__search input,
+    .mobile-menu__search input:focus {
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search ::-webkit-input-placeholder { /* WebKit browsers */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: {{ section.settings.link_color }};
+    }
+    .mobile-menu__search :-ms-input-placeholder { /* Internet Explorer 10+ */
       color: {{ section.settings.link_color }};
     }
     .mobile-menu .accordion__toggle-2 a,
@@ -159,25 +166,22 @@
     "name": "Mobile navigation",
     "settings": [
       {
-        "type": "link_list",
-        "id": "main_nav",
-        "label": "Choose main menu",
-        "default": "main-menu"
-      },
-      {
         "type": "color",
         "id": "background_color",
-        "label": "Background color"
+        "label": "Background color",
+        "default": "#ffffff"
       },
       {
         "type": "color",
         "id": "link_color",
-        "label": "Link color"
+        "label": "Link color",
+        "default": "#000000"
       },
       {
         "type": "color",
         "id": "border_color",
-        "label": "Border color"
+        "label": "Border color",
+        "default": "#000000"
       }
     ],
     "blocks": [
@@ -211,7 +215,8 @@
           {
             "type": "image_picker",
             "id": "featured_image",
-            "label": "Choose featured image"
+            "label": "Choose featured image",
+            "info": "400px x 300px recommended"
           },
           {
             "type": "url",
@@ -223,11 +228,6 @@
             "id": "full_featured_image",
             "label": "Enable full-width image",
             "default": false
-          },
-          {
-            "type": "checkbox",
-            "id": "close_over_image",
-            "label": "Position close X over top of image"
           }
         ]
       },

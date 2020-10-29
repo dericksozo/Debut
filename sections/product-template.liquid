@@ -56,26 +56,8 @@
              current_variant: current_variant,
              show_sku: section.settings.show_sku %}
 
-         {%- comment -%}
-           Live region for announcing updated price and availability to screen readers
-         {%- endcomment -%}
-         <p class="visually-hidden" data-product-status
-           aria-live="polite"
-           role="status"
-         ></p>
-
-         {%- comment -%}
-           Live region for announcing that the product form has been submitted and the
-           product is in the process being added to the cart
-         {%- endcomment -%}
-         <p class="visually-hidden" data-loader-status
-           aria-live="assertive"
-           role="alert"
-           aria-hidden="true"
-         >{{ 'products.product.loader_label' | t }}</p>
-
-         <div class="product-single__store-availability-container" data-store-availability-container>
-         </div>
+          <div class="product-single__store-availability-container" data-store-availability-container>
+          </div>
 
           {% if section.settings.product_description == 'right' %}
             <div class="rte">{{ product.description }}</div>
@@ -189,6 +171,35 @@
       outline: 0 !important;
     }
   {% endif %}
+  {%- if section.settings.form_left -%}
+    .store-availability-information {
+      justify-content: start !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: left !important;
+    }
+  {%- else -%}
+    .store-availability-information {
+      justify-content: center !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: center !important;
+    }
+  {%- endif -%}
+  @media screen and ( max-width: 740px ) {
+    .store-availability-information {
+      justify-content: center !important;
+    }
+    .store-availability-information-container,
+    .store-availability-information__stores,
+    .slideout__trigger-store-availability {
+      text-align: center !important;
+    }
+  }
 </style>
 <script type="application/json" id="ModelJson-{{ section.id }}">
   {{ product.media | where: 'media_type', 'model' | json }}
