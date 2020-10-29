@@ -196,16 +196,12 @@ console.log({{ section.settings | json }});
 			border-bottom: {{ section.settings.nav_bottom_border_height }}px solid var(--nav-border-color);
 		}
 		
-		.navigation__menu {
-			position: static;
-		}
-		
 		.navigation__menuitem {
 			line-height: {{ section.settings.nav_height }}px;
 		}
 		
 		.dropdown {
-			top: {{ section.settings.line_height }}px;
+			top: {{ section.settings.nav_height }}px;
 		}
 		
 		.megamenu {
