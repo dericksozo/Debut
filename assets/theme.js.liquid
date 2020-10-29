@@ -3038,6 +3038,52 @@ theme.a11yHelpers = (function () {
 		
 	}
 	
+	function findFocusableElement(parent, element, direction) {
+		const focusableElementSelectors = 'a:not([disabled]), button:not([disabled]), input[type=text]:not([disabled]), [tabindex]:not([disabled]):not([tabindex="-1"])';
+		const focusableElements = parent.querySelectorAll(focusableElementSelectors);
+		const numOfFocusableElements = focusableElements.length;
+		
+		var elementIndex = 0;
+		
+		for (let i = 0; i < focusableElements.length; i += 1) {
+			let currentElement = focusableElements[i];
+			
+			if (currentElement === element) {
+				elementIndex = i;
+			}	
+		}
+		
+		if (direction === 'next') {
+			if (elementIndex === (numOfFocusableElements - 1)) {
+				return focusableElements[0];
+			} else {
+				return focusableElements[elementIndex + 1];
+			}
+		}
+		
+		if (direction === 'prev') {
+			if (elementIndex === 0) {
+				return focusableElements[numOfFocusableElements - 1];
+			} else {
+				return focusableElements[elementIndex - 1];
+			}
+		}
+	}
+	
+	/*
+	 * @description - Takes a parent and a dom node and returns the next element that is focusable that is not the current element.
+	 * @param parent:DOMNode
+	 * @param element:DOMNode
+	 * @return DOMNode
+	 */
+	function findNextFocusableElement(parent, element) {
+		return findFocusableElement(parent, element, 'next');
+	}
+	
+	function findPreviousFocusableElement(parent, element) {
+		return findFocusableElement(parent, element, 'prev');
+	}
+	
 	/*
 	 * @description - Enables accessible keyboard navigation throughout the navigation menus.
 	 */
@@ -3049,64 +3095,325 @@ theme.a11yHelpers = (function () {
 				currentActiveElement = document.activeElement;
 		
 		document.addEventListener('keyup', function (event) {
-			
-			console.log("On Keyup.");
-			
 			let activeMenuItems = undefined;
 			
 			if (event.key === 'Tab') {
 				currentActiveElement = document.activeElement;
-				console.log("What's the currentActiveElement?", currentActiveElement);
 				
 				if (currentActiveElement.classList.contains("js-menu-link") && !previousActiveElement.classList.contains("js-menu-link")) {
-					console.log("The current active element and the previous one not equal");
-					
 					activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
 					activeMenuItems.forEach(function (activeMenuItem) {
-						console.log("Removing the active class from the navigation menuitem");
 						activeMenuItem.classList.remove('navigation__menuitem--active');
 					});
-					
 				}
-				
 			}
 		});
 		
+		// These are state variables for the keydown and keyup (accessibility events) for the menu
+		var megaMenu,
+				dropdown,
+				insideOfMegaMenu = false,
+				insideOfDropdown = false,
+				insideOfNestedDropdown = false,
+				activeMenuItems,
+				megaMenuListContainers,
+				dropDownMenuLinks,
+				nestedDropDownMenuLinks,
+				megaMenuListContainerIndex = 0,
+				dropDownMenuLinksIndex = 0,
+				nestedDropDownMenuLinksIndex = 0;
+		   
+		
+		/*
+		 * @description - If index is the same as Length then return 0 else increase by one...
+		 */
+		function cycleIndexUp(Length, index) {
+			if (index === Length) {
+				return 0;
+			} else {
+				return index += 1;
+			}
+		}
+		
+		function cycleIndexDown(Length, index) {
+			if (index === 0) {
+				return Length;
+			} else {
+				return index -= 1;
+			}
+		}
+		
 		document.addEventListener('keydown', function (event) {
-			
-			var activeMenuItems = undefined;
-			
-			console.log("On keydown");
-			
-			console.log("What's event.key?", event.key);
 			
 			if (event.key === 'Tab') {
 				previousActiveElement = currentActiveElement;
-				console.log("What's previousActiveElement?", previousActiveElement);
 			}
 			
 			if (event.key === 'ArrowDown') {
+				
+				// If you're currently on the top nav and press down
 				if (document.activeElement.classList.contains("js-open-dropdown-on-key")) {
-					event.preventDefault(); // Stop the page from moving down when you hit down.
+					
+					// Stop the page from scrolling down, the default behavior.
+					event.preventDefault();
+					
+					// Show the menu by adding the appropriate class.
 					document.activeElement.parentNode.classList.add("navigation__menuitem--active");
 					
-					// Move the focus to the next element in the dropdown.
-					let elementToFocusOn = document.activeElement.parentNode.querySelector('.megamenu') || document.activeElement.parentNode.querySelector('.js-dropdown');
+					megaMenu = document.activeElement.parentNode.querySelector('.megamenu');
+					dropdown = document.activeElement.parentNode.querySelector('.js-dropdown');
 					
-					console.log("What's elementToFocusOn?", elementToFocusOn);
-					console.log("document.activeElement", document.activeElement);
+					// Checking to see if this particular dropdown is a normal dropdown or a megamenu.
+					if (megaMenu != null) {
+						insideOfMegaMenu = true;
+						insideOfDropdown = false;
+						insideOfNestedDropdown = false;
+						
+						document.activeElement.parentNode.setAttribute('aria-expanded', 'true');
+						
+						// Save a reference to all the lists in the megamenu to use when pressing other keys.
+						megaMenuListContainers = megaMenu.querySelectorAll('.megamenu__listcontainer');
+						
+						findNextFocusableElement(
+							megaMenuListContainers[megaMenuListContainerIndex],
+							document.activeElement
+						).focus();
+						
+						return;
+						
+					}
 					
-					theme.a11yHelpers.focusOnElement(elementToFocusOn);
+					// Checking to see if it's a normal dropdown.
+					if (dropdown != null) {
+						insideOfDropdown = true;
+						insideOfMegaMenu = false;
+						
+						document.activeElement.parentNode.setAttribute('aria-expanded', 'true');
+						
+						// Save a reference to all the dropdown menu links for use with other keys.
+						dropDownMenuLinks = dropdown.querySelectorAll(".js-menu-link:not(.js-menu-link-inside-dropdown)");
+						
+						if (dropDownMenuLinks.length > 1) {
+							dropDownMenuLinks[dropDownMenuLinksIndex].focus();
+						} else {
+							dropdown.querySelector(".dropdown__menulink").focus();
+						}
+						
+						return;
+						
+					}
 					
 				}
-			} else {
-				if (document.activeElement.classList.contains('js-menu-link')) {
-					activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
-					activeMenuItems.forEach(function (activeMenuItem) {
-						console.log("Removing the active class from the navigation menuitem");
-						activeMenuItem.classList.remove('navigation__menuitem--active');
-					});
+				
+				if (insideOfMegaMenu) {
+					event.preventDefault();
+					findNextFocusableElement(
+						megaMenuListContainers[megaMenuListContainerIndex],
+						document.activeElement
+					).focus();
+					
+					return;
+					
 				}
+				
+				// Checking to see if the down arrow is being pressed and you're inside a Dropdown.
+				if (insideOfDropdown && !insideOfNestedDropdown) {
+					
+					event.preventDefault();
+					
+					if (dropDownMenuLinks.length > 1) {
+						dropDownMenuLinksIndex = cycleIndexUp(dropDownMenuLinks.length - 1, dropDownMenuLinksIndex);
+						dropDownMenuLinks[dropDownMenuLinksIndex].focus();
+					} else {
+						dropdown.querySelector(".dropdown__menulink").focus();
+					}
+					
+					return;
+					
+				}
+				
+				// Checking to see if down arrow + inside of nested dropdown.
+				if (insideOfNestedDropdown && insideOfDropdown) {
+					
+					event.preventDefault();
+					
+					if (nestedDropDownMenuLinks.length > 1) {
+						nestedDropDownMenuLinksIndex = cycleIndexUp(nestedDropDownMenuLinks.length - 1, nestedDropDownMenuLinksIndex);
+						nestedDropDownMenuLinks[nestedDropDownMenuLinksIndex].focus();
+					} else {
+						nestedDropDownMenuLinksIndex[0].focus();
+					}
+					
+					return;
+					
+				}
+				
+			}
+			
+			if (event.key === 'ArrowUp') {
+				if (insideOfMegaMenu) {
+					
+					event.preventDefault();
+					
+					// Checking to see if the up arrow is being pressed and you're at the top most item in the megamenu.
+					if (document.activeElement.classList.contains("megamenu__headerlink")) {
+						focusOnElement(document.activeElement.closest('.navigation__menuitem'));
+						
+						activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
+						activeMenuItems.forEach(function (activeMenuItem) {
+							console.log("Removing the active class from the navigation menuitem");
+							activeMenuItem.classList.remove('navigation__menuitem--active');
+						});
+						
+						document.activeElement.closest('.navigation__menuitem').setAttribute('aria-expanded', 'false');
+						
+					} else {
+						findPreviousFocusableElement(megaMenuListContainers[megaMenuListContainerIndex], document.activeElement).focus();
+					}
+					
+					return;
+					
+				}
+				
+				if (insideOfDropdown && !insideOfNestedDropdown) {
+					
+					event.preventDefault();
+					
+					if (dropDownMenuLinksIndex === 0) {
+						focusOnElement(document.activeElement.closest('.navigation__menuitem'));
+						
+						activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
+						activeMenuItems.forEach(function (activeMenuItem) {
+							activeMenuItem.classList.remove('navigation__menuitem--active');
+						});
+						
+						document.activeElement.closest('.navigation__menuitem').setAttribute('aria-expanded', 'false');
+						
+					} else {
+						if (dropDownMenuLinks.length > 1) {
+							dropDownMenuLinksIndex = cycleIndexDown(dropDownMenuLinks.length - 1, dropDownMenuLinksIndex);
+							dropDownMenuLinks[dropDownMenuLinksIndex].focus();
+						} else {
+							dropdown.querySelector(".dropdown__menulink").focus();
+						}
+					}
+					
+					return;
+					
+				}
+				
+				if (insideOfNestedDropdown && insideOfDropdown) {
+					
+					event.preventDefault();
+					
+					if (nestedDropDownMenuLinks.length > 1) {
+						nestedDropDownMenuLinksIndex = cycleIndexDown(nestedDropDownMenuLinks.length - 1, nestedDropDownMenuLinksIndex);
+						nestedDropDownMenuLinks[nestedDropDownMenuLinksIndex].focus();
+					} else {
+						nestedDropDownMenuLinksIndex[0].focus();
+					}
+				}
+				
+				return;
+				
+			}
+			
+			if (event.key === 'ArrowLeft') {
+				if (insideOfMegaMenu) {
+					megaMenuListContainerIndex = cycleIndexDown(megaMenuListContainers.length - 1, megaMenuListContainerIndex);
+					findNextFocusableElement(
+						megaMenuListContainers[megaMenuListContainerIndex], 
+						document.activeElement
+					).focus();
+					
+					return;
+					
+				}
+				
+				// Go back to the dropdown if you press Left in the nested dropdown.
+				if (insideOfNestedDropdown && insideOfDropdown) {
+					
+					event.preventDefault();
+					
+					insideOfNestedDropdown = false;
+					
+					//remove the class that makes the dropdown show... the active class
+					document.activeElement.closest(".js-menuitem-with-nested-dropdown").classList.remove("dropdown__menuitem--active");
+					document.activeElement.closest(".js-menuitem-with-nested-dropdown").setAttribute('aria-expanded', 'false');
+					
+					// put the focus back on the dropdown...
+					if (dropDownMenuLinks.length > 1) {
+						dropDownMenuLinksIndex = cycleIndexDown(dropDownMenuLinks.length - 1, dropDownMenuLinksIndex);
+						dropDownMenuLinks[dropDownMenuLinksIndex].focus();
+					} else {
+						dropdown.querySelector(".dropdown__menulink").focus();
+					}
+					
+					return;
+				}
+			}
+			
+			if (event.key === 'ArrowRight') {
+				if (insideOfMegaMenu) {
+					megaMenuListContainerIndex = cycleIndexUp(megaMenuListContainers.length - 1, megaMenuListContainerIndex);
+					findNextFocusableElement(
+						megaMenuListContainers[megaMenuListContainerIndex], 
+						document.activeElement
+					).focus();
+					
+					return;
+					
+				}
+				
+				if (insideOfDropdown && !insideOfNestedDropdown) {
+					
+					if (document.activeElement.parentNode.classList.contains("js-menuitem-with-nested-dropdown")) {
+						event.preventDefault();
+						
+						document.activeElement.parentNode.classList.add("dropdown__menuitem--active");
+						
+						// This makes sure to properly set the --edge class to set it in the correct position.
+						// Using setTimeout to give the DOM a chance to pick up the element before calling the calculations in isElementPastEdge func.
+						(function (dropdown) {
+							setTimeout(function () {
+								if (theme.DOMHelpers.isElementPastEdge(dropdown)) {
+									dropdown.classList.add("dropdown--edge");
+								}
+							}, 0);
+						})(document.activeElement.parentNode.querySelector(".dropdown"))
+						
+						insideOfNestedDropdown = true;
+						
+						document.activeElement.parentNode.setAttribute('aria-expanded', 'true');
+						
+						nestedDropDownMenuLinks = document.activeElement.parentNode.querySelectorAll(".js-menu-link-inside-dropdown");
+						nestedDropDownMenuLinks[0].focus();
+					}
+					
+					return;
+					
+				}
+				
+				if (insideOfNestedDropdown && insideOfDropdown) {
+					event.preventDefault();
+					insideOfNestedDropdown = false;
+					
+					//remove the class that makes the dropdown show... the active class
+					document.activeElement.closest(".js-menuitem-with-nested-dropdown").classList.remove("dropdown__menuitem--active");
+					document.activeElement.closest(".js-menuitem-with-nested-dropdown").setAttribute('aria-expanded', 'false');
+					
+					// put the focus back on the dropdown...
+					if (dropDownMenuLinks.length > 1) {
+						dropDownMenuLinksIndex = cycleIndexDown(dropDownMenuLinks.length - 1, dropDownMenuLinksIndex);
+						dropDownMenuLinks[dropDownMenuLinksIndex].focus();
+					} else {
+						dropdown.querySelector(".dropdown__menulink").focus();
+					}
+					
+					return;
+					
+				}
+				
 			}
 			
 		});
@@ -3114,7 +3421,6 @@ theme.a11yHelpers = (function () {
 	
 	return {
 		setUpAriaExpansion: setUpAriaExpansion,
-		focusOnElement: focusOnElement,
 		setUpAccessibleNavigationMenus: setUpAccessibleNavigationMenus
 	}
 	

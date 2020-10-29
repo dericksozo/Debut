@@ -63,11 +63,11 @@
       {% for sub_link in link.links %}
         {% if sub_link.links != blank %}
         <li role="none" class="dropdown__menuitem dropdown__menuitem--nested js-menuitem-with-nested-dropdown" aria-haspopup="true" aria-expanded="false">
-          <a class="dropdown__menulink js-aria-expand" role="menuitem" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+          <a class="dropdown__menulink js-aria-expand js-menu-link" role="menuitem" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
           <ul role="menu" class="dropdown dropdown--nested js-dropdown-nested">
             {% for sub_sub_link in sub_link.links %}
               <li class="dropdown__menuitem" role="none">
-                <a class="dropdown__menulink" role="menuitem" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+                <a class="dropdown__menulink js-menu-link-inside-dropdown" role="menuitem" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
               </li>
             {% endfor %}
           </ul>

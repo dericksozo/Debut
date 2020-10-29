@@ -11392,7 +11392,8 @@ section.user-login .secondary-button.create-customer {
 	display: none;
 }
 
-.dropdown__menuitem:hover > .dropdown--nested.dropdown {
+.dropdown__menuitem:hover > .dropdown--nested.dropdown,
+.dropdown__menuitem.dropdown__menuitem--active > .dropdown--nested.dropdown {
 	position: absolute;
 	left: 100%;
 	padding: 10px;
@@ -11402,7 +11403,8 @@ section.user-login .secondary-button.create-customer {
 	display: block;
 }
 
-.dropdown__menuitem:hover > .dropdown--nested.dropdown--edge.dropdown {
+.dropdown__menuitem:hover > .dropdown--nested.dropdown--edge.dropdown,
+.dropdown__menuitem.dropdown__menuitem--active > .dropdown--nested.dropdown--edge.dropdown {
 	left: initial;
 	right: calc(100% + 10px); /* 10px to make up for the padding. */
 }
