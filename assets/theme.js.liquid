@@ -46,11 +46,9 @@ window.themeInfo = {name: "Testament"};
   if(scrollDir=='up'){bottomView(i)}}}
   if(vartop<varscroll+topMargin){$('.stuckMenu').addClass('isStuck');$('.stuckMenu').next().closest('div').css({'margin-top':stickyHeight+stickyMarginB+currentMarginT+'px'},10);$('.stuckMenu').css("position","fixed");$('.isStuck').css({top:'0px'},10,function(){})};if(varscroll+topMargin<vartop){$('.stuckMenu').removeClass('isStuck');$('.stuckMenu').next().closest('div').css({'margin-top':currentMarginT+'px'},10);$('.stuckMenu').css("position","relative")}})})})
 })();
-
 (function vendorCookies(){
   !function(e){var n;if("function"==typeof define&&define.amd&&(define(e),n=!0),"object"==typeof exports&&(module.exports=e(),n=!0),!n){var t=window.Cookies,o=window.Cookies=e();o.noConflict=function(){return window.Cookies=t,o}}}(function(){function e(){for(var e=0,n={};e<arguments.length;e++){var t=arguments[e];for(var o in t)n[o]=t[o]}return n}function n(e){return e.replace(/(%[0-9A-Z]{2})+/g,decodeURIComponent)}return function t(o){function r(){}function i(n,t,i){if("undefined"!=typeof document){"number"==typeof(i=e({path:"/"},r.defaults,i)).expires&&(i.expires=new Date(1*new Date+864e5*i.expires)),i.expires=i.expires?i.expires.toUTCString():"";try{var c=JSON.stringify(t);/^[\{\[]/.test(c)&&(t=c)}catch(e){}t=o.write?o.write(t,n):encodeURIComponent(String(t)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent),n=encodeURIComponent(String(n)).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent).replace(/[\(\)]/g,escape);var f="";for(var u in i)i[u]&&(f+="; "+u,!0!==i[u]&&(f+="="+i[u].split(";")[0]));return document.cookie=n+"="+t+f}}function c(e,t){if("undefined"!=typeof document){for(var r={},i=document.cookie?document.cookie.split("; "):[],c=0;c<i.length;c++){var f=i[c].split("="),u=f.slice(1).join("=");t||'"'!==u.charAt(0)||(u=u.slice(1,-1));try{var a=n(f[0]);if(u=(o.read||o)(u,a)||n(u),t)try{u=JSON.parse(u)}catch(e){}if(r[a]=u,e===a)break}catch(e){}}return e?r[e]:r}}return r.set=i,r.get=function(e){return c(e,!1)},r.getJSON=function(e){return c(e,!0)},r.remove=function(n,t){i(n,"",e(t,{expires:-1}))},r.defaults={},r.withConverter=t,r}(function(){})});
 })();
-
 (function vendorModernizer() {
   /* Modernizr 2.8.2 (Custom Build) | MIT & BSD
    * Build: http://modernizr.com/download/#-fontface-csstransforms-csstransforms3d-touch-cssclasses-teststyles-testprop-testallprops-prefixes-domprefixes-cssclassprefix:supports!
@@ -103,383 +101,381 @@ window.themeInfo = {name: "Testament"};
 
   }( this, function factory( Flickity, utils ) {
 
-  // ---- Slide ---- //
+    // ---- Slide ---- //
 
-  var Slide = Flickity.Slide;
+    var Slide = Flickity.Slide;
 
-  var slideUpdateTarget = Slide.prototype.updateTarget;
-  Slide.prototype.updateTarget = function() {
-    slideUpdateTarget.apply( this, arguments );
-    if ( !this.parent.options.fade ) {
-      return;
-    }
-    // position cells at selected target
-    var slideTargetX = this.target - this.x;
-    var firstCellX = this.cells[0].x;
-    this.cells.forEach( function( cell ) {
-      var targetX = cell.x - firstCellX - slideTargetX;
-      cell.renderPosition( targetX );
-    });
-  };
-
-  Slide.prototype.setOpacity = function( alpha ) {
-    this.cells.forEach( function( cell ) {
-      cell.element.style.opacity = alpha;
-    });
-  };
-
-  // ---- Flickity ---- //
-
-  var proto = Flickity.prototype;
-
-  Flickity.createMethods.push('_createFade');
-
-  proto._createFade = function() {
-    this.fadeIndex = this.selectedIndex;
-    this.prevSelectedIndex = this.selectedIndex;
-    this.on( 'select', this.onSelectFade );
-    this.on( 'dragEnd', this.onDragEndFade );
-    this.on( 'settle', this.onSettleFade );
-    this.on( 'activate', this.onActivateFade );
-    this.on( 'deactivate', this.onDeactivateFade );
-  };
-
-  var updateSlides = proto.updateSlides;
-  proto.updateSlides = function() {
-    updateSlides.apply( this, arguments );
-    if ( !this.options.fade ) {
-      return;
-    }
-    // set initial opacity
-    this.slides.forEach( function( slide, i ) {
-      var alpha = i == this.selectedIndex ? 1 : 0;
-      slide.setOpacity( alpha );
-    }, this );
-  };
-
-  /* ---- events ---- */
-
-  proto.onSelectFade = function() {
-    // in case of resize, keep fadeIndex within current count
-    this.fadeIndex = Math.min( this.prevSelectedIndex, this.slides.length - 1 );
-    this.prevSelectedIndex = this.selectedIndex;
-  };
-
-  proto.onSettleFade = function() {
-    delete this.didDragEnd;
-    if ( !this.options.fade ) {
-      return;
-    }
-    // set full and 0 opacity on selected & faded slides
-    this.selectedSlide.setOpacity( 1 );
-    var fadedSlide = this.slides[ this.fadeIndex ];
-    if ( fadedSlide && this.fadeIndex != this.selectedIndex ) {
-      this.slides[ this.fadeIndex ].setOpacity( 0 );
-    }
-  };
-
-  proto.onDragEndFade = function() {
-    // set flag
-    this.didDragEnd = true;
-  };
-
-  proto.onActivateFade = function() {
-    if ( this.options.fade ) {
-      this.element.classList.add('is-fade');
-    }
-  };
-
-  proto.onDeactivateFade = function() {
-    if ( !this.options.fade ) {
-      return;
-    }
-    this.element.classList.remove('is-fade');
-    // reset opacity
-    this.slides.forEach( function( slide ) {
-      slide.setOpacity('');
-    });
-  };
-
-  /* ---- position & fading ---- */
-
-  var positionSlider = proto.positionSlider;
-  proto.positionSlider = function() {
-    if ( !this.options.fade ) {
-      positionSlider.apply( this, arguments );
-      return;
-    }
-
-    this.fadeSlides();
-    this.dispatchScrollEvent();
-  };
-
-  var positionSliderAtSelected = proto.positionSliderAtSelected;
-  proto.positionSliderAtSelected = function() {
-    if ( this.options.fade ) {
-      // position fade slider at origin
-      this.setTranslateX( 0 );
-    }
-    positionSliderAtSelected.apply( this, arguments );
-  };
-
-  proto.fadeSlides = function() {
-    if ( this.slides.length < 2 ) {
-      return;
-    }
-    // get slides to fade-in & fade-out
-    var indexes = this.getFadeIndexes();
-    var fadeSlideA = this.slides[ indexes.a ];
-    var fadeSlideB = this.slides[ indexes.b ];
-    var distance = this.wrapDifference( fadeSlideA.target, fadeSlideB.target );
-    var progress = this.wrapDifference( fadeSlideA.target, -this.x );
-    progress = progress / distance;
-
-    fadeSlideA.setOpacity( 1 - progress );
-    fadeSlideB.setOpacity( progress );
-
-    // hide previous slide
-    var fadeHideIndex = indexes.a;
-    if ( this.isDragging ) {
-      fadeHideIndex = progress > 0.5 ? indexes.a : indexes.b;
-    }
-    var isNewHideIndex = this.fadeHideIndex != undefined &&
-      this.fadeHideIndex != fadeHideIndex &&
-      this.fadeHideIndex != indexes.a &&
-      this.fadeHideIndex != indexes.b;
-    if ( isNewHideIndex ) {
-      // new fadeHideSlide set, hide previous
-      this.slides[ this.fadeHideIndex ].setOpacity( 0 );
-    }
-    this.fadeHideIndex = fadeHideIndex;
-  };
-
-  proto.getFadeIndexes = function() {
-    if ( !this.isDragging && !this.didDragEnd ) {
-      return {
-        a: this.fadeIndex,
-        b: this.selectedIndex,
-      };
-    }
-    if ( this.options.wrapAround ) {
-      return this.getFadeDragWrapIndexes();
-    } else {
-      return this.getFadeDragLimitIndexes();
-    }
-  };
-
-  proto.getFadeDragWrapIndexes = function() {
-    var distances = this.slides.map( function( slide, i ) {
-      return this.getSlideDistance( -this.x, i );
-    }, this );
-    var absDistances = distances.map( function( distance ) {
-      return Math.abs( distance );
-    });
-    var minDistance = Math.min.apply( Math, absDistances );
-    var closestIndex = absDistances.indexOf( minDistance );
-    var distance = distances[ closestIndex ];
-    var len = this.slides.length;
-
-    var delta = distance >= 0 ? 1 : -1;
-    return {
-      a: closestIndex,
-      b: utils.modulo( closestIndex + delta, len ),
-    };
-  };
-
-  proto.getFadeDragLimitIndexes = function() {
-    // calculate closest previous slide
-    var dragIndex = 0;
-    for ( var i=0; i < this.slides.length - 1; i++ ) {
-      var slide = this.slides[i];
-      if ( -this.x < slide.target ) {
-        break;
+    var slideUpdateTarget = Slide.prototype.updateTarget;
+    Slide.prototype.updateTarget = function() {
+      slideUpdateTarget.apply( this, arguments );
+      if ( !this.parent.options.fade ) {
+        return;
       }
-      dragIndex = i;
-    }
-    return {
-      a: dragIndex,
-      b: dragIndex + 1,
+      // position cells at selected target
+      var slideTargetX = this.target - this.x;
+      var firstCellX = this.cells[0].x;
+      this.cells.forEach( function( cell ) {
+        var targetX = cell.x - firstCellX - slideTargetX;
+        cell.renderPosition( targetX );
+      });
     };
-  };
 
-  proto.wrapDifference = function( a, b ) {
-    var diff = b - a;
+    Slide.prototype.setOpacity = function( alpha ) {
+      this.cells.forEach( function( cell ) {
+        cell.element.style.opacity = alpha;
+      });
+    };
 
-    if ( !this.options.wrapAround ) {
+    // ---- Flickity ---- //
+
+    var proto = Flickity.prototype;
+
+    Flickity.createMethods.push('_createFade');
+
+    proto._createFade = function() {
+      this.fadeIndex = this.selectedIndex;
+      this.prevSelectedIndex = this.selectedIndex;
+      this.on( 'select', this.onSelectFade );
+      this.on( 'dragEnd', this.onDragEndFade );
+      this.on( 'settle', this.onSettleFade );
+      this.on( 'activate', this.onActivateFade );
+      this.on( 'deactivate', this.onDeactivateFade );
+    };
+
+    var updateSlides = proto.updateSlides;
+    proto.updateSlides = function() {
+      updateSlides.apply( this, arguments );
+      if ( !this.options.fade ) {
+        return;
+      }
+      // set initial opacity
+      this.slides.forEach( function( slide, i ) {
+        var alpha = i == this.selectedIndex ? 1 : 0;
+        slide.setOpacity( alpha );
+      }, this );
+    };
+
+    /* ---- events ---- */
+
+    proto.onSelectFade = function() {
+      // in case of resize, keep fadeIndex within current count
+      this.fadeIndex = Math.min( this.prevSelectedIndex, this.slides.length - 1 );
+      this.prevSelectedIndex = this.selectedIndex;
+    };
+
+    proto.onSettleFade = function() {
+      delete this.didDragEnd;
+      if ( !this.options.fade ) {
+        return;
+      }
+      // set full and 0 opacity on selected & faded slides
+      this.selectedSlide.setOpacity( 1 );
+      var fadedSlide = this.slides[ this.fadeIndex ];
+      if ( fadedSlide && this.fadeIndex != this.selectedIndex ) {
+        this.slides[ this.fadeIndex ].setOpacity( 0 );
+      }
+    };
+
+    proto.onDragEndFade = function() {
+      // set flag
+      this.didDragEnd = true;
+    };
+
+    proto.onActivateFade = function() {
+      if ( this.options.fade ) {
+        this.element.classList.add('is-fade');
+      }
+    };
+
+    proto.onDeactivateFade = function() {
+      if ( !this.options.fade ) {
+        return;
+      }
+      this.element.classList.remove('is-fade');
+      // reset opacity
+      this.slides.forEach( function( slide ) {
+        slide.setOpacity('');
+      });
+    };
+
+    /* ---- position & fading ---- */
+
+    var positionSlider = proto.positionSlider;
+    proto.positionSlider = function() {
+      if ( !this.options.fade ) {
+        positionSlider.apply( this, arguments );
+        return;
+      }
+
+      this.fadeSlides();
+      this.dispatchScrollEvent();
+    };
+
+    var positionSliderAtSelected = proto.positionSliderAtSelected;
+    proto.positionSliderAtSelected = function() {
+      if ( this.options.fade ) {
+        // position fade slider at origin
+        this.setTranslateX( 0 );
+      }
+      positionSliderAtSelected.apply( this, arguments );
+    };
+
+    proto.fadeSlides = function() {
+      if ( this.slides.length < 2 ) {
+        return;
+      }
+      // get slides to fade-in & fade-out
+      var indexes = this.getFadeIndexes();
+      var fadeSlideA = this.slides[ indexes.a ];
+      var fadeSlideB = this.slides[ indexes.b ];
+      var distance = this.wrapDifference( fadeSlideA.target, fadeSlideB.target );
+      var progress = this.wrapDifference( fadeSlideA.target, -this.x );
+      progress = progress / distance;
+
+      fadeSlideA.setOpacity( 1 - progress );
+      fadeSlideB.setOpacity( progress );
+
+      // hide previous slide
+      var fadeHideIndex = indexes.a;
+      if ( this.isDragging ) {
+        fadeHideIndex = progress > 0.5 ? indexes.a : indexes.b;
+      }
+      var isNewHideIndex = this.fadeHideIndex != undefined &&
+        this.fadeHideIndex != fadeHideIndex &&
+        this.fadeHideIndex != indexes.a &&
+        this.fadeHideIndex != indexes.b;
+      if ( isNewHideIndex ) {
+        // new fadeHideSlide set, hide previous
+        this.slides[ this.fadeHideIndex ].setOpacity( 0 );
+      }
+      this.fadeHideIndex = fadeHideIndex;
+    };
+
+    proto.getFadeIndexes = function() {
+      if ( !this.isDragging && !this.didDragEnd ) {
+        return {
+          a: this.fadeIndex,
+          b: this.selectedIndex,
+        };
+      }
+      if ( this.options.wrapAround ) {
+        return this.getFadeDragWrapIndexes();
+      } else {
+        return this.getFadeDragLimitIndexes();
+      }
+    };
+
+    proto.getFadeDragWrapIndexes = function() {
+      var distances = this.slides.map( function( slide, i ) {
+        return this.getSlideDistance( -this.x, i );
+      }, this );
+      var absDistances = distances.map( function( distance ) {
+        return Math.abs( distance );
+      });
+      var minDistance = Math.min.apply( Math, absDistances );
+      var closestIndex = absDistances.indexOf( minDistance );
+      var distance = distances[ closestIndex ];
+      var len = this.slides.length;
+
+      var delta = distance >= 0 ? 1 : -1;
+      return {
+        a: closestIndex,
+        b: utils.modulo( closestIndex + delta, len ),
+      };
+    };
+
+    proto.getFadeDragLimitIndexes = function() {
+      // calculate closest previous slide
+      var dragIndex = 0;
+      for ( var i=0; i < this.slides.length - 1; i++ ) {
+        var slide = this.slides[i];
+        if ( -this.x < slide.target ) {
+          break;
+        }
+        dragIndex = i;
+      }
+      return {
+        a: dragIndex,
+        b: dragIndex + 1,
+      };
+    };
+
+    proto.wrapDifference = function( a, b ) {
+      var diff = b - a;
+
+      if ( !this.options.wrapAround ) {
+        return diff;
+      }
+
+      var diffPlus = diff + this.slideableWidth;
+      var diffMinus = diff - this.slideableWidth;
+      if ( Math.abs( diffPlus ) < Math.abs( diff ) ) {
+        diff = diffPlus;
+      }
+      if ( Math.abs( diffMinus ) < Math.abs( diff ) ) {
+        diff = diffMinus;
+      }
       return diff;
-    }
+    };
 
-    var diffPlus = diff + this.slideableWidth;
-    var diffMinus = diff - this.slideableWidth;
-    if ( Math.abs( diffPlus ) < Math.abs( diff ) ) {
-      diff = diffPlus;
-    }
-    if ( Math.abs( diffMinus ) < Math.abs( diff ) ) {
-      diff = diffMinus;
-    }
-    return diff;
-  };
+    // ---- wrapAround ---- //
 
-  // ---- wrapAround ---- //
+    var _getWrapShiftCells = proto._getWrapShiftCells;
+    proto._getWrapShiftCells = function() {
+      if ( !this.options.fade ) {
+        _getWrapShiftCells.apply( this, arguments );
+      }
+    };
 
-  var _getWrapShiftCells = proto._getWrapShiftCells;
-  proto._getWrapShiftCells = function() {
-    if ( !this.options.fade ) {
-      _getWrapShiftCells.apply( this, arguments );
-    }
-  };
+    var shiftWrapCells = proto.shiftWrapCells;
+    proto.shiftWrapCells = function() {
+      if ( !this.options.fade ) {
+        shiftWrapCells.apply( this, arguments );
+      }
+    };
 
-  var shiftWrapCells = proto.shiftWrapCells;
-  proto.shiftWrapCells = function() {
-    if ( !this.options.fade ) {
-      shiftWrapCells.apply( this, arguments );
-    }
-  };
-
-  return Flickity;
+    return Flickity;
 
   }));
 
   /*!
- * Flickity sync v2.0.0
- * enable sync for Flickity
- */
-
-/*jshint browser: true, undef: true, unused: true, strict: true*/
-
-( function( window, factory ) {
-  // universal module definition
-  /*jshint strict: false */ /*globals define, module, require */
-  if ( typeof define == 'function' && define.amd ) {
-    // AMD
-    define( [
-      'flickity/js/index',
-      'fizzy-ui-utils/utils'
-    ], factory );
-  } else if ( typeof module == 'object' && module.exports ) {
-    // CommonJS
-    module.exports = factory(
-      require('flickity'),
-      require('fizzy-ui-utils')
-    );
-  } else {
-    // browser global
-    window.Flickity = factory(
-      window.Flickity,
-      window.fizzyUIUtils
-    );
-  }
-
-}( window, function factory( Flickity, utils ) {
-
-'use strict';
-
-  // -------------------------- sync prototype -------------------------- //
-
-  // Flickity.defaults.sync = false;
-
-  Flickity.createMethods.push('_createSync');
-
-  Flickity.prototype._createSync = function() {
-    this.syncers = {};
-    var syncOption = this.options.sync;
-
-    this.on( 'destroy', this.unsyncAll );
-
-    if ( !syncOption ) {
-      return;
-    }
-    // HACK do async, give time for other flickity to be initalized
-    var _this = this;
-    setTimeout( function initSyncCompanion() {
-      _this.sync( syncOption );
-    });
-  };
-
-  /**
-   * sync
-   * @param {Element} or {String} elem
+   * Flickity sync v2.0.0
+   * enable sync for Flickity
    */
-  Flickity.prototype.sync = function( elem ) {
-    elem = utils.getQueryElement( elem );
-    var companion = Flickity.data( elem );
-    if ( !companion ) {
-      return;
-    }
-    // two hearts, that beat as one
-    this._syncCompanion( companion );
-    companion._syncCompanion( this );
-  };
 
-  /**
-   * @param {Flickity} companion
-   */
-  Flickity.prototype._syncCompanion = function( companion ) {
-    var _this = this;
-    function syncListener() {
-      var index = _this.selectedIndex;
-      // do not select if already selected, prevent infinite loop
-      if ( companion.selectedIndex != index ) {
-        companion.select( index );
+ /*jshint browser: true, undef: true, unused: true, strict: true*/
+  ( function( window, factory ) {
+    // universal module definition
+    /*jshint strict: false */ /*globals define, module, require */
+    if ( typeof define == 'function' && define.amd ) {
+      // AMD
+      define( [
+        'flickity/js/index',
+        'fizzy-ui-utils/utils'
+      ], factory );
+    } else if ( typeof module == 'object' && module.exports ) {
+      // CommonJS
+      module.exports = factory(
+        require('flickity'),
+        require('fizzy-ui-utils')
+      );
+    } else {
+      // browser global
+      window.Flickity = factory(
+        window.Flickity,
+        window.fizzyUIUtils
+      );
+    }
+
+  }( window, function factory( Flickity, utils ) {
+
+  'use strict';
+
+    // -------------------------- sync prototype -------------------------- //
+
+    // Flickity.defaults.sync = false;
+
+    Flickity.createMethods.push('_createSync');
+
+    Flickity.prototype._createSync = function() {
+      this.syncers = {};
+      var syncOption = this.options.sync;
+
+      this.on( 'destroy', this.unsyncAll );
+
+      if ( !syncOption ) {
+        return;
       }
-    }
-    this.on( 'select', syncListener );
-    // keep track of all synced flickities
-    // hold on to listener to unsync
-    this.syncers[ companion.guid ] = {
-      flickity: companion,
-      listener: syncListener
+      // HACK do async, give time for other flickity to be initalized
+      var _this = this;
+      setTimeout( function initSyncCompanion() {
+        _this.sync( syncOption );
+      });
     };
-  };
 
-  /**
-   * unsync
-   * @param {Element} or {String} elem
-   */
-  Flickity.prototype.unsync = function( elem ) {
-    elem = utils.getQueryElement( elem );
-    var companion = Flickity.data( elem );
-    this._unsync( companion );
-  };
+    /**
+     * sync
+     * @param {Element} or {String} elem
+     */
+    Flickity.prototype.sync = function( elem ) {
+      elem = utils.getQueryElement( elem );
+      var companion = Flickity.data( elem );
+      if ( !companion ) {
+        return;
+      }
+      // two hearts, that beat as one
+      this._syncCompanion( companion );
+      companion._syncCompanion( this );
+    };
 
-  /**
-   * @param {Flickity} companion
-   */
-  Flickity.prototype._unsync = function( companion ) {
-    if ( !companion ) {
-      return;
-    }
-    // I love you but I've chosen darkness
-    this._unsyncCompanion( companion );
-    companion._unsyncCompanion( this );
-  };
+    /**
+     * @param {Flickity} companion
+     */
+    Flickity.prototype._syncCompanion = function( companion ) {
+      var _this = this;
+      function syncListener() {
+        var index = _this.selectedIndex;
+        // do not select if already selected, prevent infinite loop
+        if ( companion.selectedIndex != index ) {
+          companion.select( index );
+        }
+      }
+      this.on( 'select', syncListener );
+      // keep track of all synced flickities
+      // hold on to listener to unsync
+      this.syncers[ companion.guid ] = {
+        flickity: companion,
+        listener: syncListener
+      };
+    };
 
-  /**
-   * @param {Flickity} companion
-   */
-  Flickity.prototype._unsyncCompanion = function( companion ) {
-    var id = companion.guid;
-    var syncer = this.syncers[ id ];
-    this.off( 'select', syncer.listener );
-    delete this.syncers[ id ];
-  };
+    /**
+     * unsync
+     * @param {Element} or {String} elem
+     */
+    Flickity.prototype.unsync = function( elem ) {
+      elem = utils.getQueryElement( elem );
+      var companion = Flickity.data( elem );
+      this._unsync( companion );
+    };
 
-  Flickity.prototype.unsyncAll = function() {
-    for ( var id in this.syncers ) {
+    /**
+     * @param {Flickity} companion
+     */
+    Flickity.prototype._unsync = function( companion ) {
+      if ( !companion ) {
+        return;
+      }
+      // I love you but I've chosen darkness
+      this._unsyncCompanion( companion );
+      companion._unsyncCompanion( this );
+    };
+
+    /**
+     * @param {Flickity} companion
+     */
+    Flickity.prototype._unsyncCompanion = function( companion ) {
+      var id = companion.guid;
       var syncer = this.syncers[ id ];
-      this._unsync( syncer.flickity );
-    }
-  };
+      this.off( 'select', syncer.listener );
+      delete this.syncers[ id ];
+    };
 
-  // -----  ----- //
+    Flickity.prototype.unsyncAll = function() {
+      for ( var id in this.syncers ) {
+        var syncer = this.syncers[ id ];
+        this._unsync( syncer.flickity );
+      }
+    };
 
-  return Flickity;
+    // -----  ----- //
 
-  }));
+    return Flickity;
+
+    }));
   !function(e,t){"function"==typeof define&&define.amd?define(["flickity/js/index","fizzy-ui-utils/utils"],t):"object"==typeof module&&module.exports?module.exports=t(require("flickity"),require("fizzy-ui-utils")):t(e.Flickity,e.fizzyUIUtils)}(this,function(e,h){var t=e.Slide,a=t.prototype.updateTarget;t.prototype.updateTarget=function(){var i,s;a.apply(this,arguments),this.parent.options.fade&&(i=this.target-this.x,s=this.cells[0].x,this.cells.forEach(function(e){var t=e.x-s-i;e.renderPosition(t)}))},t.prototype.setOpacity=function(t){this.cells.forEach(function(e){e.element.style.opacity=t})};var i=e.prototype;e.createMethods.push("_createFade"),i._createFade=function(){this.fadeIndex=this.selectedIndex,this.prevSelectedIndex=this.selectedIndex,this.on("select",this.onSelectFade),this.on("dragEnd",this.onDragEndFade),this.on("settle",this.onSettleFade),this.on("activate",this.onActivateFade),this.on("deactivate",this.onDeactivateFade)};var s=i.updateSlides;i.updateSlides=function(){s.apply(this,arguments),this.options.fade&&this.slides.forEach(function(e,t){var i=t==this.selectedIndex?1:0;e.setOpacity(i)},this)},i.onSelectFade=function(){this.fadeIndex=Math.min(this.prevSelectedIndex,this.slides.length-1),this.prevSelectedIndex=this.selectedIndex},i.onSettleFade=function(){delete this.didDragEnd,this.options.fade&&(this.selectedSlide.setOpacity(1),this.slides[this.fadeIndex]&&this.fadeIndex!=this.selectedIndex&&this.slides[this.fadeIndex].setOpacity(0))},i.onDragEndFade=function(){this.didDragEnd=!0},i.onActivateFade=function(){this.options.fade&&this.element.classList.add("is-fade")},i.onDeactivateFade=function(){this.options.fade&&(this.element.classList.remove("is-fade"),this.slides.forEach(function(e){e.setOpacity("")}))};var n=i.positionSlider;i.positionSlider=function(){this.options.fade?(this.fadeSlides(),this.dispatchScrollEvent()):n.apply(this,arguments)};var d=i.positionSliderAtSelected;i.positionSliderAtSelected=function(){this.options.fade&&this.setTranslateX(0),d.apply(this,arguments)},i.fadeSlides=function(){var e,t,i,s,a,n;this.slides.length<2||(e=this.getFadeIndexes(),t=this.slides[e.a],i=this.slides[e.b],s=this.wrapDifference(t.target,i.target),a=this.wrapDifference(t.target,-this.x),a/=s,t.setOpacity(1-a),i.setOpacity(a),n=e.a,this.isDragging&&(n=.5<a?e.a:e.b),null!=this.fadeHideIndex&&this.fadeHideIndex!=n&&this.fadeHideIndex!=e.a&&this.fadeHideIndex!=e.b&&this.slides[this.fadeHideIndex].setOpacity(0),this.fadeHideIndex=n)},i.getFadeIndexes=function(){return this.isDragging||this.didDragEnd?this.options.wrapAround?this.getFadeDragWrapIndexes():this.getFadeDragLimitIndexes():{a:this.fadeIndex,b:this.selectedIndex}},i.getFadeDragWrapIndexes=function(){var e=this.slides.map(function(e,t){return this.getSlideDistance(-this.x,t)},this),t=e.map(function(e){return Math.abs(e)}),i=Math.min.apply(Math,t),s=t.indexOf(i),a=e[s],n=this.slides.length,d=0<=a?1:-1;return{a:s,b:h.modulo(s+d,n)}},i.getFadeDragLimitIndexes=function(){for(var e=0,t=0;t<this.slides.length-1;t++){var i=this.slides[t];if(-this.x<i.target)break;e=t}return{a:e,b:e+1}},i.wrapDifference=function(e,t){var i=t-e;if(!this.options.wrapAround)return i;var s=i+this.slideableWidth,a=i-this.slideableWidth;return Math.abs(s)<Math.abs(i)&&(i=s),Math.abs(a)<Math.abs(i)&&(i=a),i};var o=i._getWrapShiftCells;i._getWrapShiftCells=function(){this.options.fade||o.apply(this,arguments)};var r=i.shiftWrapCells;return i.shiftWrapCells=function(){this.options.fade||r.apply(this,arguments)},e});
 
-  })();
-
+})();
 (function vendorWow() {
   /* wow js */
   (function(){var t,e,n,i,o,r=function(t,e){return function(){return t.apply(e,arguments)}},s=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};e=function(){function t(){}return t.prototype.extend=function(t,e){var n,i;for(n in e)i=e[n],null==t[n]&&(t[n]=i);return t},t.prototype.isMobile=function(t){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(t)},t.prototype.addEvent=function(t,e,n){return null!=t.addEventListener?t.addEventListener(e,n,!1):null!=t.attachEvent?t.attachEvent("on"+e,n):t[e]=n},t.prototype.removeEvent=function(t,e,n){return null!=t.removeEventListener?t.removeEventListener(e,n,!1):null!=t.detachEvent?t.detachEvent("on"+e,n):delete t[e]},t.prototype.innerHeight=function(){return"innerHeight"in window?window.innerHeight:document.documentElement.clientHeight},t}(),n=this.WeakMap||this.MozWeakMap||(n=function(){function t(){this.keys=[],this.values=[]}return t.prototype.get=function(t){var e,n,i,o,r;for(r=this.keys,e=i=0,o=r.length;o>i;e=++i)if(n=r[e],n===t)return this.values[e]},t.prototype.set=function(t,e){var n,i,o,r,s;for(s=this.keys,n=o=0,r=s.length;r>o;n=++o)if(i=s[n],i===t)return void(this.values[n]=e);return this.keys.push(t),this.values.push(e)},t}()),t=this.MutationObserver||this.WebkitMutationObserver||this.MozMutationObserver||(t=function(){function t(){"undefined"!=typeof console&&null!==console&&console.warn("MutationObserver is not supported by your browser."),"undefined"!=typeof console&&null!==console&&console.warn("WOW.js cannot detect dom mutations, please call .sync() after loading new content.")}return t.notSupported=!0,t.prototype.observe=function(){},t}()),i=this.getComputedStyle||function(t){return this.getPropertyValue=function(e){var n;return"float"===e&&(e="styleFloat"),o.test(e)&&e.replace(o,function(t,e){return e.toUpperCase()}),(null!=(n=t.currentStyle)?n[e]:void 0)||null},this},o=/(\-([a-z]){1})/g,this.WOW=function(){function o(t){null==t&&(t={}),this.scrollCallback=r(this.scrollCallback,this),this.scrollHandler=r(this.scrollHandler,this),this.start=r(this.start,this),this.scrolled=!0,this.config=this.util().extend(t,this.defaults),this.animationNameCache=new n}return o.prototype.defaults={boxClass:"wow",animateClass:"animated",offset:0,mobile:!0,live:!0,callback:null},o.prototype.init=function(){var t;return this.element=window.document.documentElement,"interactive"===(t=document.readyState)||"complete"===t?this.start():this.util().addEvent(document,"DOMContentLoaded",this.start),this.finished=[]},o.prototype.start=function(){var e,n,i,o;if(this.stopped=!1,this.boxes=function(){var t,n,i,o;for(i=this.element.querySelectorAll("."+this.config.boxClass),o=[],t=0,n=i.length;n>t;t++)e=i[t],o.push(e);return o}.call(this),this.all=function(){var t,n,i,o;for(i=this.boxes,o=[],t=0,n=i.length;n>t;t++)e=i[t],o.push(e);return o}.call(this),this.boxes.length)if(this.disabled())this.resetStyle();else for(o=this.boxes,n=0,i=o.length;i>n;n++)e=o[n],this.applyStyle(e,!0);return this.disabled()||(this.util().addEvent(window,"scroll",this.scrollHandler),this.util().addEvent(window,"resize",this.scrollHandler),this.interval=setInterval(this.scrollCallback,50)),this.config.live?new t(function(t){return function(e){var n,i,o,r,s;for(s=[],o=0,r=e.length;r>o;o++)i=e[o],s.push(function(){var t,e,o,r;for(o=i.addedNodes||[],r=[],t=0,e=o.length;e>t;t++)n=o[t],r.push(this.doSync(n));return r}.call(t));return s}}(this)).observe(document.body,{childList:!0,subtree:!0}):void 0},o.prototype.stop=function(){return this.stopped=!0,this.util().removeEvent(window,"scroll",this.scrollHandler),this.util().removeEvent(window,"resize",this.scrollHandler),null!=this.interval?clearInterval(this.interval):void 0},o.prototype.sync=function(){return t.notSupported?this.doSync(this.element):void 0},o.prototype.doSync=function(t){var e,n,i,o,r;if(null==t&&(t=this.element),1===t.nodeType){for(t=t.parentNode||t,o=t.querySelectorAll("."+this.config.boxClass),r=[],n=0,i=o.length;i>n;n++)e=o[n],s.call(this.all,e)<0?(this.boxes.push(e),this.all.push(e),this.stopped||this.disabled()?this.resetStyle():this.applyStyle(e,!0),r.push(this.scrolled=!0)):r.push(void 0);return r}},o.prototype.show=function(t){return this.applyStyle(t),t.className=""+t.className+" "+this.config.animateClass,null!=this.config.callback?this.config.callback(t):void 0},o.prototype.applyStyle=function(t,e){var n,i,o;return i=t.getAttribute("data-wow-duration"),n=t.getAttribute("data-wow-delay"),o=t.getAttribute("data-wow-iteration"),this.animate(function(r){return function(){return r.customStyle(t,e,i,n,o)}}(this))},o.prototype.animate=function(){return"requestAnimationFrame"in window?function(t){return window.requestAnimationFrame(t)}:function(t){return t()}}(),o.prototype.resetStyle=function(){var t,e,n,i,o;for(i=this.boxes,o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(t.style.visibility="visible");return o},o.prototype.customStyle=function(t,e,n,i,o){return e&&this.cacheAnimationName(t),t.style.visibility=e?"hidden":"visible",n&&this.vendorSet(t.style,{animationDuration:n}),i&&this.vendorSet(t.style,{animationDelay:i}),o&&this.vendorSet(t.style,{animationIterationCount:o}),this.vendorSet(t.style,{animationName:e?"none":this.cachedAnimationName(t)}),t},o.prototype.vendors=["moz","webkit"],o.prototype.vendorSet=function(t,e){var n,i,o,r;r=[];for(n in e)i=e[n],t[""+n]=i,r.push(function(){var e,r,s,l;for(s=this.vendors,l=[],e=0,r=s.length;r>e;e++)o=s[e],l.push(t[""+o+n.charAt(0).toUpperCase()+n.substr(1)]=i);return l}.call(this));return r},o.prototype.vendorCSS=function(t,e){var n,o,r,s,l,a;for(o=i(t),n=o.getPropertyCSSValue(e),a=this.vendors,s=0,l=a.length;l>s;s++)r=a[s],n=n||o.getPropertyCSSValue("-"+r+"-"+e);return n},o.prototype.animationName=function(t){var e;try{e=this.vendorCSS(t,"animation-name").cssText}catch(n){e=i(t).getPropertyValue("animation-name")}return"none"===e?"":e},o.prototype.cacheAnimationName=function(t){return this.animationNameCache.set(t,this.animationName(t))},o.prototype.cachedAnimationName=function(t){return this.animationNameCache.get(t)},o.prototype.scrollHandler=function(){return this.scrolled=!0},o.prototype.scrollCallback=function(){var t;return!this.scrolled||(this.scrolled=!1,this.boxes=function(){var e,n,i,o;for(i=this.boxes,o=[],e=0,n=i.length;n>e;e++)t=i[e],t&&(this.isVisible(t)?this.show(t):o.push(t));return o}.call(this),this.boxes.length||this.config.live)?void 0:this.stop()},o.prototype.offsetTop=function(t){for(var e;void 0===t.offsetTop;)t=t.parentNode;for(e=t.offsetTop;t=t.offsetParent;)e+=t.offsetTop;return e},o.prototype.isVisible=function(t){var e,n,i,o,r;return n=t.getAttribute("data-wow-offset")||this.config.offset,r=window.pageYOffset,o=r+Math.min(this.element.clientHeight,this.util().innerHeight())-n,i=this.offsetTop(t),e=i+t.clientHeight,o>=i&&e>=r},o.prototype.util=function(){return null!=this._util?this._util:this._util=new e},o.prototype.disabled=function(){return!this.config.mobile&&this.util().isMobile(navigator.userAgent)},o}()}).call(this);
@@ -1729,6 +1725,7 @@ window.themeInfo = {name: "Testament"};
 
 {% endif %}
 
+// custom We Are Underground plugins
 // custom We Are Underground plugins
 window.WAU = window.WAU || {};
 
