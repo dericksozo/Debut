@@ -2,7 +2,7 @@
     "name": "theme_info",
     "theme_name": "Testament",
     "theme_author": "Underground",
-    "theme_version": "7.3.2",
+    "theme_version": "7.4.0",
     "theme_documentation_url": "https:\/\/\/\/www.weareunderground.com\/products\/testament",
     "theme_support_url": "http:\/\/support.undergroundmedia.co.uk\/"
   },
@@ -27,7 +27,7 @@
       "default": "#ffffff"
     }, {
       "type": "color",
-      "id": "content_wrapper_background",
+      "id": "background",
       "label": "Content area background",
       "default": "#ffffff"
     }, {

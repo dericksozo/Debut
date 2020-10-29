@@ -7,15 +7,15 @@
   <a class="navigation__menulink js-menu-link js-open-dropdown-on-key" href="{{ link.url }}">{{ link.title }}</a>
   <ul class="megamenu row">
     {% if block.settings.nav_image != blank %}
-      {%- assign image_size = '300x' -%}
-      <span class="desktop-3 tablet-hide mm-image">
-        <a href="{{ block.settings.link }}">
-          {% render 'basic-responsive-image', type: block.settings.nav_image %}
-          <noscript>
-            <img src="{{ block.settings.nav_image | img_url: '800x' }}" class="navigation-image">
-          </noscript>
-        </a>
-      </span>
+    {%- assign image_size = '300x' -%}
+    <span class="desktop-3 tablet-hide mm-image">
+      <a href="{{ block.settings.link }}">
+        {% render 'basic-responsive-image', type: block.settings.nav_image, data_widths: '[180, 360, 540]' %}
+        <noscript>
+          <img src="{{ block.settings.nav_image | img_url: '800x' }}" class="navigation-image">
+        </noscript>
+      </a>
+    </span>
     {% endif %}
     <span class="{% if block.settings.nav_image != blank %}desktop-9{% else %}desktop-12{% endif %} tablet-6">
       {% case link.links.size %}

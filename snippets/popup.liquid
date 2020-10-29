@@ -41,7 +41,7 @@
   <div id="mailing-popup">
     <div id="subscribe_popup">
       {% if settings.email_image != blank %}
-        {% render 'basic-responsive-image', type: settings.email_image %}
+        {% render 'basic-responsive-image', type: settings.email_image, data_widths: '[180, 360, 540, 720, 900]' %}
         <noscript>
           <img src="{{ settings.email_image | img_url: '800x' }}" class="popup-image">
         </noscript>

@@ -21,12 +21,12 @@
 
   <!-- CSS
 ================================================== -->
-  
+
   <!-- CSS Liquid Variables Helpers -->
   {% render 'css-variables' %}
   {{ 'stylesheet.css' | asset_url | stylesheet_tag }}
   {{ 'queries.css' | asset_url | stylesheet_tag }}
-  
+
   <!-- JS
 ================================================== -->
 
@@ -55,51 +55,58 @@
     new WOW().init();
   </script>
 </head>
-<body class="gridlock {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template | handleize }}{% endif %}">
+</head>
+<body class="gridlock {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template | handleize }}{% endif %} js-slideout-toggle-wrapper">
+  <div class="js-slideout-overlay site-overlay"></div>
 
-<main id="panel" role="main">
-  <div class="page-wrap">
-    {% section 'header' %}
-    {% if template contains 'collection' %}
-      {% if collection.description contains '[banner]' %}
-        {% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
-        {% capture alt %}{{ collection.title }}{% endcapture %}
-        <div class="collection-banner">
-          {% assign img_url = banner | file_img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+  <aside class="slideout slideout__drawer-left" data-wau-slideout="mobile-navigation" id="slideout-mobile-navigation">
+    {% section 'mobile-navigation' %}
+  </aside>
 
-          <img class="lazyload lazyload-fade"
-            src="{{ banner | file_url }} "
-            data-src="{{ img_url }}"
-            data-sizes="auto"
-            alt="{{ alt }}">
-        </div>
+  <main class="site-wrap" role="main">
+    <div class="page-wrap">
+      {% section 'header' %}
+      {% if template contains 'collection' %}
+        {% if collection.description contains '[banner]' %}
+          {% capture banner %}{{ collection.handle }}.jpg{% endcapture %}
+          {% capture alt %}{{ collection.title }}{% endcapture %}
+          <div class="collection-banner">
+            {% assign img_url = banner | file_img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+            <img class="lazyload lazyload-fade"
+              src="{{ banner | file_url }} "
+              data-src="{{ img_url }}"
+              data-sizes="auto"
+              alt="{{ alt }}">
+          </div>
+        {% endif %}
       {% endif %}
-    {% endif %}
 
-    <div class="content-wrapper">
-      {% if template == 'index' or template contains 'blog' or template contains 'list-collections' or template.suffix contains 'custom' %}
-        {{ content_for_layout }}
-      {% else %}
-        <div id="content" class="row">
-          {% if template != 'index' %}
-            {% if settings.breadcrumb %}
-              {% render 'breadcrumb' %}
-            {% endif %}
-          {% endif %}
+      <div class="content-wrapper">
+        {% if template == 'index' or template contains 'blog' or template contains 'list-collections' or template.suffix contains 'custom' %}
           {{ content_for_layout }}
-        </div>
-      {% endif %}
+        {% else %}
+          <div id="content" class="row">
+            {% if template != 'index' %}
+              {% if settings.breadcrumb %}
+                {% render 'breadcrumb' %}
+              {% endif %}
+            {% endif %}
+            {{ content_for_layout }}
+          </div>
+        {% endif %}
+      </div>
     </div>
-  </div>
-  {% section 'footer' %}
-  {% if settings.popup %}
-    {% render 'popup' %}
-  {% endif %}
-</main>
-{% section 'mobile-navigation' %}
+    {% section 'footer' %}
+    {% if settings.popup %}
+      {% render 'popup' %}
+    {% endif %}
+  </main>
 
   <a href="#" class="scrollup"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
+
   <div class="fancybox-wrapper"></div>
+
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
