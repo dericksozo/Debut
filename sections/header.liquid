@@ -142,7 +142,7 @@
                 {%- endform -%}
               </li>
             {%- endif -%}
-            <li><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
+            <li class="my-cart-link-container"><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
         {% if section.settings.full_width_header %}
