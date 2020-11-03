@@ -175,6 +175,13 @@
     <div class="clear header-spacer"></div>
   </div>
   <style>
+	
+	  {% unless section.settings.full_width_header %}
+			div#upper-content {
+				width: 100%;
+			}
+		{% endunless %}
+		
     {% if section.settings.logo != blank %}
     @media screen and ( min-width: 740px ) {
       #logo img { max-width: {{ section.settings.logo_max_width }}px; }
@@ -311,17 +318,20 @@
       ul#cart li a,ul#cart li i {
         color: {{ settings.mobile_header_icons }};
       }
-    }
-    @media screen and (max-width: 740px) {
-      header {
-        line-height: 40px;
-      }
-      header {
+			header {
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 5;
       }
+    }
+		
+    @media screen and (max-width: 740px) {
+		
+      header {
+        line-height: 40px;
+      }
+			
       .header-wrapper {
         {% if section.settings.show_announcement_text %}
         margin-top: 80px;
