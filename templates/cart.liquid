@@ -34,6 +34,7 @@
             <div class="cart-title">
               {% if settings.vendor %}<p>{{ item.vendor }}</p>{% endif %}
               <h4>{{ item.product.title }}</h4>
+
               {%- unless item.variant.title contains 'Default' -%}
                 <p>
                   {% for option in item.product.options %}
@@ -42,6 +43,10 @@
                 </p>
               {%- endunless -%}
 
+              {% if item.selling_plan_allocation %}
+               <p>{{ item.selling_plan_allocation.selling_plan.name }}<p>
+              {% endif %}
+              
               {% assign property_size = item.properties | size %}
               {% if property_size > 0 %}
                 {% for p in item.properties %}
