@@ -3474,7 +3474,6 @@ theme.a11yHelpers = (function () {
 
 						activeMenuItems = document.querySelectorAll('.navigation__menuitem--active');
 						activeMenuItems.forEach(function (activeMenuItem) {
-							console.log("Removing the active class from the navigation menuitem");
 							activeMenuItem.classList.remove('navigation__menuitem--active');
 						});
 
@@ -5966,7 +5965,6 @@ theme.Header = (function() {
 
 		/* For Desktop-sized touch devices */
     if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/android/i))) {
-			console.log("Going to set up double tap to go...");
       $("nav #main-nav li.dropdown:has(ul)").doubleTapToGo();
       $("nav #main-nav .submenu li.has_sub_menu").doubleTapToGo();
     }
@@ -6048,15 +6046,12 @@ theme.mobileNav = (function() {
 
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
     onSelect: function() {
-			console.log("onSelect mobileNav");
 			WAU.Slideout._openByName("mobile-navigation");
     },
     onDeselect: function() {
-			console.log("onDeselect mobileNav");
 			WAU.Slideout._closeByName("mobile-navigation");
     },
     onBlockSelect: function() {
-			console.log("onBlockSelect mobileNav");
 			WAU.Slideout._openByName("mobile-navigation");
     }
   });

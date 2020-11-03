@@ -21,11 +21,16 @@
 
   <!-- CSS
 ================================================== -->
-
-  <!-- CSS Liquid Variables Helpers -->
-  {% render 'css-variables' %}
+  {%- assign main_font = settings.main_font -%}
+  {%- assign nav_font = settings.nav_font -%}
+  
   {{ 'stylesheet.css' | asset_url | stylesheet_tag }}
   {{ 'queries.css' | asset_url | stylesheet_tag }}
+  
+  <link rel="preload" as="font" href="{{ main_font | font_url }}" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="{{ nav_font | font_url }}" type="font/woff2" crossorigin>
+  
+  {% include 'css-variables' %}
 
   <!-- JS
 ================================================== -->
@@ -54,7 +59,6 @@
   <script type="text/javascript">
     new WOW().init();
   </script>
-</head>
 </head>
 <body class="gridlock {% if template contains 'product' %}product{% elsif template contains 'collection' %}collection{% else %}{{ template | handleize }}{% endif %} js-slideout-toggle-wrapper">
   <div class="js-slideout-overlay site-overlay"></div>

@@ -199,6 +199,10 @@
 		.navigation__menuitem {
 			line-height: {{ section.settings.nav_height }}px;
 		}
+		
+		.navigation--sticky.navigation + .header-spacer {
+		  margin-top: {{ section.settings.nav_height }}px;
+		}
 
 		.dropdown {
 			top: {{ section.settings.nav_height }}px;
