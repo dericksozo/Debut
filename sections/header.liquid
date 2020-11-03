@@ -175,13 +175,6 @@
     <div class="clear header-spacer"></div>
   </div>
   <style>
-	
-	  {% unless section.settings.full_width_header %}
-			div#upper-content {
-				width: 100%;
-			}
-		{% endunless %}
-		
     {% if section.settings.logo != blank %}
     @media screen and ( min-width: 740px ) {
       #logo img { max-width: {{ section.settings.logo_max_width }}px; }
@@ -309,9 +302,13 @@
         vertical-align: middle;
         max-width: 300px;
       }
-      div#upper-content {
-        width: 100%;
-      }
+			
+			{% unless section.settings.full_width_header %}
+      	div#upper-content {
+        	width: 100%;
+      	}
+			{% endunless %}
+			
       ul#cart li {
         padding: 0 15px;
       }
