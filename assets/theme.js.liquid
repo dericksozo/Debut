@@ -5920,7 +5920,7 @@ theme.Header = (function() {
 					navigation = document.querySelector(".js-navigation"),
 					menuItemsWithNestedDropdowns = document.querySelectorAll(".js-menuitem-with-nested-dropdown");
 
-		const amountToScroll = Math.abs(header.clientHeight - navigation.clientHeight); // Only calculate this number once on load and make sure it's positive.
+		const amountToScroll = Math.max(header.clientHeight, navigation.clientHeight) - Math.min(header.clientHeight, navigation.clientHeight); // Only calculate this number once on load and make sure it's positive.
 		const stickyClass = navigation.getAttribute('data-sticky-class');
 
 		var $container = this.$container = $(container);
