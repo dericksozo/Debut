@@ -3636,7 +3636,8 @@ theme.a11yHelpers = (function () {
 
 	return {
 		setUpAriaExpansion: setUpAriaExpansion,
-		setUpAccessibleNavigationMenus: setUpAccessibleNavigationMenus
+		setUpAccessibleNavigationMenus: setUpAccessibleNavigationMenus,
+		focusOnElement: focusOnElement
 	}
 
 }());
@@ -6007,7 +6008,9 @@ theme.Header = (function() {
       }
     }
   });
+	
   return Header;
+	
 })();
 
 /*======================================================
