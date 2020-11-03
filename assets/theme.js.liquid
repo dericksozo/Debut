@@ -3157,7 +3157,7 @@ WAU.Slideout = (function () {
 	 * @description - Initializes the plugin by adding all of the appropriate event listeners.
 	 */
 	function init(name) {
-
+		
 		if (typeof name === "undefined") {
 			console.log("The Slideout must have an associated name.");
 			return;
@@ -5997,8 +5997,11 @@ theme.Header = (function() {
         $currencyDisclosure: this.$container.find(selectors.disclosureCurrency)
       };
     },
-
+		onSelect: function() {
+			WAU.Slideout.init("mobile-navigation");
+    },
     onUnload: function() {
+			
       if (this.cache.$localeDisclosure.length) {
         this.localeDisclosure.unload();
       }
@@ -6047,18 +6050,21 @@ theme.mobileNav = (function() {
 
   mobileNav.prototype = _.assignIn({}, mobileNav.prototype, {
     onSelect: function() {
+			console.log("onSelect mobileNav");
 			WAU.Slideout._openByName("mobile-navigation");
     },
     onDeselect: function() {
+			console.log("onDeselect mobileNav");
 			WAU.Slideout._closeByName("mobile-navigation");
     },
     onBlockSelect: function() {
+			console.log("onBlockSelect mobileNav");
 			WAU.Slideout._openByName("mobile-navigation");
     }
   });
-
+	
   return mobileNav;
-
+	
 })();
 
 /*======================================================
