@@ -1316,6 +1316,14 @@ window.themeInfo = {name: "Testament"};
           showUnitReferenceValue = false;
         }
 
+        if ( cartItem.selling_plan_allocation ) {
+          var sellingPlanAllocation = cartItem.selling_plan_allocation.selling_plan,
+                sellingPlanAllocationName = cartItem.selling_plan_allocation.selling_plan.name;
+        } else {
+          var sellingPlanAllocation = false,
+                sellingPlanAllocationName = false;
+        }
+
         // Create item's data object and add to 'items' array
         item = {
           key: cartItem.key,
@@ -1347,7 +1355,9 @@ window.themeInfo = {name: "Testament"};
           discounts: cartItem.line_level_discount_allocations,
           discountsApplied:
             cartItem.line_level_discount_allocations.length === 0 ? false : true,
-          vendor: cartItem.vendor
+          vendor: cartItem.vendor,
+          sellingPlanAllocation: sellingPlanAllocation,
+          sellingPlanAllocationName: sellingPlanAllocationName
         };
 
         items.push(item);

@@ -19,9 +19,14 @@
                   <div class="grid-item one-quarter">
                     <a href="{{url}}" class="ajaxCart--product-image"><img src="{{img}}" alt=""></a>
                   </div>
-                  <div class="grid-item one-quarter">
+                  <div class="grid-item one-half">
                     <a href="{{url}}" class="h4">{{name}}</a>
-                    <p>{{variation}}</p>
+                    {{#if variation}}
+                     <p>{{variation}}</p>
+                    {{/if}}
+                    {{#if sellingPlanAllocation}}
+                     <p>{{ sellingPlanAllocationName }}</p>
+                    {{/if}}
                     {{#properties}}
                       {{#each this}}
                         {{#if this}}
@@ -30,7 +35,7 @@
                       {{/each}}
                     {{/properties}}
                   </div>
-                  <div class="grid-item one-half">
+                  <div class="grid-item one-quarter">
                       {{#if discountsApplied}}
                         <span class="visually-hidden">{% endraw %}{{ 'products.general.sale_price' | t }}{% raw %}</span>
                         <span class="ajaxcart__price onsale money">{{{discountedPrice}}}</span>
