@@ -32,7 +32,7 @@
 </div>
 {% endcapture %}
 
-<div class="header-section" data-section-id="{{ section.id }}" data-section-type="header-section">
+<div class="header-section js-header" data-section-id="{{ section.id }}" data-section-type="header-section">
   <header>
     {% if section.settings.full_width_header %}
     <div class="gridlock-fluid">
@@ -142,7 +142,7 @@
                 {%- endform -%}
               </li>
             {%- endif -%}
-            <li><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
+            <li class="my-cart-link-container"><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
         {% if section.settings.full_width_header %}
@@ -157,20 +157,20 @@
     </div>
     {% endif %}
     <div class="clear"></div>
-    <nav{% if nav_inline == false %} class="is_sticky"{% endif %}>
+    <nav aria-label="Primary Navigation" class="navigation js-navigation" data-sticky-class="navigation--sticky">
       {% if nav_inline %}
-      <div class="nav-inner-container">
-      {{ logo }}
+				<div class="nav-inner-container">
+				{{ logo }}
       {% endif %}
-      <ul id="main-nav"{% if nav_inline == false %} class="row"{% endif %}>
+      <ul role="menubar" aria-label="Primary Navigation" id="main-nav" class="navigation__menu {% if nav_inline == false %} row{% endif %}">
       	{% assign menu = linklists[section.settings.main_nav] %}
         {% for link in menu.links %}
           {% render 'navigation', link: link, menu: menu %}
         {% endfor %}
       </ul>
       {% if nav_inline %}
-    </div>{% comment %} close nav-inner-container {% endcomment %}
-    {% endif %}
+    		</div>{% comment %} close nav-inner-container {% endcomment %}
+    	{% endif %}
     </nav>
     <div class="clear header-spacer"></div>
   </div>
@@ -191,19 +191,27 @@
       margin-bottom: 0;
     }
 
-    ul#main-nav li {
-      line-height: {{ section.settings.nav_height }}px;
-    }
-    ul#main-nav li ul.submenu {
-      top: {{ section.settings.nav_height }}px;
-    }
-    ul.megamenu {
-      top: {{ section.settings.nav_height }}px;
-    }
-    nav {
-      border-top: {{ section.settings.nav_top_border_height }}px solid {{ settings.nav_border_color }};
-      border-bottom: {{ section.settings.nav_bottom_border_height }}px solid {{ settings.nav_border_color }};
-    }
+		.navigation {
+			border-top: {{ section.settings.nav_top_border_height }}px solid var(--nav-border-color);
+			border-bottom: {{ section.settings.nav_bottom_border_height }}px solid var(--nav-border-color);
+		}
+
+		.navigation__menuitem {
+			line-height: {{ section.settings.nav_height }}px;
+		}
+		
+		.navigation--sticky.navigation + .header-spacer {
+		  margin-top: {{ section.settings.nav_height }}px;
+		}
+
+		.dropdown {
+			top: {{ section.settings.nav_height }}px;
+		}
+
+		.megamenu {
+			top: {{ section.settings.nav_height }}px;
+		}
+
     {% if nav_inline %}
       .nav-inner-container {
         display: grid;
@@ -213,12 +221,15 @@
         line-height: {{ section.settings.nav_height }}px;
         position: relative;
       }
-      ul#main-nav {
+
+      .navigation {
         position: unset;
       }
-      ul#main-nav li {
+
+			.navigation__menuitem {
         line-height: unset;
       }
+
       div#logo {
         line-height: unset;
         margin-top: 5px;
@@ -295,26 +306,33 @@
         vertical-align: middle;
         max-width: 300px;
       }
-      div#upper-content {
-        width: 100%;
-      }
+			
+			{% unless section.settings.full_width_header %}
+      	div#upper-content {
+        	width: 100%;
+      	}
+			{% endunless %}
+			
       ul#cart li {
         padding: 0 15px;
       }
       ul#cart li a,ul#cart li i {
         color: {{ settings.mobile_header_icons }};
       }
-    }
-    @media screen and (max-width: 740px) {
-      header {
-        line-height: 40px;
-      }
-      header {
+			header {
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 5;
       }
+    }
+		
+    @media screen and (max-width: 740px) {
+		
+      header {
+        line-height: 40px;
+      }
+			
       .header-wrapper {
         {% if section.settings.show_announcement_text %}
         margin-top: 80px;
@@ -326,7 +344,6 @@
         max-width: 200px;
       }
     }
-
   </style>
 </div>
 

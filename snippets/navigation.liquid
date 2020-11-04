@@ -3,13 +3,16 @@
 {% if block.settings.menu_item == link.title %}
 {% capture megalink %}
 
-<li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
+<li class="navigation__menuitem navigation__menuitem--dropdown js-aria-expand" aria-haspopup="true" aria-expanded="false" role="none">
+  <a class="navigation__menulink js-menu-link js-open-dropdown-on-key" href="{{ link.url }}">{{ link.title }}</a>
   <ul class="megamenu row">
     {% if block.settings.nav_image != blank %}
     {%- assign image_size = '300x' -%}
     <span class="desktop-3 tablet-hide mm-image">
       <a href="{{ block.settings.link }}">
-        {% render 'basic-responsive-image', type: block.settings.nav_image, data_widths: '[180, 360, 540]' %}
+        <div class="megamenu__imagecontainer">
+          {% render 'basic-responsive-image', type: block.settings.nav_image, data_widths: '[180, 360, 540]' %}
+        </div>
         <noscript>
           <img src="{{ block.settings.nav_image | img_url: '800x' }}" class="navigation-image">
         </noscript>
@@ -20,25 +23,29 @@
       {% case link.links.size %}
       {% when 0 %}
       {% when 1 %}
-      {% assign column_width = 'desktop-12 tablet-fourth' %}
+        {% assign column_width = 'desktop-12 tablet-fourth' %}
       {% when 2 %}
-      {% assign column_width = 'desktop-6 tablet-fourth' %}
+        {% assign column_width = 'desktop-6 tablet-fourth' %}
       {% when 3 or 6 %}
-      {% assign column_width = 'desktop-4 tablet-fourth' %}
+        {% assign column_width = 'desktop-4 tablet-fourth' %}
       {% else %}
-      {% assign column_width = 'desktop-3 tablet-fourth' %}
+        {% assign column_width = 'desktop-3 tablet-fourth' %}
       {% endcase %}
       {% for sub_link in link.links %}
-      <li class="{{ column_width }}">
-        <h4><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></h4>
-        {% if sub_link.links != blank %}
-        <ul class="mega-stack">
-          {% for sub_sub_link in sub_link.links %}
-          <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-      </li>
+        <li class="megamenu__listcontainer {{ column_width }}">
+          <h4 class="megamenu__header">
+            <a class="megamenu__headerlink" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+          </h4>
+          {% if sub_link.links != blank %}
+            <ul class="megamenu__list">
+              {% for sub_sub_link in sub_link.links %}
+                <li class="megamenu__listitem">
+                  <a class="megamenu__listlink" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </li>
       {% endfor %}
     </span>
   </ul>
@@ -52,24 +59,31 @@
 {{ megalink }}
 
 {% elsif link.links != blank %}
-<li class="dropdown has_sub_menu" aria-haspopup="true" aria-expanded="false">{{ link.title | link_to: link.url }}
-  <ul class="submenu">
-    {% for sub_link in link.links %}
-    {% if sub_link.links != blank %}
-    <li class="nest has_sub_menu" aria-haspopup="true" aria-expanded="false"><a href="{{ sub_link.url }}">{{ sub_link.title }}</a>
-      <ul class="nested">
-        {% for sub_sub_link in sub_link.links %}
-        <li><a href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a></li>
-        {% endfor %}
-      </ul>
-    </li>
-    {% else %}
-    <li><a href="{{ sub_link.url }}">{{ sub_link.title }}</a></li>
-    {% endif %}
-
-    {% endfor %}
-  </ul>
-</li>
+  <li class="navigation__menuitem navigation__menuitem--dropdown js-menuitem" role="none">
+    <a class="navigation__menulink js-menu-link js-aria-expand js-open-dropdown-on-key" role="menuitem" aria-haspop="true" aria-expanded="false" href="{{ link.url}}">{{ link.title }}</a>
+    <ul role="menu" aria-label="{{ link.title }}" class="dropdown js-dropdown">
+      {% for sub_link in link.links %}
+        {% if sub_link.links != blank %}
+        <li role="none" class="dropdown__menuitem dropdown__menuitem--nested js-menuitem-with-nested-dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="dropdown__menulink js-aria-expand js-menu-link" role="menuitem" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+          <ul role="menu" class="dropdown dropdown--nested js-dropdown-nested">
+            {% for sub_sub_link in sub_link.links %}
+              <li class="dropdown__menuitem" role="none">
+                <a class="dropdown__menulink js-menu-link-inside-dropdown" role="menuitem" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+          <li class="dropdown__menuitem" role="none">
+            <a class="dropdown__menulink" role="menuitem" href="{{ sub_link.url }}">{{ sub_link.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </li>
 {% else %}
-<li>{{ link.title | link_to: link.url }}</li>
+  <li class="navigation__menuitem" role="none">
+    <a class="navigation__menulink js-menu-link" role="menuitem" href="{{ link.url }}">{{ link.title }}</a>
+  </li>
 {% endif %}
