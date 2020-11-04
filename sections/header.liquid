@@ -142,7 +142,7 @@
                 {%- endform -%}
               </li>
             {%- endif -%}
-            <li class="my-cart-link-container"><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span id="item_count">{{ cart.item_count }}</span></a></li>
+            <li class="my-cart-link-container"><a class="my-cart-link" href="{{ routes.cart_url }}"><span class="my-cart-text">{{ 'layout.header.my_cart' | t }}&nbsp; </span>{% if section.settings.cart_icon == 'cart' %}<i class="fa fa-shopping-cart fa-2x" aria-hidden="true">{% elsif section.settings.cart_icon == 'bag' %}<i class="fa fa-shopping-bag fa-2x" aria-hidden="true">{% endif %}</i>&nbsp; <span class="item_count">{{ cart.item_count }}</span></a></li>
           </ul>
         </div>
         {% if section.settings.full_width_header %}
@@ -199,7 +199,7 @@
 		.navigation__menuitem {
 			line-height: {{ section.settings.nav_height }}px;
 		}
-		
+
 		.navigation--sticky.navigation + .header-spacer {
 		  margin-top: {{ section.settings.nav_height }}px;
 		}
@@ -306,13 +306,13 @@
         vertical-align: middle;
         max-width: 300px;
       }
-			
+
 			{% unless section.settings.full_width_header %}
       	div#upper-content {
         	width: 100%;
       	}
 			{% endunless %}
-			
+
       ul#cart li {
         padding: 0 15px;
       }
@@ -326,13 +326,13 @@
         z-index: 5;
       }
     }
-		
+
     @media screen and (max-width: 740px) {
-		
+
       header {
         line-height: 40px;
       }
-			
+
       .header-wrapper {
         {% if section.settings.show_announcement_text %}
         margin-top: 80px;
