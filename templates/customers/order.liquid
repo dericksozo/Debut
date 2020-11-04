@@ -38,6 +38,9 @@
                   {% endfor %}
                 </p>
               {%- endunless -%}
+              {% if line_item.selling_plan_allocation %}
+               <p>{{ line_item.selling_plan_allocation.selling_plan.name }}<p>
+              {% endif %}
               {% if line_item.sku != blank %}
                 {{ 'customer.order.details.sku' | t }}: {{ line_item.sku }}
               {% endif %}
