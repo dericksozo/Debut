@@ -150,7 +150,7 @@
     </div>
     {% endif %}
   </header>
-  <div class="header-wrapper{% if nav_inline %} is_sticky{% endif %}">
+  <div class="js-header-wrapper header-wrapper{% if nav_inline %} is_sticky{% endif %}">
     {% if nav_inline == false %}
     <div class="row">
       {{ logo }}
@@ -199,11 +199,13 @@
 		.navigation__menuitem {
 			line-height: {{ section.settings.nav_height }}px;
 		}
-
-		.navigation--sticky.navigation + .header-spacer {
-		  margin-top: {{ section.settings.nav_height }}px;
+		
+		@media only screen and (min-width: 980px) {
+			.navigation--sticky.navigation + .header-spacer {
+				margin-top: {{ section.settings.nav_height }}px;
+			}
 		}
-
+		
 		.dropdown {
 			top: {{ section.settings.nav_height }}px;
 		}
@@ -335,16 +337,28 @@
 
       .header-wrapper {
         {% if section.settings.show_announcement_text %}
-        margin-top: 80px;
+					margin-top: 110px;
         {% else %}
-        margin-top: 40px;
+					margin-top: 70px;
         {% endif %}
       }
+			
       li.mobile-menu__logo a img {
         max-width: 200px;
       }
     }
+		
+		@media screen and (min-width: 740px and max-width: 980px) {
+			.header-wrapper {
+        {% if section.settings.show_announcement_text %}
+					margin-top: 110px;
+        {% else %}
+					margin-top: 70px;
+        {% endif %}
+      }
+		}
   </style>
+	
 </div>
 
 {% schema %}
