@@ -14,7 +14,7 @@
 
     {% assign css_color = value | split: ' ' | last | handle %}
 
-    {% capture id %}swatch-{{ option.position }}-{{ value | handle }}{% endcapture %}
+    {% capture id %}{{ section.id }}-swatch-{{ option.position }}-{{ value | handle }}{% endcapture %}
 
     {% assign available = false %}
 
