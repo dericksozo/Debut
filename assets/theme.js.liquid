@@ -4630,13 +4630,25 @@ var selectors = {
 };
 
 theme.Header = (function() {
+	
+	function addSpacingForMobileNav(headerWrapper, headerHeight) {
+		// set the margin-top for mobile to make up for the fixed header
+		const isMobileWidth = window.matchMedia("(max-width: 980px)");
+
+		if (isMobileWidth.matches) {
+			headerWrapper.style.marginTop = headerHeight + "px";
+		} else {
+			headerWrapper.style.removeProperty("margin-top");
+		}
+	}
+	
   function Header(container) {
 		const header = document.querySelector(".js-header"),
 					navigation = document.querySelector(".js-navigation"),
 					menuItemsWithNestedDropdowns = document.querySelectorAll(".js-menuitem-with-nested-dropdown"),
 					headerWrapper = document.querySelector(".js-header-wrapper");
 		
-		const amountToScroll = Math.max(header.clientHeight, navigation.clientHeight) - Math.min(header.clientHeight, navigation.clientHeight); // Only calculate this number once on load and make sure it's positive.
+		let amountToScroll = Math.max(header.clientHeight, navigation.clientHeight) - Math.min(header.clientHeight, navigation.clientHeight); // Only calculate this number once on load and make sure it's positive.
 		const stickyClass = navigation.getAttribute('data-sticky-class');
 
 		var $container = this.$container = $(container);
@@ -4649,29 +4661,26 @@ theme.Header = (function() {
 			}
 		}
 		
-		function addSpacingForMobileNav() {
-			// set the margin-top for mobile to make up for the fixed header
-			const isMobileWidth = window.matchMedia("(max-width: 980px)");
-
-			if (isMobileWidth.matches) {
-				headerWrapper.style.marginTop = header.querySelector("header").clientHeight + "px";
-			} else {
-				headerWrapper.style.removeProperty("margin-top");
-			}
-		}
-		
     document.addEventListener('scroll', function (event) {
       makeNavigationSticky();
     });
 		
 		document.addEventListener('resize', function (event) {
-			addSpacingForMobileNav();
+			addSpacingForMobileNav(headerWrapper, header.querySelector("header").clientHeight);
 		});
 		
 		makeNavigationSticky();
-		addSpacingForMobileNav();
+		addSpacingForMobileNav(headerWrapper, header.querySelector("header").clientHeight);
 		theme.a11yHelpers.setUpAriaExpansion();
 		theme.a11yHelpers.setUpAccessibleNavigationMenus();
+		
+		// This is to make sure the header / sticky updates in the theme editor when the editor changes from mobile to desktop.
+		const resizeObserver = new ResizeObserver(entries => {
+			addSpacingForMobileNav(headerWrapper, header.querySelector("header").clientHeight);
+			amountToScroll = Math.max(header.clientHeight, navigation.clientHeight) - Math.min(header.clientHeight, navigation.clientHeight); // recalculate this number because dimensions have changed.
+		});
+		
+		resizeObserver.observe(header.querySelector("header"));
 		
 		$('.shopify-currency-form select').on('change', function() {
 			$(this)
@@ -4726,9 +4735,19 @@ theme.Header = (function() {
         $currencyDisclosure: this.$container.find(selectors.disclosureCurrency)
       };
     },
+		
+    onBlockSelect: function() {
+			addSpacingForMobileNav(document.querySelector(".js-header-wrapper"), document.querySelector(".js-header > header").clientHeight);
+    },
+		
 		onSelect: function() {
 			WAU.Slideout.init("mobile-navigation");
     },
+		
+		onLoad: function () {
+			addSpacingForMobileNav(document.querySelector(".js-header-wrapper"), document.querySelector(".js-header > header").clientHeight);
+		},
+		
     onUnload: function() {
 
       if (this.cache.$localeDisclosure.length) {
