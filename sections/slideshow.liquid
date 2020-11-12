@@ -23,15 +23,7 @@
           {% if block.settings.link != blank and block.settings.button_text == blank %}<a href="{{ block.settings.link }}">{% endif %}
           {% if block.settings.image != blank %}
             <div class="slideshow__slide-desktop{% if block.settings.overlay %} overlay{% endif %}">
-              {% assign image_box_ratio = block.settings.image.height | append: ".0" | times: 1 | divided_by: block.settings.image.width | times: 100 | append: "%" %}
-              {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-              <div class="box-ratio" style="padding-bottom: {{ image_box_ratio }};">
-                <img class="slideshow__image slideshow__image--{{ block.id }} lazyload lazyload-fade"
-                  data-src="{{ img_url }}"
-                  data-sizes="auto"
-                  data-parent-fit="cover"
-                  alt="{{ block.settings.image.alt | escape }}">
-              </div>
+              {% render 'basic-responsive-image', type:  block.settings.image %}
               <noscript>
                 <img src="{{ block.settings.image | img_url: '1024x' }}" alt="{{ block.settings.image.alt | escape }}" class="slideshow__image slideshow__image--{{ block.id }}">
               </noscript>
@@ -109,7 +101,11 @@
                 .slide--{{ block.id }} {
                   background-image: url('{{ mobile_image | img_url: '600x' }}') !important;
                   opacity: 1;
+                  {% if block.settings.caption_below %}
+                  padding-bottom: 0 !important;
+                  {% else %}
                   padding-bottom: {{ image_box_ratio }} !important;
+                  {% endif %}
                   background-size: contain;
                   bacground-position: top center;
                   background-repeat: no-repeat;
@@ -136,6 +132,21 @@
                 }
                 .slide--{{ block.id }} .slideshow__slide-desktop {
                   display: block;
+                }
+              {% endif %}
+              {% if block.settings.caption_below %}
+                .slideshow__slide .slideshow__caption.slide-{{ block.id }} {
+                  position: relative;
+                  width: 100%;
+                  {% if mobile_image != blank %}
+                  margin-top: {{ image_box_ratio }};
+                  {% endif %}
+                  top: unset;
+                  left: unset;
+                  transform: translate(0, 0);
+                }
+                .slideshow__slide .slideshow__caption.slide-{{ block.id }} .slideshow__caption-wrapper {
+                  width: 100%;
                 }
               {% endif %}
               {% if block.settings.hide_caption_background %}
@@ -248,6 +259,11 @@
           "type": "checkbox",
           "id": "hide_caption_background",
           "label": "Hide caption background on mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "caption_below",
+          "label": "Position caption below image"
         },
         {
           "type": "header",
