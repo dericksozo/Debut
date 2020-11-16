@@ -19,7 +19,6 @@
 
   <!-- Preload onDomain stylesheets and script libraries -->
   <link rel="preload" href="{{ 'stylesheet.css' | asset_url }}" as="style">
-  <link rel="preload" href="{{ 'queries.css' | asset_url }}" as="style">
   <link rel="preload" as="font" href="{{ main_font | font_url }}" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="{{ nav_font | font_url }}" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="{{ heading_font | font_url }}" type="font/woff2" crossorigin>
@@ -41,17 +40,7 @@
   {% render 'social-meta-tags' %}
   {% include 'css-variables' %}
 
-  <script>
-     window.performance.mark('testament:theme_stylesheet_loaded.start');
-     function onLoadStylesheet() {
-       var url = "{{ 'stylesheet.css' | asset_url }}";
-       var link = document.querySelector('link[href="' + url + '"]');
-       link.loaded = true;
-       link.dispatchEvent(new Event('load'));
-     }
-  </script>
-
-  <link rel="stylesheet" href="{{ 'stylesheet.css' | asset_url }}" type="text/css" media="print" onload="this.media='all';onLoadStylesheet()">
+  <link rel="stylesheet" href="{{ 'stylesheet.css' | asset_url }}" type="text/css">
 
   <style>
   {{ main_font | font_face: font_display: 'swap' }}
