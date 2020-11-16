@@ -46,7 +46,7 @@
               {% if item.selling_plan_allocation %}
                <p>{{ item.selling_plan_allocation.selling_plan.name }}<p>
               {% endif %}
-              
+
               {% assign property_size = item.properties | size %}
               {% if property_size > 0 %}
                 {% for p in item.properties %}
@@ -188,7 +188,7 @@
     </div>
     {% endif %}
     <div id="continue-shopping" class="desktop-3 tablet-6 mobile-3">
-      <a href="{{ routes.account_collections_url }}">{{ 'cart.general.continue' | t }}</a>
+      <a href="{{ routes.collections_url }}">{{ 'cart.general.continue' | t }}</a>
     </div>
     <div id="basket-right" class="desktop-3 tablet-6 mobile-3">
       <div class="subtotal">
